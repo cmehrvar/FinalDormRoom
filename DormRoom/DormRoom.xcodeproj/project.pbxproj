@@ -1,0 +1,654 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3278FD4F4880FAB3A73E3957 /* libPods-DormRoom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2451B51057A263F932FCF4E /* libPods-DormRoom.a */; };
+		A364754F1C0BB5B000AC96CA /* LogInController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A364754E1C0BB5B000AC96CA /* LogInController.swift */; };
+		A36475571C0BBAB000AC96CA /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36475561C0BBAB000AC96CA /* TextFields.swift */; };
+		A3B74EB91C0BC7200082CCF4 /* SignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B74EB81C0BC7200082CCF4 /* SignUpController.swift */; };
+		A3B74EBB1C0BC7A40082CCF4 /* RootSignUpController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B74EBA1C0BC7A40082CCF4 /* RootSignUpController.swift */; };
+		A3B74EBD1C0BC93D0082CCF4 /* ChooseUniViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B74EBC1C0BC93D0082CCF4 /* ChooseUniViewController.swift */; };
+		A3F3097A1C0BB32A002DEADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F309791C0BB32A002DEADF /* AppDelegate.swift */; };
+		A3F3097F1C0BB32A002DEADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3F3097D1C0BB32A002DEADF /* Main.storyboard */; };
+		A3F309811C0BB32A002DEADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3F309801C0BB32A002DEADF /* Assets.xcassets */; };
+		A3F309841C0BB32A002DEADF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3F309821C0BB32A002DEADF /* LaunchScreen.storyboard */; };
+		A3F3098F1C0BB32A002DEADF /* DormRoomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F3098E1C0BB32A002DEADF /* DormRoomTests.swift */; };
+		A3F3099A1C0BB32A002DEADF /* DormRoomUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F309991C0BB32A002DEADF /* DormRoomUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A3F3098B1C0BB32A002DEADF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A3F3096E1C0BB32A002DEADF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A3F309751C0BB32A002DEADF;
+			remoteInfo = DormRoom;
+		};
+		A3F309961C0BB32A002DEADF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A3F3096E1C0BB32A002DEADF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A3F309751C0BB32A002DEADF;
+			remoteInfo = DormRoom;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		467D6FD297E4D0CB4EB63789 /* Pods-DormRoom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DormRoom.release.xcconfig"; path = "Pods/Target Support Files/Pods-DormRoom/Pods-DormRoom.release.xcconfig"; sourceTree = "<group>"; };
+		A364754E1C0BB5B000AC96CA /* LogInController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInController.swift; sourceTree = "<group>"; };
+		A36475561C0BBAB000AC96CA /* TextFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
+		A3B74EB81C0BC7200082CCF4 /* SignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpController.swift; sourceTree = "<group>"; };
+		A3B74EBA1C0BC7A40082CCF4 /* RootSignUpController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootSignUpController.swift; sourceTree = "<group>"; };
+		A3B74EBC1C0BC93D0082CCF4 /* ChooseUniViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseUniViewController.swift; sourceTree = "<group>"; };
+		A3F309761C0BB32A002DEADF /* DormRoom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DormRoom.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3F309791C0BB32A002DEADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A3F3097E1C0BB32A002DEADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A3F309801C0BB32A002DEADF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A3F309831C0BB32A002DEADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A3F309851C0BB32A002DEADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A3F3098A1C0BB32A002DEADF /* DormRoomTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DormRoomTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3F3098E1C0BB32A002DEADF /* DormRoomTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DormRoomTests.swift; sourceTree = "<group>"; };
+		A3F309901C0BB32A002DEADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A3F309951C0BB32A002DEADF /* DormRoomUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DormRoomUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A3F309991C0BB32A002DEADF /* DormRoomUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DormRoomUITests.swift; sourceTree = "<group>"; };
+		A3F3099B1C0BB32A002DEADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D7A798F36447F0377FEE4814 /* Pods-DormRoom.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DormRoom.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DormRoom/Pods-DormRoom.debug.xcconfig"; sourceTree = "<group>"; };
+		F2451B51057A263F932FCF4E /* libPods-DormRoom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DormRoom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A3F309731C0BB32A002DEADF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3278FD4F4880FAB3A73E3957 /* libPods-DormRoom.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A3F309871C0BB32A002DEADF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A3F309921C0BB32A002DEADF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		603D690405BDE614AB4BE6C7 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D7A798F36447F0377FEE4814 /* Pods-DormRoom.debug.xcconfig */,
+				467D6FD297E4D0CB4EB63789 /* Pods-DormRoom.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A36475501C0BB9F600AC96CA /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				A364754E1C0BB5B000AC96CA /* LogInController.swift */,
+				A3B74EB81C0BC7200082CCF4 /* SignUpController.swift */,
+				A3B74EBA1C0BC7A40082CCF4 /* RootSignUpController.swift */,
+				A3B74EBC1C0BC93D0082CCF4 /* ChooseUniViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		A36475511C0BBA0600AC96CA /* TableViewCells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		A36475521C0BBA1300AC96CA /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				A3F309791C0BB32A002DEADF /* AppDelegate.swift */,
+			);
+			name = Delegate;
+			sourceTree = "<group>";
+		};
+		A36475531C0BBA2100AC96CA /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				A3F309821C0BB32A002DEADF /* LaunchScreen.storyboard */,
+				A3F3097D1C0BB32A002DEADF /* Main.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		A36475551C0BBA8D00AC96CA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A36475561C0BBAB000AC96CA /* TextFields.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		A36475581C0BBFAF00AC96CA /* BridgingHeaders */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = BridgingHeaders;
+			sourceTree = "<group>";
+		};
+		A3F3096D1C0BB32A002DEADF = {
+			isa = PBXGroup;
+			children = (
+				A3F309781C0BB32A002DEADF /* DormRoom */,
+				A3F3098D1C0BB32A002DEADF /* DormRoomTests */,
+				A3F309981C0BB32A002DEADF /* DormRoomUITests */,
+				A3F309771C0BB32A002DEADF /* Products */,
+				603D690405BDE614AB4BE6C7 /* Pods */,
+				A4C3461F16B93E17CC57459F /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A3F309771C0BB32A002DEADF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A3F309761C0BB32A002DEADF /* DormRoom.app */,
+				A3F3098A1C0BB32A002DEADF /* DormRoomTests.xctest */,
+				A3F309951C0BB32A002DEADF /* DormRoomUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A3F309781C0BB32A002DEADF /* DormRoom */ = {
+			isa = PBXGroup;
+			children = (
+				A36475581C0BBFAF00AC96CA /* BridgingHeaders */,
+				A36475551C0BBA8D00AC96CA /* Views */,
+				A36475531C0BBA2100AC96CA /* Storyboard */,
+				A36475521C0BBA1300AC96CA /* Delegate */,
+				A36475511C0BBA0600AC96CA /* TableViewCells */,
+				A36475501C0BB9F600AC96CA /* ViewControllers */,
+				A3F309801C0BB32A002DEADF /* Assets.xcassets */,
+				A3F309851C0BB32A002DEADF /* Info.plist */,
+			);
+			path = DormRoom;
+			sourceTree = "<group>";
+		};
+		A3F3098D1C0BB32A002DEADF /* DormRoomTests */ = {
+			isa = PBXGroup;
+			children = (
+				A3F3098E1C0BB32A002DEADF /* DormRoomTests.swift */,
+				A3F309901C0BB32A002DEADF /* Info.plist */,
+			);
+			path = DormRoomTests;
+			sourceTree = "<group>";
+		};
+		A3F309981C0BB32A002DEADF /* DormRoomUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A3F309991C0BB32A002DEADF /* DormRoomUITests.swift */,
+				A3F3099B1C0BB32A002DEADF /* Info.plist */,
+			);
+			path = DormRoomUITests;
+			sourceTree = "<group>";
+		};
+		A4C3461F16B93E17CC57459F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F2451B51057A263F932FCF4E /* libPods-DormRoom.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A3F309751C0BB32A002DEADF /* DormRoom */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A3F3099E1C0BB32A002DEADF /* Build configuration list for PBXNativeTarget "DormRoom" */;
+			buildPhases = (
+				B9DC5DB1D2552C56EAE825F6 /* Check Pods Manifest.lock */,
+				A3F309721C0BB32A002DEADF /* Sources */,
+				A3F309731C0BB32A002DEADF /* Frameworks */,
+				A3F309741C0BB32A002DEADF /* Resources */,
+				9A581296982161F1B9E4C053 /* Embed Pods Frameworks */,
+				BD268779639066E62B2D9E50 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DormRoom;
+			productName = DormRoom;
+			productReference = A3F309761C0BB32A002DEADF /* DormRoom.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A3F309891C0BB32A002DEADF /* DormRoomTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A3F309A11C0BB32A002DEADF /* Build configuration list for PBXNativeTarget "DormRoomTests" */;
+			buildPhases = (
+				A3F309861C0BB32A002DEADF /* Sources */,
+				A3F309871C0BB32A002DEADF /* Frameworks */,
+				A3F309881C0BB32A002DEADF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A3F3098C1C0BB32A002DEADF /* PBXTargetDependency */,
+			);
+			name = DormRoomTests;
+			productName = DormRoomTests;
+			productReference = A3F3098A1C0BB32A002DEADF /* DormRoomTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A3F309941C0BB32A002DEADF /* DormRoomUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A3F309A41C0BB32A002DEADF /* Build configuration list for PBXNativeTarget "DormRoomUITests" */;
+			buildPhases = (
+				A3F309911C0BB32A002DEADF /* Sources */,
+				A3F309921C0BB32A002DEADF /* Frameworks */,
+				A3F309931C0BB32A002DEADF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A3F309971C0BB32A002DEADF /* PBXTargetDependency */,
+			);
+			name = DormRoomUITests;
+			productName = DormRoomUITests;
+			productReference = A3F309951C0BB32A002DEADF /* DormRoomUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A3F3096E1C0BB32A002DEADF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Cina Mehrvar";
+				TargetAttributes = {
+					A3F309751C0BB32A002DEADF = {
+						CreatedOnToolsVersion = 7.1;
+					};
+					A3F309891C0BB32A002DEADF = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = A3F309751C0BB32A002DEADF;
+					};
+					A3F309941C0BB32A002DEADF = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = A3F309751C0BB32A002DEADF;
+					};
+				};
+			};
+			buildConfigurationList = A3F309711C0BB32A002DEADF /* Build configuration list for PBXProject "DormRoom" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A3F3096D1C0BB32A002DEADF;
+			productRefGroup = A3F309771C0BB32A002DEADF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A3F309751C0BB32A002DEADF /* DormRoom */,
+				A3F309891C0BB32A002DEADF /* DormRoomTests */,
+				A3F309941C0BB32A002DEADF /* DormRoomUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A3F309741C0BB32A002DEADF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3F309841C0BB32A002DEADF /* LaunchScreen.storyboard in Resources */,
+				A3F309811C0BB32A002DEADF /* Assets.xcassets in Resources */,
+				A3F3097F1C0BB32A002DEADF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A3F309881C0BB32A002DEADF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A3F309931C0BB32A002DEADF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9A581296982161F1B9E4C053 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DormRoom/Pods-DormRoom-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B9DC5DB1D2552C56EAE825F6 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BD268779639066E62B2D9E50 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DormRoom/Pods-DormRoom-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A3F309721C0BB32A002DEADF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A364754F1C0BB5B000AC96CA /* LogInController.swift in Sources */,
+				A3B74EBB1C0BC7A40082CCF4 /* RootSignUpController.swift in Sources */,
+				A3F3097A1C0BB32A002DEADF /* AppDelegate.swift in Sources */,
+				A36475571C0BBAB000AC96CA /* TextFields.swift in Sources */,
+				A3B74EBD1C0BC93D0082CCF4 /* ChooseUniViewController.swift in Sources */,
+				A3B74EB91C0BC7200082CCF4 /* SignUpController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A3F309861C0BB32A002DEADF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3F3098F1C0BB32A002DEADF /* DormRoomTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A3F309911C0BB32A002DEADF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A3F3099A1C0BB32A002DEADF /* DormRoomUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A3F3098C1C0BB32A002DEADF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A3F309751C0BB32A002DEADF /* DormRoom */;
+			targetProxy = A3F3098B1C0BB32A002DEADF /* PBXContainerItemProxy */;
+		};
+		A3F309971C0BB32A002DEADF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A3F309751C0BB32A002DEADF /* DormRoom */;
+			targetProxy = A3F309961C0BB32A002DEADF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A3F3097D1C0BB32A002DEADF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A3F3097E1C0BB32A002DEADF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A3F309821C0BB32A002DEADF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A3F309831C0BB32A002DEADF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A3F3099C1C0BB32A002DEADF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A3F3099D1C0BB32A002DEADF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A3F3099F1C0BB32A002DEADF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D7A798F36447F0377FEE4814 /* Pods-DormRoom.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = DormRoom/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = DormRoom.DormRoom;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A3F309A01C0BB32A002DEADF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 467D6FD297E4D0CB4EB63789 /* Pods-DormRoom.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = DormRoom/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = DormRoom.DormRoom;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		A3F309A21C0BB32A002DEADF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = DormRoomTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = DormRoom.DormRoomTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DormRoom.app/DormRoom";
+			};
+			name = Debug;
+		};
+		A3F309A31C0BB32A002DEADF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = DormRoomTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = DormRoom.DormRoomTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DormRoom.app/DormRoom";
+			};
+			name = Release;
+		};
+		A3F309A51C0BB32A002DEADF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = DormRoomUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = DormRoom.DormRoomUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DormRoom;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		A3F309A61C0BB32A002DEADF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = DormRoomUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = DormRoom.DormRoomUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DormRoom;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A3F309711C0BB32A002DEADF /* Build configuration list for PBXProject "DormRoom" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3F3099C1C0BB32A002DEADF /* Debug */,
+				A3F3099D1C0BB32A002DEADF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A3F3099E1C0BB32A002DEADF /* Build configuration list for PBXNativeTarget "DormRoom" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3F3099F1C0BB32A002DEADF /* Debug */,
+				A3F309A01C0BB32A002DEADF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A3F309A11C0BB32A002DEADF /* Build configuration list for PBXNativeTarget "DormRoomTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3F309A21C0BB32A002DEADF /* Debug */,
+				A3F309A31C0BB32A002DEADF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A3F309A41C0BB32A002DEADF /* Build configuration list for PBXNativeTarget "DormRoomUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A3F309A51C0BB32A002DEADF /* Debug */,
+				A3F309A61C0BB32A002DEADF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A3F3096E1C0BB32A002DEADF /* Project object */;
+}
