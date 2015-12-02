@@ -1,19 +1,17 @@
 //
-//  SignUpController.swift
+//  MenuViewController.swift
 //  DormRoom
 //
-//  Created by Cina Mehrvar on 2015-11-29.
+//  Created by Cina Mehrvar on 2015-12-01.
 //  Copyright © 2015 Cina Mehrvar. All rights reserved.
 //
 
 import UIKit
 
-class SignUpController: UIViewController {
+class MenuViewController: UIViewController {
+    
+    weak var rootController: MainRootViewController?
 
-    
-    weak var rootController: RootSignUpController?
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 

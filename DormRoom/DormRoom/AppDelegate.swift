@@ -12,10 +12,17 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // Initialize Parse.
+        Parse.setApplicationId("YBETw0g113kFPhytERHsGafYGRBpXnsC9R69mX00",
+            clientKey: "FmjE4cTtMpro7d4ePUXRVWk1MYMygVITu5r5s0Gx")
+       
         return true
     }
 
