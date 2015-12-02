@@ -32,6 +32,7 @@ class MainRootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        setMenuStage()
         setChangeUniStage()
  
     }

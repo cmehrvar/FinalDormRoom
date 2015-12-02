@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainPuffViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MainPuffViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIWebViewDelegate {
     
     weak var rootController: MainRootViewController?
     
@@ -23,8 +23,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var dislikes = [Int]()
     var objectId = [String]()
     
-    var feed = "CanadaPuff"
-    var ranking = "createdAt"
+    var feed = String()
+    var ranking = String()
     
     var refreshControl: UIRefreshControl!
 
@@ -32,6 +32,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
+        
+        feed = "CanadaPuff"
+        ranking = "createdAt"
         
         if feed == "CanadaPuff" {
             TakeAPuffOutlet.alpha = 1
@@ -52,13 +55,17 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     //Outlets
     @IBOutlet weak var PuffTableView: UITableView!
     @IBOutlet weak var TakeAPuffOutlet: UIView!
+    @IBOutlet weak var WebViewOutlet: UIWebView!
     
     
     //Actions
     @IBAction func takePuffAction(sender: AnyObject) {
         
+        guard let actualController = rootController else {return}
         
+        actualController.takePuffController?.feed = feed
         
+       presentViewController(callCamera(), animated: true, completion: nil)
         
     }
     
@@ -83,6 +90,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         universityNames.removeAll()
         objectId.removeAll()
         
+        self.PuffTableView.reloadData()
         
         let query = PFQuery(className: feed)
         query.orderByDescending(ranking)
@@ -140,9 +148,15 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         guard let actualRootController = rootController else {return}
         
-        //FILL IN
+        actualRootController.takePuffController?.TakenPuffOutlet.image = image
         
+        self.dismissViewControllerAnimated(true, completion: nil)
         
+        rootController?.toggleTakePuff({ (complete) -> () in
+            
+            print("take puff toggled open")
+            
+        })
     }
     
    
@@ -154,23 +168,45 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
         
+        
         tableView.addSubview(refreshControl)
         
         cell.selectionStyle = .None
         
-        cell.ImageOutlet.imageFromPFFile(images[indexPath.row], placeholder: "Crest")
+        cell.objectId = objectId[indexPath.row]
+        cell.like = likes[indexPath.row]
+        cell.dislike = dislikes[indexPath.row]
         
-        return UITableViewCell()
+        cell.ImageOutlet.imageFromPFFile(images[indexPath.row])
+        cell.SwipeViewOutlet.imageFromPFFile(images[indexPath.row])
+        cell.UniversityOutlet.imageFromPFFile(universityFiles[indexPath.row])
+        cell.ProfileOutlet.imageFromPFFile(profilePictures[indexPath.row])
+        cell.LikeOutlet.text = "\(likes[indexPath.row])"
+        cell.DislikeOutlet.text = "\(dislikes[indexPath.row])"
+        cell.CaptionOutlet.text = captions[indexPath.row]
+        
+        cell.feed = feed
+        
+        return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return images.count
     }
     
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        
+        if request.URL?.absoluteString == "http://www.dormroomnetwork.com/trending.html" {
+            return true
+        } else {
+            return false
+        }
+    }
     
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        
         // Dispose of any resources that can be recreated.
     }
     

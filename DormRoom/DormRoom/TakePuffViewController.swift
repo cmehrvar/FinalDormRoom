@@ -8,19 +8,103 @@
 
 import UIKit
 
-class TakePuffViewController: UIViewController {
+class TakePuffViewController: UIViewController, UITextFieldDelegate {
     
     weak var rootController: MainRootViewController?
-
+    
+    var feed: String = ""
+    let user = PFUser.currentUser()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+        
+        CaptionOutlet.delegate = self
+    }
+    
+    //Functions
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    //Outlets
+    @IBOutlet weak var TakenPuffOutlet: UIImageView!
+    @IBOutlet weak var CaptionOutlet: UITextField!
+    
+    //Actions
+    @IBAction func postPuff(sender: AnyObject) {
+        
+        do {
+            try user?.fetch()
+        } catch let error {
+            print("error fetching new user: \(error)")
+        }
+        
+        let post = PFObject(className: "CanadaPuff")
+        
+        guard let image = TakenPuffOutlet.image else {return}
+        let data = UIImageJPEGRepresentation(image, 0.5)
+        
+        guard let actualData = data else {return}
+        let file = PFFile(data: actualData)
+        
+        post["Image"] = file
+        post["Caption"] = CaptionOutlet.text
+        post["Like"] = 0
+        post["Dislike"] = 0
+        post["ProfilePicture"] = user?["profilePicture"] as! PFFile
+        post["UniversityFile"] = user?["universityFile"] as! PFFile
+        post["UniversityName"] = user?["universityName"] as! String
+        
+        post.saveInBackgroundWithBlock { (Bool, error: NSError?) -> Void in
+            
+            if error == nil {
+                
+                guard let actualController = self.rootController else {return}
+                
+                self.rootController?.toggleTakePuff({ (complete) -> () in
+                    
+                    actualController.mainController?.loadFromParse()
+                    
+                })
+                
+            } else {
+                
+                //post.saveEventually()
+                
+            }
+        }
+        
+        self.TakenPuffOutlet.image = nil
+        self.CaptionOutlet.text = nil
+    }
+    
+    
+    @IBAction func cancelAction(sender: AnyObject) {
+        
+        TakenPuffOutlet.image = nil
+        CaptionOutlet.text = nil
+        rootController?.toggleTakePuff({ (complete) -> () in
+            print("cancelled")
+        })
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        view.endEditing(true)
+        return true
+        
     }
     
 
