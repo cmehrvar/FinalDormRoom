@@ -14,6 +14,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var user = PFUser.currentUser()
     
+    var scroll = false
+    
+    var didLoadWebsite = false
+    
     var images = [PFFile]()
     var profilePictures = [PFFile]()
     var universityNames = [String]()
@@ -27,7 +31,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var ranking = String()
     
     var refreshControl: UIRefreshControl!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,7 +69,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         actualController.takePuffController?.feed = feed
         
-       presentViewController(callCamera(), animated: true, completion: nil)
+        presentViewController(callCamera(), animated: true, completion: nil)
         
     }
     
@@ -124,6 +128,16 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }
         }
+        
+        if !didLoadWebsite {
+            
+            didLoadWebsite = true
+            
+            guard let url = NSURL(string: "http://www.dormroomnetwork.com/trending.html") else {return}
+            
+            WebViewOutlet.loadRequest(NSURLRequest(URL: url))
+            
+        }
     }
     
     func refresh(sender: AnyObject) {
@@ -150,6 +164,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         actualRootController.takePuffController?.TakenPuffOutlet.image = image
         
+        actualRootController.takePuffController?.feed = feed
+        
         self.dismissViewControllerAnimated(true, completion: nil)
         
         rootController?.toggleTakePuff({ (complete) -> () in
@@ -159,15 +175,16 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         })
     }
     
-   
+    
     
     //TableView shit
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         tableView.decelerationRate = 0.1
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
+        tableView.scrollsToTop = true
         
+        let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
         
         tableView.addSubview(refreshControl)
         
@@ -210,15 +227,15 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
 }

@@ -12,7 +12,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     
     weak var rootController: MainRootViewController?
     
-    var feed: String = ""
+    var feed = String()
     let user = PFUser.currentUser()
     
     
@@ -45,7 +45,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             print("error fetching new user: \(error)")
         }
         
-        let post = PFObject(className: "CanadaPuff")
+        let post = PFObject(className: feed)
         
         guard let image = TakenPuffOutlet.image else {return}
         let data = UIImageJPEGRepresentation(image, 0.5)
@@ -61,17 +61,15 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         post["UniversityFile"] = user?["universityFile"] as! PFFile
         post["UniversityName"] = user?["universityName"] as! String
         
+        
         post.saveInBackgroundWithBlock { (Bool, error: NSError?) -> Void in
             
             if error == nil {
                 
                 guard let actualController = self.rootController else {return}
                 
-                self.rootController?.toggleTakePuff({ (complete) -> () in
-                    
-                    actualController.mainController?.loadFromParse()
-                    
-                })
+                actualController.mainController?.loadFromParse()
+                
                 
             } else {
                 
@@ -80,8 +78,12 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
-        self.TakenPuffOutlet.image = nil
-        self.CaptionOutlet.text = nil
+        self.rootController?.toggleTakePuff({ (complete) -> () in
+            
+            self.TakenPuffOutlet.image = nil
+            self.CaptionOutlet.text = nil
+            
+        })
     }
     
     

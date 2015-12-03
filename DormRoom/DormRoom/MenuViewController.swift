@@ -12,9 +12,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     weak var rootController: MainRootViewController?
     var user = PFUser.currentUser()
-    
-    var loadedWebsite: Bool = false
-    
+ 
     var feedFiles = [PFFile]()
     var staticImages = [UIImage]()
     
@@ -108,17 +106,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         if indexPath.row == 0 {
             
-            actualController.mainController?.WebViewOutlet.alpha = 1
-            
-            if !loadedWebsite {
-                
-                guard let url = NSURL(string: "http://www.dormroomnetwork.com/trending.html") else {return}
-                
-                actualController.mainController?.WebViewOutlet.loadRequest(NSURLRequest(URL: url))
-                
-                loadedWebsite = true
-                
-            }
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                actualController.mainController?.WebViewOutlet.alpha = 1
+            })
             
         } else if indexPath.row == 1 {
             
@@ -163,7 +153,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         
         rootController?.toggleMenu({ (complete) -> () in
-             
+            
         })
     }
     
