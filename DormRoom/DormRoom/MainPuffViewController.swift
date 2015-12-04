@@ -62,7 +62,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var TakeAPuffOutlet: UIView!
     @IBOutlet weak var WebViewOutlet: UIWebView!
 
-        
+    
     //Actions
     @IBAction func takePuffAction(sender: AnyObject) {
         
