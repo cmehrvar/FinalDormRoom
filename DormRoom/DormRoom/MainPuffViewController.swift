@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MainPuffViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIWebViewDelegate {
+class MainPuffViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate {
     
     weak var rootController: MainRootViewController?
     
@@ -49,19 +49,20 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         loadFromParse()
-        
+ 
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Refresh")
         self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         // Do any additional setup after loading the view.
     }
     
+    
     //Outlets
     @IBOutlet weak var PuffTableView: UITableView!
     @IBOutlet weak var TakeAPuffOutlet: UIView!
     @IBOutlet weak var WebViewOutlet: UIWebView!
-    
-    
+
+        
     //Actions
     @IBAction func takePuffAction(sender: AnyObject) {
         

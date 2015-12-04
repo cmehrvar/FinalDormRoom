@@ -212,18 +212,28 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func addRecognizers() {
         
-        let profilePictureRecognizer = UITapGestureRecognizer()
-        let universityRecognizer = UITapGestureRecognizer()
+        let profilePictureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "profileTapped")
+        let universityRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "universityTapped")
+        let closeMenu: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "closeMenu:")
         
+        self.view.userInteractionEnabled = true
         self.ProfileOutlet.userInteractionEnabled = true
         self.UniversityOutlet.userInteractionEnabled = true
-        
-        profilePictureRecognizer.addTarget(self, action: "profileTapped")
-        universityRecognizer.addTarget(self, action: "universityTapped")
-        
+      
+        self.view.addGestureRecognizer(closeMenu)
         self.ProfileOutlet.addGestureRecognizer(profilePictureRecognizer)
         self.UniversityOutlet.addGestureRecognizer(universityRecognizer)
         
+    }
+    
+    func closeMenu(sender: UISwipeGestureRecognizer) {
+        
+        if sender.direction == .Right {
+            
+            rootController?.toggleMenu({ (complete) -> () in
+                print("menu closed")
+            })
+        }
     }
     
     func profileTapped() {

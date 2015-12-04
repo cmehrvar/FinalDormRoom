@@ -71,6 +71,9 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
     
     /*
     // MARK: - Navigation
