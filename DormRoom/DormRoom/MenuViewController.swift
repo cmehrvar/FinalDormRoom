@@ -299,9 +299,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
     }
-    
-    
-    
+  
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

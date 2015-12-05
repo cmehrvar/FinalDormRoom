@@ -10,11 +10,16 @@ import UIKit
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
+    var keyboardIsShown = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let dismissKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(dismissKeyboard)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
         
         UsernameOutlet.delegate = self
         PasswordOutlet.delegate = self
@@ -55,6 +60,31 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     
     //Functions
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if !keyboardIsShown {
+            
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                self.view.frame.origin.y -= keyboardSize.height
+            }
+            
+            keyboardIsShown = !keyboardIsShown
+            
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        
+        if keyboardIsShown {
+            
+            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                self.view.frame.origin.y += keyboardSize.height
+            }
+            
+            keyboardIsShown = !keyboardIsShown
+        }
+    }
+    
     func dismissKeyboard() {
         view.endEditing(true)
     }
