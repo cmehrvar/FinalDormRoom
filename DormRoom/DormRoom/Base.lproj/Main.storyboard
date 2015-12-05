@@ -1022,7 +1022,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="240" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="200" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8IG-jL-ir1">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="200" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8IG-jL-ir1">
                                 <rect key="frame" x="0.0" y="52" width="240" height="468"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1176,7 +1176,7 @@
                             <constraint firstItem="cp1-7U-gf6" firstAttribute="top" secondItem="8IG-jL-ir1" secondAttribute="bottom" id="5Y6-iL-cFh"/>
                             <constraint firstItem="9Fh-8i-A4t" firstAttribute="top" secondItem="2OB-Rv-xPw" secondAttribute="bottom" id="A2D-dc-pmm"/>
                             <constraint firstItem="8IG-jL-ir1" firstAttribute="top" secondItem="0am-Ab-GWu" secondAttribute="bottom" id="B1l-CV-tEg">
-                                <variation key="heightClass=regular" constant="8"/>
+                                <variation key="heightClass=regular" constant="-44"/>
                             </constraint>
                             <constraint firstItem="8IG-jL-ir1" firstAttribute="leading" secondItem="arb-HM-dN0" secondAttribute="leading" id="Fxv-gM-qKK"/>
                             <constraint firstItem="9Fh-8i-A4t" firstAttribute="top" secondItem="VKT-2b-Pal" secondAttribute="bottom" id="Gw3-xO-Jxz"/>
