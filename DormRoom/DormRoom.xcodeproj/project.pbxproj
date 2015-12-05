@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3278FD4F4880FAB3A73E3957 /* libPods-DormRoom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2451B51057A263F932FCF4E /* libPods-DormRoom.a */; };
+		A30B63491C13544A00C3C5F8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A39CBE5B1C0CFBFF00D59434 /* CoreLocation.framework */; };
 		A32EC6491C0DF71B0004D8C7 /* SignUpRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC6481C0DF71B0004D8C7 /* SignUpRootController.swift */; };
 		A32EC64B1C0DF7650004D8C7 /* ChooseUniViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC64A1C0DF7650004D8C7 /* ChooseUniViewController.swift */; };
 		A32EC64D1C0DF7AC0004D8C7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC64C1C0DF7AC0004D8C7 /* SignUpViewController.swift */; };
@@ -27,7 +28,6 @@
 		A39CBE561C0CECF800D59434 /* BlackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE551C0CECF800D59434 /* BlackButton.swift */; };
 		A39CBE581C0CED5400D59434 /* WhiteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE571C0CED5400D59434 /* WhiteButton.swift */; };
 		A39CBE5A1C0CF54200D59434 /* ChooseUniCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE591C0CF54200D59434 /* ChooseUniCellTableViewCell.swift */; };
-		A39CBE5C1C0CFBFF00D59434 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A39CBE5B1C0CFBFF00D59434 /* CoreLocation.framework */; };
 		A39CBE611C0D15D200D59434 /* BridgingHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE601C0D15D200D59434 /* BridgingHeader.m */; };
 		A39CBE681C0D228C00D59434 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE671C0D228C00D59434 /* ImageViewExtension.swift */; };
 		A3F3097A1C0BB32A002DEADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F309791C0BB32A002DEADF /* AppDelegate.swift */; };
@@ -101,7 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A39CBE5C1C0CFBFF00D59434 /* CoreLocation.framework in Frameworks */,
+				A30B63491C13544A00C3C5F8 /* CoreLocation.framework in Frameworks */,
 				3278FD4F4880FAB3A73E3957 /* libPods-DormRoom.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -342,6 +342,7 @@
 				TargetAttributes = {
 					A3F309751C0BB32A002DEADF = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = 8YKL2VACPX;
 					};
 					A3F309891C0BB32A002DEADF = {
 						CreatedOnToolsVersion = 7.1;
@@ -618,11 +619,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = DormRoom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = DormRoom.DormRoom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "DormRoom/DormRoom-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -634,11 +642,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = DormRoom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = DormRoom.DormRoom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "DormRoom/DormRoom-Bridging-Header.h";
 			};
 			name = Release;

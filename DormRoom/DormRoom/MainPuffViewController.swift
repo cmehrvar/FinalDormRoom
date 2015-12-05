@@ -12,6 +12,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     weak var rootController: MainRootViewController?
     
+    var myTableView = UITableView()
+    
     var user = PFUser.currentUser()
     
     var scroll = false
@@ -37,23 +39,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         
-        feed = "CanadaPuff"
-        ranking = "createdAt"
-        
-        if feed == "CanadaPuff" {
-            TakeAPuffOutlet.alpha = 1
-        } else if feed != user?["universityName"] as! String {
-            TakeAPuffOutlet.alpha = 0
-        } else {
-            TakeAPuffOutlet.alpha = 1
-        }
-        
+        initializeFeeds()
+        addScrollToTop()
+        addRefresh()
         loadFromParse()
  
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Refresh")
-        self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
-        // Do any additional setup after loading the view.
+                // Do any additional setup after loading the view.
     }
     
     
@@ -84,6 +75,48 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     //Functions
+    func addScrollToTop() {
+        
+        let tapScrollToTop: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "scrollToTop")
+        self.navigationItem.titleView?.userInteractionEnabled = true
+        self.navigationItem.titleView?.addGestureRecognizer(tapScrollToTop)
+    
+    }
+    
+    func scrollToTop() {
+        myTableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
+    }
+    
+    
+    func initializeFeeds() {
+        
+        feed = "CanadaPuff"
+        ranking = "createdAt"
+        
+        if feed == "CanadaPuff" {
+            TakeAPuffOutlet.alpha = 1
+        } else if feed != user?["universityName"] as! String {
+            TakeAPuffOutlet.alpha = 0
+        } else {
+            TakeAPuffOutlet.alpha = 1
+        }
+    }
+    
+    
+    func addRefresh() {
+    
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Refresh")
+        self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+    }
+    
+    func refresh(sender: AnyObject) {
+        
+        loadFromParse()
+        refreshControl.endRefreshing()
+    }
+    
+    
     func loadFromParse() {
         
         images.removeAll()
@@ -141,12 +174,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func refresh(sender: AnyObject) {
-        
-        loadFromParse()
-        refreshControl.endRefreshing()
-    }
-    
     func callCamera() -> UIImagePickerController {
         
         let cameraProfile = UIImagePickerController()
@@ -181,9 +208,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     //TableView shit
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        tableView.decelerationRate = 0.1
+        myTableView = tableView
         
-        tableView.scrollsToTop = true
+        tableView.decelerationRate = 0.1
         
         let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
         

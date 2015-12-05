@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
@@ -15,15 +16,11 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let dismissKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        view.addGestureRecognizer(dismissKeyboard)
+        handleKeyboard()
+        addDismissKeyboard()
+        textFieldDelegates()
+        coreLoactionHandler()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
-        
-        UsernameOutlet.delegate = self
-        PasswordOutlet.delegate = self
-        // Do any additional setup after loading the view.
     }
     
     
@@ -46,20 +43,51 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
                     vc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                     self.presentViewController(vc, animated: true, completion: nil)
                 }
-
+                
                 
             } else {
                 
                 let alertController = UIAlertController(title: "Fuck you", message: error?.localizedDescription, preferredStyle:  UIAlertControllerStyle.Alert)
                 alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
-
+                
             }
         }
     }
     
     
     //Functions
+    func coreLoactionHandler() {
+        
+        let manager = CLLocationManager()
+        if CLLocationManager.locationServicesEnabled() {
+            manager.startUpdatingLocation()
+            
+        }
+    }
+    
+    
+    func textFieldDelegates() {
+        
+        UsernameOutlet.delegate = self
+        PasswordOutlet.delegate = self
+        
+    }
+    
+    func handleKeyboard() {
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        
+    }
+    
+    func addDismissKeyboard() {
+        
+        let dismissKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(dismissKeyboard)
+        
+    }
+    
     func keyboardWillShow(notification: NSNotification) {
         
         if !keyboardIsShown {
