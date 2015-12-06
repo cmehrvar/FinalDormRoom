@@ -78,7 +78,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         } else {
             
             let realIndexPath = indexPath.row - (staticImages.count)
-            cell.FeedImageOutlet.imageFromPFFile(feedFiles[realIndexPath])
+            cell.FeedImageOutlet.imageFromPFFile(feedFiles[realIndexPath], placeholder: "Crest")
         }
         
         return cell
@@ -180,7 +180,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func retrieveProfilePicture() {
         
         let imageFile: PFFile = user?["profilePicture"] as! PFFile
-        self.ProfileOutlet.imageFromPFFile(imageFile)
+        self.ProfileOutlet.imageFromPFFile(imageFile, placeholder: "Crest")
         
     }
     
@@ -188,7 +188,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func retrieveUniversity() {
         
         let imageFile: PFFile = user?["universityFile"] as! PFFile
-        self.UniversityOutlet.imageFromPFFile(imageFile)
+        self.UniversityOutlet.imageFromPFFile(imageFile, placeholder: "Crest")
         
     }
     

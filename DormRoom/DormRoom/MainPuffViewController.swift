@@ -140,23 +140,33 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.universityNames.removeAll()
                     self.objectId.removeAll()
                     
+                    var stopper = 0
+                    
                     if let puffs = puffs {
                         
-                        for puff in puffs {
+                        switch stopper {
                             
-                            self.images.append(puff["Image"] as! PFFile)
-                            self.profilePictures.append(puff["ProfilePicture"] as! PFFile)
-                            self.captions.append(puff["Caption"] as! String)
-                            self.likes.append(puff["Like"] as! Int)
-                            self.dislikes.append(puff["Dislike"] as! Int)
-                            self.universityNames.append(puff["UniversityName"] as! String)
-                            self.universityFiles.append(puff["UniversityFile"] as! PFFile)
+                        case 50:
+                            break
                             
-                            if let actualId = puff.objectId {
-                                self.objectId.append(actualId)
+                        default:
+                            for puff in puffs {
+                                
+                                self.images.append(puff["Image"] as! PFFile)
+                                self.profilePictures.append(puff["ProfilePicture"] as! PFFile)
+                                self.captions.append(puff["Caption"] as! String)
+                                self.likes.append(puff["Like"] as! Int)
+                                self.dislikes.append(puff["Dislike"] as! Int)
+                                self.universityNames.append(puff["UniversityName"] as! String)
+                                self.universityFiles.append(puff["UniversityFile"] as! PFFile)
+                                
+                                if let actualId = puff.objectId {
+                                    self.objectId.append(actualId)
+                                }
+                                
+                                self.PuffTableView.reloadData()
+                                stopper++
                             }
-                            
-                            self.PuffTableView.reloadData()
                         }
                     }
                     
@@ -225,15 +235,23 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.selectionStyle = .None
         
         cell.objectId = objectId[indexPath.row]
+        
         cell.like = likes[indexPath.row]
+        
         cell.dislike = dislikes[indexPath.row]
         
-        cell.ImageOutlet.imageFromPFFile(images[indexPath.row])
-        cell.SwipeViewOutlet.imageFromPFFile(images[indexPath.row])
-        cell.UniversityOutlet.imageFromPFFile(universityFiles[indexPath.row])
-        cell.ProfileOutlet.imageFromPFFile(profilePictures[indexPath.row])
+        cell.ImageOutlet.imageFromPFFile(images[indexPath.row], placeholder: "Crest")
+        
+        cell.SwipeViewOutlet.imageFromPFFile(images[indexPath.row], placeholder: "Crest")
+        
+        cell.UniversityOutlet.imageFromPFFile(universityFiles[indexPath.row], placeholder: "Crest")
+        
+        cell.ProfileOutlet.imageFromPFFile(profilePictures[indexPath.row], placeholder: "Crest")
+        
         cell.LikeOutlet.text = "\(likes[indexPath.row])"
+        
         cell.DislikeOutlet.text = "\(dislikes[indexPath.row])"
+        
         cell.CaptionOutlet.text = captions[indexPath.row]
         
         cell.feed = feed
@@ -258,6 +276,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
+        loadFromParse()
         // Dispose of any resources that can be recreated.
     }
     

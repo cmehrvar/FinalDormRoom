@@ -63,7 +63,7 @@ class ChooseUniViewController: UIViewController, UITableViewDataSource, UITableV
         
         cell.selectionStyle = .None
         
-        cell.UniversityImageOutlet.imageFromPFFile(universityFiles[indexPath.row])
+        cell.UniversityImageOutlet.imageFromPFFile(universityFiles[indexPath.row], placeholder: "Crest")
         
         return cell
     }

@@ -33,7 +33,7 @@ class ChangeUniViewController: UIViewController, UITableViewDataSource, UITableV
         
         cell.selectionStyle = .None
         
-        cell.ChangeUniImageOutlet.imageFromPFFile(universityFiles[indexPath.row], placeholder: nil)
+        cell.ChangeUniImageOutlet.imageFromPFFile(universityFiles[indexPath.row], placeholder: "Crest")
         
         return cell
     }
@@ -53,7 +53,7 @@ class ChangeUniViewController: UIViewController, UITableViewDataSource, UITableV
         
         guard let actualController = rootController else {return}
         
-        actualController.menuController?.UniversityOutlet.imageFromPFFile(universityFiles[indexPath.row], placeholder: nil)
+        actualController.menuController?.UniversityOutlet.imageFromPFFile(universityFiles[indexPath.row], placeholder: "Crest")
         rootController?.toggleChangeUni({ (complete) -> () in
             print("change uni closed")
         })

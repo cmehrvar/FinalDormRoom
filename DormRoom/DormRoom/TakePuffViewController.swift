@@ -15,7 +15,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     var feed = String()
     let user = PFUser.currentUser()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,6 +30,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     func dismissKeyboard() {
         view.endEditing(true)
     }
+    
     
     //Outlets
     @IBOutlet weak var TakenPuffOutlet: UIImageView!
@@ -96,7 +96,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         })
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -109,15 +109,15 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using segue.destinationViewController.
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
