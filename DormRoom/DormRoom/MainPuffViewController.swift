@@ -17,6 +17,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var user = PFUser.currentUser()
     
     var scroll = false
+    var loading = false
     
     var didLoadWebsite = false
     
@@ -43,8 +44,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         addScrollToTop()
         addRefresh()
         loadFromParse()
- 
-                // Do any additional setup after loading the view.
+        
+        // Do any additional setup after loading the view.
     }
     
     
@@ -52,7 +53,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var PuffTableView: UITableView!
     @IBOutlet weak var TakeAPuffOutlet: UIView!
     @IBOutlet weak var WebViewOutlet: UIWebView!
-
+    
     
     //Actions
     @IBAction func takePuffAction(sender: AnyObject) {
@@ -76,11 +77,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     //Functions
     func addScrollToTop() {
-        
         let tapScrollToTop: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "scrollToTop")
         self.navigationItem.titleView?.userInteractionEnabled = true
         self.navigationItem.titleView?.addGestureRecognizer(tapScrollToTop)
-    
+        
     }
     
     func scrollToTop() {
@@ -104,10 +104,11 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     func addRefresh() {
-    
+        
         self.refreshControl = UIRefreshControl()
         self.refreshControl.attributedTitle = NSAttributedString(string: "Refresh")
         self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
     }
     
     func refresh(sender: AnyObject) {
@@ -119,58 +120,62 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func loadFromParse() {
         
-        images.removeAll()
-        profilePictures.removeAll()
-        likes.removeAll()
-        dislikes.removeAll()
-        captions.removeAll()
-        universityFiles.removeAll()
-        universityNames.removeAll()
-        objectId.removeAll()
-        
-        self.PuffTableView.reloadData()
-        
-        let query = PFQuery(className: feed)
-        query.orderByDescending(ranking)
-        
-        query.findObjectsInBackgroundWithBlock { (puffs: [PFObject]?, error: NSError?) -> Void in
+        if !loading {
             
-            if error == nil {
+            let query = PFQuery(className: feed)
+            query.orderByDescending(ranking)
+            
+            query.findObjectsInBackgroundWithBlock { (puffs: [PFObject]?, error: NSError?) -> Void in
                 
-                if let puffs = puffs {
+                if error == nil {
                     
-                    for puff in puffs {
+                    self.loading = true
+                    
+                    self.images.removeAll()
+                    self.profilePictures.removeAll()
+                    self.likes.removeAll()
+                    self.dislikes.removeAll()
+                    self.captions.removeAll()
+                    self.universityFiles.removeAll()
+                    self.universityNames.removeAll()
+                    self.objectId.removeAll()
+                    
+                    if let puffs = puffs {
                         
-                        self.images.append(puff["Image"] as! PFFile)
-                        self.profilePictures.append(puff["ProfilePicture"] as! PFFile)
-                        self.captions.append(puff["Caption"] as! String)
-                        self.likes.append(puff["Like"] as! Int)
-                        self.dislikes.append(puff["Dislike"] as! Int)
-                        self.universityNames.append(puff["UniversityName"] as! String)
-                        self.universityFiles.append(puff["UniversityFile"] as! PFFile)
-                        
-                        if let actualId = puff.objectId {
-                            self.objectId.append(actualId)
+                        for puff in puffs {
+                            
+                            self.images.append(puff["Image"] as! PFFile)
+                            self.profilePictures.append(puff["ProfilePicture"] as! PFFile)
+                            self.captions.append(puff["Caption"] as! String)
+                            self.likes.append(puff["Like"] as! Int)
+                            self.dislikes.append(puff["Dislike"] as! Int)
+                            self.universityNames.append(puff["UniversityName"] as! String)
+                            self.universityFiles.append(puff["UniversityFile"] as! PFFile)
+                            
+                            if let actualId = puff.objectId {
+                                self.objectId.append(actualId)
+                            }
+                            
+                            self.loading = false
+                            self.PuffTableView.reloadData()
                         }
-                        
-                        self.PuffTableView.reloadData()
                     }
+                } else {
+                    
+                    print("\(error)")
+                    
                 }
-            } else {
+            }
+            
+            if !didLoadWebsite {
                 
-                print("\(error)")
+                didLoadWebsite = true
+                
+                guard let url = NSURL(string: "http://www.dormroomnetwork.com/trending.html") else {return}
+                
+                WebViewOutlet.loadRequest(NSURLRequest(URL: url))
                 
             }
-        }
-        
-        if !didLoadWebsite {
-            
-            didLoadWebsite = true
-            
-            guard let url = NSURL(string: "http://www.dormroomnetwork.com/trending.html") else {return}
-            
-            WebViewOutlet.loadRequest(NSURLRequest(URL: url))
-            
         }
     }
     

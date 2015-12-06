@@ -29,6 +29,8 @@ class ChangeUniViewController: UIViewController, UITableViewDataSource, UITableV
         
         let cell = tableView.dequeueReusableCellWithIdentifier("ChangeUniCell", forIndexPath: indexPath) as! ChangeUniCell
         
+        tableView.decelerationRate = 0.1
+        
         cell.selectionStyle = .None
         
         cell.ChangeUniImageOutlet.imageFromPFFile(universityFiles[indexPath.row], placeholder: nil)

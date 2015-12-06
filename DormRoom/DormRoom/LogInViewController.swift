@@ -23,7 +23,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    
     //Outlets
     @IBOutlet weak var UsernameOutlet: UITextField!
     @IBOutlet weak var PasswordOutlet: UITextField!

@@ -24,6 +24,7 @@
 		A32EC69E1C0F72B20004D8C7 /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC69D1C0F72B20004D8C7 /* SwipeView.swift */; };
 		A32EC6A01C0F80C30004D8C7 /* ChangeUniCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC69F1C0F80C30004D8C7 /* ChangeUniCell.swift */; };
 		A36475571C0BBAB000AC96CA /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36475561C0BBAB000AC96CA /* TextFields.swift */; };
+		A38C82B51C13F1FC000E650F /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38C82B41C13F1FC000E650F /* InitialViewController.swift */; };
 		A39CBE521C0CE87700D59434 /* RoundedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE511C0CE87600D59434 /* RoundedImage.swift */; };
 		A39CBE561C0CECF800D59434 /* BlackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE551C0CECF800D59434 /* BlackButton.swift */; };
 		A39CBE581C0CED5400D59434 /* WhiteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE571C0CED5400D59434 /* WhiteButton.swift */; };
@@ -72,6 +73,7 @@
 		A32EC69D1C0F72B20004D8C7 /* SwipeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeView.swift; sourceTree = "<group>"; };
 		A32EC69F1C0F80C30004D8C7 /* ChangeUniCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeUniCell.swift; sourceTree = "<group>"; };
 		A36475561C0BBAB000AC96CA /* TextFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
+		A38C82B41C13F1FC000E650F /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		A39CBE511C0CE87600D59434 /* RoundedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImage.swift; sourceTree = "<group>"; };
 		A39CBE551C0CECF800D59434 /* BlackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackButton.swift; sourceTree = "<group>"; };
 		A39CBE571C0CED5400D59434 /* WhiteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteButton.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				A32EC6541C0E57620004D8C7 /* TakePuffViewController.swift */,
 				A32EC6561C0E576D0004D8C7 /* ChangeUniViewController.swift */,
 				A32EC6581C0E577F0004D8C7 /* MainPuffViewController.swift */,
+				A38C82B41C13F1FC000E650F /* InitialViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -467,6 +470,7 @@
 				A32EC65D1C0EA0DD0004D8C7 /* ChooseFeedCell.swift in Sources */,
 				A32EC6511C0E56980004D8C7 /* MainRootViewController.swift in Sources */,
 				A32EC6491C0DF71B0004D8C7 /* SignUpRootController.swift in Sources */,
+				A38C82B51C13F1FC000E650F /* InitialViewController.swift in Sources */,
 				A32EC6571C0E576D0004D8C7 /* ChangeUniViewController.swift in Sources */,
 				A36475571C0BBAB000AC96CA /* TextFields.swift in Sources */,
 				A32EC65B1C0E6A610004D8C7 /* PuffTableViewCell.swift in Sources */,

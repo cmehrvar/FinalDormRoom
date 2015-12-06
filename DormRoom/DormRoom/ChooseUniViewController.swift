@@ -59,6 +59,8 @@ class ChooseUniViewController: UIViewController, UITableViewDataSource, UITableV
         
         let cell = tableView.dequeueReusableCellWithIdentifier("ChooseUniCell", forIndexPath: indexPath) as! ChooseUniCellTableViewCell
         
+        tableView.decelerationRate = 0.1
+        
         cell.selectionStyle = .None
         
         cell.UniversityImageOutlet.imageFromPFFile(universityFiles[indexPath.row])
