@@ -120,14 +120,14 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func loadFromParse() {
         
-        if !loading {
+        let query = PFQuery(className: feed)
+        query.orderByDescending(ranking)
+        
+        query.findObjectsInBackgroundWithBlock { (puffs: [PFObject]?, error: NSError?) -> Void in
             
-            let query = PFQuery(className: feed)
-            query.orderByDescending(ranking)
-            
-            query.findObjectsInBackgroundWithBlock { (puffs: [PFObject]?, error: NSError?) -> Void in
+            if error == nil {
                 
-                if error == nil {
+                if !self.loading{
                     
                     self.loading = true
                     
@@ -156,26 +156,27 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                 self.objectId.append(actualId)
                             }
                             
-                            self.loading = false
                             self.PuffTableView.reloadData()
                         }
                     }
-                } else {
                     
-                    print("\(error)")
-                    
+                    self.loading = false
                 }
+            } else {
+                
+                print("\(error)")
+                
             }
+        }
+        
+        if !didLoadWebsite {
             
-            if !didLoadWebsite {
-                
-                didLoadWebsite = true
-                
-                guard let url = NSURL(string: "http://www.dormroomnetwork.com/trending.html") else {return}
-                
-                WebViewOutlet.loadRequest(NSURLRequest(URL: url))
-                
-            }
+            didLoadWebsite = true
+            
+            guard let url = NSURL(string: "http://www.dormroomnetwork.com/trending.html") else {return}
+            
+            WebViewOutlet.loadRequest(NSURLRequest(URL: url))
+            
         }
     }
     
@@ -215,7 +216,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         myTableView = tableView
         
-        tableView.decelerationRate = 0.1
+        tableView.decelerationRate = 0.05
         
         let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
         
