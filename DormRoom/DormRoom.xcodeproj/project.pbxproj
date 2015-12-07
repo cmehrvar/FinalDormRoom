@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3278FD4F4880FAB3A73E3957 /* libPods-DormRoom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2451B51057A263F932FCF4E /* libPods-DormRoom.a */; };
-		A30B63491C13544A00C3C5F8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A39CBE5B1C0CFBFF00D59434 /* CoreLocation.framework */; };
 		A32EC6491C0DF71B0004D8C7 /* SignUpRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC6481C0DF71B0004D8C7 /* SignUpRootController.swift */; };
 		A32EC64B1C0DF7650004D8C7 /* ChooseUniViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC64A1C0DF7650004D8C7 /* ChooseUniViewController.swift */; };
 		A32EC64D1C0DF7AC0004D8C7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC64C1C0DF7AC0004D8C7 /* SignUpViewController.swift */; };
@@ -32,6 +31,8 @@
 		A39CBE611C0D15D200D59434 /* BridgingHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE601C0D15D200D59434 /* BridgingHeader.m */; };
 		A39CBE681C0D228C00D59434 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE671C0D228C00D59434 /* ImageViewExtension.swift */; };
 		A3A419871C14C4CE003C05EA /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A419861C14C4CE003C05EA /* ImageExtension.swift */; };
+		A3A419CA1C16375B003C05EA /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A419C91C16375B003C05EA /* AVKit.framework */; };
+		A3A419CB1C163760003C05EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A419C71C16373B003C05EA /* AVFoundation.framework */; };
 		A3F3097A1C0BB32A002DEADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F309791C0BB32A002DEADF /* AppDelegate.swift */; };
 		A3F3097F1C0BB32A002DEADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3F3097D1C0BB32A002DEADF /* Main.storyboard */; };
 		A3F309811C0BB32A002DEADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3F309801C0BB32A002DEADF /* Assets.xcassets */; };
@@ -84,6 +85,8 @@
 		A39CBE601C0D15D200D59434 /* BridgingHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgingHeader.m; sourceTree = "<group>"; };
 		A39CBE671C0D228C00D59434 /* ImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
 		A3A419861C14C4CE003C05EA /* ImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
+		A3A419C71C16373B003C05EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		A3A419C91C16375B003C05EA /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		A3F309761C0BB32A002DEADF /* DormRoom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DormRoom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3F309791C0BB32A002DEADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3F3097E1C0BB32A002DEADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -105,7 +108,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A30B63491C13544A00C3C5F8 /* CoreLocation.framework in Frameworks */,
+				A3A419CB1C163760003C05EA /* AVFoundation.framework in Frameworks */,
+				A3A419CA1C16375B003C05EA /* AVKit.framework in Frameworks */,
 				3278FD4F4880FAB3A73E3957 /* libPods-DormRoom.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,6 +275,8 @@
 		A4C3461F16B93E17CC57459F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A3A419C91C16375B003C05EA /* AVKit.framework */,
+				A3A419C71C16373B003C05EA /* AVFoundation.framework */,
 				A39CBE5B1C0CFBFF00D59434 /* CoreLocation.framework */,
 				F2451B51057A263F932FCF4E /* libPods-DormRoom.a */,
 			);

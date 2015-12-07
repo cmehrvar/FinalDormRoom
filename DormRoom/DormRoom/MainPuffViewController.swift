@@ -62,8 +62,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         actualController.takePuffController?.feed = feed
         
-        presentViewController(callCamera(), animated: true, completion: nil)
-        
+        //presentViewController(callCamera(), animated: true, completion: nil)
+        rootController?.toggleTakePuff({ (complete) -> () in
+            
+        })
     }
     
     
@@ -106,7 +108,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     func addRefresh() {
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Refresh")
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Trump! Trump! Trump!")
         self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         
     }

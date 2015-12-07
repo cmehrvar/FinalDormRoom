@@ -44,14 +44,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
         
         if ProfileOutlet.image == UIImage(named: "ChooseProfile") {
             
-            let alertController = UIAlertController(title: "Fuck You!", message: "Take a profile picture", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+            let alertController = UIAlertController(title: "Puff You", message: "Take a profile picture", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Chate", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
             
         } else if UniOutlet.image == UIImage(named: "ChooseUni") {
             
-            let alertController = UIAlertController(title: "Fuck You!", message: "Choose a university", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+            let alertController = UIAlertController(title: "Puff You", message: "Choose a university", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Chate", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
             
         } else {
@@ -82,7 +82,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
 
                 } else {
                     
-                    let alertController = UIAlertController(title: "Woah!", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
+                    let alertController = UIAlertController(title: "Shit...", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.Alert)
                     alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
                     self.presentViewController(alertController, animated: true, completion: nil)
                     

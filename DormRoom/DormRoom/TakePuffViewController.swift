@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import AVFoundation
+import AVKit
 
 class TakePuffViewController: UIViewController, UITextFieldDelegate {
     
@@ -15,15 +17,30 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     var feed = String()
     let user = PFUser.currentUser()
     
+    let captureSession = AVCaptureSession()
+    let out = AVCaptureStillImageOutput()
+    var previewLayer: AVCaptureVideoPreviewLayer?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addTapGesture()
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
-        
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        view.addGestureRecognizer(tap)
-        
         CaptionOutlet.delegate = self
+        configureCameraForCapture()
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
+        guard let actualPreviewLayer = previewLayer else {
+            print("Unable to cast create a preview layer from the session")
+            return
+        }
+        
+        actualPreviewLayer.frame = CameraCaptureView.bounds
+        actualPreviewLayer.position = CGPointMake(CameraCaptureView.bounds.midX, CameraCaptureView.bounds.midY)
+        
     }
     
     //Functions
@@ -31,12 +48,85 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         view.endEditing(true)
     }
     
+    func addTapGesture() {
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+    }
+    
+    func configureCameraForCapture() {
+        
+        CameraCaptureView.clipsToBounds = true
+        
+        let devices = AVCaptureDevice.devices()
+        
+        guard let cameraCaptureDevice = devices.first as? AVCaptureDevice else {
+            print("Unable to cast the first device as a capture device")
+            return
+        }
+        
+        do {
+            let input = try AVCaptureDeviceInput(device: cameraCaptureDevice)
+            captureSession.addInput(input)
+        } catch let error {
+            print("Error was caught when trying to transform the device into a session input: \(error)")
+        }
+        
+        captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+        captureSession.startRunning()
+        
+        out.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+        
+        if captureSession.canAddOutput(out) {
+            captureSession.addOutput(out)
+        }
+        
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        
+        guard let actualPreviewLayer = previewLayer else {
+            print("Unable to cast create a preview layer from the session")
+            return
+        }
+        
+        actualPreviewLayer.frame = CameraCaptureView.bounds
+        actualPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+        actualPreviewLayer.position = CGPointMake(CameraCaptureView.bounds.midX, CameraCaptureView.bounds.midY)
+        CameraCaptureView.layer.addSublayer(actualPreviewLayer)
+        
+    }
+    
     
     //Outlets
     @IBOutlet weak var TakenPuffOutlet: UIImageView!
     @IBOutlet weak var CaptionOutlet: UITextField!
+    @IBOutlet weak var CameraCaptureView: UIView!
+    @IBOutlet weak var TakePuffButtonViewOutlet: UIView!
     
     //Actions
+    @IBAction func takePuffAction(sender: AnyObject) {
+        
+        guard let videoConnection = out.connectionWithMediaType(AVMediaTypeVideo) else {
+            print("Error creating video connection")
+            return
+        }
+        
+        out.captureStillImageAsynchronouslyFromConnection(videoConnection) { (imageDataSampleBuffer, error) -> Void in
+            
+            guard let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer), image = UIImage(data: imageData) else {
+                return
+            }
+            
+            self.TakenPuffOutlet.image = image
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.TakePuffButtonViewOutlet.alpha = 0
+                self.CameraCaptureView.alpha = 0
+                
+            })
+        }
+    }
+    
     @IBAction func postPuff(sender: AnyObject) {
         
         do {
@@ -73,13 +163,17 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                 
             } else {
                 
-                //post.saveEventually()
+                let alertController = UIAlertController(title: "Shit...", message: error?.localizedDescription, preferredStyle:  UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
                 
             }
         }
         
         self.rootController?.toggleTakePuff({ (complete) -> () in
             
+            self.CameraCaptureView.alpha = 1
+            self.TakePuffButtonViewOutlet.alpha = 1
             self.TakenPuffOutlet.image = nil
             self.CaptionOutlet.text = nil
             
@@ -89,9 +183,12 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func cancelAction(sender: AnyObject) {
         
-        TakenPuffOutlet.image = nil
-        CaptionOutlet.text = nil
         rootController?.toggleTakePuff({ (complete) -> () in
+            
+            self.CameraCaptureView.alpha = 1
+            self.TakePuffButtonViewOutlet.alpha = 1
+            self.TakenPuffOutlet.image = nil
+            self.CaptionOutlet.text = nil
             print("cancelled")
         })
         

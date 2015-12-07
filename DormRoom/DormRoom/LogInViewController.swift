@@ -46,8 +46,8 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
                 
             } else {
                 
-                let alertController = UIAlertController(title: "Fuck you", message: error?.localizedDescription, preferredStyle:  UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
+                let alertController = UIAlertController(title: "Puff you", message: error?.localizedDescription, preferredStyle:  UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
                 
             }

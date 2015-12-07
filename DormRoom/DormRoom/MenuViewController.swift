@@ -205,7 +205,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 print("saved profile picture to parse!")
             } else {
                 
-                let alertController = UIAlertController(title: "Sorry", message: "We couldn't change your profile picture", preferredStyle:  UIAlertControllerStyle.Alert)
+                let alertController = UIAlertController(title: "Shit...", message: "We couldn't change your profile picture", preferredStyle:  UIAlertControllerStyle.Alert)
                 alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
             }

@@ -85,8 +85,10 @@ class ChangeUniViewController: UIViewController, UITableViewDataSource, UITableV
                     }
                 }
             } else {
-                print(error)
-            }
+                
+                let alertController = UIAlertController(title: "Shit...", message: error?.localizedDescription, preferredStyle:  UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)            }
         }
     }
     
