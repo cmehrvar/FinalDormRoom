@@ -17,12 +17,16 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     var feed = String()
     let user = PFUser.currentUser()
     
-    let captureSession = AVCaptureSession()
-    let out = AVCaptureStillImageOutput()
+    let frontOut = AVCaptureStillImageOutput()
+    let backOut = AVCaptureStillImageOutput()
     var previewLayer: AVCaptureVideoPreviewLayer?
+    
+    var frontCameraShown = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ChangeCameraOutlet.layer.cornerRadius = 5
         
         addTapGesture()
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
@@ -54,13 +58,33 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         view.addGestureRecognizer(tap)
     }
     
+    
     func configureCameraForCapture() {
+        
+        let captureSession = AVCaptureSession()
+        
+        previewLayer?.removeFromSuperlayer()
         
         CameraCaptureView.clipsToBounds = true
         
         let devices = AVCaptureDevice.devices()
+        var actualDevice: AVCaptureDevice! = nil
         
-        guard let cameraCaptureDevice = devices.first as? AVCaptureDevice else {
+        for device in devices {
+            
+            if !frontCameraShown {
+                if device.position == .Back {
+                    actualDevice = device as! AVCaptureDevice
+                }
+            } else {
+                
+                if device.position == .Front {
+                    actualDevice = device as! AVCaptureDevice
+                }
+            }
+        }
+        
+        guard let cameraCaptureDevice = actualDevice else {
             print("Unable to cast the first device as a capture device")
             return
         }
@@ -75,10 +99,21 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         captureSession.sessionPreset = AVCaptureSessionPresetPhoto
         captureSession.startRunning()
         
-        out.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
-        
-        if captureSession.canAddOutput(out) {
-            captureSession.addOutput(out)
+        if !frontCameraShown {
+            
+            backOut.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+            
+            if captureSession.canAddOutput(backOut) {
+                captureSession.addOutput(backOut)
+            }
+            
+        } else {
+            
+            frontOut.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+            
+            if captureSession.canAddOutput(frontOut) {
+                captureSession.addOutput(frontOut)
+            }
         }
         
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -101,29 +136,64 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var CaptionOutlet: UITextField!
     @IBOutlet weak var CameraCaptureView: UIView!
     @IBOutlet weak var TakePuffButtonViewOutlet: UIView!
+    @IBOutlet weak var ChangeCameraOutlet: UIButton!
     
     //Actions
+    @IBAction func changeCameraAction(sender: AnyObject) {
+        frontCameraShown = !frontCameraShown
+        configureCameraForCapture()
+    }
+    
+    
     @IBAction func takePuffAction(sender: AnyObject) {
         
-        guard let videoConnection = out.connectionWithMediaType(AVMediaTypeVideo) else {
-            print("Error creating video connection")
-            return
-        }
-        
-        out.captureStillImageAsynchronouslyFromConnection(videoConnection) { (imageDataSampleBuffer, error) -> Void in
+        if !frontCameraShown {
             
-            guard let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer), image = UIImage(data: imageData) else {
+            guard let videoConnection = backOut.connectionWithMediaType(AVMediaTypeVideo) else {
+                print("Error creating video connection")
                 return
             }
             
-            self.TakenPuffOutlet.image = image
             
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
+            backOut.captureStillImageAsynchronouslyFromConnection(videoConnection) { (imageDataSampleBuffer, error) -> Void in
                 
-                self.TakePuffButtonViewOutlet.alpha = 0
-                self.CameraCaptureView.alpha = 0
+                guard let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer), image = UIImage(data: imageData) else {
+                    return
+                }
                 
-            })
+                self.TakenPuffOutlet.image = image
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    
+                    self.TakePuffButtonViewOutlet.alpha = 0
+                    self.CameraCaptureView.alpha = 0
+                    self.ChangeCameraOutlet.alpha = 0
+                    
+                })
+            }
+        } else {
+            
+            guard let videoConnection = frontOut.connectionWithMediaType(AVMediaTypeVideo) else {
+                print("Error creating video connection")
+                return
+            }
+            
+            frontOut.captureStillImageAsynchronouslyFromConnection(videoConnection) { (imageDataSampleBuffer, error) -> Void in
+                
+                guard let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer), image = UIImage(data: imageData) else {
+                    return
+                }
+                
+                self.TakenPuffOutlet.image = image
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    
+                    self.TakePuffButtonViewOutlet.alpha = 0
+                    self.CameraCaptureView.alpha = 0
+                    self.ChangeCameraOutlet.alpha = 0
+                    
+                })
+            }
         }
     }
     
@@ -174,6 +244,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             
             self.CameraCaptureView.alpha = 1
             self.TakePuffButtonViewOutlet.alpha = 1
+            self.ChangeCameraOutlet.alpha = 1
             self.TakenPuffOutlet.image = nil
             self.CaptionOutlet.text = nil
             
@@ -187,6 +258,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             
             self.CameraCaptureView.alpha = 1
             self.TakePuffButtonViewOutlet.alpha = 1
+            self.ChangeCameraOutlet.alpha = 1
             self.TakenPuffOutlet.image = nil
             self.CaptionOutlet.text = nil
             print("cancelled")
