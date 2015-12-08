@@ -47,89 +47,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    //Functions
-    func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
-    func addTapGesture() {
-        
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        view.addGestureRecognizer(tap)
-    }
-    
-    
-    func configureCameraForCapture() {
-        
-        let captureSession = AVCaptureSession()
-        
-        previewLayer?.removeFromSuperlayer()
-        
-        CameraCaptureView.clipsToBounds = true
-        
-        let devices = AVCaptureDevice.devices()
-        var actualDevice: AVCaptureDevice! = nil
-        
-        for device in devices {
-            
-            if !frontCameraShown {
-                if device.position == .Back {
-                    actualDevice = device as! AVCaptureDevice
-                }
-            } else {
-                
-                if device.position == .Front {
-                    actualDevice = device as! AVCaptureDevice
-                }
-            }
-        }
-        
-        guard let cameraCaptureDevice = actualDevice else {
-            print("Unable to cast the first device as a capture device")
-            return
-        }
-        
-        do {
-            let input = try AVCaptureDeviceInput(device: cameraCaptureDevice)
-            captureSession.addInput(input)
-        } catch let error {
-            print("Error was caught when trying to transform the device into a session input: \(error)")
-        }
-        
-        captureSession.sessionPreset = AVCaptureSessionPresetPhoto
-        captureSession.startRunning()
-        
-        if !frontCameraShown {
-            
-            backOut.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
-            
-            if captureSession.canAddOutput(backOut) {
-                captureSession.addOutput(backOut)
-            }
-            
-        } else {
-            
-            frontOut.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
-            
-            if captureSession.canAddOutput(frontOut) {
-                captureSession.addOutput(frontOut)
-            }
-        }
-        
-        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
-        
-        guard let actualPreviewLayer = previewLayer else {
-            print("Unable to cast create a preview layer from the session")
-            return
-        }
-        
-        actualPreviewLayer.frame = CameraCaptureView.bounds
-        actualPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-        actualPreviewLayer.position = CGPointMake(CameraCaptureView.bounds.midX, CameraCaptureView.bounds.midY)
-        CameraCaptureView.layer.addSublayer(actualPreviewLayer)
-        
-    }
-    
     
     //Outlets
     @IBOutlet weak var TakenPuffOutlet: UIImageView!
@@ -265,6 +182,104 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         })
         
     }
+
+    //Functions
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func addTapGesture() {
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        view.addGestureRecognizer(tap)
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        var length = Int()
+        
+        if let actualTextField: String = textField.text {
+            
+             length = actualTextField.characters.count + string.characters.count - range.length
+            
+        }
+       
+        return length <= 10
+        
+    }
+    
+    
+    func configureCameraForCapture() {
+        
+        previewLayer?.removeFromSuperlayer()
+        
+        let captureSession = AVCaptureSession()
+        
+        CameraCaptureView.clipsToBounds = true
+        
+        let devices = AVCaptureDevice.devices()
+        var actualDevice: AVCaptureDevice! = nil
+        
+        for device in devices {
+            
+            if !frontCameraShown {
+                if device.position == .Back {
+                    actualDevice = device as! AVCaptureDevice
+                }
+            } else {
+                
+                if device.position == .Front {
+                    actualDevice = device as! AVCaptureDevice
+                }
+            }
+        }
+        
+        guard let cameraCaptureDevice = actualDevice else {
+            print("Unable to cast the first device as a capture device")
+            return
+        }
+        
+        do {
+            let input = try AVCaptureDeviceInput(device: cameraCaptureDevice)
+            captureSession.addInput(input)
+        } catch let error {
+            print("Error was caught when trying to transform the device into a session input: \(error)")
+        }
+        
+        captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+        captureSession.startRunning()
+        
+        if !frontCameraShown {
+            
+            backOut.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+            
+            if captureSession.canAddOutput(backOut) {
+                captureSession.addOutput(backOut)
+            }
+            
+        } else {
+            
+            frontOut.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+            
+            if captureSession.canAddOutput(frontOut) {
+                captureSession.addOutput(frontOut)
+            }
+        }
+        
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        
+        guard let actualPreviewLayer = previewLayer else {
+            print("Unable to cast create a preview layer from the session")
+            return
+        }
+        
+        actualPreviewLayer.frame = CameraCaptureView.bounds
+        actualPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+        actualPreviewLayer.position = CGPointMake(CameraCaptureView.bounds.midX, CameraCaptureView.bounds.midY)
+        CameraCaptureView.layer.addSublayer(actualPreviewLayer)
+        
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
