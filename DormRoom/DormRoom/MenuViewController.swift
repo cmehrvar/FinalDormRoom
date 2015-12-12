@@ -168,7 +168,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //Functions
     func addFeedImages() {
         
-        guard let crest = UIImage(named: "Crest"), canada = UIImage(named: "Canada"), topRated = UIImage(named: "TopRated"), topHated = UIImage(named: "TopHated") else {return}
+        guard let crest = UIImage(named: "Crest"), canada = UIImage(named: "Canada"), topRated = UIImage(named: "TopRated"), topHated = UIImage(named: "MostHated") else {return}
         
         staticImages.append(crest)
         staticImages.append(canada)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="k58-Zd-rY8">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="k58-Zd-rY8">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -20,10 +20,8 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="ovH-UY-RaY">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <animations/>
                             </imageView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ovH-UY-RaY" firstAttribute="top" secondItem="job-d7-5lb" secondAttribute="top" id="Inq-9V-g52"/>
@@ -71,13 +69,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="qmI-ds-NIm">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="qmI-ds-NIm">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="usA-ov-k3i">
                                 <rect key="frame" x="163" y="60" width="275" height="60"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="yOo-3y-hhs"/>
                                 </constraints>
@@ -97,12 +93,10 @@
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Mgr-4o-cCq">
                                         <rect key="frame" x="8" y="0.0" width="544" height="40"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Mgr-4o-cCq" firstAttribute="leading" secondItem="5TO-NQ-ecb" secondAttribute="leading" id="B3X-rI-08p">
@@ -124,8 +118,7 @@
                                         <exclude reference="n8j-ua-gWN"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="20" y="368" width="560" height="40"/>
+                                <variation key="heightClass=regular">
                                     <mask key="constraints">
                                         <include reference="emg-TG-Yl4"/>
                                         <include reference="B3X-rI-08p"/>
@@ -140,12 +133,10 @@
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BUa-xI-EU0">
                                         <rect key="frame" x="8" y="0.0" width="552" height="40"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits" spellCheckingType="no" secureTextEntry="YES"/>
                                     </textField>
                                 </subviews>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="0N8-RG-4Hh">
@@ -167,8 +158,7 @@
                                         <exclude reference="wlP-zn-YiT"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="20" y="416" width="560" height="40"/>
+                                <variation key="heightClass=regular">
                                     <mask key="constraints">
                                         <include reference="0N8-RG-4Hh"/>
                                         <include reference="8QE-74-EcL"/>
@@ -183,7 +173,6 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vls-c8-U9W" userLabel="LogIn">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="60"/>
-                                        <animations/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" title="Log In">
@@ -194,7 +183,6 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="3Ma-bP-8sX"/>
@@ -227,7 +215,6 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rwC-NY-Mih" userLabel="SignUp">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="60"/>
-                                        <animations/>
                                         <color key="backgroundColor" red="1" green="0.85882352939999995" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" title="Sign Up">
@@ -238,7 +225,6 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="7rB-gM-fHO"/>
@@ -268,7 +254,6 @@
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Crest" translatesAutoresizingMaskIntoConstraints="NO" id="hjt-WE-6Mc">
                                 <rect key="frame" x="195" y="120" width="210" height="210"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="rXy-ux-McE"/>
                                 </constraints>
@@ -284,7 +269,6 @@
                                 </variation>
                             </imageView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="qmI-ds-NIm" secondAttribute="bottom" id="07u-hU-uBf"/>
@@ -386,14 +370,12 @@
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lRO-Nv-Dqu" userLabel="mainContainer">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
                                 <connections>
                                     <segue destination="j9S-vW-V4Y" kind="embed" identifier="MainSegue" id="R0F-np-3iV"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vdj-wI-aMR" userLabel="menuContainer">
                                 <rect key="frame" x="360" y="0.0" width="240" height="600"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="xFV-2s-IBN"/>
                                 </constraints>
@@ -413,7 +395,6 @@
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e7P-qN-8Ke" userLabel="chooseUniContainer">
                                 <rect key="frame" x="360" y="0.0" width="240" height="600"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="aWS-hU-YYk"/>
                                 </constraints>
@@ -433,13 +414,11 @@
                             </containerView>
                             <containerView opaque="NO" alpha="0.0" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5CZ-qI-mCf" userLabel="takePuffContainer">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
                                 <connections>
                                     <segue destination="4ia-OO-hcQ" kind="embed" identifier="TakePuffSegue" id="KmR-CG-vyO"/>
                                 </connections>
                             </containerView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Vdj-wI-aMR" firstAttribute="top" secondItem="lBz-Ry-PAO" secondAttribute="top" id="D6k-yg-EkV"/>
@@ -519,20 +498,17 @@
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p41-em-Tth" userLabel="SignUpContainer">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
                                 <connections>
                                     <segue destination="xGU-Nw-CA2" kind="embed" identifier="SignUpSegue" id="gxs-f2-RAj"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gqy-3k-RjH" userLabel="ChooseUniContainer">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
                                 <connections>
                                     <segue destination="05S-AG-V4y" kind="embed" identifier="ChooseUniSegue" id="ZBN-UG-5XS"/>
                                 </connections>
                             </containerView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="p41-em-Tth" firstAttribute="top" secondItem="sOr-93-qSH" secondAttribute="top" id="403-9L-NVs"/>
@@ -590,21 +566,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="sMh-PL-hrS">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="sMh-PL-hrS">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
                             </imageView>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XcX-vU-Lk3" userLabel="Username" customClass="TextFields" customModule="DormRoom" customModuleProvider="target">
                                 <rect key="frame" x="20" y="120" width="560" height="40"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WUG-Qh-54J">
                                         <rect key="frame" x="8" y="5" width="544" height="30"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="WUG-Qh-54J" secondAttribute="bottom" id="3t1-2d-yuD"/>
@@ -639,12 +612,10 @@
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vos-qq-b7K">
                                         <rect key="frame" x="8" y="0.0" width="544" height="40"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits" spellCheckingType="no" secureTextEntry="YES"/>
                                     </textField>
                                 </subviews>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Vos-qq-b7K" firstAttribute="top" secondItem="jWf-cX-UrD" secondAttribute="top" id="Cnz-om-TWZ"/>
@@ -679,12 +650,10 @@
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8xZ-gr-9N3">
                                         <rect key="frame" x="8" y="0.0" width="544" height="40"/>
-                                        <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
                                 </subviews>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="8xZ-gr-9N3" secondAttribute="bottom" id="Vc4-BV-WgL"/>
@@ -716,7 +685,6 @@
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="ChooseProfile" translatesAutoresizingMaskIntoConstraints="NO" id="1iD-rj-R8I" userLabel="ProfilePicture" customClass="RoundedImage" customModule="DormRoom" customModuleProvider="target">
                                 <rect key="frame" x="20" y="321" width="100" height="100"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="1Yb-IE-4Pu">
                                         <variation key="heightClass=regular" constant="80"/>
@@ -743,7 +711,6 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G1L-Lk-GgL">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="60"/>
-                                        <animations/>
                                         <color key="backgroundColor" red="1" green="0.85882352939999995" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                         <state key="normal" title="Sign Up!">
@@ -754,7 +721,6 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="G1L-Lk-GgL" secondAttribute="bottom" id="Asr-q0-bX9"/>
@@ -784,7 +750,6 @@
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="ChooseUni" translatesAutoresizingMaskIntoConstraints="NO" id="zbn-vx-wlH" userLabel="University" customClass="RoundedImage" customModule="DormRoom" customModuleProvider="target">
                                 <rect key="frame" x="480" y="321" width="100" height="100"/>
-                                <animations/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="0.5" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="MoH-qH-Hv5">
@@ -808,7 +773,6 @@
                                 </variation>
                             </imageView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XcX-vU-Lk3" firstAttribute="leading" secondItem="C4f-SE-9nG" secondAttribute="leadingMargin" id="2Al-Bv-UyV"/>
@@ -919,7 +883,6 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="350" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eQa-za-vyi">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ChooseUniCell" id="cOc-Ub-9RO" customClass="ChooseUniCellTableViewCell" customModule="DormRoom" customModuleProvider="target">
@@ -931,14 +894,11 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="UEJ-ib-cRk" userLabel="Background">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                                    <animations/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="31K-Sq-weF">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="299"/>
-                                                    <animations/>
                                                 </imageView>
                                             </subviews>
-                                            <animations/>
                                             <constraints>
                                                 <constraint firstItem="UEJ-ib-cRk" firstAttribute="top" secondItem="XXh-Lu-LS3" secondAttribute="top" id="56e-MK-zFO"/>
                                                 <constraint firstAttribute="bottom" secondItem="31K-Sq-weF" secondAttribute="bottom" id="7qn-aI-0aj"/>
@@ -980,7 +940,6 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <animations/>
                                         <connections>
                                             <outlet property="UniversityImageOutlet" destination="31K-Sq-weF" id="iQs-TB-mXp"/>
                                         </connections>
@@ -992,7 +951,6 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="eQa-za-vyi" firstAttribute="top" secondItem="ySh-32-amM" secondAttribute="bottom" id="Azw-hK-OI5">
@@ -1036,7 +994,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="E20-0W-T9C">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                         <color key="barTintColor" red="0.047058823530000002" green="0.30196078430000001" blue="0.0039215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1056,7 +1013,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QKD-DB-K4I">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                         <color key="barTintColor" red="0.047058823530000002" green="0.30196078430000001" blue="0.0039215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1082,7 +1038,6 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="200" sectionHeaderHeight="1" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="8IG-jL-ir1">
                                 <rect key="frame" x="0.0" y="52" width="240" height="468"/>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ChooseFeedCell" rowHeight="200" id="huj-I7-a0s" customClass="ChooseFeedCell" customModule="DormRoom" customModuleProvider="target">
@@ -1094,14 +1049,11 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="qdN-Tj-WtN" userLabel="Background">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                                    <animations/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gRz-SZ-BRz">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="199"/>
-                                                    <animations/>
                                                 </imageView>
                                             </subviews>
-                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="qdN-Tj-WtN" secondAttribute="trailing" id="1Zg-sJ-YzP"/>
                                                 <constraint firstItem="qdN-Tj-WtN" firstAttribute="leading" secondItem="HfF-Sr-zVO" secondAttribute="leading" id="8P0-4u-3co"/>
@@ -1143,7 +1095,6 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <animations/>
                                         <connections>
                                             <outlet property="FeedImageOutlet" destination="gRz-SZ-BRz" id="KdG-z7-TIk"/>
                                         </connections>
@@ -1156,7 +1107,6 @@
                             </tableView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VKT-2b-Pal">
                                 <rect key="frame" x="0.0" y="520" width="80" height="80"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="L9b-Tl-7y7"/>
                                     <constraint firstAttribute="width" constant="80" id="jkc-rt-fq7"/>
@@ -1176,7 +1126,6 @@
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cp1-7U-gf6">
                                 <rect key="frame" x="80" y="520" width="80" height="80"/>
-                                <animations/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="0.5" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="QXE-8r-ViS"/>
@@ -1197,7 +1146,6 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2OB-Rv-xPw">
                                 <rect key="frame" x="160" y="520" width="80" height="80"/>
-                                <animations/>
                                 <color key="backgroundColor" red="0.047058823530000002" green="0.30196078430000001" blue="0.0039215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="3Gl-gc-MHG"/>
@@ -1224,7 +1172,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2OB-Rv-xPw" firstAttribute="leading" secondItem="cp1-7U-gf6" secondAttribute="trailing" id="1SB-hc-wcZ"/>
@@ -1307,11 +1254,9 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KWS-sz-tkW" userLabel="TakenPuff">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Write Something!" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uiD-ha-YvU">
                                 <rect key="frame" x="0.0" y="240" width="600" height="50"/>
-                                <animations/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="0.59806034482758619" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="8VT-aI-ckC"/>
@@ -1334,18 +1279,15 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="TakeAPuff" translatesAutoresizingMaskIntoConstraints="NO" id="fBT-6y-fwc">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
-                                        <animations/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JLd-bU-XcQ" userLabel="TakeAPuff">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
-                                        <animations/>
                                         <connections>
                                             <action selector="postPuff:" destination="daC-xJ-rzf" eventType="touchUpInside" id="aJL-g1-UoN"/>
                                             <action selector="takePuffAction:" destination="kgB-RT-bCH" eventType="touchUpInside" id="H5o-pj-HFY"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="2NU-ao-ing"/>
                                     <constraint firstItem="fBT-6y-fwc" firstAttribute="leading" secondItem="wDd-db-f80" secondAttribute="leading" id="DVl-MQ-LCX"/>
@@ -1389,7 +1331,6 @@
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l0J-BI-RXV">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OpO-QE-Ovc" userLabel="TakePuffButtonView">
@@ -1397,11 +1338,9 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="TakeAPuff" translatesAutoresizingMaskIntoConstraints="NO" id="D56-bv-PEJ">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
-                                        <animations/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aAs-iB-CFd" userLabel="TakeAPuff">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
-                                        <animations/>
                                         <connections>
                                             <action selector="postPuff:" destination="daC-xJ-rzf" eventType="touchUpInside" id="GRb-Yb-QjX"/>
                                             <action selector="takePuffAction:" destination="daC-xJ-rzf" eventType="touchUpInside" id="Pdy-bE-lTK"/>
@@ -1409,7 +1348,6 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="aAs-iB-CFd" secondAttribute="bottom" id="2mA-bW-cwX"/>
                                     <constraint firstAttribute="width" constant="100" id="5CH-S4-A4U"/>
@@ -1453,7 +1391,6 @@
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xaO-ob-eBD">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="Nvj-zt-6w0">
                                         <variation key="heightClass=regular" constant="50"/>
@@ -1482,7 +1419,6 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="l0J-BI-RXV" firstAttribute="leading" secondItem="USC-kx-70K" secondAttribute="leading" id="0Wv-gA-ybx"/>
@@ -1592,7 +1528,6 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="500" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="uU9-xl-d3G">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PuffCell" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PuffCell" id="2tf-N6-rr9" customClass="PuffTableViewCell" customModule="DormRoom" customModuleProvider="target">
@@ -1604,15 +1539,12 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="UHd-7l-tpA" userLabel="Background">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                                    <animations/>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HGr-KR-AKa" userLabel="Image">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="501"/>
-                                                    <animations/>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hTo-IP-IL0" userLabel="Border">
                                                     <rect key="frame" x="0.0" y="-2" width="600" height="5"/>
-                                                    <animations/>
                                                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="3" id="Ua2-fh-I4M"/>
@@ -1633,11 +1565,9 @@
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="InfoBarBackgrond" translatesAutoresizingMaskIntoConstraints="NO" id="Cfd-Zm-OCF">
                                                             <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
-                                                            <animations/>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8YU-2r-u9F" userLabel="Dislike">
                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                            <animations/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="50" id="DrH-J3-vYd"/>
                                                                 <constraint firstAttribute="width" constant="50" id="Zrt-Y6-U24"/>
@@ -1660,14 +1590,12 @@
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Caption" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hRZ-sE-JIs">
                                                             <rect key="frame" x="50" y="0.0" width="386" height="50"/>
-                                                            <animations/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="po4-Kn-Wc5" userLabel="Like">
                                                             <rect key="frame" x="436" y="0.0" width="50" height="50"/>
-                                                            <animations/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="50" id="PNC-YZ-FVr"/>
                                                                 <constraint firstAttribute="height" constant="50" id="txv-tG-JUB"/>
@@ -1690,7 +1618,6 @@
                                                         </label>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ac-2I-3a4" userLabel="University" customClass="UniView" customModule="DormRoom" customModuleProvider="target">
                                                             <rect key="frame" x="494" y="2" width="45" height="45"/>
-                                                            <animations/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="45" id="TU4-Ya-r67"/>
                                                                 <constraint firstAttribute="height" constant="45" id="uut-Du-2y2"/>
@@ -1710,7 +1637,6 @@
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pDa-lP-tqT" userLabel="Profile" customClass="RoundedImage" customModule="DormRoom" customModuleProvider="target">
                                                             <rect key="frame" x="547" y="2" width="45" height="45"/>
-                                                            <animations/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="45" id="Lpb-cV-OTy"/>
                                                                 <constraint firstAttribute="width" constant="45" id="cfD-F3-VP3"/>
@@ -1729,7 +1655,6 @@
                                                             </variation>
                                                         </imageView>
                                                     </subviews>
-                                                    <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="hRZ-sE-JIs" secondAttribute="bottom" id="3we-EA-338"/>
@@ -1810,20 +1735,16 @@
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="82Q-OX-7TW">
                                                             <rect key="frame" x="0.0" y="0.0" width="600" height="501"/>
-                                                            <animations/>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="ThumbsUp" translatesAutoresizingMaskIntoConstraints="NO" id="yxr-aK-UII" userLabel="ThumbsUp">
                                                             <rect key="frame" x="0.0" y="0.0" width="600" height="501"/>
-                                                            <animations/>
                                                             <color key="backgroundColor" red="0.08235294118" green="0.52941176469999995" blue="0.0039215686269999999" alpha="0.5" colorSpace="calibratedRGB"/>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="ThumbsDown" translatesAutoresizingMaskIntoConstraints="NO" id="sKu-2d-kmL" userLabel="ThumbsDown">
                                                             <rect key="frame" x="0.0" y="0.0" width="600" height="501"/>
-                                                            <animations/>
                                                             <color key="backgroundColor" red="0.93333333330000001" green="0.1960784314" blue="0.14117647059999999" alpha="0.5" colorSpace="calibratedRGB"/>
                                                         </imageView>
                                                     </subviews>
-                                                    <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstItem="sKu-2d-kmL" firstAttribute="centerX" secondItem="tQ1-bh-ATe" secondAttribute="centerX" id="1WV-gH-Izv"/>
@@ -1873,7 +1794,6 @@
                                                     </variation>
                                                 </view>
                                             </subviews>
-                                            <animations/>
                                             <constraints>
                                                 <constraint firstItem="tQ1-bh-ATe" firstAttribute="centerY" secondItem="oPD-Nu-Kkn" secondAttribute="centerY" id="4Ry-sl-hY4"/>
                                                 <constraint firstItem="hTo-IP-IL0" firstAttribute="top" secondItem="oPD-Nu-Kkn" secondAttribute="top" id="8T3-oL-ve1"/>
@@ -1947,7 +1867,6 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <animations/>
                                         <connections>
                                             <outlet property="CaptionOutlet" destination="hRZ-sE-JIs" id="ofL-Xm-Ia8"/>
                                             <outlet property="DislikeOutlet" destination="8YU-2r-u9F" id="UuT-xW-ckS"/>
@@ -1973,17 +1892,14 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="TakeAPuff" translatesAutoresizingMaskIntoConstraints="NO" id="DFa-xx-dhH">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
-                                        <animations/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5f0-nq-qwX" userLabel="TakeAPuff">
                                         <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
-                                        <animations/>
                                         <connections>
                                             <action selector="takePuffAction:" destination="kgB-RT-bCH" eventType="touchUpInside" id="TgQ-jV-d8F"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="DFa-xx-dhH" secondAttribute="trailing" id="CH0-Mt-LeU"/>
                                     <constraint firstAttribute="height" constant="120" id="Cl8-jG-rpv">
@@ -2031,14 +1947,12 @@
                             </view>
                             <webView alpha="0.0" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hf2-kK-wYH">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <animations/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
                                 <connections>
                                     <outlet property="delegate" destination="kgB-RT-bCH" id="omV-an-LOh"/>
                                 </connections>
                             </webView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="uU9-xl-d3G" firstAttribute="top" secondItem="bm6-OK-iFu" secondAttribute="top" id="9nM-Xx-w1Y"/>
@@ -2109,7 +2023,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="oXj-iz-wRq">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                         <color key="barTintColor" red="0.047058823530000002" green="0.30196078430000001" blue="0.0039215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -2129,7 +2042,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="e2c-NE-ae0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                         <color key="barTintColor" red="0.047058823530000002" green="0.30196078430000001" blue="0.0039215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -2149,7 +2061,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="weo-im-xMb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                         <color key="barTintColor" red="0.047058823530000002" green="0.30196078430000001" blue="0.0039215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -2175,7 +2086,6 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="200" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="xA2-V3-iCR">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="600"/>
-                                <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ChangeUniCell" id="cgd-cZ-Lj6" customClass="ChangeUniCell" customModule="DormRoom" customModuleProvider="target">
@@ -2187,10 +2097,8 @@
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Uh-EV-56x">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="199"/>
-                                                    <animations/>
                                                 </imageView>
                                             </subviews>
-                                            <animations/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="7Uh-EV-56x" secondAttribute="trailing" id="ViQ-Fr-ZPw"/>
                                                 <constraint firstItem="7Uh-EV-56x" firstAttribute="top" secondItem="i5m-UV-tWr" secondAttribute="top" id="YUy-ba-S4p"/>
@@ -2214,7 +2122,6 @@
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
-                                        <animations/>
                                         <connections>
                                             <outlet property="ChangeUniImageOutlet" destination="7Uh-EV-56x" id="EG5-4R-fHh"/>
                                         </connections>
@@ -2226,7 +2133,6 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="xA2-V3-iCR" secondAttribute="trailing" id="09o-Mi-9sK"/>
@@ -2268,7 +2174,6 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xe1-RI-tMi">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -2282,10 +2187,10 @@
     </scenes>
     <resources>
         <image name="Background" width="600" height="600"/>
-        <image name="ChangeCamera" width="256" height="256"/>
-        <image name="ChooseProfile" width="455" height="455"/>
-        <image name="ChooseUni" width="455" height="455"/>
-        <image name="Crest" width="457" height="455"/>
+        <image name="ChangeCamera" width="512" height="512"/>
+        <image name="ChooseProfile" width="535" height="535"/>
+        <image name="ChooseUni" width="535" height="535"/>
+        <image name="Crest" width="538" height="535"/>
         <image name="InfoBarBackgrond" width="1024" height="640"/>
         <image name="Logo" width="528" height="112"/>
         <image name="TakeAPuff" width="380" height="377"/>
