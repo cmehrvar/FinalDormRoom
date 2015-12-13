@@ -21,6 +21,32 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="ovH-UY-RaY">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oLw-57-4UO">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="QQF-2A-q50"/>
+                                    <constraint firstAttribute="width" constant="100" id="fWV-2d-lOb"/>
+                                </constraints>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="QQF-2A-q50"/>
+                                        <exclude reference="fWV-2d-lOb"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="QQF-2A-q50"/>
+                                        <include reference="fWV-2d-lOb"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="uploadPicture:" destination="k58-Zd-rY8" eventType="touchUpInside" id="GEt-6a-MUc"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -28,27 +54,35 @@
                             <constraint firstItem="ovH-UY-RaY" firstAttribute="leading" secondItem="job-d7-5lb" secondAttribute="leading" id="Vtf-5g-6wO"/>
                             <constraint firstAttribute="trailing" secondItem="ovH-UY-RaY" secondAttribute="trailing" id="YLl-9h-BDy"/>
                             <constraint firstItem="fe9-nC-JMZ" firstAttribute="top" secondItem="ovH-UY-RaY" secondAttribute="bottom" id="ab6-Qd-391"/>
+                            <constraint firstItem="oLw-57-4UO" firstAttribute="centerY" secondItem="job-d7-5lb" secondAttribute="centerY" id="sRj-9U-wE5"/>
+                            <constraint firstItem="oLw-57-4UO" firstAttribute="centerX" secondItem="job-d7-5lb" secondAttribute="centerX" id="urI-lc-Luz"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="ovH-UY-RaY"/>
+                                <exclude reference="oLw-57-4UO"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="ab6-Qd-391"/>
                                 <exclude reference="Inq-9V-g52"/>
                                 <exclude reference="Vtf-5g-6wO"/>
                                 <exclude reference="YLl-9h-BDy"/>
+                                <exclude reference="sRj-9U-wE5"/>
+                                <exclude reference="urI-lc-Luz"/>
+                                <exclude reference="ab6-Qd-391"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
                             <mask key="subviews">
                                 <include reference="ovH-UY-RaY"/>
+                                <include reference="oLw-57-4UO"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="ab6-Qd-391"/>
                                 <include reference="Inq-9V-g52"/>
                                 <include reference="Vtf-5g-6wO"/>
                                 <include reference="YLl-9h-BDy"/>
+                                <include reference="sRj-9U-wE5"/>
+                                <include reference="urI-lc-Luz"/>
+                                <include reference="ab6-Qd-391"/>
                             </mask>
                         </variation>
                     </view>
@@ -69,7 +103,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="qmI-ds-NIm">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="qmI-ds-NIm">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="usA-ov-k3i">
@@ -118,7 +152,8 @@
                                         <exclude reference="n8j-ua-gWN"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular">
+                                <variation key="heightClass=regular" misplaced="YES">
+                                    <rect key="frame" x="20" y="368" width="560" height="40"/>
                                     <mask key="constraints">
                                         <include reference="emg-TG-Yl4"/>
                                         <include reference="B3X-rI-08p"/>
@@ -158,7 +193,8 @@
                                         <exclude reference="wlP-zn-YiT"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular">
+                                <variation key="heightClass=regular" misplaced="YES">
+                                    <rect key="frame" x="20" y="416" width="560" height="40"/>
                                     <mask key="constraints">
                                         <include reference="0N8-RG-4Hh"/>
                                         <include reference="8QE-74-EcL"/>
@@ -566,7 +602,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="sMh-PL-hrS">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="sMh-PL-hrS">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XcX-vU-Lk3" userLabel="Username" customClass="TextFields" customModule="DormRoom" customModuleProvider="target">
