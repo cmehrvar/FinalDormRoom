@@ -177,6 +177,12 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         
         rootController?.toggleTakePuff({ (complete) -> () in
             
+            guard let actualController = self.rootController else {return}
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                actualController.mainController?.uploadOutlet.alpha = 0
+            })
+    
         })
         
         let uploadRequest = imageUploadRequest(image)
@@ -299,6 +305,13 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                 self.rootController?.mainController?.loadFromParse({ () -> Void in
                     
                 })
+                
+                guard let actualController = self.rootController else {return}
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    actualController.mainController?.uploadOutlet.alpha = 0
+                })
+                
                 
             } else {
                 

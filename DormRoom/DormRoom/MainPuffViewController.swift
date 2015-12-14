@@ -54,6 +54,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var PuffTableView: UITableView!
     @IBOutlet weak var TakeAPuffOutlet: UIView!
     @IBOutlet weak var WebViewOutlet: UIWebView!
+    @IBOutlet weak var uploadOutlet: UIImageView!
     
     
     //Actions
@@ -213,8 +214,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     //TableView shit
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        //let dal = UIImage(named: "Dalhousie"), mcgill = UIImage(named: "McGill"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), western = UIImage(named: "Western"), calgary = UIImage(named: "Calgary"), ubc = UIImage(named: "UBC")
         
         myTableView = tableView
         

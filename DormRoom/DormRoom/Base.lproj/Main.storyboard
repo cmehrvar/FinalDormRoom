@@ -1935,16 +1935,41 @@
                                     <outlet property="delegate" destination="kgB-RT-bCH" id="omV-an-LOh"/>
                                 </connections>
                             </webView>
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upload" translatesAutoresizingMaskIntoConstraints="NO" id="NTN-uw-4Od">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="U6B-Jc-4kv">
+                                        <variation key="heightClass=regular" constant="75"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" constant="100" id="xeY-mO-6Eq">
+                                        <variation key="heightClass=regular" constant="75"/>
+                                    </constraint>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="U6B-Jc-4kv"/>
+                                        <exclude reference="xeY-mO-6Eq"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="U6B-Jc-4kv"/>
+                                        <include reference="xeY-mO-6Eq"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="uU9-xl-d3G" firstAttribute="top" secondItem="bm6-OK-iFu" secondAttribute="top" id="9nM-Xx-w1Y"/>
                             <constraint firstItem="0Vw-ht-ueq" firstAttribute="top" secondItem="uU9-xl-d3G" secondAttribute="bottom" id="C7H-ej-iax"/>
+                            <constraint firstItem="NTN-uw-4Od" firstAttribute="leading" secondItem="bm6-OK-iFu" secondAttribute="leadingMargin" id="FR4-Hd-aQo"/>
                             <constraint firstAttribute="trailing" secondItem="uU9-xl-d3G" secondAttribute="trailing" id="Fhy-ht-0VW"/>
                             <constraint firstItem="0Vw-ht-ueq" firstAttribute="top" secondItem="7rT-Ub-gtX" secondAttribute="bottom" constant="20" id="J5b-s7-Mon"/>
                             <constraint firstItem="7rT-Ub-gtX" firstAttribute="centerX" secondItem="bm6-OK-iFu" secondAttribute="centerX" id="Mps-Rz-3N4">
                                 <variation key="heightClass=regular" constant="1"/>
                             </constraint>
+                            <constraint firstItem="NTN-uw-4Od" firstAttribute="top" secondItem="IAs-1a-8dM" secondAttribute="bottom" constant="20" id="SI3-qi-ncx"/>
                             <constraint firstItem="hf2-kK-wYH" firstAttribute="top" secondItem="bm6-OK-iFu" secondAttribute="top" id="XuP-lA-x2a"/>
                             <constraint firstItem="0Vw-ht-ueq" firstAttribute="top" secondItem="hf2-kK-wYH" secondAttribute="bottom" id="ZfY-rf-rlp"/>
                             <constraint firstAttribute="trailing" secondItem="hf2-kK-wYH" secondAttribute="trailing" id="cPn-z4-gZX"/>
@@ -1952,6 +1977,9 @@
                             <constraint firstItem="uU9-xl-d3G" firstAttribute="leading" secondItem="bm6-OK-iFu" secondAttribute="leading" id="hN5-sd-ECu"/>
                         </constraints>
                         <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="NTN-uw-4Od"/>
+                            </mask>
                             <mask key="constraints">
                                 <exclude reference="XuP-lA-x2a"/>
                                 <exclude reference="cPn-z4-gZX"/>
@@ -1959,6 +1987,8 @@
                                 <exclude reference="9nM-Xx-w1Y"/>
                                 <exclude reference="Fhy-ht-0VW"/>
                                 <exclude reference="hN5-sd-ECu"/>
+                                <exclude reference="FR4-Hd-aQo"/>
+                                <exclude reference="SI3-qi-ncx"/>
                                 <exclude reference="Mps-Rz-3N4"/>
                                 <exclude reference="C7H-ej-iax"/>
                                 <exclude reference="J5b-s7-Mon"/>
@@ -1966,6 +1996,9 @@
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
+                            <mask key="subviews">
+                                <include reference="NTN-uw-4Od"/>
+                            </mask>
                             <mask key="constraints">
                                 <include reference="XuP-lA-x2a"/>
                                 <include reference="cPn-z4-gZX"/>
@@ -1973,6 +2006,8 @@
                                 <include reference="9nM-Xx-w1Y"/>
                                 <include reference="Fhy-ht-0VW"/>
                                 <include reference="hN5-sd-ECu"/>
+                                <include reference="FR4-Hd-aQo"/>
+                                <include reference="SI3-qi-ncx"/>
                                 <include reference="Mps-Rz-3N4"/>
                                 <include reference="C7H-ej-iax"/>
                                 <include reference="J5b-s7-Mon"/>
@@ -1992,6 +2027,7 @@
                         <outlet property="PuffTableView" destination="uU9-xl-d3G" id="eSC-gd-i8t"/>
                         <outlet property="TakeAPuffOutlet" destination="7rT-Ub-gtX" id="1SO-a8-j7Y"/>
                         <outlet property="WebViewOutlet" destination="hf2-kK-wYH" id="GPx-Zr-UIR"/>
+                        <outlet property="uploadOutlet" destination="NTN-uw-4Od" id="lD9-MB-3lP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9za-rn-Poz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2179,5 +2215,6 @@
         <image name="TakeAPuff" width="380" height="377"/>
         <image name="ThumbsDown" width="270" height="299"/>
         <image name="ThumbsUp" width="540" height="597"/>
+        <image name="upload" width="256" height="256"/>
     </resources>
 </document>

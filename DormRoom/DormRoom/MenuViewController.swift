@@ -152,7 +152,6 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             actualController.mainController?.WebViewOutlet.alpha = 0
         }
         
-        
         rootController?.toggleMenu({ (complete) -> () in
             
         })
