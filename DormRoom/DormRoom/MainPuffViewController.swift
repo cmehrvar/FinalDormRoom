@@ -49,6 +49,11 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidLayoutSubviews() {
+        loadFromParse { () -> Void in
+            
+        }
+    }
     
     //Outlets
     @IBOutlet weak var PuffTableView: UITableView!
@@ -303,6 +308,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         SDWebImageManager.sharedManager().imageCache.clearDisk()
         SDWebImageManager.sharedManager().imageCache.clearMemory()
+       
         // Dispose of any resources that can be recreated.
     }
     

@@ -180,7 +180,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             guard let actualController = self.rootController else {return}
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
-                actualController.mainController?.uploadOutlet.alpha = 0
+                actualController.mainController?.uploadOutlet.alpha = 1
             })
     
         })
