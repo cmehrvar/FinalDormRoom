@@ -14,24 +14,19 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var myTableView = UITableView()
     
-    let imageCache = SDImageCache()
-    
     var user = PFUser.currentUser()
     
-    var scroll = false
     var loading = false
-    
-    var didLoadWebsite = false
-    
+   
     var imageUrls = [String]()
-    var image = UIImage()
     var profilePictureURLS = [String]()
-    var profilePicture = UIImage()
     var universityNames = [String]()
     var captions = [String]()
     var likes = [Int]()
     var dislikes = [Int]()
     var objectId = [String]()
+    
+    let dal = UIImage(named: "Dalhousie"), mcgill = UIImage(named: "McGill"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), western = UIImage(named: "Western"), calgary = UIImage(named: "Calgary"), ubc = UIImage(named: "UBC")
     
     var feed = String()
     var ranking = String()
@@ -46,8 +41,11 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         initializeFeeds()
         addScrollToTop()
         addRefresh()
-        loadFromParse()
-        
+        loadFromParse { (complete) -> Void in
+            print("parse loaded")
+            
+        }
+        loadWebsite()
         // Do any additional setup after loading the view.
     }
     
@@ -117,12 +115,15 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func refresh(sender: AnyObject) {
         
-        loadFromParse()
+        loadFromParse { () -> Void in
+            print("parse loaded")
+        }
+        
         refreshControl.endRefreshing()
     }
     
     
-    func loadFromParse() {
+    func loadFromParse(complete: () -> Void) {
         
         let query = PFQuery(className: feed)
         query.orderByDescending(ranking)
@@ -170,16 +171,13 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }
         }
+    }
+    
+    func loadWebsite() {
         
-        if !didLoadWebsite {
-            
-            didLoadWebsite = true
-            
-            guard let url = NSURL(string: "http://www.dormroomnetwork.com/trending.html") else {return}
-            
-            WebViewOutlet.loadRequest(NSURLRequest(URL: url))
-            
-        }
+        guard let url = NSURL(string: "http://www.dormroomnetwork.com/trending.html") else {return}
+        WebViewOutlet.loadRequest(NSURLRequest(URL: url))
+        
     }
     
     func callCamera() -> UIImagePickerController {
@@ -216,12 +214,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     //TableView shit
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let dal = UIImage(named: "Dalhousie"), mcgill = UIImage(named: "McGill"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), western = UIImage(named: "Western"), calgary = UIImage(named: "Calgary"), ubc = UIImage(named: "UBC")
+        //let dal = UIImage(named: "Dalhousie"), mcgill = UIImage(named: "McGill"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), western = UIImage(named: "Western"), calgary = UIImage(named: "Calgary"), ubc = UIImage(named: "UBC")
         
         myTableView = tableView
         
         let dormroomurl = "https://s3.amazonaws.com/dormroombucket/"
-        let placeholderImage = UIImage(named: "Crest")
+        let placeholderImage = UIImage(named: "Background")
         
         tableView.decelerationRate = 0.01
         
@@ -243,7 +241,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.SwipeViewOutlet.image = image
             }
             
-            }, usingActivityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+            }, usingActivityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
         
         
         cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
@@ -304,6 +302,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
+        SDWebImageManager.sharedManager().imageCache.clearDisk()
+        SDWebImageManager.sharedManager().imageCache.clearMemory()
         // Dispose of any resources that can be recreated.
     }
     

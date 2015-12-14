@@ -296,7 +296,9 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                 self.ChangeCameraOutlet.alpha = 1
                 self.TakenPuffOutlet.image = nil
                 self.CaptionOutlet.text = nil
-                self.rootController?.mainController?.loadFromParse()
+                self.rootController?.mainController?.loadFromParse({ () -> Void in
+                    
+                })
                 
             } else {
                 
@@ -307,7 +309,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
-    
     
     
     func addUploadStuff(){

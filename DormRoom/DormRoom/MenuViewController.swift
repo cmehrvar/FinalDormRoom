@@ -109,7 +109,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             actualController.mainController?.ranking = "createdAt"
             actualController.mainController?.feed = feed
-            actualController.mainController?.loadFromParse()
+            actualController.mainController?.loadFromParse({ () -> Void in
+                
+            })
             
             actualController.mainController?.WebViewOutlet.alpha = 0
             
@@ -119,7 +121,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             actualController.mainController?.ranking = "Like"
             actualController.mainController?.feed = feed
-            actualController.mainController?.loadFromParse()
+            actualController.mainController?.loadFromParse({ () -> Void in
+                
+            })
             
             actualController.mainController?.WebViewOutlet.alpha = 0
             
@@ -129,7 +133,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             actualController.mainController?.ranking = "Dislike"
             actualController.mainController?.feed = feed
-            actualController.mainController?.loadFromParse()
+            actualController.mainController?.loadFromParse({ () -> Void in
+                
+            })
             
             actualController.mainController?.WebViewOutlet.alpha = 0
             
@@ -139,7 +145,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             actualController.mainController?.feed = "createdAt"
             actualController.mainController?.feed = feed
-            actualController.mainController?.loadFromParse()
+            actualController.mainController?.loadFromParse({ () -> Void in
+                
+            })
             
             actualController.mainController?.WebViewOutlet.alpha = 0
         }

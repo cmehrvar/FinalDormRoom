@@ -118,8 +118,7 @@
                                         <exclude reference="n8j-ua-gWN"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="20" y="368" width="560" height="40"/>
+                                <variation key="heightClass=regular">
                                     <mask key="constraints">
                                         <include reference="emg-TG-Yl4"/>
                                         <include reference="B3X-rI-08p"/>
@@ -159,8 +158,7 @@
                                         <exclude reference="wlP-zn-YiT"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="20" y="416" width="560" height="40"/>
+                                <variation key="heightClass=regular">
                                     <mask key="constraints">
                                         <include reference="0N8-RG-4Hh"/>
                                         <include reference="8QE-74-EcL"/>
@@ -1539,9 +1537,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="499"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="UHd-7l-tpA" userLabel="Background">
-                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                                </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HGr-KR-AKa" userLabel="Image">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="501"/>
                                                 </imageView>
@@ -1803,13 +1798,9 @@
                                                 <constraint firstItem="LBS-Wx-Ze0" firstAttribute="leading" secondItem="oPD-Nu-Kkn" secondAttribute="leading" id="GUW-Qv-uSw"/>
                                                 <constraint firstItem="LBS-Wx-Ze0" firstAttribute="top" secondItem="hTo-IP-IL0" secondAttribute="bottom" id="LdE-qU-HB6"/>
                                                 <constraint firstItem="HGr-KR-AKa" firstAttribute="top" secondItem="oPD-Nu-Kkn" secondAttribute="top" id="PxZ-pZ-vXk"/>
-                                                <constraint firstAttribute="bottom" secondItem="UHd-7l-tpA" secondAttribute="bottom" id="QGy-jM-tfh"/>
                                                 <constraint firstItem="HGr-KR-AKa" firstAttribute="leading" secondItem="oPD-Nu-Kkn" secondAttribute="leading" id="SCQ-eg-dHe"/>
                                                 <constraint firstItem="tQ1-bh-ATe" firstAttribute="centerX" secondItem="oPD-Nu-Kkn" secondAttribute="centerX" id="YWZ-qn-kVV"/>
-                                                <constraint firstItem="UHd-7l-tpA" firstAttribute="leading" secondItem="oPD-Nu-Kkn" secondAttribute="leading" id="ZhO-DF-wR6"/>
-                                                <constraint firstAttribute="trailing" secondItem="UHd-7l-tpA" secondAttribute="trailing" id="eKR-zK-jkv"/>
                                                 <constraint firstItem="tQ1-bh-ATe" firstAttribute="width" secondItem="oPD-Nu-Kkn" secondAttribute="width" id="gDH-lR-dtH"/>
-                                                <constraint firstItem="UHd-7l-tpA" firstAttribute="top" secondItem="oPD-Nu-Kkn" secondAttribute="top" id="hvq-kW-qLb"/>
                                                 <constraint firstAttribute="trailing" secondItem="HGr-KR-AKa" secondAttribute="trailing" id="pb7-av-XlW"/>
                                                 <constraint firstAttribute="trailing" secondItem="LBS-Wx-Ze0" secondAttribute="trailing" id="sB0-a2-e7j"/>
                                                 <constraint firstAttribute="bottom" secondItem="HGr-KR-AKa" secondAttribute="bottom" id="vKW-i5-FMz"/>
@@ -1818,14 +1809,9 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
-                                                    <exclude reference="UHd-7l-tpA"/>
                                                     <exclude reference="HGr-KR-AKa"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="QGy-jM-tfh"/>
-                                                    <exclude reference="ZhO-DF-wR6"/>
-                                                    <exclude reference="eKR-zK-jkv"/>
-                                                    <exclude reference="hvq-kW-qLb"/>
                                                     <exclude reference="PxZ-pZ-vXk"/>
                                                     <exclude reference="SCQ-eg-dHe"/>
                                                     <exclude reference="pb7-av-XlW"/>
@@ -1844,14 +1830,9 @@
                                             </variation>
                                             <variation key="heightClass=regular">
                                                 <mask key="subviews">
-                                                    <include reference="UHd-7l-tpA"/>
                                                     <include reference="HGr-KR-AKa"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="QGy-jM-tfh"/>
-                                                    <include reference="ZhO-DF-wR6"/>
-                                                    <include reference="eKR-zK-jkv"/>
-                                                    <include reference="hvq-kW-qLb"/>
                                                     <include reference="PxZ-pZ-vXk"/>
                                                     <include reference="SCQ-eg-dHe"/>
                                                     <include reference="pb7-av-XlW"/>
