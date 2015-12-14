@@ -18,7 +18,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     var user = PFUser.currentUser()
     var imageUrl: String = String()
     var profilePictureUrl: String = String()
-
+    
     
     let frontOut = AVCaptureStillImageOutput()
     let backOut = AVCaptureStillImageOutput()
@@ -52,7 +52,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     
     
     
-     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
     
@@ -70,8 +70,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     
     
     
-     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
     
     
@@ -86,6 +85,44 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func takePuffAction(sender: AnyObject) {
         
+        takeApuff()
+        
+    }
+    
+    @IBAction func postPuff(sender: AnyObject) {
+        
+        guard let image = self.TakenPuffOutlet.image else {return}
+        self.uploadToAWS(image)
+        print("Upload in progress")
+        
+    }
+    
+    
+    @IBAction func cancelAction(sender: AnyObject) {
+        
+        rootController?.toggleTakePuff({ (complete) -> () in
+            
+            self.CameraCaptureView.alpha = 1
+            self.TakePuffButtonViewOutlet.alpha = 1
+            self.ChangeCameraOutlet.alpha = 1
+            self.TakenPuffOutlet.image = nil
+            self.CaptionOutlet.text = nil
+            print("cancelled")
+        })
+        
+    }
+    
+    
+    
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    
+    
+    
+    //Functions
+    func takeApuff() {
         if !frontCameraShown {
             
             guard let videoConnection = backOut.connectionWithMediaType(AVMediaTypeVideo) else {
@@ -136,39 +173,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func postPuff(sender: AnyObject) {
-
-        guard let image = self.TakenPuffOutlet.image else {return}
-        self.uploadToAWS(image)
-        print("Upload in progress")
-    
-    }
-    
-    
-    @IBAction func cancelAction(sender: AnyObject) {
-        
-        rootController?.toggleTakePuff({ (complete) -> () in
-            
-            self.CameraCaptureView.alpha = 1
-            self.TakePuffButtonViewOutlet.alpha = 1
-            self.ChangeCameraOutlet.alpha = 1
-            self.TakenPuffOutlet.image = nil
-            self.CaptionOutlet.text = nil
-            print("cancelled")
-        })
-        
-    }
-
-    
-    
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    
-    
-    
-    
-    //Functions
     func uploadToAWS(image: UIImage) {
         
         rootController?.toggleTakePuff({ (complete) -> () in
@@ -196,49 +200,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             return nil
         }
     }
-
-
-    func saveToParse(){
-        
-        do {
-            try user?.fetch()
-        } catch let error {
-            print("error fetching new user: \(error)")
-        }
-        
-        let post = PFObject(className: feed)
-        
-        post["ImageUrl"] = imageUrl
-        post["Caption"] = CaptionOutlet.text
-        post["Like"] = 0
-        post["Dislike"] = 0
-        post["ProfilePictureUrl"] = profilePictureUrl
-        post["UniversityName"] = user?["universityName"] as! String
-        
-        post.saveInBackgroundWithBlock { (Bool, error: NSError?) -> Void in
-            
-            if error == nil {
-                
-                print("successfully posted to parse")
-                self.CameraCaptureView.alpha = 1
-                self.TakePuffButtonViewOutlet.alpha = 1
-                self.ChangeCameraOutlet.alpha = 1
-                self.TakenPuffOutlet.image = nil
-                self.CaptionOutlet.text = nil
-                self.rootController?.mainController?.loadFromParse()
-                
-            } else {
-                
-                let alertController = UIAlertController(title: "Shit...", message: error?.localizedDescription, preferredStyle:  UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
-                self.presentViewController(alertController, animated: true, completion: nil)
-                
-            }
-        }
-    }
-
-
-
+    
     func imageUploadRequest(image: UIImage) -> AWSS3TransferManagerUploadRequest {
         
         let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".jpeg")
@@ -283,7 +245,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         uploadRequest.body = fileURL
         uploadRequest.key = fileName
         uploadRequest.bucket = "dormroombucket"
-
+        
         if let key = uploadRequest.key {
             profilePictureUrl = key
         }
@@ -301,9 +263,48 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                 let alertController = UIAlertController(title: "Shit...", message: "Error Uploading", preferredStyle:  UIAlertControllerStyle.Alert)
                 alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
-
+                
             }
             return nil
+        }
+    }
+    
+    func saveToParse(){
+        
+        do {
+            try user?.fetch()
+        } catch let error {
+            print("error fetching new user: \(error)")
+        }
+        
+        let post = PFObject(className: feed)
+        
+        post["ImageUrl"] = imageUrl
+        post["Caption"] = CaptionOutlet.text
+        post["Like"] = 0
+        post["Dislike"] = 0
+        post["ProfilePictureUrl"] = profilePictureUrl
+        post["UniversityName"] = user?["universityName"] as! String
+        
+        post.saveInBackgroundWithBlock { (Bool, error: NSError?) -> Void in
+            
+            if error == nil {
+                
+                print("successfully posted to parse")
+                self.CameraCaptureView.alpha = 1
+                self.TakePuffButtonViewOutlet.alpha = 1
+                self.ChangeCameraOutlet.alpha = 1
+                self.TakenPuffOutlet.image = nil
+                self.CaptionOutlet.text = nil
+                self.rootController?.mainController?.loadFromParse()
+                
+            } else {
+                
+                let alertController = UIAlertController(title: "Shit...", message: error?.localizedDescription, preferredStyle:  UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            }
         }
     }
     
@@ -338,10 +339,10 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         
         if let actualTextField: String = textField.text {
             
-             length = actualTextField.characters.count + string.characters.count - range.length
+            length = actualTextField.characters.count + string.characters.count - range.length
             
         }
-       
+        
         return length <= 10
         
     }

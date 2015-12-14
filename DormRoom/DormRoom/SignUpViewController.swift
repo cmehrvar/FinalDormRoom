@@ -14,7 +14,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
     let user = PFUser()
     
     var universityName = String()
-    var universityFile = PFFile?()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +67,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
             user.email = EmailOutlet.text
             user["profilePicture"] = PFFile(data: actualProfiledata)
             user["universityName"] = universityName
-            user["universityFile"] = universityFile
             
             user.signUpInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                 

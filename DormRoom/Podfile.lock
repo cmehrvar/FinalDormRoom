@@ -8,11 +8,14 @@ PODS:
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
+  - UIActivityIndicator-for-SDWebImage (1.2):
+    - SDWebImage (~> 3.7)
 
 DEPENDENCIES:
   - AWSS3
   - Parse
   - SDWebImage
+  - UIActivityIndicator-for-SDWebImage
 
 SPEC CHECKSUMS:
   AWSCore: c2f69975fd2caf38a10736961de28a0105cdb00c
@@ -20,5 +23,6 @@ SPEC CHECKSUMS:
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   Parse: 90b2544822200f84b18bfacc4e8b0a3a6c3584a2
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
 
 COCOAPODS: 0.39.0

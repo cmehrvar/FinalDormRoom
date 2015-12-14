@@ -14,6 +14,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var myTableView = UITableView()
     
+    let imageCache = SDImageCache()
+    
     var user = PFUser.currentUser()
     
     var scroll = false
@@ -46,6 +48,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         addRefresh()
         loadFromParse()
         addDownloadStuff()
+        
+        
         // Do any additional setup after loading the view.
     }
     
@@ -167,9 +171,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                             if let actualId = puff.objectId {
                                 self.objectId.append(actualId)
                             }
-                            self.PuffTableView.reloadData()
                         }
                     }
+                    
+                    self.PuffTableView.reloadData()
                     
                     self.loading = false
                 }
@@ -246,9 +251,16 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell.dislike = dislikes[indexPath.row]
         
-        cell.ImageOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: placeholderImage)
-        cell.SwipeViewOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: placeholderImage)
-        cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])), placeholderImage: placeholderImage)
+        cell.ImageOutlet.setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: placeholderImage, completed: { (image, error, cache, url) -> Void in
+            
+            if error == nil {
+                cell.SwipeViewOutlet.image = image
+            }
+            
+            }, usingActivityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+        
+        
+        cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
         
         switch universityNames[indexPath.row] {
             
@@ -306,7 +318,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
-        loadFromParse()
+        
+        
+        //loadFromParse()
         // Dispose of any resources that can be recreated.
     }
     

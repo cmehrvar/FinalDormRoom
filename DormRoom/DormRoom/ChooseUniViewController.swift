@@ -12,14 +12,13 @@ class ChooseUniViewController: UIViewController, UITableViewDataSource, UITableV
     
     weak var rootController: SignUpRootController?
     
-    var universityFiles = [PFFile]()
+    var staticImages = [UIImage]()
     var universityNames = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadUnisFromParse()
-        //self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
+        addFeedImages()
         // Do any additional setup after loading the view.
     }
     
@@ -28,31 +27,28 @@ class ChooseUniViewController: UIViewController, UITableViewDataSource, UITableV
     
     
     //Functions
-    func loadUnisFromParse() {
+    func addFeedImages() {
         
-        universityFiles.removeAll()
-        universityNames.removeAll()
+        guard let dal = UIImage(named: "Dalhousie"), mcgill = UIImage(named: "McGill"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), western = UIImage(named: "Western"), calgary = UIImage(named: "Calgary"), ubc = UIImage(named: "UBC") else {return}
         
-        let query = PFQuery(className: "Universities")
-        query.orderByDescending("createdAt")
+        staticImages.append(dal)
+        universityNames.append("Dalhousie")
+        staticImages.append(mcgill)
+        universityNames.append("McGill")
+        staticImages.append(queens)
+        universityNames.append("Queens")
+        staticImages.append(ryerson)
+        universityNames.append("Ryerson")
+        staticImages.append(western)
+        universityNames.append("Western")
+        staticImages.append(calgary)
+        universityNames.append("Calgary")
+        staticImages.append(ubc)
+        universityNames.append("UBC")
         
-        query.findObjectsInBackgroundWithBlock { (unis: [PFObject]?, error: NSError?) -> Void in
-            
-            if error == nil {
-                
-                if let unis = unis {
-                    
-                    for uni in unis {
-                        self.universityFiles.append(uni["Image"] as! PFFile)
-                        self.universityNames.append(uni["Name"] as! String)
-                        self.ChooseUniTableViewOutlet.reloadData()
-                    }
-                }
-            } else {
-                print(error)
-            }
-        }
+        ChooseUniTableViewOutlet.reloadData()
     }
+
     
     //TableView shit
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -63,22 +59,21 @@ class ChooseUniViewController: UIViewController, UITableViewDataSource, UITableV
         
         cell.selectionStyle = .None
         
-        cell.UniversityImageOutlet.imageFromPFFile(universityFiles[indexPath.row], placeholder: "Crest")
+        cell.UniversityImageOutlet.image = staticImages[indexPath.row]
         
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return universityFiles.count
+        return staticImages.count
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         guard let actualController = rootController else {return}
         
-        actualController.signUpViewController?.universityFile = universityFiles[indexPath.row]
         actualController.signUpViewController?.universityName = universityNames[indexPath.row]
-        actualController.signUpViewController?.UniOutlet.imageFromPFFile(universityFiles[indexPath.row])
+        actualController.signUpViewController?.UniOutlet.image = staticImages[indexPath.row]
         
         rootController?.toggleChooseUni({ (complete) -> () in
             

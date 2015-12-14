@@ -12,10 +12,8 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     weak var rootController: MainRootViewController?
     var user = PFUser.currentUser()
- 
-    var feedFiles = [PFFile]()
+
     var staticImages = [UIImage]()
-    
     
     var feedName: [String] = ["CanadaPuff", "CanadaPuff", "CanadaPuff", "Dalhousie","McGill", "Queens", "Ryerson", "Western", "Calgary", "UBC"]
     
@@ -25,12 +23,11 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         addRecognizers()
         
         addFeedImages()
-        //loadFromParse()
         
         retrieveProfilePicture()
         retrieveUniversity()
         
-        FeedTableViewOutlet.reloadData()
+        //FeedTableViewOutlet.reloadData()
         // Do any additional setup after loading the view.
     }
     
@@ -74,16 +71,6 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.selectionStyle = .None
         
         cell.FeedImageOutlet.image = staticImages[indexPath.row]
-        
-        /*
-        if indexPath.row <= (staticImages.count - 1) {
-            cell.FeedImageOutlet.image = staticImages[indexPath.row]
-        } else {
-            
-            let realIndexPath = indexPath.row - (staticImages.count)
-            cell.FeedImageOutlet.imageFromPFFile(feedFiles[realIndexPath], placeholder: "Crest")
-        }
-    */
         
         return cell
     }
@@ -165,7 +152,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (staticImages.count + feedFiles.count)
+        return (staticImages.count)
     }
     
     
@@ -198,9 +185,34 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func retrieveUniversity() {
         
-        let imageFile: PFFile = user?["universityFile"] as! PFFile
-        self.UniversityOutlet.imageFromPFFile(imageFile, placeholder: "Crest")
+        let imageName: String = user?["universityName"] as! String
         
+        switch imageName {
+            
+        case "Dalhousie":
+            self.UniversityOutlet.image = staticImages[4]
+            
+        case "McGill":
+            self.UniversityOutlet.image = staticImages[5]
+            
+        case "Queens":
+            self.UniversityOutlet.image = staticImages[6]
+            
+        case "Ryerson":
+            self.UniversityOutlet.image = staticImages[7]
+            
+        case "Western":
+            self.UniversityOutlet.image = staticImages[8]
+            
+        case "Calgary":
+            self.UniversityOutlet.image = staticImages[9]
+            
+        case "UBC":
+            self.UniversityOutlet.image = staticImages[10]
+        default:
+            break
+            
+        }
     }
     
     func saveProfile(profile: UIImage) {
@@ -284,37 +296,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
-    func loadFromParse() {
-        
-        let query = PFQuery(className: "Universities")
-        query.orderByDescending("createdAt")
-        
-        query.findObjectsInBackgroundWithBlock { (unis:[PFObject]?, error: NSError?) -> Void in
-            
-            if error == nil {
-                
-                if let unis = unis {
-                    
-                    for uni in unis {
-                        
-                        self.feedFiles.append(uni["Image"] as! PFFile)
-                        self.feedName.append(uni["Name"] as! String)
-                        self.FeedTableViewOutlet.reloadData()
-                    }
-                }
-                
-            } else {
-                print("error")
-            }
-            
-            for feed in self.feedName {
-                print(feed)
-            }
-        }
-    }
-  
-    
-    override func didReceiveMemoryWarning() {
+        override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

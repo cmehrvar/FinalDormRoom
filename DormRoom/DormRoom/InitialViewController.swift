@@ -10,75 +10,13 @@ import UIKit
 
 class InitialViewController: UIViewController {
     
-    var uploadRequests = [AWSS3TransferManagerUploadRequest]()
-    var uploadFileUrls = [NSURL]()
-    let image: UIImage = UIImage(named: "Crest")!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       let error = NSErrorPointer()
-        
-        do {
-            try NSFileManager.defaultManager().createDirectoryAtURL(NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload"), withIntermediateDirectories: true, attributes: nil)
-        } catch let error1 as NSError {
-            error.memory = error1
-            print("Creating 'upload' directory failed. Error: \(error)")
-        }
-        
-        
         
         // Do any additional setup after loading the view.
     }
     
-    @IBAction func uploadPicture(sender: AnyObject) {
-        selectPicture()
-    }
-    
-    func selectPicture() {
-        print("selectPictureTapped")
-        
-        let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".jpeg")
-        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload").URLByAppendingPathComponent(fileName)
-        let filePath = fileURL.path!
-        let imageData = UIImageJPEGRepresentation(image, 1.0)
-        
-        imageData?.writeToFile(filePath, atomically: true)
-        
-        let uploadRequest = AWSS3TransferManagerUploadRequest()
-        uploadRequest.body = fileURL
-        uploadRequest.key = fileName
-        uploadRequest.bucket = "dormroombucket"
-        
-        uploadRequests.append(uploadRequest)
-        uploadFileUrls.append(fileURL)
-        
-        upload(uploadRequest)
-        
-    }
-    
-    
-    func upload(uploadRequest: AWSS3TransferManagerUploadRequest) {
-        
-        let transferManager = AWSS3TransferManager.defaultS3TransferManager()
-        
-        transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject? in
-            
-            if task.error == nil {
-                
-                print("successful upload")
-                
-            } else {
-                
-                print("failed upload")
-                
-            }
-            return nil
-        }
-    }
-    
     override func viewDidAppear(animated: Bool) {
-        
         
         if PFUser.currentUser() == nil {
             

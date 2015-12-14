@@ -13,14 +13,15 @@ class ChangeUniViewController: UIViewController, UITableViewDataSource, UITableV
     weak var rootController: MainRootViewController?
     let user = PFUser.currentUser()
     
-    var universityFiles = [PFFile]()
+
     var universityNames = [String]()
+    var staticImages = [UIImage]()
     
     @IBOutlet weak var ChooseUniTableViewOutlet: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadUnisFromParse()
+        addFeedImages()
         // Do any additional setup after loading the view.
     }
     
@@ -29,18 +30,18 @@ class ChangeUniViewController: UIViewController, UITableViewDataSource, UITableV
         
         let cell = tableView.dequeueReusableCellWithIdentifier("ChangeUniCell", forIndexPath: indexPath) as! ChangeUniCell
         
-        tableView.decelerationRate = 0.1
+        tableView.decelerationRate = 0.01
         
         cell.selectionStyle = .None
         
-        cell.ChangeUniImageOutlet.imageFromPFFile(universityFiles[indexPath.row], placeholder: "Crest")
+        cell.ChangeUniImageOutlet.image = staticImages[indexPath.row]
         
         return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return universityFiles.count
+        return staticImages.count
         
     }
     
@@ -48,12 +49,11 @@ class ChangeUniViewController: UIViewController, UITableViewDataSource, UITableV
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         user?["universityName"] = universityNames[indexPath.row]
-        user?["universityFile"] = universityFiles[indexPath.row]
         user?.saveEventually()
         
         guard let actualController = rootController else {return}
         
-        actualController.menuController?.UniversityOutlet.imageFromPFFile(universityFiles[indexPath.row], placeholder: "Crest")
+        actualController.menuController?.UniversityOutlet.image = staticImages[indexPath.row]
         rootController?.toggleChangeUni({ (complete) -> () in
             print("change uni closed")
         })
@@ -62,36 +62,27 @@ class ChangeUniViewController: UIViewController, UITableViewDataSource, UITableV
     
     
     //Functions
-    func loadUnisFromParse() {
+    func addFeedImages() {
         
-        universityFiles.removeAll()
-        universityNames.removeAll()
+        guard let dal = UIImage(named: "Dalhousie"), mcgill = UIImage(named: "McGill"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), western = UIImage(named: "Western"), calgary = UIImage(named: "Calgary"), ubc = UIImage(named: "UBC") else {return}
         
-        self.ChooseUniTableViewOutlet.reloadData()
+        staticImages.append(dal)
+        universityNames.append("Dalhousie")
+        staticImages.append(mcgill)
+        universityNames.append("McGill")
+        staticImages.append(queens)
+        universityNames.append("Queens")
+        staticImages.append(ryerson)
+        universityNames.append("Ryerson")
+        staticImages.append(western)
+        universityNames.append("Western")
+        staticImages.append(calgary)
+        universityNames.append("Calgary")
+        staticImages.append(ubc)
+        universityNames.append("UBC")
         
-        let query = PFQuery(className: "Universities")
-        query.orderByDescending("createdAt")
-        
-        query.findObjectsInBackgroundWithBlock { (unis: [PFObject]?, error: NSError?) -> Void in
-            
-            if error == nil {
-                
-                if let unis = unis {
-                    
-                    for uni in unis {
-                        self.universityFiles.append(uni["Image"] as! PFFile)
-                        self.universityNames.append(uni["Name"] as! String)
-                        self.ChooseUniTableViewOutlet.reloadData()
-                    }
-                }
-            } else {
-                
-                let alertController = UIAlertController(title: "Shit...", message: error?.localizedDescription, preferredStyle:  UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
-                self.presentViewController(alertController, animated: true, completion: nil)            }
-        }
+        ChooseUniTableViewOutlet.reloadData()
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

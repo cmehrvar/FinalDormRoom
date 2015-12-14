@@ -8,6 +8,7 @@ target 'DormRoom' do
 pod ‘Parse’
 pod 'AWSS3'
 pod 'SDWebImage'
+pod 'UIActivityIndicator-for-SDWebImage'
 
 end
 

@@ -79,7 +79,6 @@
 		A39CBE551C0CECF800D59434 /* BlackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackButton.swift; sourceTree = "<group>"; };
 		A39CBE571C0CED5400D59434 /* WhiteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteButton.swift; sourceTree = "<group>"; };
 		A39CBE591C0CF54200D59434 /* ChooseUniCellTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseUniCellTableViewCell.swift; sourceTree = "<group>"; };
-		A39CBE5B1C0CFBFF00D59434 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A39CBE5F1C0D15D200D59434 /* DormRoom-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DormRoom-Bridging-Header.h"; sourceTree = "<group>"; };
 		A39CBE601C0D15D200D59434 /* BridgingHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgingHeader.m; sourceTree = "<group>"; };
 		A3A419C71C16373B003C05EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -274,7 +273,6 @@
 			children = (
 				A3A419C91C16375B003C05EA /* AVKit.framework */,
 				A3A419C71C16373B003C05EA /* AVFoundation.framework */,
-				A39CBE5B1C0CFBFF00D59434 /* CoreLocation.framework */,
 				F2451B51057A263F932FCF4E /* libPods-DormRoom.a */,
 			);
 			name = Frameworks;

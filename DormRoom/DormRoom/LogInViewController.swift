@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreLocation
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
@@ -19,8 +18,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         handleKeyboard()
         addDismissKeyboard()
         textFieldDelegates()
-        coreLoactionHandler()
-        
     }
     
     //Outlets
@@ -56,16 +53,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     
     //Functions
-    func coreLoactionHandler() {
-        
-        let manager = CLLocationManager()
-        if CLLocationManager.locationServicesEnabled() {
-            manager.startUpdatingLocation()
-            
-        }
-    }
-    
-    
     func textFieldDelegates() {
         
         UsernameOutlet.delegate = self

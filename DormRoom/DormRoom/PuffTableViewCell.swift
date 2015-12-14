@@ -58,27 +58,31 @@ class PuffTableViewCell: UITableViewCell {
     
     func expandImage() {
         
+        isExpanded = true
+        
         UIView.animateWithDuration(0.3) { () -> Void in
             
-            self.ReadSwipeViewOutlet.alpha = 0
+            self.ReadSwipeViewOutlet.alpha = 1
             self.ReadSwipeViewOutlet.transform = CGAffineTransformMakeScale(0.4, 0.4)
             
         }
-        
-        isExpanded = true
-        ReadSwipeViewOutlet.alpha = 1
-        
     }
     
     func contractImage() {
         
-        UIView.animateWithDuration(0.3) { () -> Void in
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
             
-            self.ReadSwipeViewOutlet.transform = CGAffineTransformIdentity
             self.ReadSwipeViewOutlet.alpha = 0
+            self.ReadSwipeViewOutlet.transform = CGAffineTransformIdentity
             
+            }) { (complete) -> Void in
+                
+                self.SwipeConstraint.constant = 0
+                self.ThumbsUpOutlet.alpha = 0
+                self.ThumbsDownOutlet.alpha = 0
         }
     }
+    
     
     func longPressed(sender: UILongPressGestureRecognizer) {
         
@@ -137,10 +141,6 @@ class PuffTableViewCell: UITableViewCell {
             } else if SwipeConstraint.constant >= 50 {
                 swipeLike()
             }
-            
-            SwipeConstraint.constant = 0
-            ThumbsUpOutlet.alpha = 0
-            ThumbsDownOutlet.alpha = 0
             
         default:
             break
