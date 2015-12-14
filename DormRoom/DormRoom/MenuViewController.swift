@@ -17,7 +17,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var staticImages = [UIImage]()
     
     
-    var feedName: [String] = ["CanadaPuff", "CanadaPuff", "CanadaPuff"]
+    var feedName: [String] = ["CanadaPuff", "CanadaPuff", "CanadaPuff", "Dalhousie","McGill", "Queens", "Ryerson", "Western", "Calgary", "UBC"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         addRecognizers()
         
         addFeedImages()
-        loadFromParse()
+        //loadFromParse()
         
         retrieveProfilePicture()
         retrieveUniversity()
@@ -69,10 +69,13 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let cell = tableView.dequeueReusableCellWithIdentifier("ChooseFeedCell", forIndexPath: indexPath) as! ChooseFeedCell
         
-        tableView.decelerationRate = 0.1
+        tableView.decelerationRate = 0.01
         
         cell.selectionStyle = .None
         
+        cell.FeedImageOutlet.image = staticImages[indexPath.row]
+        
+        /*
         if indexPath.row <= (staticImages.count - 1) {
             cell.FeedImageOutlet.image = staticImages[indexPath.row]
         } else {
@@ -80,6 +83,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let realIndexPath = indexPath.row - (staticImages.count)
             cell.FeedImageOutlet.imageFromPFFile(feedFiles[realIndexPath], placeholder: "Crest")
         }
+    */
         
         return cell
     }
@@ -168,12 +172,19 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //Functions
     func addFeedImages() {
         
-        guard let crest = UIImage(named: "Crest"), canada = UIImage(named: "Canada"), topRated = UIImage(named: "TopRated"), topHated = UIImage(named: "MostHated") else {return}
+        guard let crest = UIImage(named: "Crest"), canada = UIImage(named: "Canada"), topRated = UIImage(named: "TopRated"), topHated = UIImage(named: "MostHated"), dal = UIImage(named: "Dalhousie"), mcgill = UIImage(named: "McGill"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), western = UIImage(named: "Western"), calgary = UIImage(named: "Calgary"), ubc = UIImage(named: "UBC") else {return}
         
         staticImages.append(crest)
         staticImages.append(canada)
         staticImages.append(topRated)
         staticImages.append(topHated)
+        staticImages.append(dal)
+        staticImages.append(mcgill)
+        staticImages.append(queens)
+        staticImages.append(ryerson)
+        staticImages.append(western)
+        staticImages.append(calgary)
+        staticImages.append(ubc)
     }
     
     

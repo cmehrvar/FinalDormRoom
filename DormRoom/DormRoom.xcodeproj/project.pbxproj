@@ -29,10 +29,9 @@
 		A39CBE581C0CED5400D59434 /* WhiteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE571C0CED5400D59434 /* WhiteButton.swift */; };
 		A39CBE5A1C0CF54200D59434 /* ChooseUniCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE591C0CF54200D59434 /* ChooseUniCellTableViewCell.swift */; };
 		A39CBE611C0D15D200D59434 /* BridgingHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE601C0D15D200D59434 /* BridgingHeader.m */; };
-		A39CBE681C0D228C00D59434 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE671C0D228C00D59434 /* ImageViewExtension.swift */; };
-		A3A419871C14C4CE003C05EA /* ImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3A419861C14C4CE003C05EA /* ImageExtension.swift */; };
 		A3A419CA1C16375B003C05EA /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A419C91C16375B003C05EA /* AVKit.framework */; };
 		A3A419CB1C163760003C05EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A419C71C16373B003C05EA /* AVFoundation.framework */; };
+		A3E110991C1E3E7D00398F03 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E110981C1E3E7D00398F03 /* ImageViewExtension.swift */; };
 		A3F3097A1C0BB32A002DEADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F309791C0BB32A002DEADF /* AppDelegate.swift */; };
 		A3F3097F1C0BB32A002DEADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3F3097D1C0BB32A002DEADF /* Main.storyboard */; };
 		A3F309811C0BB32A002DEADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3F309801C0BB32A002DEADF /* Assets.xcassets */; };
@@ -83,10 +82,9 @@
 		A39CBE5B1C0CFBFF00D59434 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A39CBE5F1C0D15D200D59434 /* DormRoom-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DormRoom-Bridging-Header.h"; sourceTree = "<group>"; };
 		A39CBE601C0D15D200D59434 /* BridgingHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgingHeader.m; sourceTree = "<group>"; };
-		A39CBE671C0D228C00D59434 /* ImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
-		A3A419861C14C4CE003C05EA /* ImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageExtension.swift; sourceTree = "<group>"; };
 		A3A419C71C16373B003C05EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A3A419C91C16375B003C05EA /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		A3E110981C1E3E7D00398F03 /* ImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
 		A3F309761C0BB32A002DEADF /* DormRoom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DormRoom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3F309791C0BB32A002DEADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3F3097E1C0BB32A002DEADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -210,8 +208,7 @@
 		A39CBE621C0D18DC00D59434 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				A39CBE671C0D228C00D59434 /* ImageViewExtension.swift */,
-				A3A419861C14C4CE003C05EA /* ImageExtension.swift */,
+				A3E110981C1E3E7D00398F03 /* ImageViewExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -473,9 +470,9 @@
 				A32EC6591C0E577F0004D8C7 /* MainPuffViewController.swift in Sources */,
 				A32EC6531C0E57550004D8C7 /* MenuViewController.swift in Sources */,
 				A32EC6A01C0F80C30004D8C7 /* ChangeUniCell.swift in Sources */,
-				A3A419871C14C4CE003C05EA /* ImageExtension.swift in Sources */,
 				A39CBE611C0D15D200D59434 /* BridgingHeader.m in Sources */,
 				A39CBE5A1C0CF54200D59434 /* ChooseUniCellTableViewCell.swift in Sources */,
+				A3E110991C1E3E7D00398F03 /* ImageViewExtension.swift in Sources */,
 				A32EC64B1C0DF7650004D8C7 /* ChooseUniViewController.swift in Sources */,
 				A32EC65D1C0EA0DD0004D8C7 /* ChooseFeedCell.swift in Sources */,
 				A32EC6511C0E56980004D8C7 /* MainRootViewController.swift in Sources */,
@@ -488,7 +485,6 @@
 				A39CBE561C0CECF800D59434 /* BlackButton.swift in Sources */,
 				A32EC6551C0E57620004D8C7 /* TakePuffViewController.swift in Sources */,
 				A39CBE581C0CED5400D59434 /* WhiteButton.swift in Sources */,
-				A39CBE681C0D228C00D59434 /* ImageViewExtension.swift in Sources */,
 				A32EC69C1C0F4B300004D8C7 /* UniView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

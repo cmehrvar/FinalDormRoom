@@ -63,12 +63,12 @@
                                 <exclude reference="oLw-57-4UO"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="ab6-Qd-391"/>
+                                <exclude reference="sRj-9U-wE5"/>
+                                <exclude reference="urI-lc-Luz"/>
                                 <exclude reference="Inq-9V-g52"/>
                                 <exclude reference="Vtf-5g-6wO"/>
                                 <exclude reference="YLl-9h-BDy"/>
-                                <exclude reference="sRj-9U-wE5"/>
-                                <exclude reference="urI-lc-Luz"/>
-                                <exclude reference="ab6-Qd-391"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -77,12 +77,12 @@
                                 <include reference="oLw-57-4UO"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="ab6-Qd-391"/>
+                                <include reference="sRj-9U-wE5"/>
+                                <include reference="urI-lc-Luz"/>
                                 <include reference="Inq-9V-g52"/>
                                 <include reference="Vtf-5g-6wO"/>
                                 <include reference="YLl-9h-BDy"/>
-                                <include reference="sRj-9U-wE5"/>
-                                <include reference="urI-lc-Luz"/>
-                                <include reference="ab6-Qd-391"/>
                             </mask>
                         </variation>
                     </view>

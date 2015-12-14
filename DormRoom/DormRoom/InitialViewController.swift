@@ -79,7 +79,7 @@ class InitialViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
         
-        /*
+        
         if PFUser.currentUser() == nil {
             
             print("no user")
@@ -98,7 +98,7 @@ class InitialViewController: UIViewController {
                 self.presentViewController(vc, animated: true, completion: nil)
             }
         }
-*/
+
     }
     
     override func didReceiveMemoryWarning() {

@@ -15,7 +15,10 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     weak var rootController: MainRootViewController?
     
     var feed = String()
-    let user = PFUser.currentUser()
+    var user = PFUser.currentUser()
+    var imageUrl: String = String()
+    var profilePictureUrl: String = String()
+
     
     let frontOut = AVCaptureStillImageOutput()
     let backOut = AVCaptureStillImageOutput()
@@ -26,12 +29,11 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        ChangeCameraOutlet.layer.cornerRadius = 5
-        
         addTapGesture()
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         CaptionOutlet.delegate = self
         configureCameraForCapture()
+        addUploadStuff()
         
     }
     
@@ -48,12 +50,32 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     }
     
     
+    
+    
+     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    
+    
+    
     //Outlets
     @IBOutlet weak var TakenPuffOutlet: UIImageView!
     @IBOutlet weak var CaptionOutlet: UITextField!
     @IBOutlet weak var CameraCaptureView: UIView!
     @IBOutlet weak var TakePuffButtonViewOutlet: UIView!
     @IBOutlet weak var ChangeCameraOutlet: UIButton!
+    
+    
+    
+    
+    
+    
+     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    
+    
+    
     
     //Actions
     @IBAction func changeCameraAction(sender: AnyObject) {
@@ -115,57 +137,11 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func postPuff(sender: AnyObject) {
-        
-        do {
-            try user?.fetch()
-        } catch let error {
-            print("error fetching new user: \(error)")
-        }
-        
-        let post = PFObject(className: feed)
-        
-        guard let image = TakenPuffOutlet.image else {return}
-        let data = UIImageJPEGRepresentation(image, 0.5)
-        
-        guard let actualData = data else {return}
-        let file = PFFile(data: actualData)
-        
-        post["Image"] = file
-        post["Caption"] = CaptionOutlet.text
-        post["Like"] = 0
-        post["Dislike"] = 0
-        post["ProfilePicture"] = user?["profilePicture"] as! PFFile
-        post["UniversityFile"] = user?["universityFile"] as! PFFile
-        post["UniversityName"] = user?["universityName"] as! String
-        
-        
-        post.saveInBackgroundWithBlock { (Bool, error: NSError?) -> Void in
-            
-            if error == nil {
-                
-                guard let actualController = self.rootController else {return}
-                
-                actualController.mainController?.loadFromParse()
-                
-                
-            } else {
-                
-                let alertController = UIAlertController(title: "Shit...", message: error?.localizedDescription, preferredStyle:  UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
-                self.presentViewController(alertController, animated: true, completion: nil)
-                
-            }
-        }
-        
-        self.rootController?.toggleTakePuff({ (complete) -> () in
-            
-            self.CameraCaptureView.alpha = 1
-            self.TakePuffButtonViewOutlet.alpha = 1
-            self.ChangeCameraOutlet.alpha = 1
-            self.TakenPuffOutlet.image = nil
-            self.CaptionOutlet.text = nil
-            
-        })
+
+        guard let image = self.TakenPuffOutlet.image else {return}
+        self.uploadToAWS(image)
+        print("Upload in progress")
+    
     }
     
     
@@ -183,7 +159,169 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         
     }
 
+    
+    
+    
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
+    
+    
+    
     //Functions
+    func uploadToAWS(image: UIImage) {
+        
+        rootController?.toggleTakePuff({ (complete) -> () in
+            
+        })
+        
+        let uploadRequest = imageUploadRequest(image)
+        
+        let transferManager = AWSS3TransferManager.defaultS3TransferManager()
+        
+        transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject? in
+            
+            if task.error == nil {
+                
+                print("successful image upload")
+                self.uploadProfilePicture()
+                
+            } else {
+                print("error uploading: \(task.error)")
+                
+                let alertController = UIAlertController(title: "Shit...", message: "Error Uploading", preferredStyle:  UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+            }
+            return nil
+        }
+    }
+
+
+    func saveToParse(){
+        
+        do {
+            try user?.fetch()
+        } catch let error {
+            print("error fetching new user: \(error)")
+        }
+        
+        let post = PFObject(className: feed)
+        
+        post["ImageUrl"] = imageUrl
+        post["Caption"] = CaptionOutlet.text
+        post["Like"] = 0
+        post["Dislike"] = 0
+        post["ProfilePictureUrl"] = profilePictureUrl
+        post["UniversityName"] = user?["universityName"] as! String
+        
+        post.saveInBackgroundWithBlock { (Bool, error: NSError?) -> Void in
+            
+            if error == nil {
+                
+                print("successfully posted to parse")
+                self.CameraCaptureView.alpha = 1
+                self.TakePuffButtonViewOutlet.alpha = 1
+                self.ChangeCameraOutlet.alpha = 1
+                self.TakenPuffOutlet.image = nil
+                self.CaptionOutlet.text = nil
+                self.rootController?.mainController?.loadFromParse()
+                
+            } else {
+                
+                let alertController = UIAlertController(title: "Shit...", message: error?.localizedDescription, preferredStyle:  UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            }
+        }
+    }
+
+
+
+    func imageUploadRequest(image: UIImage) -> AWSS3TransferManagerUploadRequest {
+        
+        let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".jpeg")
+        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload").URLByAppendingPathComponent(fileName)
+        let filePath = fileURL.path!
+        
+        let imageData = UIImageJPEGRepresentation(image, 0.5)
+        
+        imageData?.writeToFile(filePath, atomically: true)
+        
+        let uploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest.body = fileURL
+        uploadRequest.key = fileName
+        uploadRequest.bucket = "dormroombucket"
+        
+        if let key = uploadRequest.key {
+            imageUrl = key
+        }
+        
+        return uploadRequest
+        
+    }
+    
+    func uploadProfilePicture() {
+        
+        let userProfilePictureFile: PFFile = user?["profilePicture"] as! PFFile
+        var userProfilePictureData: NSData = NSData()
+        
+        do {
+            userProfilePictureData = try userProfilePictureFile.getData()
+        } catch let error {
+            print(error)
+        }
+        
+        let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".jpeg")
+        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload").URLByAppendingPathComponent(fileName)
+        let filePath = fileURL.path!
+        
+        userProfilePictureData.writeToFile(filePath, atomically: true)
+        
+        let uploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest.body = fileURL
+        uploadRequest.key = fileName
+        uploadRequest.bucket = "dormroombucket"
+
+        if let key = uploadRequest.key {
+            profilePictureUrl = key
+        }
+        
+        let transferManager = AWSS3TransferManager.defaultS3TransferManager()
+        
+        transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject? in
+            
+            if task.error == nil {
+                print("successful Profile upload")
+                self.saveToParse()
+                
+            } else {
+                print("error uploading: \(task.error)")
+                let alertController = UIAlertController(title: "Shit...", message: "Error Uploading", preferredStyle:  UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+
+            }
+            return nil
+        }
+    }
+    
+    
+    
+    func addUploadStuff(){
+        
+        let error = NSErrorPointer()
+        
+        do{
+            try NSFileManager.defaultManager().createDirectoryAtURL(NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload"), withIntermediateDirectories: true, attributes: nil)
+        } catch let error1 as NSError {
+            error.memory = error1
+            print("Creating upload directory failed. Error: \(error)")
+        }
+    }
+    
+    
     func dismissKeyboard() {
         view.endEditing(true)
     }

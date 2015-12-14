@@ -20,11 +20,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var loading = false
     
     var didLoadWebsite = false
-    
-    var images = [PFFile]()
-    var profilePictures = [PFFile]()
+
+    var imageUrls = [String]()
+    var image = UIImage()
+    var profilePictureURLS = [String]()
+    var profilePicture = UIImage()
     var universityNames = [String]()
-    var universityFiles = [PFFile]()
     var captions = [String]()
     var likes = [Int]()
     var dislikes = [Int]()
@@ -44,7 +45,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         addScrollToTop()
         addRefresh()
         loadFromParse()
-        
+        addDownloadStuff()
         // Do any additional setup after loading the view.
     }
     
@@ -62,7 +63,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         actualController.takePuffController?.feed = feed
         
-        //presentViewController(callCamera(), animated: true, completion: nil)
         rootController?.toggleTakePuff({ (complete) -> () in
             
         })
@@ -78,6 +78,18 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     //Functions
+    func addDownloadStuff(){
+        
+        let error = NSErrorPointer()
+        
+        do {
+            try NSFileManager.defaultManager().createDirectoryAtURL(NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("download"), withIntermediateDirectories: true, attributes: nil)
+        } catch let error1 as NSError {
+            error.memory = error1
+            print("Creating 'download' directory failed. Error: \(error)")
+        }
+    }
+    
     func addScrollToTop() {
         let tapScrollToTop: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "scrollToTop")
         self.navigationItem.titleView?.userInteractionEnabled = true
@@ -108,7 +120,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     func addRefresh() {
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Puff You")
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Keep on Puffin'")
         self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         
     }
@@ -133,42 +145,29 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     
                     self.loading = true
                     
-                    self.images.removeAll()
-                    self.profilePictures.removeAll()
+                    self.imageUrls.removeAll()
+                    self.profilePictureURLS.removeAll()
                     self.likes.removeAll()
                     self.dislikes.removeAll()
                     self.captions.removeAll()
-                    self.universityFiles.removeAll()
                     self.universityNames.removeAll()
                     self.objectId.removeAll()
                     
-                    var stopper = 0
-                    
                     if let puffs = puffs {
                         
-                        switch stopper {
+                        for puff in puffs {
                             
-                        case 50:
-                            break
+                            self.imageUrls.append(puff["ImageUrl"] as! String)
+                            self.profilePictureURLS.append(puff["ProfilePictureUrl"] as! String)
+                            self.captions.append(puff["Caption"] as! String)
+                            self.likes.append(puff["Like"] as! Int)
+                            self.dislikes.append(puff["Dislike"] as! Int)
+                            self.universityNames.append(puff["UniversityName"] as! String)
                             
-                        default:
-                            for puff in puffs {
-                                
-                                self.images.append(puff["Image"] as! PFFile)
-                                self.profilePictures.append(puff["ProfilePicture"] as! PFFile)
-                                self.captions.append(puff["Caption"] as! String)
-                                self.likes.append(puff["Like"] as! Int)
-                                self.dislikes.append(puff["Dislike"] as! Int)
-                                self.universityNames.append(puff["UniversityName"] as! String)
-                                self.universityFiles.append(puff["UniversityFile"] as! PFFile)
-                                
-                                if let actualId = puff.objectId {
-                                    self.objectId.append(actualId)
-                                }
-                                
-                                self.PuffTableView.reloadData()
-                                stopper++
+                            if let actualId = puff.objectId {
+                                self.objectId.append(actualId)
                             }
+                            self.PuffTableView.reloadData()
                         }
                     }
                     
@@ -226,9 +225,14 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     //TableView shit
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        let dal = UIImage(named: "Dalhousie"), mcgill = UIImage(named: "McGill"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), western = UIImage(named: "Western"), calgary = UIImage(named: "Calgary"), ubc = UIImage(named: "UBC")
+        
         myTableView = tableView
         
-        tableView.decelerationRate = 0.05
+        let dormroomurl = "https://s3.amazonaws.com/dormroombucket/"
+        let placeholderImage = UIImage(named: "Crest")
+        
+        tableView.decelerationRate = 0.01
         
         let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
         
@@ -242,14 +246,38 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell.dislike = dislikes[indexPath.row]
         
-        cell.ImageOutlet.imageFromPFFile(images[indexPath.row], placeholder: "Crest")
+        cell.ImageOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: placeholderImage)
+        cell.SwipeViewOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: placeholderImage)
+        cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])), placeholderImage: placeholderImage)
         
-        cell.SwipeViewOutlet.imageFromPFFile(images[indexPath.row], placeholder: "Crest")
-        
-        cell.UniversityOutlet.imageFromPFFile(universityFiles[indexPath.row], placeholder: "Crest")
-        
-        cell.ProfileOutlet.imageFromPFFile(profilePictures[indexPath.row], placeholder: "Crest")
-        
+        switch universityNames[indexPath.row] {
+            
+        case "Dalhousie":
+            cell.UniversityOutlet.image = dal
+            
+        case "McGill":
+            cell.UniversityOutlet.image = mcgill
+            
+        case "Queens":
+            cell.UniversityOutlet.image = queens
+            
+        case "Ryerson":
+            cell.UniversityOutlet.image = ryerson
+            
+        case "Western":
+            cell.UniversityOutlet.image = western
+            
+        case "Calgary":
+            cell.UniversityOutlet.image = calgary
+            
+        case "UBC":
+            cell.UniversityOutlet.image = ubc
+            
+        default:
+            break
+            
+        }
+
         cell.LikeOutlet.text = "\(likes[indexPath.row])"
         
         cell.DislikeOutlet.text = "\(dislikes[indexPath.row])"
@@ -262,7 +290,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return images.count
+        return imageUrls.count
     }
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
