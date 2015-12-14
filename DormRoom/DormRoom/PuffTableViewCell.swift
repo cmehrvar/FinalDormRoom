@@ -49,7 +49,6 @@ class PuffTableViewCell: UITableViewCell {
         longPressRecognizer.delegate = self
         self.addGestureRecognizer(longPressRecognizer)
         
-        
         //Adding Pan Gesture
         let panRecognizer = UIPanGestureRecognizer(target: self, action: "panOnCell:")
         panRecognizer.delegate = self

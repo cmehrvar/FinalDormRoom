@@ -22,7 +22,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var loading = false
     
     var didLoadWebsite = false
-
+    
     var imageUrls = [String]()
     var image = UIImage()
     var profilePictureURLS = [String]()
@@ -47,8 +47,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         addScrollToTop()
         addRefresh()
         loadFromParse()
-        addDownloadStuff()
-        
         
         // Do any additional setup after loading the view.
     }
@@ -82,18 +80,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     //Functions
-    func addDownloadStuff(){
-        
-        let error = NSErrorPointer()
-        
-        do {
-            try NSFileManager.defaultManager().createDirectoryAtURL(NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("download"), withIntermediateDirectories: true, attributes: nil)
-        } catch let error1 as NSError {
-            error.memory = error1
-            print("Creating 'download' directory failed. Error: \(error)")
-        }
-    }
-    
     func addScrollToTop() {
         let tapScrollToTop: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "scrollToTop")
         self.navigationItem.titleView?.userInteractionEnabled = true
@@ -289,7 +275,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             break
             
         }
-
+        
         cell.LikeOutlet.text = "\(likes[indexPath.row])"
         
         cell.DislikeOutlet.text = "\(dislikes[indexPath.row])"
@@ -318,9 +304,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
-        
-        
-        //loadFromParse()
         // Dispose of any resources that can be recreated.
     }
     

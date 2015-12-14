@@ -10,7 +10,6 @@ import UIKit
 
 class ChooseFeedCell: UITableViewCell {
     
-    
     @IBOutlet weak var FeedImageOutlet: UIImageView!
 
     override func awakeFromNib() {

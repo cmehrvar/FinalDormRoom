@@ -21,6 +21,7 @@ class ChangeUniViewController: UIViewController, UITableViewDataSource, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         addFeedImages()
         // Do any additional setup after loading the view.
     }
