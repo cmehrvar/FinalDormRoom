@@ -64,7 +64,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var CameraCaptureView: UIView!
     @IBOutlet weak var TakePuffButtonViewOutlet: UIView!
     @IBOutlet weak var ChangeCameraOutlet: UIButton!
-    
+    @IBOutlet weak var PostButtonOutlet: UIView!
     
     
     
@@ -86,13 +86,37 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     @IBAction func takePuffAction(sender: AnyObject) {
         
         takeApuff()
+        PostButtonOutlet.alpha = 1
         
     }
     
     @IBAction func postPuff(sender: AnyObject) {
         
-        guard let image = self.TakenPuffOutlet.image else {return}
-        self.uploadToAWS(image)
+        guard let image = self.TakenPuffOutlet.image else {print("step skipped")
+            return}
+        
+        rootController?.toggleTakePuff({ (complete) -> () in
+            
+            guard let actualController = self.rootController else {return}
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                actualController.mainController?.uploadOutlet.alpha = 1
+                actualController.mainController?.TakeAPuffOutlet.alpha = 0
+                
+                self.CameraCaptureView.alpha = 1
+                self.TakePuffButtonViewOutlet.alpha = 1
+                self.ChangeCameraOutlet.alpha = 1
+                
+                self.PostButtonOutlet.alpha = 0
+                
+                
+                
+                self.uploadToAWS(image)
+            })
+            
+        })
+
         print("Upload in progress")
         
     }
@@ -105,6 +129,9 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             self.CameraCaptureView.alpha = 1
             self.TakePuffButtonViewOutlet.alpha = 1
             self.ChangeCameraOutlet.alpha = 1
+            
+            self.PostButtonOutlet.alpha = 0
+            
             self.TakenPuffOutlet.image = nil
             self.CaptionOutlet.text = nil
             print("cancelled")
@@ -175,16 +202,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     
     func uploadToAWS(image: UIImage) {
         
-        rootController?.toggleTakePuff({ (complete) -> () in
-            
-            guard let actualController = self.rootController else {return}
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                actualController.mainController?.uploadOutlet.alpha = 1
-            })
-    
-        })
-        
         let uploadRequest = imageUploadRequest(image)
         
         let transferManager = AWSS3TransferManager.defaultS3TransferManager()
@@ -213,7 +230,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload").URLByAppendingPathComponent(fileName)
         let filePath = fileURL.path!
         
-        let imageData = UIImageJPEGRepresentation(image, 0.5)
+        let imageData = UIImageJPEGRepresentation(image, 0.25)
         
         imageData?.writeToFile(filePath, atomically: true)
         
@@ -291,15 +308,13 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         post["Dislike"] = 0
         post["ProfilePictureUrl"] = profilePictureUrl
         post["UniversityName"] = user?["universityName"] as! String
+        post["Username"] = user?.username
         
         post.saveInBackgroundWithBlock { (Bool, error: NSError?) -> Void in
             
             if error == nil {
                 
                 print("successfully posted to parse")
-                self.CameraCaptureView.alpha = 1
-                self.TakePuffButtonViewOutlet.alpha = 1
-                self.ChangeCameraOutlet.alpha = 1
                 self.TakenPuffOutlet.image = nil
                 self.CaptionOutlet.text = nil
                 self.rootController?.mainController?.loadFromParse({ () -> Void in
@@ -310,6 +325,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                 
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     actualController.mainController?.uploadOutlet.alpha = 0
+                    actualController.mainController?.TakeAPuffOutlet.alpha = 1
                 })
                 
                 

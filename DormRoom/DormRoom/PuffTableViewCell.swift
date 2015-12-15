@@ -38,6 +38,7 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var ReadSwipeViewOutlet: UIView!
     @IBOutlet weak var ThumbsUpOutlet: UIImageView!
     @IBOutlet weak var ThumbsDownOutlet: UIImageView!
+    @IBOutlet weak var UsernameOutlet: UILabel!
     
      @IBOutlet weak var SwipeConstraint: NSLayoutConstraint!
     

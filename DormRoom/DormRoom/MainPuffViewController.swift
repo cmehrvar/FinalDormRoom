@@ -17,13 +17,14 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var user = PFUser.currentUser()
     
     var loading = false
-   
+    
     var imageUrls = [String]()
     var profilePictureURLS = [String]()
     var universityNames = [String]()
     var captions = [String]()
     var likes = [Int]()
     var dislikes = [Int]()
+    var usernames = [String]()
     var objectId = [String]()
     
     let dal = UIImage(named: "Dalhousie"), mcgill = UIImage(named: "McGill"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), western = UIImage(named: "Western"), calgary = UIImage(named: "Calgary"), ubc = UIImage(named: "UBC")
@@ -38,6 +39,19 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         
+        if user?["firstTime"] as! Bool == true {
+            
+            rootController?.toggleTakePuff({ (complete) -> () in
+                
+                guard let actualController = self.rootController else {return}
+                actualController.takePuffController?.feed = self.feed
+                
+                self.user?["firstTime"] = false
+                self.user?.saveEventually()
+                
+            })
+        }
+        
         initializeFeeds()
         addScrollToTop()
         addRefresh()
@@ -48,12 +62,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         loadWebsite()
         // Do any additional setup after loading the view.
     }
-    
-    override func viewDidLayoutSubviews() {
-        loadFromParse { () -> Void in
-            
-        }
-    }
+   
     
     //Outlets
     @IBOutlet weak var PuffTableView: UITableView!
@@ -71,6 +80,11 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         rootController?.toggleTakePuff({ (complete) -> () in
             
+            actualController.takePuffController?.TakenPuffOutlet.image = nil
+            actualController.takePuffController?.CaptionOutlet.text = nil
+            
+            self.uploadOutlet.alpha = 0
+    
         })
     }
     
@@ -141,13 +155,14 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 if !self.loading{
                     
                     self.loading = true
-                    
+                                        
                     self.imageUrls.removeAll()
                     self.profilePictureURLS.removeAll()
                     self.likes.removeAll()
                     self.dislikes.removeAll()
                     self.captions.removeAll()
                     self.universityNames.removeAll()
+                    self.usernames.removeAll()
                     self.objectId.removeAll()
                     
                     if let puffs = puffs {
@@ -160,6 +175,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                             self.likes.append(puff["Like"] as! Int)
                             self.dislikes.append(puff["Dislike"] as! Int)
                             self.universityNames.append(puff["UniversityName"] as! String)
+                            self.usernames.append(puff["Username"] as! String)
                             
                             if let actualId = puff.objectId {
                                 self.objectId.append(actualId)
@@ -247,6 +263,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             }, usingActivityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
         
+        cell.UsernameOutlet.text = "@" + usernames[indexPath.row]
+        
         
         cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
         
@@ -308,7 +326,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         SDWebImageManager.sharedManager().imageCache.clearDisk()
         SDWebImageManager.sharedManager().imageCache.clearMemory()
-       
+        
         // Dispose of any resources that can be recreated.
     }
     

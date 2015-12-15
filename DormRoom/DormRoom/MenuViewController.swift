@@ -224,7 +224,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func saveProfile(profile: UIImage) {
         
-        guard let data = UIImageJPEGRepresentation(profile, 0.5), pfProfile = PFFile(data: data) else {return}
+        guard let data = UIImageJPEGRepresentation(profile, 0.25), pfProfile = PFFile(data: data) else {return}
         
         user?["profilePicture"] = pfProfile as PFFile
         

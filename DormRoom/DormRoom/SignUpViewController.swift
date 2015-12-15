@@ -58,7 +58,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
             
             guard let actualImage = ProfileOutlet.image else {return}
             
-            let profilePictureData = UIImageJPEGRepresentation(actualImage, 0.5)
+            let profilePictureData = UIImageJPEGRepresentation(actualImage, 0.25)
             
             guard let actualProfiledata = profilePictureData else {return}
             
@@ -67,6 +67,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
             user.email = EmailOutlet.text
             user["profilePicture"] = PFFile(data: actualProfiledata)
             user["universityName"] = universityName
+            user["firstTime"] = true
             
             user.signUpInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                 
@@ -74,7 +75,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
                     //call main root controller
                     print("successfully signed up")
                     
-                    if let vc: UIViewController = (self.storyboard?.instantiateViewControllerWithIdentifier("MainController")) {
+                    if let vc: UIViewController = (self.storyboard?.instantiateViewControllerWithIdentifier("InstructionController")) {
                         vc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                         self.presentViewController(vc, animated: true, completion: nil)
                     }
