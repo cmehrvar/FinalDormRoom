@@ -14,6 +14,7 @@ class MainRootViewController: UIViewController {
     var menuIsRevealed = false
     var takePuffIsRevealed = false
     var changeUniIsRevealed = false
+    var commentsIsRevealed = false
     
     weak var mainController: MainPuffViewController?
     weak var changeUniController: ChangeUniViewController?
@@ -24,6 +25,8 @@ class MainRootViewController: UIViewController {
     @IBOutlet weak var MenuConstraint: NSLayoutConstraint!
     @IBOutlet weak var ChangeUniBottom: NSLayoutConstraint!
     @IBOutlet weak var ChangeUniTop: NSLayoutConstraint!
+    @IBOutlet weak var CommentsConstraint: NSLayoutConstraint!
+    
     
     
     //Outlets
@@ -33,6 +36,7 @@ class MainRootViewController: UIViewController {
         super.viewDidLoad()
 
         setMenuStage()
+        setCommentStage()
         setChangeUniStage()
  
     }
@@ -46,6 +50,12 @@ class MainRootViewController: UIViewController {
     
     func setMenuStage() {
         MenuConstraint.constant = -drawerWidthConstant
+    }
+    
+    func setCommentStage() {
+        
+        CommentsConstraint.constant = -drawerWidthConstant
+        
     }
     
     func toggleChangeUni(completion: (Bool) -> ()) {
@@ -91,6 +101,29 @@ class MainRootViewController: UIViewController {
                 
         }
     }
+    
+    func toggleComments(completion: (Bool) -> ()) {
+        
+        var panelOffset: CGFloat = 0
+        
+        if commentsIsRevealed {
+            panelOffset = -drawerWidthConstant
+        }
+        
+        commentsIsRevealed = !commentsIsRevealed
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.CommentsConstraint.constant = panelOffset
+            self.view.layoutIfNeeded()
+            
+            }) { (complete) -> Void in
+                
+                completion(complete)
+                
+        }
+    }
+    
     
     func toggleTakePuff(completion: (Bool) -> ()) {
         

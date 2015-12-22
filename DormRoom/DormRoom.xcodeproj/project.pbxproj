@@ -31,6 +31,7 @@
 		A39CBE611C0D15D200D59434 /* BridgingHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE601C0D15D200D59434 /* BridgingHeader.m */; };
 		A3A419CA1C16375B003C05EA /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A419C91C16375B003C05EA /* AVKit.framework */; };
 		A3A419CB1C163760003C05EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A419C71C16373B003C05EA /* AVFoundation.framework */; };
+		A3B60AC51C25C4DA00266FB7 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B60AC41C25C4DA00266FB7 /* CommentsViewController.swift */; };
 		A3E110991C1E3E7D00398F03 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E110981C1E3E7D00398F03 /* ImageViewExtension.swift */; };
 		A3F048221C1F8D09003763D3 /* instruction1.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F048211C1F8D09003763D3 /* instruction1.swift */; };
 		A3F048241C1F8DBD003763D3 /* instruction2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F048231C1F8DBD003763D3 /* instruction2.swift */; };
@@ -41,6 +42,7 @@
 		A3F309841C0BB32A002DEADF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3F309821C0BB32A002DEADF /* LaunchScreen.storyboard */; };
 		A3F3098F1C0BB32A002DEADF /* DormRoomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F3098E1C0BB32A002DEADF /* DormRoomTests.swift */; };
 		A3F3099A1C0BB32A002DEADF /* DormRoomUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F309991C0BB32A002DEADF /* DormRoomUITests.swift */; };
+		A3FF60231C28744F0012159A /* Username.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF60221C28744F0012159A /* Username.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +88,7 @@
 		A39CBE601C0D15D200D59434 /* BridgingHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BridgingHeader.m; sourceTree = "<group>"; };
 		A3A419C71C16373B003C05EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A3A419C91C16375B003C05EA /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		A3B60AC41C25C4DA00266FB7 /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
 		A3E110981C1E3E7D00398F03 /* ImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
 		A3F048211C1F8D09003763D3 /* instruction1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = instruction1.swift; sourceTree = "<group>"; };
 		A3F048231C1F8DBD003763D3 /* instruction2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = instruction2.swift; sourceTree = "<group>"; };
@@ -102,6 +105,7 @@
 		A3F309951C0BB32A002DEADF /* DormRoomUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DormRoomUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3F309991C0BB32A002DEADF /* DormRoomUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DormRoomUITests.swift; sourceTree = "<group>"; };
 		A3F3099B1C0BB32A002DEADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A3FF60221C28744F0012159A /* Username.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Username.swift; sourceTree = "<group>"; };
 		D7A798F36447F0377FEE4814 /* Pods-DormRoom.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DormRoom.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DormRoom/Pods-DormRoom.debug.xcconfig"; sourceTree = "<group>"; };
 		F2451B51057A263F932FCF4E /* libPods-DormRoom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DormRoom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -159,6 +163,7 @@
 				A3F048211C1F8D09003763D3 /* instruction1.swift */,
 				A3F048231C1F8DBD003763D3 /* instruction2.swift */,
 				A3F048251C1F8DCD003763D3 /* instruction3.swift */,
+				A3B60AC41C25C4DA00266FB7 /* CommentsViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -200,6 +205,7 @@
 				A39CBE571C0CED5400D59434 /* WhiteButton.swift */,
 				A32EC69B1C0F4B300004D8C7 /* UniView.swift */,
 				A32EC69D1C0F72B20004D8C7 /* SwipeView.swift */,
+				A3FF60221C28744F0012159A /* Username.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -483,10 +489,12 @@
 				A39CBE5A1C0CF54200D59434 /* ChooseUniCellTableViewCell.swift in Sources */,
 				A3E110991C1E3E7D00398F03 /* ImageViewExtension.swift in Sources */,
 				A32EC64B1C0DF7650004D8C7 /* ChooseUniViewController.swift in Sources */,
+				A3FF60231C28744F0012159A /* Username.swift in Sources */,
 				A32EC65D1C0EA0DD0004D8C7 /* ChooseFeedCell.swift in Sources */,
 				A32EC6511C0E56980004D8C7 /* MainRootViewController.swift in Sources */,
 				A32EC6491C0DF71B0004D8C7 /* SignUpRootController.swift in Sources */,
 				A38C82B51C13F1FC000E650F /* InitialViewController.swift in Sources */,
+				A3B60AC51C25C4DA00266FB7 /* CommentsViewController.swift in Sources */,
 				A3F048241C1F8DBD003763D3 /* instruction2.swift in Sources */,
 				A32EC6571C0E576D0004D8C7 /* ChangeUniViewController.swift in Sources */,
 				A36475571C0BBAB000AC96CA /* TextFields.swift in Sources */,

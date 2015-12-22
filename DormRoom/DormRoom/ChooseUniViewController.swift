@@ -29,23 +29,39 @@ class ChooseUniViewController: UIViewController, UITableViewDataSource, UITableV
     //Functions
     func addFeedImages() {
         
-        guard let dal = UIImage(named: "Dalhousie"), mcgill = UIImage(named: "McGill"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), western = UIImage(named: "Western"), calgary = UIImage(named: "Calgary"), ubc = UIImage(named: "UBC") else {return}
+        guard let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York") else {return}
         
+        staticImages.append(brock)
+        universityNames.append("Brock")
+        staticImages.append(calgary)
+        universityNames.append("Calgary")
+        staticImages.append(carlton)
+        universityNames.append("Carleton")
         staticImages.append(dal)
         universityNames.append("Dalhousie")
+        staticImages.append(laurier)
+        universityNames.append("Laurier")
         staticImages.append(mcgill)
         universityNames.append("McGill")
+        staticImages.append(mac)
+        universityNames.append("Mac")
+        staticImages.append(mun)
+        universityNames.append("Mun")
+        staticImages.append(ottawa)
+        universityNames.append("Ottawa")
         staticImages.append(queens)
         universityNames.append("Queens")
         staticImages.append(ryerson)
         universityNames.append("Ryerson")
-        staticImages.append(western)
-        universityNames.append("Western")
-        staticImages.append(calgary)
-        universityNames.append("Calgary")
         staticImages.append(ubc)
         universityNames.append("UBC")
-        
+        staticImages.append(uoft)
+        universityNames.append("UofT")
+        staticImages.append(western)
+        universityNames.append("Western")
+        staticImages.append(york)
+        universityNames.append("York")
+       
         ChooseUniTableViewOutlet.reloadData()
     }
 

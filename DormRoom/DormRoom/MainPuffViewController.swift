@@ -27,7 +27,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var usernames = [String]()
     var objectId = [String]()
     
-    let dal = UIImage(named: "Dalhousie"), mcgill = UIImage(named: "McGill"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), western = UIImage(named: "Western"), calgary = UIImage(named: "Calgary"), ubc = UIImage(named: "UBC")
+    let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York")
     
     var feed = String()
     var ranking = String()
@@ -270,10 +270,31 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         switch universityNames[indexPath.row] {
             
-        case "Dalhousie":
+        case "Brock":
             cell.UniversityOutlet.image = dal
             
+        case "Calgary":
+            cell.UniversityOutlet.image = mcgill
+            
+        case "Carlton":
+            cell.UniversityOutlet.image = queens
+            
+        case "Dalhousie":
+            cell.UniversityOutlet.image = ryerson
+            
+        case "Laurier":
+            cell.UniversityOutlet.image = western
+            
         case "McGill":
+            cell.UniversityOutlet.image = calgary
+            
+        case "Mac":
+            cell.UniversityOutlet.image = ubc
+            
+        case "Mun":
+            cell.UniversityOutlet.image = dal
+            
+        case "Ottawa":
             cell.UniversityOutlet.image = mcgill
             
         case "Queens":
@@ -282,13 +303,16 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         case "Ryerson":
             cell.UniversityOutlet.image = ryerson
             
-        case "Western":
+        case "UBC":
             cell.UniversityOutlet.image = western
             
-        case "Calgary":
+        case "UofT":
             cell.UniversityOutlet.image = calgary
             
-        case "UBC":
+        case "Western":
+            cell.UniversityOutlet.image = ubc
+            
+        case "York":
             cell.UniversityOutlet.image = ubc
             
         default:

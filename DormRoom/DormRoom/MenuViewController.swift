@@ -15,7 +15,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     var staticImages = [UIImage]()
     
-    var feedName: [String] = ["CanadaPuff", "CanadaPuff", "CanadaPuff", "Dalhousie","McGill", "Queens", "Ryerson", "Western", "Calgary", "UBC"]
+    var universityNames: [String] = ["CanadaPuff", "CanadaPuff", "CanadaPuff"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,11 +82,11 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         if indexPath.row >= 1 {
             
-            if feedName[indexPath.row - 1] == "CanadaPuff" {
+            if universityNames[indexPath.row - 1] == "CanadaPuff" {
                 
                 actualController.mainController?.TakeAPuffOutlet.alpha = 1
                 
-            } else if user?["universityName"] as! String != feedName[indexPath.row - 1] {
+            } else if user?["universityName"] as! String != universityNames[indexPath.row - 1] {
                 
                 actualController.mainController?.TakeAPuffOutlet.alpha = 0
                 
@@ -105,7 +105,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         } else if indexPath.row == 1 {
             
-            let feed = feedName[indexPath.row - 1]
+            let feed = universityNames[indexPath.row - 1]
             
             actualController.mainController?.ranking = "createdAt"
             actualController.mainController?.feed = feed
@@ -117,7 +117,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         } else if indexPath.row == 2 {
             
-            let feed = feedName[indexPath.row - 1]
+            let feed = universityNames[indexPath.row - 1]
             
             actualController.mainController?.ranking = "Like"
             actualController.mainController?.feed = feed
@@ -129,7 +129,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         } else if indexPath.row == 3 {
             
-            let feed = feedName[indexPath.row - 1]
+            let feed = universityNames[indexPath.row - 1]
             
             actualController.mainController?.ranking = "Dislike"
             actualController.mainController?.feed = feed
@@ -141,7 +141,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         } else {
             
-            let feed = feedName[indexPath.row - 1]
+            let feed = universityNames[indexPath.row - 1]
             
             actualController.mainController?.feed = "createdAt"
             actualController.mainController?.feed = feed
@@ -166,19 +166,43 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //Functions
     func addFeedImages() {
         
-        guard let crest = UIImage(named: "Crest"), canada = UIImage(named: "Canada"), topRated = UIImage(named: "TopRated"), topHated = UIImage(named: "MostHated"), dal = UIImage(named: "Dalhousie"), mcgill = UIImage(named: "McGill"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), western = UIImage(named: "Western"), calgary = UIImage(named: "Calgary"), ubc = UIImage(named: "UBC") else {return}
+        guard let crest = UIImage(named: "Crest"), canada = UIImage(named: "Canada"), topRated = UIImage(named: "TopRated"), topHated = UIImage(named: "MostHated"), brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York") else {return}
         
         staticImages.append(crest)
         staticImages.append(canada)
         staticImages.append(topRated)
         staticImages.append(topHated)
-        staticImages.append(dal)
-        staticImages.append(mcgill)
-        staticImages.append(queens)
-        staticImages.append(ryerson)
-        staticImages.append(western)
+        staticImages.append(brock)
+        universityNames.append("Brock")
         staticImages.append(calgary)
+        universityNames.append("Calgary")
+        staticImages.append(carlton)
+        universityNames.append("Carleton")
+        staticImages.append(dal)
+        universityNames.append("Dalhousie")
+        staticImages.append(laurier)
+        universityNames.append("Laurier")
+        staticImages.append(mcgill)
+        universityNames.append("McGill")
+        staticImages.append(mac)
+        universityNames.append("Mac")
+        staticImages.append(mun)
+        universityNames.append("Mun")
+        staticImages.append(ottawa)
+        universityNames.append("Ottawa")
+        staticImages.append(queens)
+        universityNames.append("Queens")
+        staticImages.append(ryerson)
+        universityNames.append("Ryerson")
         staticImages.append(ubc)
+        universityNames.append("UBC")
+        staticImages.append(uoft)
+        universityNames.append("UofT")
+        staticImages.append(western)
+        universityNames.append("Western")
+        staticImages.append(york)
+        universityNames.append("York")
+
     }
     
     
@@ -196,26 +220,51 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         switch imageName {
             
-        case "Dalhousie":
+        case "Brock":
             self.UniversityOutlet.image = staticImages[4]
             
-        case "McGill":
+        case "Calgary":
             self.UniversityOutlet.image = staticImages[5]
             
-        case "Queens":
+        case "Carleton":
             self.UniversityOutlet.image = staticImages[6]
             
-        case "Ryerson":
+        case "Dalhousie":
             self.UniversityOutlet.image = staticImages[7]
             
-        case "Western":
+        case "Laurier":
             self.UniversityOutlet.image = staticImages[8]
             
-        case "Calgary":
+        case "McGill":
             self.UniversityOutlet.image = staticImages[9]
             
-        case "UBC":
+        case "Mac":
             self.UniversityOutlet.image = staticImages[10]
+            
+        case "Mun":
+            self.UniversityOutlet.image = staticImages[11]
+            
+        case "Ottawa":
+            self.UniversityOutlet.image = staticImages[12]
+            
+        case "Queens":
+            self.UniversityOutlet.image = staticImages[13]
+            
+        case "Ryerson":
+            self.UniversityOutlet.image = staticImages[14]
+            
+        case "UBC":
+            self.UniversityOutlet.image = staticImages[15]
+            
+        case "UofT":
+            self.UniversityOutlet.image = staticImages[16]
+            
+        case "Western":
+            self.UniversityOutlet.image = staticImages[17]
+            
+        case "York":
+            self.UniversityOutlet.image = staticImages[18]
+            
         default:
             break
             
