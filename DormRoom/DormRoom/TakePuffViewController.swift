@@ -300,6 +300,37 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             print("error fetching new user: \(error)")
         }
         
+        if feed != "CanadaPuff" {
+            
+            let post = PFObject(className: "CanadaPuff")
+            
+            post["ImageUrl"] = imageUrl
+            post["Caption"] = CaptionOutlet.text
+            post["Like"] = 0
+            post["Dislike"] = 0
+            post["ProfilePictureUrl"] = profilePictureUrl
+            post["UniversityName"] = user?["universityName"] as! String
+            post["Username"] = user?.username
+
+            post.saveEventually()
+            
+        } else {
+            
+            let uniName = user?["universityName"] as! String
+            
+            let post = PFObject(className: uniName)
+            
+            post["ImageUrl"] = imageUrl
+            post["Caption"] = CaptionOutlet.text
+            post["Like"] = 0
+            post["Dislike"] = 0
+            post["ProfilePictureUrl"] = profilePictureUrl
+            post["UniversityName"] = user?["universityName"] as! String
+            post["Username"] = user?.username
+            
+            post.saveEventually()
+        }
+        
         let post = PFObject(className: feed)
         
         post["ImageUrl"] = imageUrl

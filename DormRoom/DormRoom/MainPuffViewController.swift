@@ -271,31 +271,31 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         switch universityNames[indexPath.row] {
             
         case "Brock":
-            cell.UniversityOutlet.image = dal
+            cell.UniversityOutlet.image = brock
             
         case "Calgary":
-            cell.UniversityOutlet.image = mcgill
-            
-        case "Carlton":
-            cell.UniversityOutlet.image = queens
-            
-        case "Dalhousie":
-            cell.UniversityOutlet.image = ryerson
-            
-        case "Laurier":
-            cell.UniversityOutlet.image = western
-            
-        case "McGill":
             cell.UniversityOutlet.image = calgary
             
-        case "Mac":
-            cell.UniversityOutlet.image = ubc
+        case "Carlton":
+            cell.UniversityOutlet.image = carlton
             
-        case "Mun":
+        case "Dalhousie":
             cell.UniversityOutlet.image = dal
             
-        case "Ottawa":
+        case "Laurier":
+            cell.UniversityOutlet.image = laurier
+            
+        case "McGill":
             cell.UniversityOutlet.image = mcgill
+            
+        case "Mac":
+            cell.UniversityOutlet.image = mac
+            
+        case "Mun":
+            cell.UniversityOutlet.image = mun
+            
+        case "Ottawa":
+            cell.UniversityOutlet.image = ottawa
             
         case "Queens":
             cell.UniversityOutlet.image = queens
@@ -304,16 +304,16 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.UniversityOutlet.image = ryerson
             
         case "UBC":
-            cell.UniversityOutlet.image = western
+            cell.UniversityOutlet.image = ubc
             
         case "UofT":
-            cell.UniversityOutlet.image = calgary
+            cell.UniversityOutlet.image = uoft
             
         case "Western":
-            cell.UniversityOutlet.image = ubc
+            cell.UniversityOutlet.image = western
             
         case "York":
-            cell.UniversityOutlet.image = ubc
+            cell.UniversityOutlet.image = york
             
         default:
             break

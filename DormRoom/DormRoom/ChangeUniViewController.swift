@@ -72,7 +72,7 @@ class ChangeUniViewController: UIViewController, UITableViewDataSource, UITableV
         staticImages.append(calgary)
         universityNames.append("Calgary")
         staticImages.append(carlton)
-        universityNames.append("Carleton")
+        universityNames.append("Carlton")
         staticImages.append(dal)
         universityNames.append("Dalhousie")
         staticImages.append(laurier)

@@ -33,32 +33,46 @@ class ChooseUniViewController: UIViewController, UITableViewDataSource, UITableV
         
         staticImages.append(brock)
         universityNames.append("Brock")
+        
         staticImages.append(calgary)
         universityNames.append("Calgary")
+        
         staticImages.append(carlton)
-        universityNames.append("Carleton")
+        universityNames.append("Carlton")
+        
         staticImages.append(dal)
         universityNames.append("Dalhousie")
+        
         staticImages.append(laurier)
         universityNames.append("Laurier")
+        
         staticImages.append(mcgill)
         universityNames.append("McGill")
+        
         staticImages.append(mac)
         universityNames.append("Mac")
+        
         staticImages.append(mun)
         universityNames.append("Mun")
+        
         staticImages.append(ottawa)
         universityNames.append("Ottawa")
+        
         staticImages.append(queens)
         universityNames.append("Queens")
+        
         staticImages.append(ryerson)
         universityNames.append("Ryerson")
+        
         staticImages.append(ubc)
         universityNames.append("UBC")
+        
         staticImages.append(uoft)
         universityNames.append("UofT")
+        
         staticImages.append(western)
         universityNames.append("Western")
+        
         staticImages.append(york)
         universityNames.append("York")
        

@@ -177,7 +177,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         staticImages.append(calgary)
         universityNames.append("Calgary")
         staticImages.append(carlton)
-        universityNames.append("Carleton")
+        universityNames.append("Carlton")
         staticImages.append(dal)
         universityNames.append("Dalhousie")
         staticImages.append(laurier)
@@ -226,7 +226,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         case "Calgary":
             self.UniversityOutlet.image = staticImages[5]
             
-        case "Carleton":
+        case "Carlton":
             self.UniversityOutlet.image = staticImages[6]
             
         case "Dalhousie":
