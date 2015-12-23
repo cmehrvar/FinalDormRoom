@@ -16,6 +16,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var user = PFUser.currentUser()
     
+    let dormroomurl = "https://s3.amazonaws.com/dormroombucket/"
+    let placeholderImage = UIImage(named: "Background")
+    
     var loading = false
     
     var imageUrls = [String]()
@@ -238,9 +241,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         myTableView = tableView
         
-        let dormroomurl = "https://s3.amazonaws.com/dormroombucket/"
-        let placeholderImage = UIImage(named: "Background")
-        
         tableView.decelerationRate = 0.01
         
         let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
@@ -335,6 +335,85 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         return imageUrls.count
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        
+        
+        guard let actualController = rootController else {return}
+        
+        actualController.commentsController?.Image.sd_setImageWithURL((NSURL(string: (dormroomurl + imageUrls[indexPath.row]))), placeholderImage: placeholderImage)
+        
+        actualController.commentsController?.ProfilePicture.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
+        
+        switch universityNames[indexPath.row] {
+            
+        case "Brock":
+            actualController.commentsController?.University.image = brock
+            
+        case "Calgary":
+            actualController.commentsController?.University.image = calgary
+            
+        case "Carlton":
+            actualController.commentsController?.University.image = carlton
+            
+        case "Dalhousie":
+            actualController.commentsController?.University.image = dal
+            
+        case "Laurier":
+            actualController.commentsController?.University.image = laurier
+            
+        case "McGill":
+            actualController.commentsController?.University.image = mcgill
+            
+        case "Mac":
+            actualController.commentsController?.University.image = mac
+            
+        case "Mun":
+            actualController.commentsController?.University.image = mun
+            
+        case "Ottawa":
+            actualController.commentsController?.University.image = ottawa
+            
+        case "Queens":
+            actualController.commentsController?.University.image = queens
+            
+        case "Ryerson":
+            actualController.commentsController?.University.image = ryerson
+            
+        case "UBC":
+            actualController.commentsController?.University.image = ubc
+            
+        case "UofT":
+            actualController.commentsController?.University.image = uoft
+            
+        case "Western":
+            actualController.commentsController?.University.image = western
+            
+        case "York":
+            actualController.commentsController?.University.image = york
+            
+        default:
+            break
+            
+        }
+        
+        actualController.commentsController?.Username.text = "@" + usernames[indexPath.row]
+        
+        actualController.commentsController?.objectId = objectId[indexPath.row]
+        
+        actualController.commentsController?.feed = feed
+        
+        actualController.commentsController?.loadFromParse()
+        
+        rootController?.toggleComments({ (Bool) -> () in
+            
+            print("comments toggled")
+            
+        })
+
+    }
+    
+
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         
         if request.URL?.absoluteString == "http://www.dormroomnetwork.com/trending.html" {

@@ -43,6 +43,7 @@
 		A3F3098F1C0BB32A002DEADF /* DormRoomTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F3098E1C0BB32A002DEADF /* DormRoomTests.swift */; };
 		A3F3099A1C0BB32A002DEADF /* DormRoomUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F309991C0BB32A002DEADF /* DormRoomUITests.swift */; };
 		A3FF60231C28744F0012159A /* Username.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF60221C28744F0012159A /* Username.swift */; };
+		A3FF60271C2A4C2A0012159A /* CommentsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF60261C2A4C2A0012159A /* CommentsCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +107,7 @@
 		A3F309991C0BB32A002DEADF /* DormRoomUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DormRoomUITests.swift; sourceTree = "<group>"; };
 		A3F3099B1C0BB32A002DEADF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3FF60221C28744F0012159A /* Username.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Username.swift; sourceTree = "<group>"; };
+		A3FF60261C2A4C2A0012159A /* CommentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsCell.swift; sourceTree = "<group>"; };
 		D7A798F36447F0377FEE4814 /* Pods-DormRoom.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DormRoom.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DormRoom/Pods-DormRoom.debug.xcconfig"; sourceTree = "<group>"; };
 		F2451B51057A263F932FCF4E /* libPods-DormRoom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DormRoom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -175,6 +177,7 @@
 				A32EC65A1C0E6A610004D8C7 /* PuffTableViewCell.swift */,
 				A32EC65C1C0EA0DD0004D8C7 /* ChooseFeedCell.swift */,
 				A32EC69F1C0F80C30004D8C7 /* ChangeUniCell.swift */,
+				A3FF60261C2A4C2A0012159A /* CommentsCell.swift */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -489,6 +492,7 @@
 				A39CBE5A1C0CF54200D59434 /* ChooseUniCellTableViewCell.swift in Sources */,
 				A3E110991C1E3E7D00398F03 /* ImageViewExtension.swift in Sources */,
 				A32EC64B1C0DF7650004D8C7 /* ChooseUniViewController.swift in Sources */,
+				A3FF60271C2A4C2A0012159A /* CommentsCell.swift in Sources */,
 				A3FF60231C28744F0012159A /* Username.swift in Sources */,
 				A32EC65D1C0EA0DD0004D8C7 /* ChooseFeedCell.swift in Sources */,
 				A32EC6511C0E56980004D8C7 /* MainRootViewController.swift in Sources */,

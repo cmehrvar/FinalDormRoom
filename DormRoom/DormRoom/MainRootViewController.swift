@@ -11,15 +11,18 @@ import UIKit
 class MainRootViewController: UIViewController {
     
     let drawerWidthConstant: CGFloat = 240.0
+    let commentsWidthConstant: CGFloat = 260.0
     var menuIsRevealed = false
     var takePuffIsRevealed = false
     var changeUniIsRevealed = false
     var commentsIsRevealed = false
     
+    
     weak var mainController: MainPuffViewController?
     weak var changeUniController: ChangeUniViewController?
     weak var takePuffController: TakePuffViewController?
     weak var menuController: MenuViewController?
+    weak var commentsController: CommentsViewController?
     
     //Constraints
     @IBOutlet weak var MenuConstraint: NSLayoutConstraint!
@@ -54,7 +57,7 @@ class MainRootViewController: UIViewController {
     
     func setCommentStage() {
         
-        CommentsConstraint.constant = -drawerWidthConstant
+        CommentsConstraint.constant = -commentsWidthConstant
         
     }
     
@@ -107,7 +110,8 @@ class MainRootViewController: UIViewController {
         var panelOffset: CGFloat = 0
         
         if commentsIsRevealed {
-            panelOffset = -drawerWidthConstant
+            panelOffset = -commentsWidthConstant
+            
         }
         
         commentsIsRevealed = !commentsIsRevealed
@@ -183,6 +187,13 @@ class MainRootViewController: UIViewController {
             mainController = main
             mainController?.rootController = self
             
+        } else if segue.identifier == "CommentsSegue" {
+            
+            guard let navController = segue.destinationViewController as? UINavigationController, comments = navController.topViewController as? CommentsViewController else {return}
+            commentsController = comments
+            commentsController?.rootController = self
+            
         }
+
     }
 }

@@ -110,7 +110,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                 
                 self.PostButtonOutlet.alpha = 0
                 
-                
+                self.view.endEditing(true)
                 
                 self.uploadToAWS(image)
             })
@@ -131,6 +131,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             self.ChangeCameraOutlet.alpha = 1
             
             self.PostButtonOutlet.alpha = 0
+            
+            self.view.endEditing(true)
             
             self.TakenPuffOutlet.image = nil
             self.CaptionOutlet.text = nil
@@ -311,6 +313,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             post["ProfilePictureUrl"] = profilePictureUrl
             post["UniversityName"] = user?["universityName"] as! String
             post["Username"] = user?.username
+            post["Safe"] = true
+            post["Comments"] = []
 
             post.saveEventually()
             
@@ -327,6 +331,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             post["ProfilePictureUrl"] = profilePictureUrl
             post["UniversityName"] = user?["universityName"] as! String
             post["Username"] = user?.username
+            post["Safe"] = true
+            post["Comments"] = []
             
             post.saveEventually()
         }
@@ -340,6 +346,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         post["ProfilePictureUrl"] = profilePictureUrl
         post["UniversityName"] = user?["universityName"] as! String
         post["Username"] = user?.username
+        post["Safe"] = true
+        post["Comments"] = []
         
         post.saveInBackgroundWithBlock { (Bool, error: NSError?) -> Void in
             
