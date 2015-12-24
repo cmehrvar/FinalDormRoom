@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CommentsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class CommentsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
     weak var rootController: MainRootViewController?
     
@@ -37,6 +37,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var Username: UILabel!
     @IBOutlet weak var CommentText: UITextView!
     @IBOutlet weak var CommentTableView: UITableView!
+    @IBOutlet weak var commentIcon: UIImageView!
     
     
     //Actions
@@ -59,22 +60,38 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                         self.CommentText.text = ""
                         
+                        UIView.animateWithDuration(0.3, animations: { () -> Void in
+                            self.commentIcon.alpha = 1
+                        })
+                        
+                        self.loadFromParse()
+                        
                     } else {
                         print("error")
                     }
                     
                 })
-                self.loadFromParse()
             }
         }
+        
+        view.endEditing(true)
     }
     
     @IBAction func hideButton(sender: AnyObject) {
         
+        
+        
         rootController?.toggleComments({ (Bool) -> () in
+            
+            guard let actualController = self.rootController else {return}
+            
+            actualController.mainController?.commentsOpened = false
             
             self.view.endEditing(true)
             self.CommentText.text = ""
+            self.commentIcon.alpha = 0
+            self.comments.removeAll()
+            self.CommentTableView.reloadData()
             
         })
         
@@ -121,9 +138,39 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     print(error)
                 }
                 
+                if post?["Comments"] != nil {
+                
                 self.comments = post?["Comments"] as! [String]
+                
                 self.CommentTableView.reloadData()
                 
+                } else {
+                    
+                    
+                    let query = PFQuery(className: self.feed)
+                    query.getObjectInBackgroundWithId(self.objectId) { (post: PFObject?, error: NSError?) -> Void in
+                        
+                        if error != nil {
+                            print(error)
+                        } else if let post = post {
+                            
+                            post["Comments"] = []
+                            
+                            post.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                                
+                                if error == nil {
+                                    
+                                    print("success")
+                                    
+                                } else {
+                                    print("error")
+                                }
+                                
+                            })
+                        }
+                    }
+
+                }
             } else {
                 print(error)
             }
@@ -158,7 +205,14 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 rootController?.toggleComments({ (Bool) -> () in
                     self.view.endEditing(true)
+                    
+                    guard let actualController = self.rootController else {return}
+                    actualController.mainController?.commentsOpened = false
+                    
                     self.CommentText.text = ""
+                    self.commentIcon.alpha = 1
+                    self.comments.removeAll()
+                    self.CommentTableView.reloadData()
                 })
                 
             }
@@ -189,6 +243,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentsCell", forIndexPath: indexPath) as! CommentsCell
         
+        cell.selectionStyle = .None
+        
         cell.textLabel?.text = comments[indexPath.row]
         
         return cell
@@ -198,6 +254,27 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return comments.count
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        
+        UIView.animateWithDuration(0.3) { () -> Void in
+            
+            self.commentIcon.alpha = 0
+            
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        
+        if CommentText.text == "" {
+            
+            UIView.animateWithDuration(0.3) { () -> Void in
+                
+                self.commentIcon.alpha = 1
+                
+            }
+        }
     }
  
     

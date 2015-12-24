@@ -20,6 +20,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     let placeholderImage = UIImage(named: "Background")
     
     var loading = false
+    var commentsOpened = false
     
     var imageUrls = [String]()
     var profilePictureURLS = [String]()
@@ -29,6 +30,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var dislikes = [Int]()
     var usernames = [String]()
     var objectId = [String]()
+    var comments = [[String]]()
     
     let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York")
     
@@ -167,6 +169,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.universityNames.removeAll()
                     self.usernames.removeAll()
                     self.objectId.removeAll()
+                    self.comments.removeAll()
                     
                     if let puffs = puffs {
                         
@@ -179,6 +182,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                             self.dislikes.append(puff["Dislike"] as! Int)
                             self.universityNames.append(puff["UniversityName"] as! String)
                             self.usernames.append(puff["Username"] as! String)
+                            self.comments.append(puff["Comments"] as! [String])
                             
                             if let actualId = puff.objectId {
                                 self.objectId.append(actualId)
@@ -326,6 +330,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell.CaptionOutlet.text = captions[indexPath.row]
         
+        cell.CommentNumber.text = "\(comments[indexPath.row].count)"
+        
         cell.feed = feed
         
         return cell
@@ -337,80 +343,91 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        
-        
-        guard let actualController = rootController else {return}
-        
-        actualController.commentsController?.Image.sd_setImageWithURL((NSURL(string: (dormroomurl + imageUrls[indexPath.row]))), placeholderImage: placeholderImage)
-        
-        actualController.commentsController?.ProfilePicture.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
-        
-        switch universityNames[indexPath.row] {
+        if !commentsOpened {
             
-        case "Brock":
-            actualController.commentsController?.University.image = brock
+            guard let actualController = rootController else {return}
             
-        case "Calgary":
-            actualController.commentsController?.University.image = calgary
+            actualController.commentsController?.Image.sd_setImageWithURL((NSURL(string: (dormroomurl + imageUrls[indexPath.row]))), placeholderImage: placeholderImage)
             
-        case "Carlton":
-            actualController.commentsController?.University.image = carlton
+            actualController.commentsController?.ProfilePicture.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
             
-        case "Dalhousie":
-            actualController.commentsController?.University.image = dal
+            switch universityNames[indexPath.row] {
+                
+            case "Brock":
+                actualController.commentsController?.University.image = brock
+                
+            case "Calgary":
+                actualController.commentsController?.University.image = calgary
+                
+            case "Carlton":
+                actualController.commentsController?.University.image = carlton
+                
+            case "Dalhousie":
+                actualController.commentsController?.University.image = dal
+                
+            case "Laurier":
+                actualController.commentsController?.University.image = laurier
+                
+            case "McGill":
+                actualController.commentsController?.University.image = mcgill
+                
+            case "Mac":
+                actualController.commentsController?.University.image = mac
+                
+            case "Mun":
+                actualController.commentsController?.University.image = mun
+                
+            case "Ottawa":
+                actualController.commentsController?.University.image = ottawa
+                
+            case "Queens":
+                actualController.commentsController?.University.image = queens
+                
+            case "Ryerson":
+                actualController.commentsController?.University.image = ryerson
+                
+            case "UBC":
+                actualController.commentsController?.University.image = ubc
+                
+            case "UofT":
+                actualController.commentsController?.University.image = uoft
+                
+            case "Western":
+                actualController.commentsController?.University.image = western
+                
+            case "York":
+                actualController.commentsController?.University.image = york
+                
+            default:
+                break
+                
+            }
             
-        case "Laurier":
-            actualController.commentsController?.University.image = laurier
+            actualController.commentsController?.Username.text = "@" + usernames[indexPath.row]
             
-        case "McGill":
-            actualController.commentsController?.University.image = mcgill
+            actualController.commentsController?.objectId = objectId[indexPath.row]
             
-        case "Mac":
-            actualController.commentsController?.University.image = mac
+            actualController.commentsController?.feed = feed
             
-        case "Mun":
-            actualController.commentsController?.University.image = mun
+            actualController.commentsController?.loadFromParse()
             
-        case "Ottawa":
-            actualController.commentsController?.University.image = ottawa
+            actualController.commentsController?.view.endEditing(true)
             
-        case "Queens":
-            actualController.commentsController?.University.image = queens
+            rootController?.toggleComments({ (Bool) -> () in
+                
+                
+                print("comments toggled")
+                
+            })
             
-        case "Ryerson":
-            actualController.commentsController?.University.image = ryerson
+            commentsOpened = true
             
-        case "UBC":
-            actualController.commentsController?.University.image = ubc
+        } else {
             
-        case "UofT":
-            actualController.commentsController?.University.image = uoft
-            
-        case "Western":
-            actualController.commentsController?.University.image = western
-            
-        case "York":
-            actualController.commentsController?.University.image = york
-            
-        default:
-            break
+            guard let actualController = rootController else {return}
+            actualController.commentsController?.view.endEditing(true)
             
         }
-        
-        actualController.commentsController?.Username.text = "@" + usernames[indexPath.row]
-        
-        actualController.commentsController?.objectId = objectId[indexPath.row]
-        
-        actualController.commentsController?.feed = feed
-        
-        actualController.commentsController?.loadFromParse()
-        
-        rootController?.toggleComments({ (Bool) -> () in
-            
-            print("comments toggled")
-            
-        })
-
     }
     
 

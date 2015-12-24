@@ -221,6 +221,10 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                 let alertController = UIAlertController(title: "Shit...", message: "Error Uploading", preferredStyle:  UIAlertControllerStyle.Alert)
                 alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
+                
+                if let actualController = self.rootController {
+                actualController.mainController?.uploadOutlet.alpha = 0
+                }
             }
             return nil
         }
@@ -288,6 +292,10 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                 let alertController = UIAlertController(title: "Shit...", message: "Error Uploading", preferredStyle:  UIAlertControllerStyle.Alert)
                 alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
+                
+                if let actualController = self.rootController {
+                    actualController.mainController?.uploadOutlet.alpha = 0
+                }
                 
             }
             return nil
@@ -373,6 +381,10 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                 let alertController = UIAlertController(title: "Shit...", message: error?.localizedDescription, preferredStyle:  UIAlertControllerStyle.Alert)
                 alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
+                
+                if let actualController = self.rootController {
+                    actualController.mainController?.uploadOutlet.alpha = 0
+                }
                 
             }
         }

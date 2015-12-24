@@ -45,6 +45,7 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var ReportView: UIView!
     @IBOutlet weak var NoLabel: UILabel!
     @IBOutlet weak var YesLabel: UILabel!
+    @IBOutlet weak var CommentNumber: UILabel!
     
     
     
