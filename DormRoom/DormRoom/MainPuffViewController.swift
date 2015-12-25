@@ -31,6 +31,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var usernames = [String]()
     var objectId = [String]()
     var comments = [[String]]()
+    var commentsNil = [Bool]()
     
     let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York")
     
@@ -170,6 +171,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.usernames.removeAll()
                     self.objectId.removeAll()
                     self.comments.removeAll()
+                    self.commentsNil.removeAll()
                     
                     if let puffs = puffs {
                         
@@ -182,7 +184,15 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                             self.dislikes.append(puff["Dislike"] as! Int)
                             self.universityNames.append(puff["UniversityName"] as! String)
                             self.usernames.append(puff["Username"] as! String)
-                            self.comments.append(puff["Comments"] as! [String])
+                            
+                            if puff["Comments"] == nil {
+                                self.commentsNil.append(true)
+                                self.comments.append([])
+                            } else {
+                                self.commentsNil.append(false)
+                                self.comments.append(puff["Comments"] as! [String])
+                            }
+                            
                             
                             if let actualId = puff.objectId {
                                 self.objectId.append(actualId)
@@ -330,7 +340,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell.CaptionOutlet.text = captions[indexPath.row]
         
-        cell.CommentNumber.text = "\(comments[indexPath.row].count)"
+        
+        if commentsNil[indexPath.row] == true {
+            cell.CommentNumber.text = "0"
+        } else {
+            cell.CommentNumber.text = "\(comments[indexPath.row].count)"
+        }
         
         cell.feed = feed
         

@@ -322,7 +322,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             post["UniversityName"] = user?["universityName"] as! String
             post["Username"] = user?.username
             post["Safe"] = true
-            post["Comments"] = []
+            //post["Comments"] = []
 
             post.saveEventually()
             
@@ -340,7 +340,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             post["UniversityName"] = user?["universityName"] as! String
             post["Username"] = user?.username
             post["Safe"] = true
-            post["Comments"] = []
+            //post["Comments"] = []
             
             post.saveEventually()
         }
@@ -355,7 +355,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         post["UniversityName"] = user?["universityName"] as! String
         post["Username"] = user?.username
         post["Safe"] = true
-        post["Comments"] = []
+        //post["Comments"] = []
         
         post.saveInBackgroundWithBlock { (Bool, error: NSError?) -> Void in
             

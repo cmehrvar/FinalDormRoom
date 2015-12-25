@@ -13,7 +13,8 @@ class Username: UIView {
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.blackColor().CGColor
         self.layer.cornerRadius = 5
         self.clipsToBounds = true
         

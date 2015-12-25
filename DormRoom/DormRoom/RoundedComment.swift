@@ -14,9 +14,7 @@ class RoundedComment: UIView {
         
         super.awakeFromNib()
         
-        layer.cornerRadius = 10
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.blackColor().CGColor
+        layer.cornerRadius = 5
         self.clipsToBounds = true
     }
 
