@@ -10,7 +10,9 @@ import UIKit
 
 class CommentsCell: UITableViewCell {
 
-    @IBOutlet weak var Comment: UILabel!
+ 
+    @IBOutlet weak var CommentProfile: RoundedImage!
+    @IBOutlet weak var WorkingLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

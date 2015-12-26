@@ -362,9 +362,11 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             guard let actualController = rootController else {return}
             
-            actualController.commentsController?.Image.sd_setImageWithURL((NSURL(string: (dormroomurl + imageUrls[indexPath.row]))), placeholderImage: placeholderImage)
+            actualController.commentsController?.imageUrl = dormroomurl + imageUrls[indexPath.row]
             
-            actualController.commentsController?.ProfilePicture.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
+            actualController.commentsController?.profilePictureUrl = dormroomurl + profilePictureURLS[indexPath.row]
+            
+            actualController.commentsController?.updateInfo()
             
             switch universityNames[indexPath.row] {
                 

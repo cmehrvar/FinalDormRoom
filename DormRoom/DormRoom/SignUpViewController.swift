@@ -146,6 +146,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
 
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

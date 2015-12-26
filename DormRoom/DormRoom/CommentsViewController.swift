@@ -16,16 +16,18 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     var objectId = String()
     var feed = String()
     
+    var imageUrl = String()
+    var profilePictureUrl = String()
+    
+    var loading = false
+    
     var refreshControl: UIRefreshControl!
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addCloseSwipe()
         addTapGesture()
         addRefresh()
-        //configureTableView()
         // Do any additional setup after loading the view.
     }
 
@@ -115,19 +117,16 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
 
-    
-    
-    func configureTableView() {
-        CommentTableView.rowHeight = UITableViewAutomaticDimension
-        CommentTableView.estimatedRowHeight = 44.0
-    }
-    
     func loadFromParse() {
         
         let query = PFQuery(className: feed)
         
         query.getObjectInBackgroundWithId(objectId) { (post: PFObject?, error: NSError?) -> Void in
             
+            if !self.loading {
+            
+            self.loading = true
+                
             if error == nil && post != nil {
                 
                 self.comments.removeAll()
@@ -141,9 +140,9 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 if post?["Comments"] != nil {
                 
                 self.comments = post?["Comments"] as! [String]
-                
+                    
                 self.CommentTableView.reloadData()
-                
+                    
                 } else {
                     
                     
@@ -174,7 +173,17 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             } else {
                 print(error)
             }
+                self.loading = false
+                
+            }
          }
+        
+    }
+    
+    func updateInfo() {
+        
+        self.Image.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "Background"))
+        self.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictureUrl))
     }
     
     
@@ -243,9 +252,12 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentsCell", forIndexPath: indexPath) as! CommentsCell
         
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 60.0
+        
         cell.selectionStyle = .None
         
-        cell.textLabel?.text = comments[indexPath.row]
+        cell.WorkingLabel.text = comments[indexPath.row]
         
         return cell
         
