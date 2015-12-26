@@ -101,12 +101,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
         
         let profilePictureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "profileTapped")
         let universityRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "uniTapped")
+        let dismissKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         
         ProfileOutlet.userInteractionEnabled = true
         UniOutlet.userInteractionEnabled = true
+        view.userInteractionEnabled = true
         
         ProfileOutlet.addGestureRecognizer(profilePictureRecognizer)
         UniOutlet.addGestureRecognizer(universityRecognizer)
+        view.addGestureRecognizer(dismissKeyboard)
         
     }
     
