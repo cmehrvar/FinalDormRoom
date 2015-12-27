@@ -15,15 +15,15 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     var staticImages = [UIImage]()
     
+    var websiteLoading = false
+    
     var universityNames: [String] = ["CanadaPuff", "CanadaPuff", "CanadaPuff"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addRecognizers()
-        
         addFeedImages()
-        
         retrieveProfilePicture()
         retrieveUniversity()
         
@@ -98,6 +98,13 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         if indexPath.row == 0 {
+            
+            if !websiteLoading {
+                
+                actualController.mainController?.loadWebsite()
+                websiteLoading = true
+                
+            }
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 actualController.mainController?.WebViewOutlet.alpha = 1

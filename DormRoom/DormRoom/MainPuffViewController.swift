@@ -65,7 +65,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             print("parse loaded")
             
         }
-        loadWebsite()
+        
         // Do any additional setup after loading the view.
     }
    
