@@ -132,6 +132,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 if let actualController = self.rootController {
                     actualController.mainController?.uploadOutlet.alpha = 0
                     self.isUploading = false
+                    self.uploadProfileUrl = "https://s3.amazonaws.com/dormroombucket/"
                 }
                 
             }
@@ -165,6 +166,10 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                             self.commentIcon.alpha = 1
                             self.UploadIcon.alpha = 0
                             self.isUploading = false
+                            self.uploadProfileUrl = "https://s3.amazonaws.com/dormroombucket/"
+                            self.rootController?.mainController?.loadFromParse({ () -> Void in
+                                
+                            })
                         })
                         
                         
@@ -181,6 +186,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                             
                             self.UploadIcon.alpha = 0
                             self.isUploading = false
+                            self.uploadProfileUrl = "https://s3.amazonaws.com/dormroombucket/"
                             
                         })
                     }
