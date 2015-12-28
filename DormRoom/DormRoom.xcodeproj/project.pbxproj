@@ -22,6 +22,7 @@
 		A32EC69C1C0F4B300004D8C7 /* UniView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC69B1C0F4B300004D8C7 /* UniView.swift */; };
 		A32EC69E1C0F72B20004D8C7 /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC69D1C0F72B20004D8C7 /* SwipeView.swift */; };
 		A32EC6A01C0F80C30004D8C7 /* ChangeUniCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC69F1C0F80C30004D8C7 /* ChangeUniCell.swift */; };
+		A33C50D11C30A69C0085DA8C /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33C50D01C30A69C0085DA8C /* TimeAgo.swift */; };
 		A36475571C0BBAB000AC96CA /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36475561C0BBAB000AC96CA /* TextFields.swift */; };
 		A38C82B51C13F1FC000E650F /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38C82B41C13F1FC000E650F /* InitialViewController.swift */; };
 		A39CBE521C0CE87700D59434 /* RoundedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE511C0CE87600D59434 /* RoundedImage.swift */; };
@@ -81,6 +82,7 @@
 		A32EC69B1C0F4B300004D8C7 /* UniView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniView.swift; sourceTree = "<group>"; };
 		A32EC69D1C0F72B20004D8C7 /* SwipeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeView.swift; sourceTree = "<group>"; };
 		A32EC69F1C0F80C30004D8C7 /* ChangeUniCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeUniCell.swift; sourceTree = "<group>"; };
+		A33C50D01C30A69C0085DA8C /* TimeAgo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
 		A36475561C0BBAB000AC96CA /* TextFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
 		A38C82B41C13F1FC000E650F /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		A39CBE511C0CE87600D59434 /* RoundedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImage.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 		A3F309781C0BB32A002DEADF /* DormRoom */ = {
 			isa = PBXGroup;
 			children = (
+				A33C50D01C30A69C0085DA8C /* TimeAgo.swift */,
 				A39CBE621C0D18DC00D59434 /* Extensions */,
 				A36475581C0BBFAF00AC96CA /* BridgingHeaders */,
 				A36475551C0BBA8D00AC96CA /* Views */,
@@ -499,6 +502,7 @@
 				A3E110991C1E3E7D00398F03 /* ImageViewExtension.swift in Sources */,
 				A32EC64B1C0DF7650004D8C7 /* ChooseUniViewController.swift in Sources */,
 				A3FF60271C2A4C2A0012159A /* CommentsCell.swift in Sources */,
+				A33C50D11C30A69C0085DA8C /* TimeAgo.swift in Sources */,
 				A3FF60231C28744F0012159A /* Username.swift in Sources */,
 				A32EC65D1C0EA0DD0004D8C7 /* ChooseFeedCell.swift in Sources */,
 				A32EC6511C0E56980004D8C7 /* MainRootViewController.swift in Sources */,

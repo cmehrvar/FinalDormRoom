@@ -57,6 +57,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         rootController?.toggleMenu({ (complete) -> () in
             print("toggled closed")
+            
+            guard let actualController = self.rootController else {return}
+            actualController.mainController?.myTableView.scrollEnabled = true
         })
     }
     
@@ -108,6 +111,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 actualController.mainController?.WebViewOutlet.alpha = 1
+                actualController.mainController?.funcToCallWhenStartLoadingYourWebview()
             })
             
         } else if indexPath.row == 1 {
@@ -160,7 +164,8 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         rootController?.toggleMenu({ (complete) -> () in
-            
+            guard let actualController = self.rootController else {return}
+            actualController.mainController?.myTableView.scrollEnabled = true
         })
     }
     
@@ -319,6 +324,10 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         if sender.direction == .Right {
             
             rootController?.toggleMenu({ (complete) -> () in
+                
+                guard let actualController = self.rootController else {return}
+                actualController.mainController?.myTableView.scrollEnabled = true
+                
                 print("menu closed")
             })
         }
@@ -354,6 +363,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func universityTapped() {
         
         rootController?.toggleChangeUni({ (complete) -> () in
+            
             
         })
     }

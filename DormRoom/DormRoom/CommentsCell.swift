@@ -13,6 +13,7 @@ class CommentsCell: UITableViewCell {
  
     @IBOutlet weak var CommentProfile: RoundedImage!
     @IBOutlet weak var WorkingLabel: UILabel!
+    @IBOutlet weak var TimeLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

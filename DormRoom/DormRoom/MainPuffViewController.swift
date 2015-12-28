@@ -22,6 +22,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var loading = false
     var commentsOpened = false
     
+    var theBool: Bool = Bool()
+    var myTimer: NSTimer = NSTimer()
+    
     var imageUrls = [String]()
     var profilePictureURLS = [String]()
     var universityNames = [String]()
@@ -75,6 +78,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var TakeAPuffOutlet: UIView!
     @IBOutlet weak var WebViewOutlet: UIWebView!
     @IBOutlet weak var uploadOutlet: UIImageView!
+    @IBOutlet weak var ProgressView: UIProgressView!
     
     
     //Actions
@@ -99,11 +103,43 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         rootController?.toggleMenu({ (Bool) -> () in
             print("menu opened")
+            self.myTableView.scrollEnabled = false
         })
     }
     
     
     //Functions
+    func funcToCallWhenStartLoadingYourWebview() {
+        ProgressView.progress = 0.0
+        ProgressView.alpha = 1
+        theBool = false
+        myTimer = NSTimer.scheduledTimerWithTimeInterval(0.01667, target: self, selector: "timerCallback", userInfo: nil, repeats: true)
+    }
+    
+    func funcToCallCalledWhenUIWebViewFinishesLoading() {
+        self.theBool = true
+        ProgressView.alpha = 0
+    }
+    
+    func timerCallback() {
+        if theBool == true {
+            if ProgressView.progress >= 1 {
+                ProgressView.hidden = true
+                
+                myTimer.invalidate()
+            
+            } else {
+                ProgressView.progress += 0.1
+            }
+        } else {
+            ProgressView.progress += 0.05
+            if ProgressView.progress >= 0.95 {
+                ProgressView.progress = 0.95
+            }
+        }
+    }
+    
+
     func addScrollToTop() {
         let tapScrollToTop: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "scrollToTop")
         self.navigationItem.titleView?.userInteractionEnabled = true
@@ -432,7 +468,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             rootController?.toggleComments({ (Bool) -> () in
                 
-                
+                self.myTableView.scrollEnabled = false
                 print("comments toggled")
                 
             })
@@ -447,6 +483,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    func webViewDidFinishLoad(webView: UIWebView) {
+        funcToCallCalledWhenUIWebViewFinishesLoading()
+    }
 
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         

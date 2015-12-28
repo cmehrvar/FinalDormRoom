@@ -14,6 +14,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var comments = [String]()
     var profilePictures = [String]()
+    var dates = [NSDate]()
     var objectId = String()
     var feed = String()
     
@@ -77,11 +78,13 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             guard let actualController = self.rootController else {return}
             
+            actualController.mainController?.myTableView.scrollEnabled = true
+            
             actualController.mainController?.commentsOpened = false
             
             self.view.endEditing(true)
             self.CommentText.text = ""
-            self.commentIcon.alpha = 0
+            self.commentIcon.alpha = 1
             self.comments.removeAll()
             self.CommentTableView.reloadData()
             
@@ -150,11 +153,15 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 print(error)
             } else if let post = post {
                 
+                let date = NSDate()
+                
                 self.comments = post["Comments"] as! [String]
                 self.profilePictures = post["CommentProfiles"] as! [String]
+                self.dates = post["CommentDates"] as! [NSDate]
                 
                 post["Comments"] = [self.CommentText.text] + self.comments
                 post["CommentProfiles"] = [self.uploadProfileUrl] + self.profilePictures
+                post["CommentDates"] = [date] + self.dates
                 
                 post.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                     
@@ -237,6 +244,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                         self.comments = post?["Comments"] as! [String]
                         self.profilePictures = post?["CommentProfiles"] as! [String]
+                        self.dates = post?["CommentDates"] as! [NSDate]
                         
                         self.CommentTableView.reloadData()
                         
@@ -252,6 +260,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                                 
                                 post["Comments"] = []
                                 post["CommentProfiles"] = []
+                                post["CommentDates"] = []
                                 
                                 post.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                                     
@@ -316,6 +325,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     guard let actualController = self.rootController else {return}
                     actualController.mainController?.commentsOpened = false
                     
+                    actualController.mainController?.myTableView.scrollEnabled = true
+                    
                     self.CommentText.text = ""
                     self.commentIcon.alpha = 1
                     self.comments.removeAll()
@@ -356,8 +367,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.selectionStyle = .None
         
         cell.WorkingLabel.text = comments[indexPath.row]
-        
         cell.CommentProfile.sd_setImageWithURL(NSURL(string: profilePictures[indexPath.row]))
+        cell.TimeLabel.text = timeAgoSince(dates[indexPath.row])
         
         return cell
         
