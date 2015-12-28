@@ -71,7 +71,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Do any additional setup after loading the view.
     }
-   
+    
     
     //Outlets
     @IBOutlet weak var PuffTableView: UITableView!
@@ -94,7 +94,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             actualController.takePuffController?.CaptionOutlet.text = nil
             
             self.uploadOutlet.alpha = 0
-    
+            
         })
     }
     
@@ -127,7 +127,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 ProgressView.hidden = true
                 
                 myTimer.invalidate()
-            
+                
             } else {
                 ProgressView.progress += 0.1
             }
@@ -139,7 +139,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-
+    
     func addScrollToTop() {
         let tapScrollToTop: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "scrollToTop")
         self.navigationItem.titleView?.userInteractionEnabled = true
@@ -187,7 +187,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func loadFromParse(complete: () -> Void) {
         
-        let query = PFQuery(className: feed)
+        let query = PFQuery(className: "CanadaPuff")
         query.orderByDescending(ranking)
         
         query.findObjectsInBackgroundWithBlock { (puffs: [PFObject]?, error: NSError?) -> Void in
@@ -197,7 +197,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 if !self.loading{
                     
                     self.loading = true
-                                        
+                    
                     self.imageUrls.removeAll()
                     self.profilePictureURLS.removeAll()
                     self.likes.removeAll()
@@ -213,25 +213,53 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                         for puff in puffs {
                             
-                            self.imageUrls.append(puff["ImageUrl"] as! String)
-                            self.profilePictureURLS.append(puff["ProfilePictureUrl"] as! String)
-                            self.captions.append(puff["Caption"] as! String)
-                            self.likes.append(puff["Like"] as! Int)
-                            self.dislikes.append(puff["Dislike"] as! Int)
-                            self.universityNames.append(puff["UniversityName"] as! String)
-                            self.usernames.append(puff["Username"] as! String)
-                            
-                            if puff["Comments"] == nil {
-                                self.commentsNil.append(true)
-                                self.comments.append([])
+                            if self.feed != "CanadaPuff" {
+                                
+                                if puff["UniversityName"] as! String == self.feed {
+                                    
+                                    self.imageUrls.append(puff["ImageUrl"] as! String)
+                                    self.profilePictureURLS.append(puff["ProfilePictureUrl"] as! String)
+                                    self.captions.append(puff["Caption"] as! String)
+                                    self.likes.append(puff["Like"] as! Int)
+                                    self.dislikes.append(puff["Dislike"] as! Int)
+                                    self.universityNames.append(puff["UniversityName"] as! String)
+                                    self.usernames.append(puff["Username"] as! String)
+                                    
+                                    if puff["Comments"] == nil {
+                                        self.commentsNil.append(true)
+                                        self.comments.append([])
+                                    } else {
+                                        self.commentsNil.append(false)
+                                        self.comments.append(puff["Comments"] as! [String])
+                                    }
+                                    
+                                    
+                                    if let actualId = puff.objectId {
+                                        self.objectId.append(actualId)
+                                    }
+                                }
                             } else {
-                                self.commentsNil.append(false)
-                                self.comments.append(puff["Comments"] as! [String])
-                            }
-                            
-                            
-                            if let actualId = puff.objectId {
-                                self.objectId.append(actualId)
+                                
+                                self.imageUrls.append(puff["ImageUrl"] as! String)
+                                self.profilePictureURLS.append(puff["ProfilePictureUrl"] as! String)
+                                self.captions.append(puff["Caption"] as! String)
+                                self.likes.append(puff["Like"] as! Int)
+                                self.dislikes.append(puff["Dislike"] as! Int)
+                                self.universityNames.append(puff["UniversityName"] as! String)
+                                self.usernames.append(puff["Username"] as! String)
+                                
+                                if puff["Comments"] == nil {
+                                    self.commentsNil.append(true)
+                                    self.comments.append([])
+                                } else {
+                                    self.commentsNil.append(false)
+                                    self.comments.append(puff["Comments"] as! [String])
+                                }
+                                
+                                
+                                if let actualId = puff.objectId {
+                                    self.objectId.append(actualId)
+                                }
                             }
                         }
                     }
@@ -486,7 +514,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     func webViewDidFinishLoad(webView: UIWebView) {
         funcToCallCalledWhenUIWebViewFinishesLoading()
     }
-
+    
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         
         if request.URL?.absoluteString == "http://www.dormroomnetwork.com/trending.html" {

@@ -154,7 +154,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             let feed = universityNames[indexPath.row - 1]
             
-            actualController.mainController?.feed = "createdAt"
+            actualController.mainController?.ranking = "createdAt"
             actualController.mainController?.feed = feed
             actualController.mainController?.loadFromParse({ () -> Void in
                 

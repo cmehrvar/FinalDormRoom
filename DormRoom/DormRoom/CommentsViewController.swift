@@ -83,7 +83,10 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             actualController.mainController?.commentsOpened = false
             
             self.view.endEditing(true)
+            
+            if !self.isUploading {
             self.CommentText.text = ""
+            }
             self.commentIcon.alpha = 1
             self.comments.removeAll()
             self.CommentTableView.reloadData()
@@ -327,7 +330,9 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     
                     actualController.mainController?.myTableView.scrollEnabled = true
                     
+                    if !self.isUploading {
                     self.CommentText.text = ""
+                    }
                     self.commentIcon.alpha = 1
                     self.comments.removeAll()
                     self.CommentTableView.reloadData()
