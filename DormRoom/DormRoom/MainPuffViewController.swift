@@ -65,12 +65,27 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         initializeFeeds()
         addScrollToTop()
         addRefresh()
+        addRecognizers()
         loadFromParse { (complete) -> Void in
             print("parse loaded")
             
         }
         
         // Do any additional setup after loading the view.
+    }
+    
+    func addRecognizers() {
+        
+        let tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        ImageBlur.userInteractionEnabled = true
+        ImageBlur.addGestureRecognizer(tapRecognizer)
+        
+    }
+    
+    func dismissKeyboard() {
+        
+        guard let actualController = rootController else {return}
+        actualController.commentsController?.view.endEditing(true)
     }
     
     
