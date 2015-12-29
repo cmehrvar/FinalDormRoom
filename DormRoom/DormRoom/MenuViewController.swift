@@ -55,6 +55,12 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func hide(sender: AnyObject) {
         
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            guard let actualController = self.rootController else {return}
+            actualController.mainController?.ImageBlur.alpha = 0
+        })
+        
         rootController?.toggleMenu({ (complete) -> () in
             print("toggled closed")
             
@@ -162,6 +168,12 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             actualController.mainController?.WebViewOutlet.alpha = 0
         }
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            guard let actualController = self.rootController else {return}
+            actualController.mainController?.ImageBlur.alpha = 0
+        })
         
         rootController?.toggleMenu({ (complete) -> () in
             guard let actualController = self.rootController else {return}
@@ -322,6 +334,12 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func closeMenu(sender: UISwipeGestureRecognizer) {
         
         if sender.direction == .Right {
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                guard let actualController = self.rootController else {return}
+                actualController.mainController?.ImageBlur.alpha = 0
+            })
             
             rootController?.toggleMenu({ (complete) -> () in
                 

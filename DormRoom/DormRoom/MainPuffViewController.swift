@@ -21,6 +21,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var loading = false
     var commentsOpened = false
+    var menuOpened = false
     
     var theBool: Bool = Bool()
     var myTimer: NSTimer = NSTimer()
@@ -79,6 +80,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var WebViewOutlet: UIWebView!
     @IBOutlet weak var uploadOutlet: UIImageView!
     @IBOutlet weak var ProgressView: UIProgressView!
+    @IBOutlet weak var ImageBlur: UIView!
     
     
     //Actions
@@ -100,6 +102,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     @IBAction func menuAction(sender: AnyObject) {
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.ImageBlur.alpha = 1
+        })
         
         rootController?.toggleMenu({ (Bool) -> () in
             print("menu opened")
@@ -494,8 +500,13 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             actualController.commentsController?.view.endEditing(true)
             
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.ImageBlur.alpha = 1
+            })
+            
             rootController?.toggleComments({ (Bool) -> () in
                 
+
                 self.myTableView.scrollEnabled = false
                 print("comments toggled")
                 

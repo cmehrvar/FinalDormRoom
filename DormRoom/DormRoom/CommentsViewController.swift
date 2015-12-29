@@ -74,6 +74,12 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func hideButton(sender: AnyObject) {
         
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            guard let actualController = self.rootController else {return}
+            actualController.mainController?.ImageBlur.alpha = 0
+        })
+        
         rootController?.toggleComments({ (Bool) -> () in
             
             guard let actualController = self.rootController else {return}
@@ -321,6 +327,12 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         case .Ended:
             
             if translation.x < initialShit {
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    
+                    guard let actualController = self.rootController else {return}
+                    actualController.mainController?.ImageBlur.alpha = 0
+                })
                 
                 rootController?.toggleComments({ (Bool) -> () in
                     self.view.endEditing(true)

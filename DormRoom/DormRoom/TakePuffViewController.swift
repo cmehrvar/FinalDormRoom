@@ -324,6 +324,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             post["Safe"] = true
             post["Comments"] = []
             post["CommentProfiles"] = []
+            post["CommentDates"] = []
 
             post.saveEventually()
             
@@ -343,6 +344,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             post["Safe"] = true
             post["Comments"] = []
             post["CommentProfiles"] = []
+            post["CommentDates"] = []
             
             post.saveEventually()
         }
@@ -359,6 +361,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         post["Safe"] = true
         post["Comments"] = []
         post["CommentProfiles"] = []
+        post["CommentDates"] = []
         
         post.saveInBackgroundWithBlock { (Bool, error: NSError?) -> Void in
             
