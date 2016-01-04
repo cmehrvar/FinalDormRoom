@@ -37,10 +37,21 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
     @IBOutlet weak var EmailOutlet: UITextField!
     @IBOutlet weak var ProfileOutlet: RoundedImage!
     @IBOutlet weak var UniOutlet: RoundedImage!
+    @IBOutlet weak var CheckmarkOutlet: UIImageView!
+    @IBOutlet weak var ReadTermsView: WhiteButton!
+    
     
     
     //Actions
     @IBAction func signUp(sender: AnyObject) {
+        
+        if CheckmarkOutlet.alpha == 0 {
+            
+            let alertController = UIAlertController(title: "Hey", message: "Read Terms Aggreement", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Chate", style: .Cancel, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+        } else
+
         
         if ProfileOutlet.image == UIImage(named: "ChooseProfile") {
             
@@ -54,7 +65,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
             alertController.addAction(UIAlertAction(title: "Chate", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
             
-        } else {
+        }
+            
+        else {
             
             guard let actualImage = ProfileOutlet.image else {return}
             
@@ -103,15 +116,27 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
         let profilePictureRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "profileTapped")
         let universityRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "uniTapped")
         let dismissKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let readTermsRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "readTerms")
         
         ProfileOutlet.userInteractionEnabled = true
         UniOutlet.userInteractionEnabled = true
         view.userInteractionEnabled = true
+        ReadTermsView.userInteractionEnabled = true
         
         ProfileOutlet.addGestureRecognizer(profilePictureRecognizer)
         UniOutlet.addGestureRecognizer(universityRecognizer)
         view.addGestureRecognizer(dismissKeyboard)
+        ReadTermsView.addGestureRecognizer(readTermsRecognizer)
         
+    }
+    
+    func readTerms() {
+        
+        UIView.animateWithDuration(0.3) { () -> Void in
+            
+            self.CheckmarkOutlet.alpha = 1
+
+        }
     }
     
     func uniTapped() {

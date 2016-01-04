@@ -846,10 +846,153 @@
                                     </mask>
                                 </variation>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gDZ-rA-4PJ">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I Have Read The Terms Of Aggreement" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="huV-pt-IEn" userLabel="Read">
+                                        <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gDu-n1-veM">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="17" id="Qs8-4u-aTP">
+                                                <variation key="heightClass=regular" constant="14"/>
+                                            </constraint>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        <state key="normal" title="Terms Of Aggreement"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Qs8-4u-aTP"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular">
+                                            <mask key="constraints">
+                                                <include reference="Qs8-4u-aTP"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <segue destination="WNn-VU-3px" kind="showDetail" id="0yx-Cq-afV"/>
+                                        </connections>
+                                    </button>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JCL-Qb-OC3" customClass="WhiteButton" customModule="DormRoom" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkMark" translatesAutoresizingMaskIntoConstraints="NO" id="ndE-fr-jWl">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.90420673076923075" green="0.90420673076923075" blue="0.90420673076923075" alpha="1" colorSpace="calibratedRGB"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstItem="ndE-fr-jWl" firstAttribute="leading" secondItem="JCL-Qb-OC3" secondAttribute="leading" constant="2" id="Adp-C1-8Wb"/>
+                                            <constraint firstAttribute="trailing" secondItem="ndE-fr-jWl" secondAttribute="trailing" constant="3" id="ThF-ot-ZE3"/>
+                                            <constraint firstAttribute="bottom" secondItem="ndE-fr-jWl" secondAttribute="bottom" constant="2" id="ako-dP-ueX"/>
+                                            <constraint firstAttribute="height" constant="25" id="hAE-Pp-UcU"/>
+                                            <constraint firstItem="ndE-fr-jWl" firstAttribute="top" secondItem="JCL-Qb-OC3" secondAttribute="top" constant="3" id="rNL-hA-kC0"/>
+                                            <constraint firstAttribute="width" constant="25" id="zG0-hI-jIj"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="subviews">
+                                                <exclude reference="ndE-fr-jWl"/>
+                                            </mask>
+                                            <mask key="constraints">
+                                                <exclude reference="hAE-Pp-UcU"/>
+                                                <exclude reference="zG0-hI-jIj"/>
+                                                <exclude reference="Adp-C1-8Wb"/>
+                                                <exclude reference="ThF-ot-ZE3"/>
+                                                <exclude reference="ako-dP-ueX"/>
+                                                <exclude reference="rNL-hA-kC0"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular">
+                                            <mask key="subviews">
+                                                <include reference="ndE-fr-jWl"/>
+                                            </mask>
+                                            <mask key="constraints">
+                                                <include reference="hAE-Pp-UcU"/>
+                                                <include reference="zG0-hI-jIj"/>
+                                                <include reference="Adp-C1-8Wb"/>
+                                                <include reference="ThF-ot-ZE3"/>
+                                                <include reference="ako-dP-ueX"/>
+                                                <include reference="rNL-hA-kC0"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="JCL-Qb-OC3" firstAttribute="top" secondItem="gDZ-rA-4PJ" secondAttribute="top" id="2KT-Ph-JPf"/>
+                                    <constraint firstItem="huV-pt-IEn" firstAttribute="leading" secondItem="JCL-Qb-OC3" secondAttribute="trailing" constant="-45" id="2eB-fZ-29x">
+                                        <variation key="heightClass=regular" constant="8"/>
+                                    </constraint>
+                                    <constraint firstItem="gDu-n1-veM" firstAttribute="leading" secondItem="JCL-Qb-OC3" secondAttribute="trailing" constant="-45" id="6XS-8n-YzK">
+                                        <variation key="heightClass=regular" constant="8"/>
+                                    </constraint>
+                                    <constraint firstAttribute="bottom" secondItem="gDu-n1-veM" secondAttribute="bottom" id="Gsy-Tr-ISY"/>
+                                    <constraint firstAttribute="bottom" secondItem="JCL-Qb-OC3" secondAttribute="bottom" id="Kn6-aZ-by4"/>
+                                    <constraint firstItem="gDu-n1-veM" firstAttribute="leading" secondItem="JCL-Qb-OC3" secondAttribute="trailing" constant="8" id="Mf5-Pw-dOC">
+                                        <variation key="heightClass=regular" constant="20"/>
+                                    </constraint>
+                                    <constraint firstAttribute="bottom" secondItem="gDu-n1-veM" secondAttribute="bottom" constant="688" id="Npt-aj-wks">
+                                        <variation key="heightClass=regular" constant="0.0"/>
+                                    </constraint>
+                                    <constraint firstAttribute="height" constant="25" id="Xeq-aB-shc"/>
+                                    <constraint firstItem="huV-pt-IEn" firstAttribute="top" secondItem="gDZ-rA-4PJ" secondAttribute="top" constant="-687" id="i8h-UM-p3S">
+                                        <variation key="heightClass=regular" constant="0.0"/>
+                                    </constraint>
+                                    <constraint firstItem="JCL-Qb-OC3" firstAttribute="leading" secondItem="gDZ-rA-4PJ" secondAttribute="leading" constant="268" id="mkZ-c4-rRC">
+                                        <variation key="heightClass=regular" constant="0.0"/>
+                                    </constraint>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="huV-pt-IEn"/>
+                                        <exclude reference="gDu-n1-veM"/>
+                                        <exclude reference="JCL-Qb-OC3"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <exclude reference="Xeq-aB-shc"/>
+                                        <exclude reference="2KT-Ph-JPf"/>
+                                        <exclude reference="Kn6-aZ-by4"/>
+                                        <exclude reference="mkZ-c4-rRC"/>
+                                        <exclude reference="2eB-fZ-29x"/>
+                                        <exclude reference="i8h-UM-p3S"/>
+                                        <exclude reference="6XS-8n-YzK"/>
+                                        <exclude reference="Gsy-Tr-ISY"/>
+                                        <exclude reference="Mf5-Pw-dOC"/>
+                                        <exclude reference="Npt-aj-wks"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular">
+                                    <mask key="subviews">
+                                        <include reference="huV-pt-IEn"/>
+                                        <include reference="gDu-n1-veM"/>
+                                        <include reference="JCL-Qb-OC3"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="Xeq-aB-shc"/>
+                                        <include reference="2KT-Ph-JPf"/>
+                                        <include reference="Kn6-aZ-by4"/>
+                                        <include reference="mkZ-c4-rRC"/>
+                                        <include reference="2eB-fZ-29x"/>
+                                        <include reference="i8h-UM-p3S"/>
+                                        <exclude reference="6XS-8n-YzK"/>
+                                        <include reference="Gsy-Tr-ISY"/>
+                                        <include reference="Mf5-Pw-dOC"/>
+                                        <exclude reference="Npt-aj-wks"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="aqo-JA-jv0" firstAttribute="top" secondItem="gDZ-rA-4PJ" secondAttribute="bottom" constant="8" id="0Yy-2f-aoj"/>
                             <constraint firstItem="XcX-vU-Lk3" firstAttribute="leading" secondItem="C4f-SE-9nG" secondAttribute="leadingMargin" id="2Al-Bv-UyV"/>
+                            <constraint firstItem="gDZ-rA-4PJ" firstAttribute="leading" secondItem="C4f-SE-9nG" secondAttribute="leading" constant="20" id="5rD-Uc-4bN"/>
                             <constraint firstItem="RyF-fm-INQ" firstAttribute="top" secondItem="aqo-JA-jv0" secondAttribute="bottom" constant="20" id="CBL-b2-vnV"/>
                             <constraint firstItem="RyF-fm-INQ" firstAttribute="top" secondItem="sMh-PL-hrS" secondAttribute="bottom" id="CG8-uw-GUZ"/>
                             <constraint firstItem="jWf-cX-UrD" firstAttribute="trailing" secondItem="C4f-SE-9nG" secondAttribute="trailingMargin" id="GUp-XE-zgh"/>
@@ -873,8 +1016,12 @@
                                 <variation key="heightClass=regular" constant="25"/>
                             </constraint>
                             <constraint firstItem="YdJ-fp-zLD" firstAttribute="trailing" secondItem="C4f-SE-9nG" secondAttribute="trailingMargin" id="uGc-91-SGv"/>
+                            <constraint firstAttribute="trailing" secondItem="gDZ-rA-4PJ" secondAttribute="trailing" constant="20" id="v7j-HH-cRE"/>
                         </constraints>
                         <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="gDZ-rA-4PJ"/>
+                            </mask>
                             <mask key="constraints">
                                 <exclude reference="Xac-ko-rhc"/>
                                 <exclude reference="Yzl-fZ-42h"/>
@@ -890,15 +1037,21 @@
                                 <exclude reference="uGc-91-SGv"/>
                                 <exclude reference="PeP-rN-Sal"/>
                                 <exclude reference="oJa-xE-xld"/>
-                                <exclude reference="N2F-Oh-cH7"/>
-                                <exclude reference="WOp-yy-c6P"/>
                                 <exclude reference="bwP-fG-Ykb"/>
                                 <exclude reference="l0E-Vt-ahs"/>
+                                <exclude reference="5rD-Uc-4bN"/>
+                                <exclude reference="v7j-HH-cRE"/>
+                                <exclude reference="0Yy-2f-aoj"/>
+                                <exclude reference="N2F-Oh-cH7"/>
+                                <exclude reference="WOp-yy-c6P"/>
                                 <exclude reference="CBL-b2-vnV"/>
                                 <exclude reference="CG8-uw-GUZ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
+                            <mask key="subviews">
+                                <include reference="gDZ-rA-4PJ"/>
+                            </mask>
                             <mask key="constraints">
                                 <include reference="Xac-ko-rhc"/>
                                 <include reference="Yzl-fZ-42h"/>
@@ -914,10 +1067,13 @@
                                 <include reference="uGc-91-SGv"/>
                                 <include reference="PeP-rN-Sal"/>
                                 <include reference="oJa-xE-xld"/>
-                                <include reference="N2F-Oh-cH7"/>
-                                <include reference="WOp-yy-c6P"/>
                                 <include reference="bwP-fG-Ykb"/>
                                 <include reference="l0E-Vt-ahs"/>
+                                <include reference="5rD-Uc-4bN"/>
+                                <include reference="v7j-HH-cRE"/>
+                                <include reference="0Yy-2f-aoj"/>
+                                <include reference="N2F-Oh-cH7"/>
+                                <include reference="WOp-yy-c6P"/>
                                 <include reference="CBL-b2-vnV"/>
                                 <include reference="CG8-uw-GUZ"/>
                             </mask>
@@ -932,9 +1088,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="CheckmarkOutlet" destination="ndE-fr-jWl" id="AVb-WE-5mo"/>
                         <outlet property="EmailOutlet" destination="8xZ-gr-9N3" id="ic3-Eb-lFd"/>
                         <outlet property="PasswordOutlet" destination="Vos-qq-b7K" id="FZQ-pF-XSc"/>
                         <outlet property="ProfileOutlet" destination="1iD-rj-R8I" id="ocq-3m-jcK"/>
+                        <outlet property="ReadTermsView" destination="JCL-Qb-OC3" id="M0Y-40-fGz"/>
                         <outlet property="UniOutlet" destination="zbn-vx-wlH" id="qpy-cT-d9l"/>
                         <outlet property="UsernameOutlet" destination="WUG-Qh-54J" id="TRe-B7-AG1"/>
                     </connections>
@@ -942,6 +1100,98 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0ZK-jD-AVV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2742" y="349.5"/>
+        </scene>
+        <!--Terms Controller-->
+        <scene sceneID="FSj-ky-5uH">
+            <objects>
+                <viewController id="TvB-qh-57A" customClass="TermsController" customModule="DormRoom" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Wf-9I-HdU"/>
+                        <viewControllerLayoutGuide type="bottom" id="pmj-YJ-QLN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="e89-aB-jt5">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms Of Aggreement (EULA)" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zj9-9B-U6b">
+                                <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="75" id="Is3-ro-gBy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Is3-ro-gBy"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular">
+                                    <mask key="constraints">
+                                        <include reference="Is3-ro-gBy"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Egz-Nc-klJ">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <mutableString key="text">End-User License Agreement ("Agreement")Last updated: January 04, 2016Please read this End-User License Agreement ("Agreement") carefully before clicking the "I Agree" button, downloading or using DormRoom ("Application").By clicking the "I Agree" button, downloading or using the Application, you are agreeing to be bound by the terms and conditions of this Agreement.This Agreement is a legal agreement between you (either an individual or a single entity) and DormRoom and it governs your use of the Application made available to you by DormRoom.If you do not agree to the terms of this Agreement, do not click on the "I Agree" button and do not download or use the Application.The Application is licensed, not sold, to you by DormRoom for use strictly in accordance with the terms of this Agreement.There is a zero tolerance policy regarding objectional content.DormRoom reserves the right to ejecting users who violate these terms and remove their objectionable content.LicenseDormRoom grants you a revocable, non-exclusive, non-transferable, limited license to download, install and use the Application solely for your personal, non-commercial purposes strictly in accordance with the terms of this Agreement.RestrictionsYou agree not to, and you will not permit others to:remove, alter or obscure any proprietary notice (including any notice of copyright or trademark) of DormRoom or its affiliates, partners, suppliers or the licensors of the ApplicationIntellectual PropertyThe Application, including without limitation all copyrights, patents, trademarks, trade secrets and other intellectual property rights are, and shall remain, the sole and exclusive property of DormRoom.Third-Party ServicesThe Application may display, include or make available third-party content (including data, information, applications and other products services) or provide links to third-party websites or services ("Third-Party Services").You acknowledge and agree that DormRoom shall not be responsible for any Third-Party Services, including their accuracy, completeness, timeliness, validity, copyright compliance, legality, decency, quality or any other aspect thereof. DormRoom does not assume and shall not have any liability or responsibility to you or any other person or entity for any Third-Party Services.Third-Party Services and links thereto are provided solely as a convenience to you and you access and use them entirely at your own risk and subject to such third parties' terms and conditions.Privacy PolicyDormRoom collects, stores, maintains, and shares information about you in accordance with its Privacy Policy, which is available at http://communityconvo.dormroomnetwork.com/privacy. By accepting this Agreement, you acknowledge that you hereby agree and consent to the terms and conditions of our Privacy Policy.Term and TerminationThis Agreement shall remain in effect until terminated by you or DormRoom. DormRoom may, in its sole discretion, at any time and for any or no reason, suspend or terminate this Agreement with or without prior notice.This Agreement will terminate immediately, without prior notice from DormRoom, in the event that you fail to comply with any provision of this Agreement. You may also terminate this Agreement by deleting the Application and all copies thereof from your mobile device or from your computer.Upon termination of this Agreement, you shall cease all use of the Application and delete all copies of the Application from your mobile device or from your computer.Termination of this Agreement will not limit any of DormRoom's rights or remedies at law or in equity in case of breach by you (during the term of this Agreement) of any of your obligations under the present Agreement.Amendments to this AgreementDormRoom reserves the right, at its sole discretion, to modify or replace this Agreement at any time. If a revision is material we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.By continuing to access or use our Application after any revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, you are no longer authorized to use the Application.Governing LawThe laws of Ontario, Canada, excluding its conflicts of law rules, shall govern this Agreement and your use of the Application. Your use of the Application may also be subject to other local, state, national, or international laws.Contact InformationIf you have any questions about this Agreement, please contact us.Entire AgreementThe Agreement constitutes the entire agreement between you and DormRoom regarding your use of the Application and supersedes all prior and contemporaneous written or oral agreements between you and DormRoom.You may be subject to additional terms and conditions that apply when you use or purchase other DormRoom's services, which DormRoom will provide to you at the time of such use or purchase.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Egz-Nc-klJ" firstAttribute="leading" secondItem="e89-aB-jt5" secondAttribute="leading" id="8GP-mz-UwK"/>
+                            <constraint firstItem="Zj9-9B-U6b" firstAttribute="leading" secondItem="e89-aB-jt5" secondAttribute="leading" id="IDg-r3-nvD"/>
+                            <constraint firstItem="pmj-YJ-QLN" firstAttribute="top" secondItem="Egz-Nc-klJ" secondAttribute="bottom" id="MxC-YF-JGy"/>
+                            <constraint firstItem="Zj9-9B-U6b" firstAttribute="top" secondItem="6Wf-9I-HdU" secondAttribute="bottom" id="TFF-Rm-JQn"/>
+                            <constraint firstAttribute="trailing" secondItem="Zj9-9B-U6b" secondAttribute="trailing" id="YGR-YK-9gd"/>
+                            <constraint firstAttribute="trailing" secondItem="Egz-Nc-klJ" secondAttribute="trailing" id="drU-W8-Qw4"/>
+                            <constraint firstItem="Egz-Nc-klJ" firstAttribute="top" secondItem="Zj9-9B-U6b" secondAttribute="bottom" constant="8" id="rEH-9p-XJR"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="Zj9-9B-U6b"/>
+                                <exclude reference="Egz-Nc-klJ"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="IDg-r3-nvD"/>
+                                <exclude reference="TFF-Rm-JQn"/>
+                                <exclude reference="YGR-YK-9gd"/>
+                                <exclude reference="8GP-mz-UwK"/>
+                                <exclude reference="drU-W8-Qw4"/>
+                                <exclude reference="rEH-9p-XJR"/>
+                                <exclude reference="MxC-YF-JGy"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular">
+                            <mask key="subviews">
+                                <include reference="Zj9-9B-U6b"/>
+                                <include reference="Egz-Nc-klJ"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="IDg-r3-nvD"/>
+                                <include reference="TFF-Rm-JQn"/>
+                                <include reference="YGR-YK-9gd"/>
+                                <include reference="8GP-mz-UwK"/>
+                                <include reference="drU-W8-Qw4"/>
+                                <include reference="rEH-9p-XJR"/>
+                                <include reference="MxC-YF-JGy"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" id="WRx-1w-mdb">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="CFd-OQ-d9r">
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="b54-vm-55N" kind="show" id="cxE-jh-a26"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zJS-YD-VeI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4195" y="349.5"/>
         </scene>
         <!--Choose Uni View Controller-->
         <scene sceneID="0ei-qg-hH8">
@@ -4155,6 +4405,25 @@
             </objects>
             <point key="canvasLocation" x="924" y="2821.5"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="iRZ-PD-9v4">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="WNn-VU-3px" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gwG-JS-Uc4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.047058823530000002" green="0.30196078430000001" blue="0.0039215686269999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="TvB-qh-57A" kind="relationship" relationship="rootViewController" id="9nM-F5-g6C"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jdR-Xm-4i7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3447" y="349.5"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Background" width="600" height="600"/>
@@ -4171,6 +4440,7 @@
         <image name="ThumbsUp" width="540" height="597"/>
         <image name="chatIcon" width="512" height="512"/>
         <image name="chatIconGrey" width="256" height="256"/>
+        <image name="checkMark" width="400" height="380"/>
         <image name="clickCrest" width="184" height="245"/>
         <image name="doneButton" width="190" height="73"/>
         <image name="fingerSwipe" width="190" height="146"/>
@@ -4182,4 +4452,7 @@
         <image name="report" width="512" height="512"/>
         <image name="upload" width="190" height="190"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="cxE-jh-a26"/>
+    </inferredMetricsTieBreakers>
 </document>
