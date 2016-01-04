@@ -17,6 +17,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     var dates = [NSDate]()
     var objectId = String()
     var feed = String()
+    var usernameString = String()
     
     let user = PFUser.currentUser()
     
@@ -48,27 +49,57 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var CommentTableView: UITableView!
     @IBOutlet weak var commentIcon: UIImageView!
     @IBOutlet weak var UploadIcon: UIImageView!
+    @IBOutlet weak var reportView: UIView!
     
     
     //Actions
+    @IBAction func yesReport(sender: AnyObject) {
+        
+        report()
+        
+    }
+    
+    
+    @IBAction func noReport(sender: AnyObject) {
+        
+        UIView.animateWithDuration(0.3) { () -> Void in
+            
+            self.reportView.alpha = 0
+            
+        }
+    }
+    
+    
+    @IBAction func report(sender: AnyObject) {
+        
+        UIView.animateWithDuration(0.3) { () -> Void in
+            
+            self.reportView.alpha = 1
+            
+        }
+    }
+    
+    
+    
+    
     @IBAction func post(sender: AnyObject) {
         
         if !isUploading {
-        
-        if CommentText.text != "" {
             
-            isUploading = true
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
+            if CommentText.text != "" {
                 
-                self.UploadIcon.alpha = 1
-                self.uploadProfilePicture()
+                isUploading = true
                 
-            })
-            
-            
-            view.endEditing(true)
-        }
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    
+                    self.UploadIcon.alpha = 1
+                    self.uploadProfilePicture()
+                    
+                })
+                
+                
+                view.endEditing(true)
+            }
         }
     }
     
@@ -78,6 +109,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             guard let actualController = self.rootController else {return}
             actualController.mainController?.ImageBlur.alpha = 0
+            self.reportView.alpha = 0
         })
         
         rootController?.toggleComments({ (Bool) -> () in
@@ -91,7 +123,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             self.view.endEditing(true)
             
             if !self.isUploading {
-            self.CommentText.text = ""
+                self.CommentText.text = ""
             }
             self.commentIcon.alpha = 1
             self.comments.removeAll()
@@ -101,6 +133,76 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     //Functions
+    func report() {
+        
+        if usernameString != user?.username {
+            
+            var blockedPuffs = [String]()
+            
+            do {
+                try user?.fetch()
+            } catch let error {
+                print(error)
+            }
+            
+            blockedPuffs = user?["blockedPuffs"] as! [String]
+            
+            user?["blockedPuffs"] = [usernameString] + blockedPuffs
+            
+            user?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    
+                    do {
+                        try self.user?.fetch()
+                    } catch let error {
+                        print(error)
+                    }
+                    
+                    }) { (Bool) -> Void in
+                        self.reportView.alpha = 0
+                        self.rootController?.mainController?.ImageBlur.alpha = 0
+                        self.rootController?.toggleComments({ (Bool) -> () in
+                            
+                            guard let actualController = self.rootController else {return}
+                            
+                            actualController.mainController?.myTableView.scrollEnabled = true
+                            
+                            actualController.mainController?.commentsOpened = false
+                            
+                            actualController.mainController?.loadFromParse({ () -> Void in
+                                
+                            })
+                            
+                            self.view.endEditing(true)
+                            
+                            if !self.isUploading {
+                                self.CommentText.text = ""
+                            }
+                            self.commentIcon.alpha = 1
+                            self.comments.removeAll()
+                            self.CommentTableView.reloadData()
+                            
+                        })
+
+                }
+                
+                
+            })
+        } else {
+            
+            let alertController = UIAlertController(title: "Hey", message: "You can't report yourself...", preferredStyle:  UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Oh", style: UIAlertActionStyle.Cancel, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.reportView.alpha = 0
+            })
+            
+        }
+    }
+    
+    
     func uploadProfilePicture() {
         
         let userProfilePictureFile: PFFile = user?["profilePicture"] as! PFFile
@@ -151,7 +253,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             return nil
         }
     }
-
+    
     
     func saveToParse() {
         
@@ -332,6 +434,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     
                     guard let actualController = self.rootController else {return}
                     actualController.mainController?.ImageBlur.alpha = 0
+                    self.reportView.alpha = 0
                 })
                 
                 rootController?.toggleComments({ (Bool) -> () in
@@ -343,7 +446,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     actualController.mainController?.myTableView.scrollEnabled = true
                     
                     if !self.isUploading {
-                    self.CommentText.text = ""
+                        self.CommentText.text = ""
                     }
                     self.commentIcon.alpha = 1
                     self.comments.removeAll()

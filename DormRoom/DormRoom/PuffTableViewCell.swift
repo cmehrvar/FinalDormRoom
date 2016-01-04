@@ -12,6 +12,8 @@ class PuffTableViewCell: UITableViewCell {
     
     var isExpanded = false
     
+    weak var rootController: MainRootViewController?
+    
     var objectId = String()
     var like = Int()
     var dislike = Int()
@@ -41,10 +43,10 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var UsernameOutlet: UILabel!
     
     @IBOutlet weak var SwipeConstraint: NSLayoutConstraint!
-    @IBOutlet weak var ReportOutlet: UIImageView!
-    @IBOutlet weak var ReportView: UIView!
-    @IBOutlet weak var NoLabel: UILabel!
-    @IBOutlet weak var YesLabel: UILabel!
+    //@IBOutlet weak var ReportOutlet: UIImageView!
+    //@IBOutlet weak var ReportView: UIView!
+    //@IBOutlet weak var NoLabel: UILabel!
+    //@IBOutlet weak var YesLabel: UILabel!
     @IBOutlet weak var CommentNumber: UILabel!
     
     
@@ -62,9 +64,12 @@ class PuffTableViewCell: UITableViewCell {
         self.addGestureRecognizer(panRecognizer)
         
         //Adding Tap to Report
+        
+        /*
         let tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "reportTapped")
         ReportOutlet.userInteractionEnabled = true
         ReportOutlet.addGestureRecognizer(tapRecognizer)
+        
         
         let yesTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "yesTapped")
         YesLabel.userInteractionEnabled = true
@@ -73,6 +78,7 @@ class PuffTableViewCell: UITableViewCell {
         let noTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "noTapped")
         NoLabel.userInteractionEnabled = true
         NoLabel.addGestureRecognizer(noTapRecognizer)
+*/
     }
     
     func expandImage() {
@@ -104,11 +110,16 @@ class PuffTableViewCell: UITableViewCell {
     
     func reportTapped() {
         
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.ReportView.alpha = 1
-        }
+        print("report tapped")
+        
+        rootController?.toggleBlockUser({ (Bool) -> () in
+            
+        })
+        
+        
     }
     
+    /*
     func yesTapped() {
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -137,7 +148,7 @@ class PuffTableViewCell: UITableViewCell {
             self.ReportView.alpha = 0
         }
     }
-    
+    */
     func longPressed(sender: UILongPressGestureRecognizer) {
         
         switch sender.state {

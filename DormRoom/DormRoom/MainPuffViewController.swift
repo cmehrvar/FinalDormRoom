@@ -36,6 +36,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var objectId = [String]()
     var comments = [[String]]()
     var commentsNil = [Bool]()
+    var usersBlocked = [[String]]()
     
     let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York")
     
@@ -230,13 +231,51 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.comments.removeAll()
                     self.commentsNil.removeAll()
                     
+                    
                     if let puffs = puffs {
                         
                         for puff in puffs {
                             
-                            if self.feed != "CanadaPuff" {
+                            let blockedUsers = self.user?["blockedPuffs"] as! [String]
+                            var puffBlocked = false
+                            
+                            for blockedUser in blockedUsers {
                                 
-                                if puff["UniversityName"] as! String == self.feed {
+                                if puff["Username"] as! String == blockedUser {
+                                    puffBlocked = true
+                                }
+                            }
+                            
+                            if !puffBlocked {
+                                
+                                if self.feed != "CanadaPuff" {
+                                    
+                                    if puff["UniversityName"] as! String == self.feed {
+                                        
+                                        self.imageUrls.append(puff["ImageUrl"] as! String)
+                                        self.profilePictureURLS.append(puff["ProfilePictureUrl"] as! String)
+                                        self.captions.append(puff["Caption"] as! String)
+                                        self.likes.append(puff["Like"] as! Int)
+                                        self.dislikes.append(puff["Dislike"] as! Int)
+                                        self.universityNames.append(puff["UniversityName"] as! String)
+                                        self.usernames.append(puff["Username"] as! String)
+                                        
+                                        if puff["Comments"] == nil {
+                                            self.commentsNil.append(true)
+                                            self.comments.append([])
+                                        } else {
+                                            self.commentsNil.append(false)
+                                            self.comments.append(puff["Comments"] as! [String])
+                                        }
+                                        
+                                        
+                                        if let actualId = puff.objectId {
+                                            self.objectId.append(actualId)
+                                        }
+                                    }
+                                    
+                                }
+                                else {
                                     
                                     self.imageUrls.append(puff["ImageUrl"] as! String)
                                     self.profilePictureURLS.append(puff["ProfilePictureUrl"] as! String)
@@ -259,34 +298,14 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                         self.objectId.append(actualId)
                                     }
                                 }
-                            } else {
                                 
-                                self.imageUrls.append(puff["ImageUrl"] as! String)
-                                self.profilePictureURLS.append(puff["ProfilePictureUrl"] as! String)
-                                self.captions.append(puff["Caption"] as! String)
-                                self.likes.append(puff["Like"] as! Int)
-                                self.dislikes.append(puff["Dislike"] as! Int)
-                                self.universityNames.append(puff["UniversityName"] as! String)
-                                self.usernames.append(puff["Username"] as! String)
-                                
-                                if puff["Comments"] == nil {
-                                    self.commentsNil.append(true)
-                                    self.comments.append([])
-                                } else {
-                                    self.commentsNil.append(false)
-                                    self.comments.append(puff["Comments"] as! [String])
-                                }
-                                
-                                
-                                if let actualId = puff.objectId {
-                                    self.objectId.append(actualId)
-                                }
                             }
+                            
                         }
                     }
                     
                     self.PuffTableView.reloadData()
-                    
+                    print(self.imageUrls)
                     self.loading = false
                 }
             } else {
@@ -296,6 +315,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
     }
+    
     
     func loadWebsite() {
         
@@ -451,6 +471,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             actualController.commentsController?.profilePictureUrl = dormroomurl + profilePictureURLS[indexPath.row]
             
+            actualController.commentsController?.usernameString = usernames[indexPath.row]
+            
             actualController.commentsController?.updateInfo()
             
             switch universityNames[indexPath.row] {
@@ -521,7 +543,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             rootController?.toggleComments({ (Bool) -> () in
                 
-
+                
                 self.myTableView.scrollEnabled = false
                 print("comments toggled")
                 

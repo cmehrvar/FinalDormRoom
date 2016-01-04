@@ -16,13 +16,14 @@ class MainRootViewController: UIViewController {
     var takePuffIsRevealed = false
     var changeUniIsRevealed = false
     var commentsIsRevealed = false
-    
+    var reportIsRevealed = false
     
     weak var mainController: MainPuffViewController?
     weak var changeUniController: ChangeUniViewController?
     weak var takePuffController: TakePuffViewController?
     weak var menuController: MenuViewController?
     weak var commentsController: CommentsViewController?
+    weak var reportController: ReportViewController?
     
     //Constraints
     @IBOutlet weak var MenuConstraint: NSLayoutConstraint!
@@ -34,6 +35,7 @@ class MainRootViewController: UIViewController {
     
     //Outlets
     @IBOutlet weak var TakePuffContainerOutlet: UIView!
+    @IBOutlet weak var ReportOutlet: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -149,6 +151,25 @@ class MainRootViewController: UIViewController {
                 completion(complete)
         }
     }
+    
+    
+    func toggleBlockUser(completion: (Bool) -> ()) {
+        
+        var panelOffset: CGFloat = 1
+        
+        if reportIsRevealed {
+            panelOffset = 0
+        }
+        
+        reportIsRevealed = !reportIsRevealed
+        
+        UIView.animateWithDuration(0.3) { () -> Void in
+            
+            self.ReportOutlet.alpha = panelOffset
+            self.view.layoutIfNeeded()
+            
+        }
+    }
   
     
     override func didReceiveMemoryWarning() {
@@ -192,6 +213,12 @@ class MainRootViewController: UIViewController {
             guard let navController = segue.destinationViewController as? UINavigationController, comments = navController.topViewController as? CommentsViewController else {return}
             commentsController = comments
             commentsController?.rootController = self
+            
+        } else if segue.identifier == "ReportSegue" {
+            
+            guard let navController = segue.destinationViewController as? UINavigationController, report = navController.topViewController as? ReportViewController else {return}
+            reportController = report
+            reportController?.rootController = self
             
         }
 

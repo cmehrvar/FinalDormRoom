@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "takeAtimeNew.png",
+      "filename" : "howManyMore.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "takeAtimeNew-1.png",
+      "filename" : "howManyMore-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "takeAtimeNew-2.png",
+      "filename" : "howManyMore-2.png",
       "scale" : "3x"
     }
   ],

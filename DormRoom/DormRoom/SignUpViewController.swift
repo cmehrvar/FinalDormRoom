@@ -68,6 +68,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
             user["profilePicture"] = PFFile(data: actualProfiledata)
             user["universityName"] = universityName
             user["firstTime"] = true
+            user["blockedPuffs"] = []
             
             user.signUpInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                 
