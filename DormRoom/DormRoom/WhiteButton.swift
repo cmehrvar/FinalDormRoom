@@ -14,8 +14,7 @@ class WhiteButton: UIView {
         
         super.awakeFromNib()
         
-        layer.borderWidth = 2
-        layer.borderColor = UIColor.blackColor().CGColor
+        
         
         self.clipsToBounds = true
         

@@ -14,8 +14,7 @@ class BlackButton: UIView {
         
         super.awakeFromNib()
         
-        layer.borderWidth = 2
-        layer.borderColor = UIColor.whiteColor().CGColor
+        
         
         self.clipsToBounds = true
         

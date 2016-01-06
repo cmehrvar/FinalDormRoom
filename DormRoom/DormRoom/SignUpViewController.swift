@@ -13,6 +13,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
     weak var rootController: SignUpRootController?
     let user = PFUser()
     
+    
     var universityName = String()
 
 
@@ -39,10 +40,33 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
     @IBOutlet weak var UniOutlet: RoundedImage!
     @IBOutlet weak var CheckmarkOutlet: UIImageView!
     @IBOutlet weak var ReadTermsView: WhiteButton!
+    @IBOutlet weak var termsView: UIView!
     
     
     
     //Actions
+    @IBAction func termsAction(sender: AnyObject) {
+        
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.termsView.alpha = 1
+            
+        }
+        
+    }
+    
+    @IBAction func okAction(sender: AnyObject) {
+        
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.termsView.alpha = 0
+        }
+        
+    }
+    @IBAction func termsOfAgreement(sender: AnyObject) {
+        
+        rootController?.uniIsRevealed = false
+        
+    }
+    
     @IBAction func signUp(sender: AnyObject) {
         
         if CheckmarkOutlet.alpha == 0 {
@@ -141,6 +165,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
     
     func uniTapped() {
         
+        print("uniTapped")
         rootController?.toggleChooseUni({ (complete) -> () in
             
         })

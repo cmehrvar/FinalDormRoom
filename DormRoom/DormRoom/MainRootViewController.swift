@@ -80,7 +80,6 @@ class MainRootViewController: UIViewController {
             self.view.layoutIfNeeded()
             
             }) { (complete) -> Void in
-                
                 completion(complete)
         }
     }
