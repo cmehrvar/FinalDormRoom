@@ -430,7 +430,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             
         }
         
-        return length <= 10
+        return length <= 20
         
     }
     

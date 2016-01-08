@@ -12,15 +12,13 @@ class PuffTableViewCell: UITableViewCell {
     
     var isExpanded = false
     
-    weak var rootController: MainRootViewController?
+    let user = PFUser.currentUser()
     
     var objectId = String()
     var like = Int()
     var dislike = Int()
     
     var feed: String = "CanadaPuff"
-    
-    var likedDisliked = [String : Bool]()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,13 +39,12 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var ThumbsUpOutlet: UIImageView!
     @IBOutlet weak var ThumbsDownOutlet: UIImageView!
     @IBOutlet weak var UsernameOutlet: UILabel!
-    
+    @IBOutlet weak var LikeButtonOutlet: UIImageView!
+    @IBOutlet weak var DislikeButtonOutlet: UIImageView!
     @IBOutlet weak var SwipeConstraint: NSLayoutConstraint!
-    //@IBOutlet weak var ReportOutlet: UIImageView!
-    //@IBOutlet weak var ReportView: UIView!
-    //@IBOutlet weak var NoLabel: UILabel!
-    //@IBOutlet weak var YesLabel: UILabel!
     @IBOutlet weak var CommentNumber: UILabel!
+    @IBOutlet weak var likeView: UIView!
+    @IBOutlet weak var dislikeView: UIView!
     
     
     
@@ -63,23 +60,14 @@ class PuffTableViewCell: UITableViewCell {
         panRecognizer.delegate = self
         self.addGestureRecognizer(panRecognizer)
         
-        //Adding Tap to Report
+        let likeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeLike")
+        likeView.addGestureRecognizer(likeTapRecognizer)
         
-        /*
-        let tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "reportTapped")
-        ReportOutlet.userInteractionEnabled = true
-        ReportOutlet.addGestureRecognizer(tapRecognizer)
+        let dislikeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeDislike")
+        dislikeView.addGestureRecognizer(dislikeTapRecognizer)
         
-        
-        let yesTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "yesTapped")
-        YesLabel.userInteractionEnabled = true
-        YesLabel.addGestureRecognizer(yesTapRecognizer)
-        
-        let noTapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "noTapped")
-        NoLabel.userInteractionEnabled = true
-        NoLabel.addGestureRecognizer(noTapRecognizer)
-*/
     }
+    
     
     func expandImage() {
         
@@ -108,55 +96,30 @@ class PuffTableViewCell: UITableViewCell {
         }
     }
     
-    func reportTapped() {
-        
-        print("report tapped")
-        
-        rootController?.toggleBlockUser({ (Bool) -> () in
-            
-        })
-        
-        
-    }
     
-    /*
-    func yesTapped() {
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            
-            self.ReportView.alpha = 0
-            
-            }) { (complete) -> Void in
-                
-                let query = PFQuery(className: self.feed)
-                query.getObjectInBackgroundWithId(self.objectId) {
-                    (gameScore: PFObject?, error: NSError?) -> Void in
-                    if error != nil {
-                        print(error)
-                    } else if let gameScore = gameScore {
-                        gameScore["Safe"] = false
-                        gameScore.saveInBackground()
-                    }
-                }
-                
-        }
-    }
-    
-    func noTapped() {
-        
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.ReportView.alpha = 0
-        }
-    }
-    */
+   
     func longPressed(sender: UILongPressGestureRecognizer) {
         
         switch sender.state {
             
         case .Began:
             
-            if likedDisliked[objectId] != true {
-                expandImage()
+            if user?["liked"] == nil {
+                user?["liked"] = []
+            }
+            
+            let likedObjects: [String] = user?["liked"] as! [String]
+            var liked = false
+            
+            for likedObject in likedObjects {
+                
+                if likedObject == objectId {
+                    liked = true
+                }
+            }
+            
+            if !liked {
+            expandImage()
             }
             
         case .Ended:
@@ -215,6 +178,31 @@ class PuffTableViewCell: UITableViewCell {
     
     func swipeLike() {
         
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.LikeButtonOutlet.transform = CGAffineTransformMakeScale(6,6)
+            self.LikeButtonOutlet.alpha = 0
+            
+            self.DislikeButtonOutlet.transform = CGAffineTransformMakeScale(0.15, 0.15)
+            self.DislikeButtonOutlet.alpha = 0
+            
+            }) { (Bool) -> Void in
+                
+                self.LikeButtonOutlet.image = nil
+                self.likeView.userInteractionEnabled = false
+                
+                self.DislikeButtonOutlet.image = nil
+                self.dislikeView.userInteractionEnabled = false
+                
+                self.LikeButtonOutlet.transform = CGAffineTransformIdentity
+                self.LikeButtonOutlet.alpha = 1
+                
+                self.DislikeButtonOutlet.transform = CGAffineTransformIdentity
+                self.DislikeButtonOutlet.alpha = 1
+                
+        }
+
+        
         let query = PFQuery(className: feed)
         
         query.getObjectInBackgroundWithId(objectId) { (puff: PFObject?, error: NSError?) -> Void in
@@ -237,13 +225,50 @@ class PuffTableViewCell: UITableViewCell {
             }
         }
         
-        likedDisliked[objectId] = true
+        var array: [String] = user?["liked"] as! [String]
+        array = [objectId] + array
+        user?["liked"] = array
+        user?.saveInBackgroundWithBlock({ (Bool, error:NSError?) -> Void in
+            
+            do {
+                try self.user?.fetch()
+            } catch let error {
+                print(error)
+            }
+            
+        })
+        
         LikeOutlet.text = "\(1 + like)"
         
     }
     
     
     func swipeDislike() {
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.DislikeButtonOutlet.transform = CGAffineTransformMakeScale(6,6)
+            self.DislikeButtonOutlet.alpha = 0
+            
+            self.LikeButtonOutlet.transform = CGAffineTransformMakeScale(0.15,0.15)
+            self.LikeButtonOutlet.alpha = 0
+            
+            }) { (Bool) -> Void in
+                
+                self.LikeButtonOutlet.image = nil
+                self.likeView.userInteractionEnabled = false
+                
+                self.DislikeButtonOutlet.image = nil
+                self.dislikeView.userInteractionEnabled = false
+                
+                self.LikeButtonOutlet.transform = CGAffineTransformIdentity
+                self.LikeButtonOutlet.alpha = 1
+                
+                self.DislikeButtonOutlet.transform = CGAffineTransformIdentity
+                self.DislikeButtonOutlet.alpha = 1
+                
+        }
+
         
         let query = PFQuery(className: feed)
         
@@ -267,7 +292,19 @@ class PuffTableViewCell: UITableViewCell {
             }
         }
         
-        likedDisliked[objectId] = true
+        var array: [String] = user?["liked"] as! [String]
+        array = [objectId] + array
+        user?["liked"] = array
+        user?.saveInBackgroundWithBlock({ (Bool, error:NSError?) -> Void in
+            
+            do {
+                try self.user?.fetch()
+            } catch let error {
+                print(error)
+            }
+        
+        })
+        
         DislikeOutlet.text = "\(1 + dislike)"
         
     }

@@ -50,6 +50,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var commentIcon: UIImageView!
     @IBOutlet weak var UploadIcon: UIImageView!
     @IBOutlet weak var reportView: UIView!
+    @IBOutlet weak var BlockReportOutlet: UILabel!
     
     
     //Actions
@@ -73,6 +74,14 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBAction func report(sender: AnyObject) {
         
         UIView.animateWithDuration(0.3) { () -> Void in
+            
+            if self.usernameString != self.user?.username {
+                
+                self.BlockReportOutlet.text = "Report & Block User?"
+                
+            } else {
+                self.BlockReportOutlet.text = "Delete?"
+            }
             
             self.reportView.alpha = 1
             
@@ -137,6 +146,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if usernameString != user?.username {
             
+            
             var blockedPuffs = [String]()
             
             do {
@@ -191,14 +201,34 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             })
         } else {
             
-            let alertController = UIAlertController(title: "Hey", message: "You can't report yourself...", preferredStyle:  UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "Oh", style: UIAlertActionStyle.Cancel, handler: nil))
-            self.presentViewController(alertController, animated: true, completion: nil)
-            
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.reportView.alpha = 0
             })
             
+            let alertController = UIAlertController(title: "So...", message: "You wanna delete this?", preferredStyle:  UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil))
+            
+            alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
+                
+                let query = PFQuery(className: self.feed)
+                query.getObjectInBackgroundWithId(self.objectId, block: { (post: PFObject?, error: NSError?) -> Void in
+                    
+                    post?["Deleted"] = true
+                    post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                        
+                        self.rootController?.toggleComments({ (Bool) -> () in
+                            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                                self.rootController?.mainController?.ImageBlur.alpha = 0
+                            })
+                            self.rootController?.mainController?.loadFromParse({ () -> Void in
+                                
+                            })
+                        })
+                    })
+                })
+            }))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     

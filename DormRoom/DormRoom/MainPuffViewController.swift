@@ -236,21 +236,52 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                         for puff in puffs {
                             
-                            let blockedUsers = self.user?["blockedPuffs"] as! [String]
-                            var puffBlocked = false
-                            
-                            for blockedUser in blockedUsers {
-                                
-                                if puff["Username"] as! String == blockedUser {
-                                    puffBlocked = true
-                                }
+                            if puff["Deleted"] == nil {
+                                puff["Deleted"] = false
                             }
                             
-                            if !puffBlocked {
+                            if puff["Deleted"] as! Bool != true {
                                 
-                                if self.feed != "CanadaPuff" {
+                                let blockedUsers = self.user?["blockedPuffs"] as! [String]
+                                var puffBlocked = false
+                                
+                                for blockedUser in blockedUsers {
                                     
-                                    if puff["UniversityName"] as! String == self.feed {
+                                    if puff["Username"] as! String == blockedUser {
+                                        puffBlocked = true
+                                    }
+                                }
+                                
+                                if !puffBlocked {
+                                    
+                                    if self.feed != "CanadaPuff" {
+                                        
+                                        if puff["UniversityName"] as! String == self.feed {
+                                            
+                                            self.imageUrls.append(puff["ImageUrl"] as! String)
+                                            self.profilePictureURLS.append(puff["ProfilePictureUrl"] as! String)
+                                            self.captions.append(puff["Caption"] as! String)
+                                            self.likes.append(puff["Like"] as! Int)
+                                            self.dislikes.append(puff["Dislike"] as! Int)
+                                            self.universityNames.append(puff["UniversityName"] as! String)
+                                            self.usernames.append(puff["Username"] as! String)
+                                            
+                                            if puff["Comments"] == nil {
+                                                self.commentsNil.append(true)
+                                                self.comments.append([])
+                                            } else {
+                                                self.commentsNil.append(false)
+                                                self.comments.append(puff["Comments"] as! [String])
+                                            }
+                                            
+                                            
+                                            if let actualId = puff.objectId {
+                                                self.objectId.append(actualId)
+                                            }
+                                        }
+                                        
+                                    }
+                                    else {
                                         
                                         self.imageUrls.append(puff["ImageUrl"] as! String)
                                         self.profilePictureURLS.append(puff["ProfilePictureUrl"] as! String)
@@ -275,33 +306,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                     }
                                     
                                 }
-                                else {
-                                    
-                                    self.imageUrls.append(puff["ImageUrl"] as! String)
-                                    self.profilePictureURLS.append(puff["ProfilePictureUrl"] as! String)
-                                    self.captions.append(puff["Caption"] as! String)
-                                    self.likes.append(puff["Like"] as! Int)
-                                    self.dislikes.append(puff["Dislike"] as! Int)
-                                    self.universityNames.append(puff["UniversityName"] as! String)
-                                    self.usernames.append(puff["Username"] as! String)
-                                    
-                                    if puff["Comments"] == nil {
-                                        self.commentsNil.append(true)
-                                        self.comments.append([])
-                                    } else {
-                                        self.commentsNil.append(false)
-                                        self.comments.append(puff["Comments"] as! [String])
-                                    }
-                                    
-                                    
-                                    if let actualId = puff.objectId {
-                                        self.objectId.append(actualId)
-                                    }
-                                }
                                 
                             }
                             
+                            
                         }
+                        
                     }
                     
                     self.PuffTableView.reloadData()
@@ -360,6 +370,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         myTableView = tableView
         
+        let likedObjects: [String] = user?["liked"] as! [String]
+        
         tableView.decelerationRate = 0.01
         
         let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
@@ -374,18 +386,46 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell.dislike = dislikes[indexPath.row]
         
-        cell.ImageOutlet.setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: placeholderImage, completed: { (image, error, cache, url) -> Void in
+        
+        cell.ImageOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: placeholderImage) { (image, error, cache, url) -> Void in
             
             if error == nil {
                 cell.SwipeViewOutlet.image = image
             }
-            
-            }, usingActivityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+        }
         
         cell.UsernameOutlet.text = "@" + usernames[indexPath.row]
         
-        
         cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
+        
+        var liked = false
+        
+        for likedObject in likedObjects {
+            
+            if likedObject == objectId[indexPath.row] {
+                liked = true
+            }
+        }
+        
+        if !liked {
+            
+            cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
+            cell.likeView.userInteractionEnabled = true
+            
+            cell.DislikeButtonOutlet.image = UIImage(named: "ThumbsDown")
+            cell.likeView.userInteractionEnabled = true
+            
+
+        } else {
+            
+            cell.LikeButtonOutlet.image = nil
+            cell.likeView.userInteractionEnabled = false
+            
+            cell.DislikeButtonOutlet.image = nil
+            cell.likeView.userInteractionEnabled = false
+            
+        }
+        
         
         switch universityNames[indexPath.row] {
             
