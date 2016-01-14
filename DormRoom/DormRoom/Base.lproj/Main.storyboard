@@ -2973,6 +2973,7 @@ You may be subject to additional terms and conditions that apply when you use or
                                             <outlet property="UsernameOutlet" destination="ogO-F2-W7M" id="4I8-sh-YYS"/>
                                             <outlet property="dislikeView" destination="3bv-E2-A8p" id="rQA-Ml-pJw"/>
                                             <outlet property="likeView" destination="WIz-bj-OM3" id="57M-ur-GDJ"/>
+                                            <outlet property="timePosted" destination="UIy-h6-C3q" id="sGW-XL-3KC"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

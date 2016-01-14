@@ -45,6 +45,8 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var CommentNumber: UILabel!
     @IBOutlet weak var likeView: UIView!
     @IBOutlet weak var dislikeView: UIView!
+    @IBOutlet weak var timePosted: UILabel!
+    
     
     
     

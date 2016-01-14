@@ -37,6 +37,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var comments = [[String]]()
     var commentsNil = [Bool]()
     var usersBlocked = [[String]]()
+    var imageDates = [NSDate]()
     
     let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York")
     
@@ -280,7 +281,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.objectId.removeAll()
                     self.comments.removeAll()
                     self.commentsNil.removeAll()
-                    
+                    self.imageDates.removeAll()
                     
                     if let puffs = puffs {
                         
@@ -316,6 +317,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.universityNames.append(puff["UniversityName"] as! String)
                                             self.usernames.append(puff["Username"] as! String)
                                             
+                                            if let actualDate = puff.createdAt {
+                                                self.imageDates.append(actualDate)
+                                            }
+                                            
                                             if puff["Comments"] == nil {
                                                 self.commentsNil.append(true)
                                                 self.comments.append([])
@@ -340,6 +345,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                         self.dislikes.append(puff["Dislike"] as! Int)
                                         self.universityNames.append(puff["UniversityName"] as! String)
                                         self.usernames.append(puff["Username"] as! String)
+                                        
+                                        if let actualDate = puff.createdAt {
+                                            self.imageDates.append(actualDate)
+                                        }
                                         
                                         if puff["Comments"] == nil {
                                             self.commentsNil.append(true)
@@ -422,6 +431,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let likedObjects: [String] = user?["liked"] as! [String]
         
+        let date: NSDate = imageDates[indexPath.row]
+        
         tableView.decelerationRate = 0.01
         
         let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
@@ -435,6 +446,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.like = likes[indexPath.row]
         
         cell.dislike = dislikes[indexPath.row]
+        
+        cell.timePosted.text = timeAgoSince(date)
         
         
         cell.ImageOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: placeholderImage) { (image, error, cache, url) -> Void in
