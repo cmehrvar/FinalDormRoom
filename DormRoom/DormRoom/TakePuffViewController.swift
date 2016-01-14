@@ -10,18 +10,35 @@ import UIKit
 import AVFoundation
 import AVKit
 
-class TakePuffViewController: UIViewController, UITextFieldDelegate {
+class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFileOutputRecordingDelegate {
     
     weak var rootController: MainRootViewController?
+    
+    var playerItem: AVPlayerItem!
+    var player: AVPlayer!
+    var playerLayer: AVPlayerLayer!
+    var asset: AVURLAsset!
     
     var feed = String()
     var user = PFUser.currentUser()
     var imageUrl: String = String()
     var profilePictureUrl: String = String()
     
+    var ms = 0
+    var s = 0
+    
+    var startTime = NSTimeInterval()
+    var timer:NSTimer = NSTimer()
+    
+    var isImage = Bool()
+    
     
     let frontOut = AVCaptureStillImageOutput()
     let backOut = AVCaptureStillImageOutput()
+    
+    let frontVideoOut = AVCaptureMovieFileOutput()
+    let backVideoOut = AVCaptureMovieFileOutput()
+    
     var previewLayer: AVCaptureVideoPreviewLayer?
     
     var frontCameraShown = false
@@ -65,6 +82,11 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var TakePuffButtonViewOutlet: UIView!
     @IBOutlet weak var ChangeCameraOutlet: UIButton!
     @IBOutlet weak var PostButtonOutlet: UIView!
+    @IBOutlet weak var HoldToRecordOutlet: UIView!
+    @IBOutlet weak var TakeImageOutlet: UIImageView!
+    @IBOutlet weak var RecordingIconOutlet: UIImageView!
+    @IBOutlet weak var TimerOutlet: UILabel!
+    @IBOutlet weak var VideoView: UIView!
     
     
     
@@ -83,12 +105,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    @IBAction func takePuffAction(sender: AnyObject) {
-        
-        takeApuff()
-        PostButtonOutlet.alpha = 1
-        
-    }
     
     @IBAction func postPuff(sender: AnyObject) {
         
@@ -107,6 +123,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                 self.CameraCaptureView.alpha = 1
                 self.TakePuffButtonViewOutlet.alpha = 1
                 self.ChangeCameraOutlet.alpha = 1
+                self.HoldToRecordOutlet.alpha = 1
                 
                 self.PostButtonOutlet.alpha = 0
                 
@@ -116,7 +133,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             })
             
         })
-
+        
         print("Upload in progress")
         
     }
@@ -129,6 +146,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             self.CameraCaptureView.alpha = 1
             self.TakePuffButtonViewOutlet.alpha = 1
             self.ChangeCameraOutlet.alpha = 1
+            self.HoldToRecordOutlet.alpha = 1
             
             self.PostButtonOutlet.alpha = 0
             
@@ -137,6 +155,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             self.TakenPuffOutlet.image = nil
             self.CaptionOutlet.text = nil
             print("cancelled")
+            self.player.pause()
         })
         
     }
@@ -151,7 +170,167 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
     
     
     //Functions
-    func takeApuff() {
+    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
+        
+        print("done recording")
+        
+        self.TakenPuffOutlet.image = nil
+        self.PostButtonOutlet.alpha = 1
+        self.TakeImageOutlet.image = UIImage(named: "TakeAPuff")
+        self.RecordingIconOutlet.image = nil
+        
+        timer.invalidate()
+        ms = 0
+        s = 0
+        TimerOutlet.text = ""
+        
+        if let sampleUrl = outputFileURL {
+            asset = AVURLAsset(URL: sampleUrl)
+        }
+        
+        playerItem = AVPlayerItem(asset: asset)
+        player = AVPlayer(playerItem: playerItem)
+        playerLayer = AVPlayerLayer(player: player)
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.player.replaceCurrentItemWithPlayerItem(self.playerItem)
+            self.playerLayer.frame = self.VideoView.bounds
+            self.player.actionAtItemEnd = .None
+            self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+            self.VideoView.layer.addSublayer(self.playerLayer)
+            self.player.play()
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerItemDidReachEnd:", name: AVPlayerItemDidPlayToEndTimeNotification, object: player.currentItem)
+        
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.TakePuffButtonViewOutlet.alpha = 0
+            self.CameraCaptureView.alpha = 0
+            self.ChangeCameraOutlet.alpha = 0
+            self.HoldToRecordOutlet.alpha = 0
+            
+        })
+    }
+    
+    func update() {
+        
+        ms++
+        
+        switch ms {
+            
+        case 0:
+            s = 0
+            
+        case 100:
+            s = 1
+            
+        case 200:
+            s = 2
+            
+        case 300:
+            s = 3
+            
+        case 400:
+            s = 4
+            
+        case 500:
+            s = 5
+            
+        case 600:
+            s = 6
+            
+        case 700:
+            s = 7
+            
+        case 800:
+            s = 8
+            
+        case 900:
+            s = 9
+            
+        case 1000:
+            s = 10
+            
+        default:
+            break
+            
+            
+        }
+        
+        TimerOutlet.text = "\(s)"
+        
+    }
+    
+    func takeVideo(sender: UILongPressGestureRecognizer) {
+        
+        switch sender.state {
+            
+        case .Began:
+            
+            self.timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.HoldToRecordOutlet.alpha = 0
+                self.TakeImageOutlet.image = UIImage(named: "Recording")
+                self.RecordingIconOutlet.image = UIImage(named: "Recording")
+            })
+            
+            if !frontCameraShown {
+                
+                backVideoOut.maxRecordedDuration = CMTime(seconds: 10, preferredTimescale: 1)
+                
+                let recordingDelegate:AVCaptureFileOutputRecordingDelegate? = self
+                
+                let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".mov")
+                let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload").URLByAppendingPathComponent(fileName)
+                
+                backVideoOut.startRecordingToOutputFileURL(fileURL, recordingDelegate: recordingDelegate)
+                
+            } else {
+                
+                frontVideoOut.maxRecordedDuration = CMTime(seconds: 10, preferredTimescale: 1)
+                
+                let recordingDelegate:AVCaptureFileOutputRecordingDelegate? = self
+                
+                let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".mov")
+                let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload").URLByAppendingPathComponent(fileName)
+                
+                frontVideoOut.startRecordingToOutputFileURL(fileURL, recordingDelegate: recordingDelegate)
+                
+            }
+            print("began")
+            
+        case .Ended:
+            print("ended")
+            
+            PostButtonOutlet.alpha = 1
+            RecordingIconOutlet.image = nil
+            TakeImageOutlet.image = UIImage(named: "TakeAPuff")
+            
+            if !frontCameraShown {
+                backVideoOut.stopRecording()
+            } else {
+                frontVideoOut.stopRecording()
+            }
+            
+            timer.invalidate()
+            ms = 0
+            s = 0
+            TimerOutlet.text = ""
+            
+        default:
+            break
+            
+        }
+        
+    }
+    
+    func takeImage() {
+        
+        PostButtonOutlet.alpha = 1
+        
         if !frontCameraShown {
             
             guard let videoConnection = backOut.connectionWithMediaType(AVMediaTypeVideo) else {
@@ -173,6 +352,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                     self.TakePuffButtonViewOutlet.alpha = 0
                     self.CameraCaptureView.alpha = 0
                     self.ChangeCameraOutlet.alpha = 0
+                    self.HoldToRecordOutlet.alpha = 0
                     
                 })
             }
@@ -196,6 +376,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                     self.TakePuffButtonViewOutlet.alpha = 0
                     self.CameraCaptureView.alpha = 0
                     self.ChangeCameraOutlet.alpha = 0
+                    self.HoldToRecordOutlet.alpha = 0
                     
                 })
             }
@@ -223,7 +404,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                 self.presentViewController(alertController, animated: true, completion: nil)
                 
                 if let actualController = self.rootController {
-                actualController.mainController?.uploadOutlet.alpha = 0
+                    actualController.mainController?.uploadOutlet.alpha = 0
                 }
             }
             return nil
@@ -325,7 +506,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             post["Comments"] = []
             post["CommentProfiles"] = []
             post["CommentDates"] = []
-
+            
             post.saveEventually()
             
         } else {
@@ -414,10 +595,20 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         view.endEditing(true)
     }
     
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    
     func addTapGesture() {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
+        
+        let imageTap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "takeImage")
+        let videoRecord: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "takeVideo:")
+        TakePuffButtonViewOutlet.userInteractionEnabled = true
+        TakePuffButtonViewOutlet.addGestureRecognizer(imageTap)
+        TakePuffButtonViewOutlet.addGestureRecognizer(videoRecord)
+        
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
@@ -472,7 +663,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
             print("Error was caught when trying to transform the device into a session input: \(error)")
         }
         
-        captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+        captureSession.sessionPreset = AVCaptureSessionPresetHigh
         captureSession.startRunning()
         
         if !frontCameraShown {
@@ -483,12 +674,20 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
                 captureSession.addOutput(backOut)
             }
             
+            if captureSession.canAddOutput(backVideoOut) {
+                captureSession.addOutput(backVideoOut)
+            }
+            
         } else {
             
             frontOut.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
             
             if captureSession.canAddOutput(frontOut) {
                 captureSession.addOutput(frontOut)
+            }
+            
+            if captureSession.canAddOutput(frontVideoOut) {
+                captureSession.addOutput(frontVideoOut)
             }
         }
         
@@ -504,6 +703,11 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate {
         actualPreviewLayer.position = CGPointMake(CameraCaptureView.bounds.midX, CameraCaptureView.bounds.midY)
         CameraCaptureView.layer.addSublayer(actualPreviewLayer)
         
+    }
+    
+    func playerItemDidReachEnd(notification: NSNotification) {
+        let p: AVPlayerItem = notification.object as! AVPlayerItem
+        p.seekToTime(kCMTimeZero)
     }
     
     

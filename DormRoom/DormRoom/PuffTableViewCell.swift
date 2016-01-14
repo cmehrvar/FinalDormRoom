@@ -219,29 +219,29 @@ class PuffTableViewCell: UITableViewCell {
                 
                 if let puff = puff {
                     puff["Like"] = 1 + (puff["Like"] as! Int)
-                    puff.saveEventually()
+                    puff.saveInBackground()
                 }
                 
+                var array: [String] = self.user?["liked"] as! [String]
+                array = [self.objectId] + array
+                self.user?["liked"] = array
+                self.user?.saveInBackgroundWithBlock({ (Bool, error:NSError?) -> Void in
+                    
+                    print("savedLiked")
+                    
+                    do {
+                        try self.user?.fetch()
+                    } catch let error {
+                        print(error)
+                    }
+                    
+                })
             } else {
                 print("\(error)")
             }
         }
         
-        var array: [String] = user?["liked"] as! [String]
-        array = [objectId] + array
-        user?["liked"] = array
-        user?.saveInBackgroundWithBlock({ (Bool, error:NSError?) -> Void in
-            
-            do {
-                try self.user?.fetch()
-            } catch let error {
-                print(error)
-            }
-            
-        })
-        
         LikeOutlet.text = "\(1 + like)"
-        
     }
     
     
@@ -289,23 +289,26 @@ class PuffTableViewCell: UITableViewCell {
                     puff.saveEventually()
                 }
                 
+                var array: [String] = self.user?["liked"] as! [String]
+                array = [self.objectId] + array
+                self.user?["liked"] = array
+                self.user?.saveInBackgroundWithBlock({ (Bool, error:NSError?) -> Void in
+                    
+                    print("savedDisliked")
+                    
+                    do {
+                        try self.user?.fetch()
+                    } catch let error {
+                        print(error)
+                    }
+                    
+                })
+
+                
             } else {
                 print("\(error)")
             }
         }
-        
-        var array: [String] = user?["liked"] as! [String]
-        array = [objectId] + array
-        user?["liked"] = array
-        user?.saveInBackgroundWithBlock({ (Bool, error:NSError?) -> Void in
-            
-            do {
-                try self.user?.fetch()
-            } catch let error {
-                print(error)
-            }
-        
-        })
         
         DislikeOutlet.text = "\(1 + dislike)"
         

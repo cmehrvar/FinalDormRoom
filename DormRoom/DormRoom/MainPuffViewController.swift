@@ -1,4 +1,4 @@
-//
+////
 //  MainPuffViewController.swift
 //  DormRoom
 //
@@ -155,10 +155,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         guard let actualController = rootController else {return}
         
         actualController.takePuffController?.feed = feed
+        //actualController.takePuffController?.feed = feed
         
         rootController?.toggleTakePuff({ (complete) -> () in
             
             actualController.takePuffController?.TakenPuffOutlet.image = nil
+            //actualController.takePuffController?.TakenPuffOutlet.image = nil
             actualController.takePuffController?.CaptionOutlet.text = nil
             
             self.uploadOutlet.alpha = 0
