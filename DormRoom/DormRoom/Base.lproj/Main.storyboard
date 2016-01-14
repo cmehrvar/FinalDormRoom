@@ -2510,6 +2510,52 @@ You may be subject to additional terms and conditions that apply when you use or
                                                         </mask>
                                                     </variation>
                                                 </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8DP-Wd-jBu" userLabel="TimePostedView" customClass="RoundedComment" customModule="DormRoom" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UIy-h6-C3q">
+                                                            <rect key="frame" x="-42" y="-21" width="42" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="0.50387931029999999" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="30" id="GKj-GP-Vf4"/>
+                                                        <constraint firstAttribute="width" constant="30" id="Pq6-Tc-FXf"/>
+                                                        <constraint firstItem="UIy-h6-C3q" firstAttribute="height" secondItem="8DP-Wd-jBu" secondAttribute="height" id="QfZ-7x-5p8"/>
+                                                        <constraint firstItem="UIy-h6-C3q" firstAttribute="centerX" secondItem="8DP-Wd-jBu" secondAttribute="centerX" id="faS-KN-rX9"/>
+                                                        <constraint firstItem="UIy-h6-C3q" firstAttribute="centerY" secondItem="8DP-Wd-jBu" secondAttribute="centerY" id="jDU-kU-To4"/>
+                                                        <constraint firstItem="UIy-h6-C3q" firstAttribute="width" secondItem="8DP-Wd-jBu" secondAttribute="width" id="mUl-Tb-D8m"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="subviews">
+                                                            <exclude reference="UIy-h6-C3q"/>
+                                                        </mask>
+                                                        <mask key="constraints">
+                                                            <exclude reference="GKj-GP-Vf4"/>
+                                                            <exclude reference="Pq6-Tc-FXf"/>
+                                                            <exclude reference="mUl-Tb-D8m"/>
+                                                            <exclude reference="QfZ-7x-5p8"/>
+                                                            <exclude reference="jDU-kU-To4"/>
+                                                            <exclude reference="faS-KN-rX9"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular">
+                                                        <mask key="subviews">
+                                                            <include reference="UIy-h6-C3q"/>
+                                                        </mask>
+                                                        <mask key="constraints">
+                                                            <include reference="GKj-GP-Vf4"/>
+                                                            <include reference="Pq6-Tc-FXf"/>
+                                                            <include reference="mUl-Tb-D8m"/>
+                                                            <include reference="QfZ-7x-5p8"/>
+                                                            <include reference="jDU-kU-To4"/>
+                                                            <include reference="faS-KN-rX9"/>
+                                                        </mask>
+                                                    </variation>
+                                                </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tvB-kX-MU5" userLabel="chatIcon" customClass="RoundedComment" customModule="DormRoom" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <subviews>
@@ -2774,14 +2820,24 @@ You may be subject to additional terms and conditions that apply when you use or
                                             <constraints>
                                                 <constraint firstItem="WIz-bj-OM3" firstAttribute="centerY" secondItem="oPD-Nu-Kkn" secondAttribute="centerY" id="0uH-6O-kcH"/>
                                                 <constraint firstAttribute="trailing" secondItem="WIz-bj-OM3" secondAttribute="trailing" id="1cl-xb-egN"/>
+                                                <constraint firstItem="8DP-Wd-jBu" firstAttribute="top" secondItem="LBS-Wx-Ze0" secondAttribute="bottom" constant="182" id="4Md-Jr-BDR">
+                                                    <variation key="heightClass=regular" constant="8"/>
+                                                </constraint>
                                                 <constraint firstItem="tQ1-bh-ATe" firstAttribute="centerY" secondItem="oPD-Nu-Kkn" secondAttribute="centerY" id="4Ry-sl-hY4"/>
                                                 <constraint firstItem="hTo-IP-IL0" firstAttribute="top" secondItem="oPD-Nu-Kkn" secondAttribute="top" id="8T3-oL-ve1"/>
                                                 <constraint firstItem="5eH-Wu-2UX" firstAttribute="leading" secondItem="tvB-kX-MU5" secondAttribute="trailing" constant="155" id="9ds-An-jDL">
                                                     <variation key="heightClass=regular" constant="8"/>
                                                 </constraint>
+                                                <constraint firstAttribute="trailingMargin" secondItem="8DP-Wd-jBu" secondAttribute="trailing" constant="277" id="B8B-EA-xNt">
+                                                    <variation key="heightClass=regular" constant="0.0"/>
+                                                </constraint>
                                                 <constraint firstItem="3bv-E2-A8p" firstAttribute="centerY" secondItem="oPD-Nu-Kkn" secondAttribute="centerY" id="EYo-QW-XDF"/>
                                                 <constraint firstAttribute="trailing" secondItem="hTo-IP-IL0" secondAttribute="trailing" id="Fmy-iN-Grj"/>
                                                 <constraint firstItem="LBS-Wx-Ze0" firstAttribute="leading" secondItem="oPD-Nu-Kkn" secondAttribute="leading" id="GUW-Qv-uSw"/>
+                                                <constraint firstAttribute="trailing" secondItem="8DP-Wd-jBu" secondAttribute="trailing" id="KST-ep-r0g"/>
+                                                <constraint firstItem="8DP-Wd-jBu" firstAttribute="leading" secondItem="5eH-Wu-2UX" secondAttribute="leading" id="Kni-eW-oWu">
+                                                    <variation key="heightClass=regular" constant="8"/>
+                                                </constraint>
                                                 <constraint firstItem="LBS-Wx-Ze0" firstAttribute="top" secondItem="hTo-IP-IL0" secondAttribute="bottom" id="LdE-qU-HB6"/>
                                                 <constraint firstItem="HGr-KR-AKa" firstAttribute="top" secondItem="oPD-Nu-Kkn" secondAttribute="top" id="PxZ-pZ-vXk"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="5eH-Wu-2UX" secondAttribute="trailing" constant="32" id="Rrb-wj-Vlm">
@@ -2792,6 +2848,9 @@ You may be subject to additional terms and conditions that apply when you use or
                                                 <constraint firstItem="tvB-kX-MU5" firstAttribute="top" secondItem="5eH-Wu-2UX" secondAttribute="bottom" constant="8" id="TOW-8S-g5d"/>
                                                 <constraint firstItem="3bv-E2-A8p" firstAttribute="leading" secondItem="oPD-Nu-Kkn" secondAttribute="leading" id="UJN-cw-8J0"/>
                                                 <constraint firstItem="tQ1-bh-ATe" firstAttribute="centerX" secondItem="oPD-Nu-Kkn" secondAttribute="centerX" id="YWZ-qn-kVV"/>
+                                                <constraint firstItem="8DP-Wd-jBu" firstAttribute="leading" secondItem="5eH-Wu-2UX" secondAttribute="trailing" constant="-22" id="cvF-ie-4We">
+                                                    <variation key="heightClass=regular" constant="8"/>
+                                                </constraint>
                                                 <constraint firstItem="tvB-kX-MU5" firstAttribute="top" secondItem="LBS-Wx-Ze0" secondAttribute="bottom" constant="133" id="ezo-KH-oed">
                                                     <variation key="heightClass=regular" constant="8"/>
                                                 </constraint>
@@ -2804,12 +2863,16 @@ You may be subject to additional terms and conditions that apply when you use or
                                                 <constraint firstAttribute="trailing" secondItem="LBS-Wx-Ze0" secondAttribute="trailing" id="sB0-a2-e7j"/>
                                                 <constraint firstAttribute="bottom" secondItem="HGr-KR-AKa" secondAttribute="bottom" id="vKW-i5-FMz"/>
                                                 <constraint firstItem="tQ1-bh-ATe" firstAttribute="height" secondItem="oPD-Nu-Kkn" secondAttribute="height" id="voa-8Y-jWL"/>
+                                                <constraint firstItem="5eH-Wu-2UX" firstAttribute="leading" secondItem="8DP-Wd-jBu" secondAttribute="trailing" constant="-269" id="vyH-aE-oHT">
+                                                    <variation key="heightClass=regular" constant="8"/>
+                                                </constraint>
                                                 <constraint firstItem="hTo-IP-IL0" firstAttribute="leading" secondItem="oPD-Nu-Kkn" secondAttribute="leading" id="xut-cL-vMO"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="subviews">
                                                     <exclude reference="HGr-KR-AKa"/>
                                                     <exclude reference="5eH-Wu-2UX"/>
+                                                    <exclude reference="8DP-Wd-jBu"/>
                                                     <exclude reference="tvB-kX-MU5"/>
                                                     <exclude reference="WIz-bj-OM3"/>
                                                     <exclude reference="3bv-E2-A8p"/>
@@ -2836,16 +2899,23 @@ You may be subject to additional terms and conditions that apply when you use or
                                                     <exclude reference="Rrb-wj-Vlm"/>
                                                     <exclude reference="lUm-1W-mRi"/>
                                                     <exclude reference="nns-qP-msg"/>
+                                                    <exclude reference="vyH-aE-oHT"/>
                                                     <exclude reference="EYo-QW-XDF"/>
                                                     <exclude reference="UJN-cw-8J0"/>
                                                     <exclude reference="0uH-6O-kcH"/>
                                                     <exclude reference="1cl-xb-egN"/>
+                                                    <exclude reference="4Md-Jr-BDR"/>
+                                                    <exclude reference="B8B-EA-xNt"/>
+                                                    <exclude reference="KST-ep-r0g"/>
+                                                    <exclude reference="Kni-eW-oWu"/>
+                                                    <exclude reference="cvF-ie-4We"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular">
                                                 <mask key="subviews">
                                                     <include reference="HGr-KR-AKa"/>
                                                     <include reference="5eH-Wu-2UX"/>
+                                                    <include reference="8DP-Wd-jBu"/>
                                                     <include reference="tvB-kX-MU5"/>
                                                     <include reference="WIz-bj-OM3"/>
                                                     <include reference="3bv-E2-A8p"/>
@@ -2869,13 +2939,19 @@ You may be subject to additional terms and conditions that apply when you use or
                                                     <exclude reference="TOW-8S-g5d"/>
                                                     <include reference="ezo-KH-oed"/>
                                                     <include reference="9ds-An-jDL"/>
-                                                    <include reference="Rrb-wj-Vlm"/>
+                                                    <exclude reference="Rrb-wj-Vlm"/>
                                                     <exclude reference="lUm-1W-mRi"/>
                                                     <include reference="nns-qP-msg"/>
+                                                    <exclude reference="vyH-aE-oHT"/>
                                                     <include reference="EYo-QW-XDF"/>
                                                     <include reference="UJN-cw-8J0"/>
                                                     <include reference="0uH-6O-kcH"/>
                                                     <include reference="1cl-xb-egN"/>
+                                                    <include reference="4Md-Jr-BDR"/>
+                                                    <include reference="B8B-EA-xNt"/>
+                                                    <exclude reference="KST-ep-r0g"/>
+                                                    <exclude reference="Kni-eW-oWu"/>
+                                                    <include reference="cvF-ie-4We"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>

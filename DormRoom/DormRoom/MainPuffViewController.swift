@@ -85,8 +85,57 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func dismissKeyboard() {
         
+        ///////////////////////////////////////////////////////////////////////////////
+        
         guard let actualController = rootController else {return}
         actualController.commentsController?.view.endEditing(true)
+        
+        guard let isUploading: Bool = actualController.commentsController?.isUploading else {return}
+        guard let isTyping: Bool = actualController.commentsController?.textIsEditing else {return}
+        
+        print(isTyping)
+        
+        if commentsOpened && isTyping != true {
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.ImageBlur.alpha = 0
+                
+            })
+            
+            rootController?.toggleComments({ (Bool) -> () in
+                
+                self.commentsOpened = false
+                
+                self.myTableView.scrollEnabled = true
+                
+                actualController.commentsController?.view.endEditing(true)
+                
+                
+                if !isUploading {
+                    actualController.commentsController?.CommentText.text = ""
+                }
+                actualController.commentsController?.commentIcon.alpha = 1
+                actualController.commentsController?.comments.removeAll()
+                actualController.commentsController?.CommentTableView.reloadData()
+                
+            })
+        }
+        
+        if menuOpened {
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.ImageBlur.alpha = 0
+                
+            })
+            
+            rootController?.toggleMenu({ (Bool) -> () in
+                
+                self.menuOpened = false
+            })
+        }
+
     }
     
     
@@ -125,7 +174,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         rootController?.toggleMenu({ (Bool) -> () in
             print("menu opened")
-            self.myTableView.scrollEnabled = false
+            //self.myTableView.scrollEnabled = false
+            self.menuOpened = true
         })
     }
     

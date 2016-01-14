@@ -19,6 +19,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     var feed = String()
     var usernameString = String()
     
+    var textIsEditing = false
+    
     let user = PFUser.currentUser()
     
     var isUploading = false
@@ -134,6 +136,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             if !self.isUploading {
                 self.CommentText.text = ""
             }
+            
+            self.textIsEditing = false
             self.commentIcon.alpha = 1
             self.comments.removeAll()
             self.CommentTableView.reloadData()
@@ -479,6 +483,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.CommentText.text = ""
                     }
                     self.commentIcon.alpha = 1
+                    self.textIsEditing = false
                     self.comments.removeAll()
                     self.CommentTableView.reloadData()
                 })
@@ -532,7 +537,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     func textViewDidBeginEditing(textView: UITextView) {
         
         UIView.animateWithDuration(0.3) { () -> Void in
-            
+            self.textIsEditing = true
             self.commentIcon.alpha = 0
             
         }
@@ -544,6 +549,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             UIView.animateWithDuration(0.3) { () -> Void in
                 
+                self.textIsEditing = false
                 self.commentIcon.alpha = 1
                 
             }

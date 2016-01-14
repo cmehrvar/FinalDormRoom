@@ -64,8 +64,6 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         rootController?.toggleMenu({ (complete) -> () in
             print("toggled closed")
             
-            guard let actualController = self.rootController else {return}
-            actualController.mainController?.myTableView.scrollEnabled = true
         })
     }
     
@@ -342,10 +340,6 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             })
             
             rootController?.toggleMenu({ (complete) -> () in
-                
-                guard let actualController = self.rootController else {return}
-                actualController.mainController?.myTableView.scrollEnabled = true
-                
                 print("menu closed")
             })
         }
