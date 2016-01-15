@@ -23,6 +23,10 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     var user = PFUser.currentUser()
     var imageUrl: String = String()
     var profilePictureUrl: String = String()
+    var videoUrl: String = String()
+    var globalVideoUrl: NSURL = NSURL()
+    var globalVideoName: String = String()
+    var globalVideoSaveUrl: String = String()
     
     var ms = 0
     var s = 0
@@ -108,9 +112,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     
     @IBAction func postPuff(sender: AnyObject) {
         
-        guard let image = self.TakenPuffOutlet.image else {print("step skipped")
-            return}
-        
         rootController?.toggleTakePuff({ (complete) -> () in
             
             guard let actualController = self.rootController else {return}
@@ -129,9 +130,20 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
                 
                 self.view.endEditing(true)
                 
-                self.uploadToAWS(image)
+                //self.uploadVideo()
+                
+                if self.isImage {
+                    
+                    print(self.isImage)
+                    if let actualImage = self.TakenPuffOutlet.image {
+                        self.uploadToAWS(actualImage)
+                    }
+                } else {
+                    
+                    print(self.isImage)
+                    self.uploadVideo()
+                }
             })
-            
         })
         
         print("Upload in progress")
@@ -174,6 +186,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         
         print("done recording")
         
+        globalVideoUrl = outputFileURL
+        
         self.TakenPuffOutlet.image = nil
         self.PostButtonOutlet.alpha = 1
         self.TakeImageOutlet.image = UIImage(named: "TakeAPuff")
@@ -202,6 +216,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerItemDidReachEnd:", name: AVPlayerItemDidPlayToEndTimeNotification, object: player.currentItem)
+        
         
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -265,6 +280,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     
     func takeVideo(sender: UILongPressGestureRecognizer) {
         
+        isImage = false
+        
         switch sender.state {
             
         case .Began:
@@ -285,6 +302,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
                 
                 let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".mov")
                 let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload").URLByAppendingPathComponent(fileName)
+                
+                
                 
                 backVideoOut.startRecordingToOutputFileURL(fileURL, recordingDelegate: recordingDelegate)
                 
@@ -328,6 +347,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     }
     
     func takeImage() {
+        
+        isImage = true
         
         PostButtonOutlet.alpha = 1
         
@@ -432,6 +453,45 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         
         return uploadRequest
         
+    }
+    
+    func uploadVideo() {
+        
+        let uploadRequest = AWSS3TransferManagerUploadRequest()
+        
+        let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".mov")
+        
+        uploadRequest.body = globalVideoUrl
+        uploadRequest.key = fileName
+        uploadRequest.bucket = "dormroombucket"
+        
+        if let key = uploadRequest.key {
+            globalVideoSaveUrl = key
+        }
+        
+        let transferManager = AWSS3TransferManager.defaultS3TransferManager()
+        
+        transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject? in
+            
+            if task.error == nil {
+                print("successful Video upload")
+                
+                
+                //self.saveToParse()
+                
+            } else {
+                print("error uploading: \(task.error)")
+                let alertController = UIAlertController(title: "Shit...", message: "Error Uploading", preferredStyle:  UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+                if let actualController = self.rootController {
+                    actualController.mainController?.uploadOutlet.alpha = 0
+                }
+                
+            }
+            return nil
+        }
     }
     
     func uploadProfilePicture() {
@@ -663,7 +723,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             print("Error was caught when trying to transform the device into a session input: \(error)")
         }
         
-        captureSession.sessionPreset = AVCaptureSessionPresetHigh
+        captureSession.sessionPreset = AVCaptureSessionPresetMedium
         captureSession.startRunning()
         
         if !frontCameraShown {

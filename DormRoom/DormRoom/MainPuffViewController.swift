@@ -38,6 +38,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var commentsNil = [Bool]()
     var usersBlocked = [[String]]()
     var imageDates = [NSDate]()
+    var isImage = [Bool]()
+    var videoUrls = [String]()
     
     let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York")
     
@@ -284,6 +286,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.comments.removeAll()
                     self.commentsNil.removeAll()
                     self.imageDates.removeAll()
+                    self.isImage.removeAll()
+                    self.videoUrls.removeAll()
                     
                     if let puffs = puffs {
                         
@@ -291,6 +295,15 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                             
                             if puff["Deleted"] == nil {
                                 puff["Deleted"] = false
+                            }
+                            
+                            if puff["VideoUrl"] == nil {
+                                puff["VideoUrl"] = ""
+                            }
+                            
+                            
+                            if puff["IsImage"] == nil {
+                                puff["IsImage"] = true
                             }
                             
                             if puff["Deleted"] as! Bool != true {
@@ -318,6 +331,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.dislikes.append(puff["Dislike"] as! Int)
                                             self.universityNames.append(puff["UniversityName"] as! String)
                                             self.usernames.append(puff["Username"] as! String)
+                                            self.isImage.append(puff["IsImage"] as! Bool)
+                                            //self.videoUrls.append(puff["VideoUrl"] as! String)
+                                            self.videoUrls.append("https://s3.amazonaws.com/dormroombucket/2D38B74D-865B-4C79-9035-B11FB860C492-1110-000000A97BE01CC8.mov")
                                             
                                             if let actualDate = puff.createdAt {
                                                 self.imageDates.append(actualDate)
@@ -347,6 +363,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                         self.dislikes.append(puff["Dislike"] as! Int)
                                         self.universityNames.append(puff["UniversityName"] as! String)
                                         self.usernames.append(puff["Username"] as! String)
+                                        self.isImage.append(puff["IsImage"] as! Bool)
+                                        //self.videoUrls.append(puff["VideoUrl"] as! String)
+                                        self.videoUrls.append("https://s3.amazonaws.com/dormroombucket/2D38B74D-865B-4C79-9035-B11FB860C492-1110-000000A97BE01CC8.mov")
                                         
                                         if let actualDate = puff.createdAt {
                                             self.imageDates.append(actualDate)
@@ -437,129 +456,249 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         tableView.decelerationRate = 0.01
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
-        
         tableView.addSubview(refreshControl)
         
-        cell.selectionStyle = .None
-        
-        cell.objectId = objectId[indexPath.row]
-        
-        cell.like = likes[indexPath.row]
-        
-        cell.dislike = dislikes[indexPath.row]
-        
-        cell.timePosted.text = timeAgoSince(date)
-        
-        
-        cell.ImageOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: placeholderImage) { (image, error, cache, url) -> Void in
+        if isImage[indexPath.row] {
             
-            if error == nil {
-                cell.SwipeViewOutlet.image = image
+            let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
+            
+            cell.selectionStyle = .None
+            
+            cell.objectId = objectId[indexPath.row]
+            
+            cell.like = likes[indexPath.row]
+            
+            cell.dislike = dislikes[indexPath.row]
+            
+            cell.timePosted.text = timeAgoSince(date)
+            
+            
+            cell.ImageOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: placeholderImage) { (image, error, cache, url) -> Void in
+                
+                if error == nil {
+                    cell.SwipeViewOutlet.image = image
+                }
             }
-        }
-        
-        cell.UsernameOutlet.text = "@" + usernames[indexPath.row]
-        
-        cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
-        
-        var liked = false
-        
-        for likedObject in likedObjects {
             
-            if likedObject == objectId[indexPath.row] {
-                liked = true
+            cell.UsernameOutlet.text = "@" + usernames[indexPath.row]
+            
+            cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
+            
+            var liked = false
+            
+            for likedObject in likedObjects {
+                
+                if likedObject == objectId[indexPath.row] {
+                    liked = true
+                }
             }
-        }
-        
-        if !liked {
             
-            cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
-            cell.likeView.userInteractionEnabled = true
+            if !liked {
+                
+                cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
+                cell.likeView.userInteractionEnabled = true
+                
+                cell.DislikeButtonOutlet.image = UIImage(named: "ThumbsDown")
+                cell.likeView.userInteractionEnabled = true
+                
+                
+            } else {
+                
+                cell.LikeButtonOutlet.image = nil
+                cell.likeView.userInteractionEnabled = false
+                
+                cell.DislikeButtonOutlet.image = nil
+                cell.likeView.userInteractionEnabled = false
+                
+            }
             
-            cell.DislikeButtonOutlet.image = UIImage(named: "ThumbsDown")
-            cell.likeView.userInteractionEnabled = true
             
+            switch universityNames[indexPath.row] {
+                
+            case "Brock":
+                cell.UniversityOutlet.image = brock
+                
+            case "Calgary":
+                cell.UniversityOutlet.image = calgary
+                
+            case "Carlton":
+                cell.UniversityOutlet.image = carlton
+                
+            case "Dalhousie":
+                cell.UniversityOutlet.image = dal
+                
+            case "Laurier":
+                cell.UniversityOutlet.image = laurier
+                
+            case "McGill":
+                cell.UniversityOutlet.image = mcgill
+                
+            case "Mac":
+                cell.UniversityOutlet.image = mac
+                
+            case "Mun":
+                cell.UniversityOutlet.image = mun
+                
+            case "Ottawa":
+                cell.UniversityOutlet.image = ottawa
+                
+            case "Queens":
+                cell.UniversityOutlet.image = queens
+                
+            case "Ryerson":
+                cell.UniversityOutlet.image = ryerson
+                
+            case "UBC":
+                cell.UniversityOutlet.image = ubc
+                
+            case "UofT":
+                cell.UniversityOutlet.image = uoft
+                
+            case "Western":
+                cell.UniversityOutlet.image = western
+                
+            case "York":
+                cell.UniversityOutlet.image = york
+                
+            default:
+                break
+                
+            }
+            
+            cell.LikeOutlet.text = "\(likes[indexPath.row])"
+            
+            cell.DislikeOutlet.text = "\(dislikes[indexPath.row])"
+            
+            cell.CaptionOutlet.text = captions[indexPath.row]
+            
+            
+            if commentsNil[indexPath.row] == true {
+                cell.CommentNumber.text = "0"
+            } else {
+                cell.CommentNumber.text = "\(comments[indexPath.row].count)"
+            }
+            
+            cell.feed = feed
+            
+            return cell
+        } else {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("VideoCell", forIndexPath: indexPath) as! VideoTableViewCell
+            
+            cell.selectionStyle = .None
+            
+            cell.objectId = objectId[indexPath.row]
+            
+            cell.like = likes[indexPath.row]
+            
+            cell.dislike = dislikes[indexPath.row]
+            
+            cell.timePosted.text = timeAgoSince(date)
+            
+            cell.playVideo(videoUrls[indexPath.row])
+            
+            cell.UsernameOutlet.text = "@" + usernames[indexPath.row]
+            
+            cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
+            
+            var liked = false
+            
+            for likedObject in likedObjects {
+                
+                if likedObject == objectId[indexPath.row] {
+                    liked = true
+                }
+            }
+            
+            if !liked {
+                
+                cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
+                cell.likeView.userInteractionEnabled = true
+                
+                cell.DislikeButtonOutlet.image = UIImage(named: "ThumbsDown")
+                cell.likeView.userInteractionEnabled = true
+                
+                
+            } else {
+                
+                cell.LikeButtonOutlet.image = nil
+                cell.likeView.userInteractionEnabled = false
+                
+                cell.DislikeButtonOutlet.image = nil
+                cell.likeView.userInteractionEnabled = false
+                
+            }
+            
+            
+            switch universityNames[indexPath.row] {
+                
+            case "Brock":
+                cell.UniversityOutlet.image = brock
+                
+            case "Calgary":
+                cell.UniversityOutlet.image = calgary
+                
+            case "Carlton":
+                cell.UniversityOutlet.image = carlton
+                
+            case "Dalhousie":
+                cell.UniversityOutlet.image = dal
+                
+            case "Laurier":
+                cell.UniversityOutlet.image = laurier
+                
+            case "McGill":
+                cell.UniversityOutlet.image = mcgill
+                
+            case "Mac":
+                cell.UniversityOutlet.image = mac
+                
+            case "Mun":
+                cell.UniversityOutlet.image = mun
+                
+            case "Ottawa":
+                cell.UniversityOutlet.image = ottawa
+                
+            case "Queens":
+                cell.UniversityOutlet.image = queens
+                
+            case "Ryerson":
+                cell.UniversityOutlet.image = ryerson
+                
+            case "UBC":
+                cell.UniversityOutlet.image = ubc
+                
+            case "UofT":
+                cell.UniversityOutlet.image = uoft
+                
+            case "Western":
+                cell.UniversityOutlet.image = western
+                
+            case "York":
+                cell.UniversityOutlet.image = york
+                
+            default:
+                break
+                
+            }
+            
+            cell.LikeOutlet.text = "\(likes[indexPath.row])"
+            
+            cell.DislikeOutlet.text = "\(dislikes[indexPath.row])"
+            
+            cell.CaptionOutlet.text = captions[indexPath.row]
+            
+            
+            if commentsNil[indexPath.row] == true {
+                cell.CommentNumber.text = "0"
+            } else {
+                cell.CommentNumber.text = "\(comments[indexPath.row].count)"
+            }
+            
+            cell.feed = feed
 
-        } else {
-            
-            cell.LikeButtonOutlet.image = nil
-            cell.likeView.userInteractionEnabled = false
-            
-            cell.DislikeButtonOutlet.image = nil
-            cell.likeView.userInteractionEnabled = false
-            
+            return cell
         }
-        
-        
-        switch universityNames[indexPath.row] {
-            
-        case "Brock":
-            cell.UniversityOutlet.image = brock
-            
-        case "Calgary":
-            cell.UniversityOutlet.image = calgary
-            
-        case "Carlton":
-            cell.UniversityOutlet.image = carlton
-            
-        case "Dalhousie":
-            cell.UniversityOutlet.image = dal
-            
-        case "Laurier":
-            cell.UniversityOutlet.image = laurier
-            
-        case "McGill":
-            cell.UniversityOutlet.image = mcgill
-            
-        case "Mac":
-            cell.UniversityOutlet.image = mac
-            
-        case "Mun":
-            cell.UniversityOutlet.image = mun
-            
-        case "Ottawa":
-            cell.UniversityOutlet.image = ottawa
-            
-        case "Queens":
-            cell.UniversityOutlet.image = queens
-            
-        case "Ryerson":
-            cell.UniversityOutlet.image = ryerson
-            
-        case "UBC":
-            cell.UniversityOutlet.image = ubc
-            
-        case "UofT":
-            cell.UniversityOutlet.image = uoft
-            
-        case "Western":
-            cell.UniversityOutlet.image = western
-            
-        case "York":
-            cell.UniversityOutlet.image = york
-            
-        default:
-            break
-            
-        }
-        
-        cell.LikeOutlet.text = "\(likes[indexPath.row])"
-        
-        cell.DislikeOutlet.text = "\(dislikes[indexPath.row])"
-        
-        cell.CaptionOutlet.text = captions[indexPath.row]
-        
-        
-        if commentsNil[indexPath.row] == true {
-            cell.CommentNumber.text = "0"
-        } else {
-            cell.CommentNumber.text = "\(comments[indexPath.row].count)"
-        }
-        
-        cell.feed = feed
-        
-        return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -683,6 +822,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         SDWebImageManager.sharedManager().imageCache.clearDisk()
         SDWebImageManager.sharedManager().imageCache.clearMemory()
+        
+        myTableView.reloadData()
         
         // Dispose of any resources that can be recreated.
     }
