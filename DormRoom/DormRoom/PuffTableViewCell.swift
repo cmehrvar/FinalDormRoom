@@ -63,9 +63,11 @@ class PuffTableViewCell: UITableViewCell {
         self.addGestureRecognizer(panRecognizer)
         
         let likeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeLike")
+        likeView.userInteractionEnabled = true
         likeView.addGestureRecognizer(likeTapRecognizer)
         
         let dislikeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeDislike")
+        dislikeView.userInteractionEnabled = true
         dislikeView.addGestureRecognizer(dislikeTapRecognizer)
         
     }

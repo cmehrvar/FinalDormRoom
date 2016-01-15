@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import AVKit
 
-class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFileOutputRecordingDelegate {
+class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFileOutputRecordingDelegate, AVAudioSessionDelegate {
     
     weak var rootController: MainRootViewController?
     
@@ -39,6 +39,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     
     let frontOut = AVCaptureStillImageOutput()
     let backOut = AVCaptureStillImageOutput()
+    
+    let micDeviceInput: AVCaptureDeviceInput = AVCaptureDeviceInput()
     
     let frontVideoOut = AVCaptureMovieFileOutput()
     let backVideoOut = AVCaptureMovieFileOutput()
@@ -130,8 +132,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
                 
                 self.view.endEditing(true)
                 
-                //self.uploadVideo()
-                
                 if self.isImage {
                     
                     print(self.isImage)
@@ -142,6 +142,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
                     
                     print(self.isImage)
                     self.uploadVideo()
+                    self.player.pause()
                 }
             })
         })
@@ -466,7 +467,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         uploadRequest.bucket = "dormroombucket"
         
         if let key = uploadRequest.key {
-            globalVideoSaveUrl = key
+            globalVideoSaveUrl = "https://s3.amazonaws.com/dormroombucket/" + key
         }
         
         let transferManager = AWSS3TransferManager.defaultS3TransferManager()
@@ -476,8 +477,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             if task.error == nil {
                 print("successful Video upload")
                 
+                self.uploadProfilePicture()
                 
-                //self.saveToParse()
                 
             } else {
                 print("error uploading: \(task.error)")
@@ -551,48 +552,16 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             print("error fetching new user: \(error)")
         }
         
-        if feed != "CanadaPuff" {
-            
-            let post = PFObject(className: "CanadaPuff")
-            
+       let post = PFObject(className: "CanadaPuff")
+        
+        if isImage {
             post["ImageUrl"] = imageUrl
-            post["Caption"] = CaptionOutlet.text
-            post["Like"] = 0
-            post["Dislike"] = 0
-            post["ProfilePictureUrl"] = profilePictureUrl
-            post["UniversityName"] = user?["universityName"] as! String
-            post["Username"] = user?.username
-            post["Safe"] = true
-            post["Comments"] = []
-            post["CommentProfiles"] = []
-            post["CommentDates"] = []
-            
-            post.saveEventually()
-            
+            post["VideoUrl"] = ""
         } else {
-            
-            let uniName = user?["universityName"] as! String
-            
-            let post = PFObject(className: uniName)
-            
-            post["ImageUrl"] = imageUrl
-            post["Caption"] = CaptionOutlet.text
-            post["Like"] = 0
-            post["Dislike"] = 0
-            post["ProfilePictureUrl"] = profilePictureUrl
-            post["UniversityName"] = user?["universityName"] as! String
-            post["Username"] = user?.username
-            post["Safe"] = true
-            post["Comments"] = []
-            post["CommentProfiles"] = []
-            post["CommentDates"] = []
-            
-            post.saveEventually()
+            post["VideoUrl"] = globalVideoSaveUrl
+            post["ImageUrl"] = "642B0999-A10B-4D65-B1D1-8CA13CFC7E12-757-00000062F62FA73B.jpeg"
         }
         
-        let post = PFObject(className: feed)
-        
-        post["ImageUrl"] = imageUrl
         post["Caption"] = CaptionOutlet.text
         post["Like"] = 0
         post["Dislike"] = 0
@@ -603,6 +572,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         post["Comments"] = []
         post["CommentProfiles"] = []
         post["CommentDates"] = []
+        post["Deleted"] = false
+        post["IsImage"] = isImage
         
         post.saveInBackgroundWithBlock { (Bool, error: NSError?) -> Void in
             
@@ -693,8 +664,9 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         let captureSession = AVCaptureSession()
         
         CameraCaptureView.clipsToBounds = true
-        
+    
         let devices = AVCaptureDevice.devices()
+        let audioDevices = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeAudio)
         var actualDevice: AVCaptureDevice! = nil
         
         for device in devices {
@@ -722,6 +694,22 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         } catch let error {
             print("Error was caught when trying to transform the device into a session input: \(error)")
         }
+        
+        
+        
+        guard let audioCaptureDevice = audioDevices else {
+            print("Unable to cast the first device as a capture device")
+            return
+        }
+        
+        do {
+            let input = try AVCaptureDeviceInput(device: audioCaptureDevice)
+            captureSession.addInput(input)
+        } catch let error {
+            print("Error was caught when trying to transform the device into a session input: \(error)")
+        }
+        
+        
         
         captureSession.sessionPreset = AVCaptureSessionPresetMedium
         captureSession.startRunning()

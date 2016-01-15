@@ -18,6 +18,8 @@ class MainRootViewController: UIViewController {
     var commentsIsRevealed = false
     var reportIsRevealed = false
     
+    let user = PFUser.currentUser()
+    
     weak var mainController: MainPuffViewController?
     weak var changeUniController: ChangeUniViewController?
     weak var takePuffController: TakePuffViewController?
@@ -39,6 +41,11 @@ class MainRootViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if user?["liked"] == nil {
+            user?["liked"] = []
+            user?.saveInBackground()
+        }
 
         setMenuStage()
         setCommentStage()

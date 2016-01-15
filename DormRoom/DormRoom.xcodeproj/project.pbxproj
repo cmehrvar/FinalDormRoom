@@ -26,6 +26,8 @@
 		A36475571C0BBAB000AC96CA /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36475561C0BBAB000AC96CA /* TextFields.swift */; };
 		A365BFB11C4862020012C32F /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A365BFB01C4862020012C32F /* VideoTableViewCell.swift */; };
 		A365BFB31C48746A0012C32F /* SmallRoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = A365BFB21C48746A0012C32F /* SmallRoundedCorners.swift */; };
+		A365BFB51C489F510012C32F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A365BFB41C489F510012C32F /* libz.tbd */; };
+		A365BFB71C489F650012C32F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A365BFB61C489F650012C32F /* libsqlite3.tbd */; };
 		A38C82B51C13F1FC000E650F /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38C82B41C13F1FC000E650F /* InitialViewController.swift */; };
 		A39CBE521C0CE87700D59434 /* RoundedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE511C0CE87600D59434 /* RoundedImage.swift */; };
 		A39CBE561C0CECF800D59434 /* BlackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE551C0CECF800D59434 /* BlackButton.swift */; };
@@ -90,6 +92,8 @@
 		A36475561C0BBAB000AC96CA /* TextFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
 		A365BFB01C4862020012C32F /* VideoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTableViewCell.swift; sourceTree = "<group>"; };
 		A365BFB21C48746A0012C32F /* SmallRoundedCorners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallRoundedCorners.swift; sourceTree = "<group>"; };
+		A365BFB41C489F510012C32F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		A365BFB61C489F650012C32F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		A38C82B41C13F1FC000E650F /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		A39CBE511C0CE87600D59434 /* RoundedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImage.swift; sourceTree = "<group>"; };
 		A39CBE551C0CECF800D59434 /* BlackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackButton.swift; sourceTree = "<group>"; };
@@ -131,6 +135,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A365BFB71C489F650012C32F /* libsqlite3.tbd in Frameworks */,
+				A365BFB51C489F510012C32F /* libz.tbd in Frameworks */,
 				A3A419CB1C163760003C05EA /* AVFoundation.framework in Frameworks */,
 				A3A419CA1C16375B003C05EA /* AVKit.framework in Frameworks */,
 				3278FD4F4880FAB3A73E3957 /* libPods-DormRoom.a in Frameworks */,
@@ -310,6 +316,8 @@
 		A4C3461F16B93E17CC57459F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A365BFB61C489F650012C32F /* libsqlite3.tbd */,
+				A365BFB41C489F510012C32F /* libz.tbd */,
 				A3A419C91C16375B003C05EA /* AVKit.framework */,
 				A3A419C71C16373B003C05EA /* AVFoundation.framework */,
 				F2451B51057A263F932FCF4E /* libPods-DormRoom.a */,

@@ -59,6 +59,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             guard let actualController = self.rootController else {return}
             actualController.mainController?.ImageBlur.alpha = 0
+            actualController.mainController?.menuOpened = false
         })
         
         rootController?.toggleMenu({ (complete) -> () in
@@ -333,14 +334,18 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         if sender.direction == .Right {
             
+            guard let actualController = self.rootController else {return}
+            
+            actualController.mainController?.menuOpened = false
+            
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 
-                guard let actualController = self.rootController else {return}
                 actualController.mainController?.ImageBlur.alpha = 0
             })
             
             rootController?.toggleMenu({ (complete) -> () in
                 print("menu closed")
+                
             })
         }
     }

@@ -226,6 +226,24 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func scrollToTop() {
         myTableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
+        
+        var cells: [AnyObject] = [AnyObject]()
+        for var j = 0; j < myTableView.numberOfSections; ++j {
+            for var i = 0; i < myTableView.numberOfRowsInSection(j); ++i {
+                
+                if let actualCell = myTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: j)) {
+                    cells.append(actualCell)
+                }
+            }
+        }
+        
+        for cell in cells {
+            
+            guard let actualCell: VideoTableViewCell = cell as? VideoTableViewCell else {return}
+            actualCell.player.pause()
+            
+        }
+
     }
     
     
@@ -332,8 +350,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.universityNames.append(puff["UniversityName"] as! String)
                                             self.usernames.append(puff["Username"] as! String)
                                             self.isImage.append(puff["IsImage"] as! Bool)
-                                            //self.videoUrls.append(puff["VideoUrl"] as! String)
-                                            self.videoUrls.append("https://s3.amazonaws.com/dormroombucket/2D38B74D-865B-4C79-9035-B11FB860C492-1110-000000A97BE01CC8.mov")
+                                            self.videoUrls.append(puff["VideoUrl"] as! String)
                                             
                                             if let actualDate = puff.createdAt {
                                                 self.imageDates.append(actualDate)
@@ -364,8 +381,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                         self.universityNames.append(puff["UniversityName"] as! String)
                                         self.usernames.append(puff["Username"] as! String)
                                         self.isImage.append(puff["IsImage"] as! Bool)
-                                        //self.videoUrls.append(puff["VideoUrl"] as! String)
-                                        self.videoUrls.append("https://s3.amazonaws.com/dormroombucket/2D38B74D-865B-4C79-9035-B11FB860C492-1110-000000A97BE01CC8.mov")
+                                        self.videoUrls.append(puff["VideoUrl"] as! String)
                                         
                                         if let actualDate = puff.createdAt {
                                             self.imageDates.append(actualDate)
@@ -584,7 +600,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         } else {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("VideoCell", forIndexPath: indexPath) as! VideoTableViewCell
-            
+        
             cell.selectionStyle = .None
             
             cell.objectId = objectId[indexPath.row]
@@ -596,6 +612,15 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.timePosted.text = timeAgoSince(date)
             
             cell.playVideo(videoUrls[indexPath.row])
+            
+            /*
+            for realCell in cells {
+                if realCell = cell {
+                    cell.playVideo(videoUrls[indexPath.row])
+                }
+            }
+            */
+            
             
             cell.UsernameOutlet.text = "@" + usernames[indexPath.row]
             
@@ -816,6 +841,27 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        
+        var cells: [AnyObject] = [AnyObject]()
+        for var j = 0; j < myTableView.numberOfSections; ++j {
+            for var i = 0; i < myTableView.numberOfRowsInSection(j); ++i {
+                
+                if let actualCell = myTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: j)) {
+                    cells.append(actualCell)
+                }
+            }
+        }
+        
+        for cell in cells {
+            
+            guard let actualCell: VideoTableViewCell = cell as? VideoTableViewCell else {return}
+            actualCell.player.pause()
+            
+        }
+    }
+    
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
