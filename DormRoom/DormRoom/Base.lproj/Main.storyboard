@@ -886,7 +886,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="260" id="pdb-be-lga"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                         <state key="normal" title="I Have Read The Terms Of Agreement">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -931,7 +931,8 @@
                                         <exclude reference="uvq-Ua-rSa"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular">
+                                <variation key="heightClass=regular" misplaced="YES">
+                                    <rect key="frame" x="20" y="472" width="560" height="40"/>
                                     <mask key="subviews">
                                         <include reference="JCL-Qb-OC3"/>
                                         <include reference="gDu-n1-veM"/>
@@ -984,7 +985,8 @@
                                                 <exclude reference="7J7-aa-Hwd"/>
                                             </mask>
                                         </variation>
-                                        <variation key="heightClass=regular">
+                                        <variation key="heightClass=regular" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="474" width="600" height="60"/>
                                             <mask key="constraints">
                                                 <include reference="7J7-aa-Hwd"/>
                                             </mask>
@@ -1079,6 +1081,9 @@ You may be subject to additional terms and conditions that apply when you use or
 </string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        <variation key="heightClass=regular" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="78" width="600" height="388"/>
+                                        </variation>
                                     </textView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1115,7 +1120,8 @@ You may be subject to additional terms and conditions that apply when you use or
                                         <exclude reference="y7R-Kv-I75"/>
                                     </mask>
                                 </variation>
-                                <variation key="heightClass=regular">
+                                <variation key="heightClass=regular" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="66" width="600" height="534"/>
                                     <mask key="subviews">
                                         <include reference="TJL-lq-Tbx"/>
                                         <include reference="01I-VD-RKF"/>
@@ -1322,10 +1328,6 @@ You may be subject to additional terms and conditions that apply when you use or
                                                     <exclude reference="o0B-ps-Kqg"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="7qn-aI-0aj"/>
-                                                    <exclude reference="MnV-yC-Hon"/>
-                                                    <exclude reference="XMf-Cc-lCU"/>
-                                                    <exclude reference="kII-Ib-qaI"/>
                                                     <exclude reference="56e-MK-zFO"/>
                                                     <exclude reference="ALv-0F-JSB"/>
                                                     <exclude reference="D0Q-oU-5CH"/>
@@ -1334,6 +1336,10 @@ You may be subject to additional terms and conditions that apply when you use or
                                                     <exclude reference="PWg-9n-tqg"/>
                                                     <exclude reference="qyX-lY-q3X"/>
                                                     <exclude reference="sCd-FC-cnK"/>
+                                                    <exclude reference="7qn-aI-0aj"/>
+                                                    <exclude reference="MnV-yC-Hon"/>
+                                                    <exclude reference="XMf-Cc-lCU"/>
+                                                    <exclude reference="kII-Ib-qaI"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=regular">
@@ -1342,10 +1348,6 @@ You may be subject to additional terms and conditions that apply when you use or
                                                     <include reference="o0B-ps-Kqg"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="7qn-aI-0aj"/>
-                                                    <include reference="MnV-yC-Hon"/>
-                                                    <include reference="XMf-Cc-lCU"/>
-                                                    <include reference="kII-Ib-qaI"/>
                                                     <include reference="56e-MK-zFO"/>
                                                     <include reference="ALv-0F-JSB"/>
                                                     <include reference="D0Q-oU-5CH"/>
@@ -1354,6 +1356,10 @@ You may be subject to additional terms and conditions that apply when you use or
                                                     <include reference="PWg-9n-tqg"/>
                                                     <include reference="qyX-lY-q3X"/>
                                                     <include reference="sCd-FC-cnK"/>
+                                                    <include reference="7qn-aI-0aj"/>
+                                                    <include reference="MnV-yC-Hon"/>
+                                                    <include reference="XMf-Cc-lCU"/>
+                                                    <include reference="kII-Ib-qaI"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -2025,10 +2031,10 @@ You may be subject to additional terms and conditions that apply when you use or
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="Nvj-zt-6w0">
-                                        <variation key="heightClass=regular" constant="50"/>
+                                        <variation key="heightClass=regular" constant="30"/>
                                     </constraint>
                                     <constraint firstAttribute="width" constant="80" id="mEr-C9-qKr">
-                                        <variation key="heightClass=regular" constant="75"/>
+                                        <variation key="heightClass=regular" constant="50"/>
                                     </constraint>
                                 </constraints>
                                 <state key="normal" image="ChangeCamera">
@@ -4780,8 +4786,8 @@ You may be subject to additional terms and conditions that apply when you use or
                                         <variation key="heightClass=regular" constant="66"/>
                                     </constraint>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -5028,14 +5034,14 @@ You may be subject to additional terms and conditions that apply when you use or
                                                 <exclude reference="zwh-uF-j8b"/>
                                             </mask>
                                             <mask key="constraints">
-                                                <exclude reference="446-h6-LdS"/>
-                                                <exclude reference="NQR-an-fox"/>
-                                                <exclude reference="R4b-Cv-2I7"/>
-                                                <exclude reference="hGU-fD-TWO"/>
-                                                <exclude reference="wtr-GT-spM"/>
                                                 <exclude reference="8bS-AF-vye"/>
                                                 <exclude reference="MEA-fF-eMI"/>
                                                 <exclude reference="UEv-m8-QSy"/>
+                                                <exclude reference="hGU-fD-TWO"/>
+                                                <exclude reference="wtr-GT-spM"/>
+                                                <exclude reference="446-h6-LdS"/>
+                                                <exclude reference="NQR-an-fox"/>
+                                                <exclude reference="R4b-Cv-2I7"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular">
@@ -5045,14 +5051,14 @@ You may be subject to additional terms and conditions that apply when you use or
                                                 <include reference="zwh-uF-j8b"/>
                                             </mask>
                                             <mask key="constraints">
-                                                <include reference="446-h6-LdS"/>
-                                                <include reference="NQR-an-fox"/>
-                                                <include reference="R4b-Cv-2I7"/>
-                                                <include reference="hGU-fD-TWO"/>
-                                                <include reference="wtr-GT-spM"/>
                                                 <include reference="8bS-AF-vye"/>
                                                 <include reference="MEA-fF-eMI"/>
                                                 <include reference="UEv-m8-QSy"/>
+                                                <include reference="hGU-fD-TWO"/>
+                                                <include reference="wtr-GT-spM"/>
+                                                <include reference="446-h6-LdS"/>
+                                                <include reference="NQR-an-fox"/>
+                                                <include reference="R4b-Cv-2I7"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -5184,7 +5190,7 @@ You may be subject to additional terms and conditions that apply when you use or
                                     <constraint firstItem="cWB-XI-LmZ" firstAttribute="bottom" secondItem="eHg-QB-UyO" secondAttribute="bottom" id="HyO-mH-6db"/>
                                     <constraint firstAttribute="bottom" secondItem="cWB-XI-LmZ" secondAttribute="bottom" id="ID3-wL-ihH"/>
                                     <constraint firstItem="xWV-4P-uEa" firstAttribute="leading" secondItem="1VE-5c-VBX" secondAttribute="trailing" constant="8" id="JkE-45-MNn">
-                                        <variation key="heightClass=regular" constant="3"/>
+                                        <variation key="heightClass=regular" constant="5"/>
                                     </constraint>
                                     <constraint firstItem="idp-Rg-iMf" firstAttribute="top" secondItem="p7b-QQ-p84" secondAttribute="top" id="KTB-al-ADF"/>
                                     <constraint firstItem="cWB-XI-LmZ" firstAttribute="leading" secondItem="p7b-QQ-p84" secondAttribute="leading" id="LUm-JH-2dN"/>
@@ -5235,6 +5241,18 @@ You may be subject to additional terms and conditions that apply when you use or
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="0yh-y7-jDb"/>
+                                        <exclude reference="2yI-2b-vIp"/>
+                                        <exclude reference="d0M-Iq-fcS"/>
+                                        <exclude reference="flm-lZ-GP7"/>
+                                        <exclude reference="lVB-ui-NXd"/>
+                                        <exclude reference="Qu6-Z6-Vcn"/>
+                                        <exclude reference="SBx-j0-tYW"/>
+                                        <exclude reference="5mS-DV-Hfg"/>
+                                        <exclude reference="c9H-hg-u82"/>
+                                        <exclude reference="nJJ-Rw-HGs"/>
+                                        <exclude reference="Fk4-ve-SRM"/>
+                                        <exclude reference="G7z-gy-SzS"/>
+                                        <exclude reference="axL-Ud-l92"/>
                                         <exclude reference="HyO-mH-6db"/>
                                         <exclude reference="ID3-wL-ihH"/>
                                         <exclude reference="LUm-JH-2dN"/>
@@ -5242,34 +5260,22 @@ You may be subject to additional terms and conditions that apply when you use or
                                         <exclude reference="Z7z-YB-o2t"/>
                                         <exclude reference="auK-m7-B4I"/>
                                         <exclude reference="yPE-B7-Icc"/>
+                                        <exclude reference="CWx-dh-Bod"/>
+                                        <exclude reference="QSC-Rc-JUM"/>
+                                        <exclude reference="gOc-KQ-zcN"/>
+                                        <exclude reference="KTB-al-ADF"/>
+                                        <exclude reference="dyK-mg-uYC"/>
+                                        <exclude reference="ztb-nt-ckR"/>
                                         <exclude reference="1XQ-Ln-Lxf"/>
                                         <exclude reference="9Yq-e3-YSn"/>
                                         <exclude reference="H3B-Ae-p0U"/>
                                         <exclude reference="wYf-Qm-ZNp"/>
-                                        <exclude reference="5mS-DV-Hfg"/>
-                                        <exclude reference="c9H-hg-u82"/>
-                                        <exclude reference="nJJ-Rw-HGs"/>
-                                        <exclude reference="2yI-2b-vIp"/>
-                                        <exclude reference="d0M-Iq-fcS"/>
-                                        <exclude reference="flm-lZ-GP7"/>
-                                        <exclude reference="lVB-ui-NXd"/>
-                                        <exclude reference="KTB-al-ADF"/>
-                                        <exclude reference="dyK-mg-uYC"/>
-                                        <exclude reference="ztb-nt-ckR"/>
                                         <exclude reference="1tc-yb-9aU"/>
                                         <exclude reference="8EV-hF-9CA"/>
                                         <exclude reference="JkE-45-MNn"/>
                                         <exclude reference="e5r-LU-uXN"/>
                                         <exclude reference="fHy-dI-eWQ"/>
                                         <exclude reference="zl1-8M-ozA"/>
-                                        <exclude reference="Fk4-ve-SRM"/>
-                                        <exclude reference="G7z-gy-SzS"/>
-                                        <exclude reference="axL-Ud-l92"/>
-                                        <exclude reference="CWx-dh-Bod"/>
-                                        <exclude reference="QSC-Rc-JUM"/>
-                                        <exclude reference="gOc-KQ-zcN"/>
-                                        <exclude reference="Qu6-Z6-Vcn"/>
-                                        <exclude reference="SBx-j0-tYW"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular">
@@ -5288,6 +5294,18 @@ You may be subject to additional terms and conditions that apply when you use or
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="0yh-y7-jDb"/>
+                                        <include reference="2yI-2b-vIp"/>
+                                        <include reference="d0M-Iq-fcS"/>
+                                        <include reference="flm-lZ-GP7"/>
+                                        <include reference="lVB-ui-NXd"/>
+                                        <include reference="Qu6-Z6-Vcn"/>
+                                        <include reference="SBx-j0-tYW"/>
+                                        <include reference="5mS-DV-Hfg"/>
+                                        <include reference="c9H-hg-u82"/>
+                                        <include reference="nJJ-Rw-HGs"/>
+                                        <exclude reference="Fk4-ve-SRM"/>
+                                        <include reference="G7z-gy-SzS"/>
+                                        <include reference="axL-Ud-l92"/>
                                         <include reference="HyO-mH-6db"/>
                                         <include reference="ID3-wL-ihH"/>
                                         <include reference="LUm-JH-2dN"/>
@@ -5295,34 +5313,22 @@ You may be subject to additional terms and conditions that apply when you use or
                                         <include reference="Z7z-YB-o2t"/>
                                         <include reference="auK-m7-B4I"/>
                                         <include reference="yPE-B7-Icc"/>
+                                        <include reference="CWx-dh-Bod"/>
+                                        <include reference="QSC-Rc-JUM"/>
+                                        <include reference="gOc-KQ-zcN"/>
+                                        <include reference="KTB-al-ADF"/>
+                                        <include reference="dyK-mg-uYC"/>
+                                        <include reference="ztb-nt-ckR"/>
                                         <include reference="1XQ-Ln-Lxf"/>
                                         <include reference="9Yq-e3-YSn"/>
                                         <include reference="H3B-Ae-p0U"/>
                                         <include reference="wYf-Qm-ZNp"/>
-                                        <include reference="5mS-DV-Hfg"/>
-                                        <include reference="c9H-hg-u82"/>
-                                        <include reference="nJJ-Rw-HGs"/>
-                                        <include reference="2yI-2b-vIp"/>
-                                        <include reference="d0M-Iq-fcS"/>
-                                        <include reference="flm-lZ-GP7"/>
-                                        <include reference="lVB-ui-NXd"/>
-                                        <include reference="KTB-al-ADF"/>
-                                        <include reference="dyK-mg-uYC"/>
-                                        <include reference="ztb-nt-ckR"/>
                                         <include reference="1tc-yb-9aU"/>
                                         <include reference="8EV-hF-9CA"/>
                                         <include reference="JkE-45-MNn"/>
                                         <include reference="e5r-LU-uXN"/>
                                         <include reference="fHy-dI-eWQ"/>
                                         <include reference="zl1-8M-ozA"/>
-                                        <exclude reference="Fk4-ve-SRM"/>
-                                        <include reference="G7z-gy-SzS"/>
-                                        <include reference="axL-Ud-l92"/>
-                                        <include reference="CWx-dh-Bod"/>
-                                        <include reference="QSC-Rc-JUM"/>
-                                        <include reference="gOc-KQ-zcN"/>
-                                        <include reference="Qu6-Z6-Vcn"/>
-                                        <include reference="SBx-j0-tYW"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -5872,8 +5878,8 @@ You may be subject to additional terms and conditions that apply when you use or
         <image name="fingerSwipe" width="190" height="146"/>
         <image name="likeDislike" width="190" height="42"/>
         <image name="linkToWebsite" width="95" height="22"/>
-        <image name="pauseIcon" width="2255" height="2257"/>
-        <image name="playIcon" width="2255" height="2257"/>
+        <image name="pauseIcon" width="1048" height="1048"/>
+        <image name="playIcon" width="1053" height="1049"/>
         <image name="post" width="190" height="188"/>
         <image name="postnshare" width="190" height="41"/>
         <image name="ppl" width="178" height="267"/>

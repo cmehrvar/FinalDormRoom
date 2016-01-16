@@ -2,17 +2,15 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "TopRated.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "TopRated@2x.png",
+      "filename" : "Thumbs Up!.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "TopRated@3x.png",
       "scale" : "3x"
     }
   ],

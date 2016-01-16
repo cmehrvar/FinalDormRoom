@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Ryerson_University_New.png",
+      "filename" : "Ryerson_University_New2.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Ryerson_University_New-1.png",
+      "filename" : "Ryerson_University_New2-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Ryerson_University_New-2.png",
+      "filename" : "Ryerson_University_New2-2.png",
       "scale" : "3x"
     }
   ],

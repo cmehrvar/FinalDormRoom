@@ -565,7 +565,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             post["VideoUrl"] = ""
         } else {
             post["VideoUrl"] = globalVideoSaveUrl
-            post["ImageUrl"] = "642B0999-A10B-4D65-B1D1-8CA13CFC7E12-757-00000062F62FA73B.jpeg"
+            post["ImageUrl"] = "download+latest+version.jpg"
         }
         
         post["Caption"] = CaptionOutlet.text
