@@ -116,6 +116,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         
         rootController?.toggleTakePuff({ (complete) -> () in
             
+            //self.previewLayer?.removeFromSuperlayer()
+            
             guard let actualController = self.rootController else {return}
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -170,6 +172,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             print("cancelled")
             
             if !self.isImage {
+            
             self.player.pause()
             }
         })
@@ -663,6 +666,10 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     func configureCameraForCapture() {
         
         previewLayer?.removeFromSuperlayer()
+        
+        if !isImage {
+        playerLayer.removeFromSuperlayer()
+        }
         
         let captureSession = AVCaptureSession()
         

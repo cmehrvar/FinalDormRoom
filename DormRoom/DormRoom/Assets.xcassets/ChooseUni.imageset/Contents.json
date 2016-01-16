@@ -2,17 +2,15 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Uni_Selection_Icon_DormRoom_App (4).png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Uni_Selection_Icon_DormRoom_App (4)-1.png",
+      "filename" : "Uni_Selection_Icon_DormRoom_App (5).png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Uni_Selection_Icon_DormRoom_App (4)-2.png",
       "scale" : "3x"
     }
   ],

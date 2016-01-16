@@ -7,10 +7,18 @@
 //
 
 import UIKit
+import AVFoundation
 
 class CommentsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
     weak var rootController: MainRootViewController?
+    
+    var playerItem: AVPlayerItem!
+    var player: AVPlayer!
+    var playerLayer: AVPlayerLayer!
+    var asset: AVURLAsset!
+    
+    var isImage = Bool()
     
     var comments = [String]()
     var profilePictures = [String]()
@@ -53,9 +61,47 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var UploadIcon: UIImageView!
     @IBOutlet weak var reportView: UIView!
     @IBOutlet weak var BlockReportOutlet: UILabel!
+    @IBOutlet weak var VideoView: UIView!
     
     
     //Actions
+    func playVideo(url: String) {
+        
+        if let actualUrl = NSURL(string: url) {
+            asset = AVURLAsset(URL: actualUrl)
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.playerItem = AVPlayerItem(asset: self.asset)
+            self.player = AVPlayer(playerItem: self.playerItem)
+            self.playerLayer = AVPlayerLayer(player: self.player)
+            self.player.replaceCurrentItemWithPlayerItem(self.playerItem)
+            self.playerLayer.frame = self.VideoView.bounds
+            self.player.actionAtItemEnd = .None
+            self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+            self.VideoView.layer.addSublayer(self.playerLayer)
+            self.player.play()
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerItemDidReachEnd:", name: AVPlayerItemDidPlayToEndTimeNotification, object: self.player.currentItem)
+        }
+        
+        
+        
+        /*
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerItemDidReachEnd:", name: AVPlayerItemDidPlayToEndTimeNotification, object: player.currentItem)
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerItemDidReachEnd:", name: AVPlayerItemDidPlayToEndTimeNotification, object: player.currentItem)
+*/
+    
+    }
+    
+    func playerItemDidReachEnd(notification: NSNotification) {
+        let p: AVPlayerItem = notification.object as! AVPlayerItem
+        p.seekToTime(kCMTimeZero)
+    }
+
     @IBAction func yesReport(sender: AnyObject) {
         
         report()
@@ -121,7 +167,13 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             guard let actualController = self.rootController else {return}
             actualController.mainController?.ImageBlur.alpha = 0
             self.reportView.alpha = 0
+            self.Image.image = nil
         })
+        
+        if !self.isImage {
+            self.player.pause()
+            self.playerLayer.removeFromSuperlayer()
+        }
         
         rootController?.toggleComments({ (Bool) -> () in
             
@@ -471,6 +523,11 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.reportView.alpha = 0
                 })
                 
+                if !self.isImage {
+                    self.player.pause()
+                    self.playerLayer.removeFromSuperlayer()
+                }
+                
                 rootController?.toggleComments({ (Bool) -> () in
                     self.view.endEditing(true)
                     
@@ -484,6 +541,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     }
                     self.commentIcon.alpha = 1
                     self.textIsEditing = false
+                    self.Image.image = nil
                     self.comments.removeAll()
                     self.CommentTableView.reloadData()
                 })

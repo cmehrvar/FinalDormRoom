@@ -114,6 +114,11 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 actualController.commentsController?.view.endEditing(true)
                 
+                if actualController.commentsController?.isImage == false {
+                    actualController.commentsController?.player.pause()
+                    actualController.commentsController?.playerLayer.removeFromSuperlayer()
+                }
+                
                 
                 if !isUploading {
                     actualController.commentsController?.CommentText.text = ""
@@ -121,6 +126,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 actualController.commentsController?.commentIcon.alpha = 1
                 actualController.commentsController?.comments.removeAll()
                 actualController.commentsController?.CommentTableView.reloadData()
+                actualController.commentsController?.Image.image = nil
                 
             })
         }
@@ -736,7 +742,20 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             guard let actualController = rootController else {return}
             
+            if !isImage[indexPath.row] {
+            let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoTableViewCell
+                cell.player.pause()
+            }
+            
+            
+            if isImage[indexPath.row] {
             actualController.commentsController?.imageUrl = dormroomurl + imageUrls[indexPath.row]
+            actualController.commentsController?.isImage = true
+            } else {
+                
+                actualController.commentsController?.isImage = false
+                actualController.commentsController?.playVideo(videoUrls[indexPath.row])
+            }
             
             actualController.commentsController?.profilePictureUrl = dormroomurl + profilePictureURLS[indexPath.row]
             
@@ -802,6 +821,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             actualController.commentsController?.feed = feed
             
+            
+            
             actualController.commentsController?.loadFromParse()
             
             actualController.commentsController?.view.endEditing(true)
@@ -813,7 +834,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             rootController?.toggleComments({ (Bool) -> () in
                 
                 
-                self.myTableView.scrollEnabled = false
+                
                 print("comments toggled")
                 
             })

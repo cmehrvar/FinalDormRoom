@@ -49,6 +49,8 @@ class VideoTableViewCell: UITableViewCell {
             self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
             self.VideoView.layer.addSublayer(self.playerLayer)
         }
+        
+        
     }
     
     //Outlets
