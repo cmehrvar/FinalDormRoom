@@ -34,7 +34,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     var startTime = NSTimeInterval()
     var timer:NSTimer = NSTimer()
     
-    var isImage = Bool()
+    var isImage = true
     
     
     let frontOut = AVCaptureStillImageOutput()
@@ -168,7 +168,10 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             self.TakenPuffOutlet.image = nil
             self.CaptionOutlet.text = nil
             print("cancelled")
+            
+            if !self.isImage {
             self.player.pause()
+            }
         })
         
     }

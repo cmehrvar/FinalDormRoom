@@ -2,17 +2,15 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "howManyMore.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "howManyMore-1.png",
+      "filename" : "Bottle cap with camera3.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "howManyMore-2.png",
       "scale" : "3x"
     }
   ],

@@ -138,7 +138,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.menuOpened = false
             })
         }
-
+        
     }
     
     
@@ -243,7 +243,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             actualCell.player.pause()
             
         }
-
+        
     }
     
     
@@ -600,7 +600,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         } else {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("VideoCell", forIndexPath: indexPath) as! VideoTableViewCell
-        
+            
             cell.selectionStyle = .None
             
             cell.objectId = objectId[indexPath.row]
@@ -615,9 +615,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             /*
             for realCell in cells {
-                if realCell = cell {
-                    cell.playVideo(videoUrls[indexPath.row])
-                }
+            if realCell = cell {
+            cell.playVideo(videoUrls[indexPath.row])
+            }
             }
             */
             
@@ -721,7 +721,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             cell.feed = feed
-
+            
             return cell
         }
     }
@@ -846,30 +846,30 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         var cells: [AnyObject] = [AnyObject]()
         for var j = 0; j < myTableView.numberOfSections; ++j {
             for var i = 0; i < myTableView.numberOfRowsInSection(j); ++i {
-                
-                if let actualCell = myTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: j)) {
-                    cells.append(actualCell)
+                if !isImage[i] {
+                    if let actualCell = myTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: j)) {
+                        cells.append(actualCell)
+                    }
                 }
             }
         }
         
         for cell in cells {
             
-            guard let actualCell: VideoTableViewCell = cell as? VideoTableViewCell else {return}
+            guard let actualCell: VideoTableViewCell = cell as? VideoTableViewCell else { print("not video cell")
+                return}
             actualCell.player.pause()
             
         }
     }
     
-
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
         SDWebImageManager.sharedManager().imageCache.clearDisk()
         SDWebImageManager.sharedManager().imageCache.clearMemory()
-        
-        myTableView.reloadData()
         
         // Dispose of any resources that can be recreated.
     }
