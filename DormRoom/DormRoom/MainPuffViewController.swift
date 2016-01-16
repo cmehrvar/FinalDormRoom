@@ -41,7 +41,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var isImage = [Bool]()
     var videoUrls = [String]()
     
-    let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York")
+    let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York"), other = UIImage(named: "OtherUni")
     
     var feed = String()
     var ranking = String()
@@ -582,6 +582,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             case "York":
                 cell.UniversityOutlet.image = york
                 
+            case "OtherUni":
+                cell.UniversityOutlet.image = other
+                
             default:
                 break
                 
@@ -809,6 +812,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             case "York":
                 actualController.commentsController?.University.image = york
+                
+            case "OtherUni":
+                actualController.commentsController?.University.image = other
                 
             default:
                 break

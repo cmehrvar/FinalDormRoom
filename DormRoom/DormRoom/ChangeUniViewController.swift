@@ -65,7 +65,7 @@ class ChangeUniViewController: UIViewController, UITableViewDataSource, UITableV
     //Functions
     func addFeedImages() {
         
-        guard let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York") else {return}
+        guard let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York"), other = UIImage(named: "OtherUni") else {return}
         
         staticImages.append(brock)
         universityNames.append("Brock")
@@ -97,6 +97,8 @@ class ChangeUniViewController: UIViewController, UITableViewDataSource, UITableV
         universityNames.append("Western")
         staticImages.append(york)
         universityNames.append("York")
+        staticImages.append(other)
+        universityNames.append("OtherUni")
         
         ChooseUniTableViewOutlet.reloadData()
     }

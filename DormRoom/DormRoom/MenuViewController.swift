@@ -189,7 +189,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //Functions
     func addFeedImages() {
         
-        guard let crest = UIImage(named: "Crest"), canada = UIImage(named: "Canada"), topRated = UIImage(named: "TopRated"), topHated = UIImage(named: "MostHated"), brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York") else {return}
+        guard let crest = UIImage(named: "Crest"), canada = UIImage(named: "Canada"), topRated = UIImage(named: "TopRated"), topHated = UIImage(named: "MostHated"), brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York"), other = UIImage(named: "OtherUni") else {return}
         
         staticImages.append(crest)
         staticImages.append(canada)
@@ -225,6 +225,8 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         universityNames.append("Western")
         staticImages.append(york)
         universityNames.append("York")
+        staticImages.append(other)
+        universityNames.append("OtherUni")
 
     }
     
@@ -287,6 +289,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
         case "York":
             self.UniversityOutlet.image = staticImages[18]
+            
+        case "OtherUni":
+            self.UniversityOutlet.image = staticImages[19]
             
         default:
             break

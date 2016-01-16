@@ -397,6 +397,11 @@
 					A3F309751C0BB32A002DEADF = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = 8YKL2VACPX;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					A3F309891C0BB32A002DEADF = {
 						CreatedOnToolsVersion = 7.1;
