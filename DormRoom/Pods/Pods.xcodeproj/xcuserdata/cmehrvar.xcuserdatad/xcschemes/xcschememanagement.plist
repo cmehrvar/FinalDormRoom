@@ -34,7 +34,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>UIActivityIndicator-for-SDWebImage.xcscheme</key>
+		<key>VIMVideoPlayer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -42,7 +42,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1EF6A7AD1CF923C4A325F4399F7CD7F7</key>
+		<key>1C1BD151256D551861EC2E6A3A02DAC2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,17 +62,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>649EA57EDA98B065176B9DE97D8548CE</key>
+		<key>85BD47572C0AFB9D630E9A16626ACC92</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>871042F385CCDB682399AF49C7758840</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>B53DF583949C0313F8655A28EF6EB07D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F60053894F20BECFF2422B14806DD5E4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

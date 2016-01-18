@@ -16,8 +16,16 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var user = PFUser.currentUser()
     
+    var wasVisible = false
+    var index = 0
+    
     let dormroomurl = "https://s3.amazonaws.com/dormroombucket/"
     let placeholderImage = UIImage(named: "Background")
+    
+    var videoPlayer: AVPlayer!
+    var videoPlayerItem: AVPlayerItem!
+    var asset: AVURLAsset!
+    var videoPlayerLayer: AVPlayerLayer!
     
     var loading = false
     var commentsOpened = false
@@ -246,7 +254,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         for cell in cells {
             
             guard let actualCell: VideoTableViewCell = cell as? VideoTableViewCell else {return}
-            actualCell.player.pause()
+            //actualCell.player.pause()
             
         }
         
@@ -521,16 +529,16 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.likeView.userInteractionEnabled = true
                 
                 cell.DislikeButtonOutlet.image = UIImage(named: "ThumbsDown")
-                cell.likeView.userInteractionEnabled = true
+                cell.DislikeButtonOutlet.userInteractionEnabled = true
                 
                 
             } else {
                 
                 cell.LikeButtonOutlet.image = nil
-                cell.likeView.userInteractionEnabled = false
+                cell.LikeButtonOutlet.userInteractionEnabled = false
                 
                 cell.DislikeButtonOutlet.image = nil
-                cell.likeView.userInteractionEnabled = false
+                cell.DislikeButtonOutlet.userInteractionEnabled = false
                 
             }
             
@@ -612,6 +620,35 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.selectionStyle = .None
             
+            if indexPath.row == index {
+                
+                if let url = NSURL(string: self.videoUrls[indexPath.row]) {
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        
+                        self.asset = AVURLAsset(URL: url)
+                        self.videoPlayerItem = AVPlayerItem(asset: self.asset)
+                        
+                        self.videoPlayer = AVPlayer(playerItem: self.videoPlayerItem)
+                        
+                        self.videoPlayerLayer = AVPlayerLayer(player: self.videoPlayer)
+                        self.videoPlayerLayer.frame = cell.VideoView.bounds
+                        self.videoPlayerLayer.fillMode = AVLayerVideoGravityResizeAspectFill
+                        
+                        cell.VideoView.layer.addSublayer(self.videoPlayerLayer)
+                        
+                        self.videoPlayer.play()
+                        
+                        NSNotificationCenter.defaultCenter().addObserver(self,
+                            selector: "playerItemDidReachEnd:",
+                            name: AVPlayerItemDidPlayToEndTimeNotification,
+                            object: self.videoPlayer.currentItem)
+                        
+                        
+                    })
+                }
+            }
+            
             cell.objectId = objectId[indexPath.row]
             
             cell.like = likes[indexPath.row]
@@ -620,16 +657,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.timePosted.text = timeAgoSince(date)
             
-            cell.playVideo(videoUrls[indexPath.row])
-            
-            /*
-            for realCell in cells {
-            if realCell = cell {
-            cell.playVideo(videoUrls[indexPath.row])
-            }
-            }
-            */
-            
+            cell.videoUrl = videoUrls[indexPath.row]
             
             cell.UsernameOutlet.text = "@" + usernames[indexPath.row]
             
@@ -650,7 +678,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.likeView.userInteractionEnabled = true
                 
                 cell.DislikeButtonOutlet.image = UIImage(named: "ThumbsDown")
-                cell.likeView.userInteractionEnabled = true
+                cell.DislikeButtonOutlet.userInteractionEnabled = true
                 
                 
             } else {
@@ -659,7 +687,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.likeView.userInteractionEnabled = false
                 
                 cell.DislikeButtonOutlet.image = nil
-                cell.likeView.userInteractionEnabled = false
+                cell.DislikeButtonOutlet.userInteractionEnabled = false
                 
             }
             
@@ -735,6 +763,11 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    func playerItemDidReachEnd(notification: NSNotification) {
+        self.videoPlayer.seekToTime(kCMTimeZero)
+        self.videoPlayer.play()
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return imageUrls.count
     }
@@ -746,14 +779,14 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             guard let actualController = rootController else {return}
             
             if !isImage[indexPath.row] {
-            let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoTableViewCell
-                cell.player.pause()
+                let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoTableViewCell
+                //cell.player.pause()
             }
             
             
             if isImage[indexPath.row] {
-            actualController.commentsController?.imageUrl = dormroomurl + imageUrls[indexPath.row]
-            actualController.commentsController?.isImage = true
+                actualController.commentsController?.imageUrl = dormroomurl + imageUrls[indexPath.row]
+                actualController.commentsController?.isImage = true
             } else {
                 
                 actualController.commentsController?.isImage = false
@@ -868,28 +901,96 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
-        var cells: [AnyObject] = [AnyObject]()
-        for var j = 0; j < myTableView.numberOfSections; ++j {
-            for var i = 0; i < myTableView.numberOfRowsInSection(j); ++i {
-                if !isImage[i] {
-                    if let actualCell = myTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: j)) {
-                        cells.append(actualCell)
-                    }
-                }
-            }
-        }
+        /*
+        print("begin dragging")
         
-        for cell in cells {
+        wasVisible = false
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
             
-            guard let actualCell: VideoTableViewCell = cell as? VideoTableViewCell else { print("not video cell")
-                return}
-            actualCell.player.pause()
+            self.index = 0
+            
+            if self.videoPlayer != nil {
+                self.videoPlayer.pause()
+            }
+            
+            if self.videoPlayerLayer != nil {
+                self.videoPlayerLayer.removeFromSuperlayer()
+            }
+            
+            self.myTableView.reloadData()
+            
+        }
+*/
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        //print("begin dragging")
+        
+        wasVisible = false
+        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            
+            self.index = 0
+            
+            if self.videoPlayer != nil {
+                self.videoPlayer.pause()
+            }
+            
+            if self.videoPlayerLayer != nil {
+                self.videoPlayerLayer.removeFromSuperlayer()
+            }
+            
+            self.myTableView.reloadData()
             
         }
     }
     
+    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+        print("End Scrolling")
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        print("End Dragging")
+    }
+    
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        
+        print("End Decelerating")
+        
+        let cells = myTableView.visibleCells
+        
+        print(cells.count)
+        
+        for cell in cells {
+            
+            if let actualCell = cell as? VideoTableViewCell {
+                
+                let indexPath = myTableView.indexPathForCell(actualCell)
+                var cellRect: CGRect = CGRect()
+                
+                if let actualPath = indexPath {
+                    cellRect = myTableView.rectForRowAtIndexPath(actualPath)
+                    
+                    cellRect.size.height = 300.0
+                    
+                    let visible = CGRectContainsRect(myTableView.bounds, cellRect)
+                    print(visible)
+                    
+                    if visible {
+                        wasVisible = visible
+                        index = actualPath.row
+                        myTableView.reloadData()
+                    }
+                }
+            }
+        }
+    }
     
     
     override func didReceiveMemoryWarning() {

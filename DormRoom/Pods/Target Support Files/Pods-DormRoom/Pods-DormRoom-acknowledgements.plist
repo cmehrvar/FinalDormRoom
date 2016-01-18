@@ -731,7 +731,7 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>Copyright (C) 2014 by Giacomo Saccardo
+			<string>Copyright (c) 2014-2015 Vimeo (https://vimeo.com)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -752,7 +752,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 </string>
 			<key>Title</key>
-			<string>UIActivityIndicator-for-SDWebImage</string>
+			<string>VIMVideoPlayer</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 		</dict>

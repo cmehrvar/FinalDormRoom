@@ -11,14 +11,13 @@ import AVFoundation
 
 class VideoTableViewCell: UITableViewCell {
     
-    var playerItem: AVPlayerItem!
-    var player: AVPlayer!
-    var playerLayer: AVPlayerLayer!
-    var asset: AVURLAsset!
-
     var isExpanded = false
     
     let user = PFUser.currentUser()
+    
+    var videoUrl = String()
+    
+    var fullyVisible = false
     
     var objectId = String()
     var like = Int()
@@ -28,30 +27,12 @@ class VideoTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+
         swipeLikeDislike()
         // Initialization code
     }
     
-    func playVideo(url: String) {
-        
-        if let actualUrl = NSURL(string: url) {
-            asset = AVURLAsset(URL: actualUrl)
-        }
-        
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            self.playerItem = AVPlayerItem(asset: self.asset)
-            self.player = AVPlayer(playerItem: self.playerItem)
-            self.playerLayer = AVPlayerLayer(player: self.player)
-            self.player.replaceCurrentItemWithPlayerItem(self.playerItem)
-            self.playerLayer.frame = self.VideoView.bounds
-            self.player.actionAtItemEnd = .None
-            self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-            self.VideoView.layer.addSublayer(self.playerLayer)
-        }
-        
-        
-    }
+    
     
     //Outlets
     @IBOutlet weak var VideoView: UIView!
@@ -75,36 +56,8 @@ class VideoTableViewCell: UITableViewCell {
     @IBOutlet weak var TapPlay: UIView!
     @IBOutlet weak var TapPause: UIView!
     
-
-    //Functions
-    func pause() {
-        
-        print("pause")
-        
-        
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            self.player.pause()
-        }
-        
-    }
-        
-    func play() {
-        
-        print("play")
-        
-        
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            self.player.play()
-        }
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerItemDidReachEnd:", name: AVPlayerItemDidPlayToEndTimeNotification, object: player.currentItem)
-    }
     
-    func playerItemDidReachEnd(notification: NSNotification) {
-        let p: AVPlayerItem = notification.object as! AVPlayerItem
-        p.seekToTime(kCMTimeZero)
-    }
-
+    //Functions    
     func swipeLikeDislike() {
         
         let longPressRecognizer: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
