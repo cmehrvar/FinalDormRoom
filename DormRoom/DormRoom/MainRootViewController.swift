@@ -11,12 +11,10 @@ import UIKit
 class MainRootViewController: UIViewController {
     
     let drawerWidthConstant: CGFloat = 240.0
-    let commentsWidthConstant: CGFloat = 260.0
     var menuIsRevealed = false
     var takePuffIsRevealed = false
     var changeUniIsRevealed = false
-    var commentsIsRevealed = false
-    var reportIsRevealed = false
+
     
     let user = PFUser.currentUser()
     
@@ -24,22 +22,17 @@ class MainRootViewController: UIViewController {
     weak var changeUniController: ChangeUniViewController?
     weak var takePuffController: TakePuffViewController?
     weak var menuController: MenuViewController?
-    weak var commentsController: CommentsViewController?
-    weak var reportController: ReportViewController?
+
     
     //Constraints
     @IBOutlet weak var MenuConstraint: NSLayoutConstraint!
     @IBOutlet weak var ChangeUniBottom: NSLayoutConstraint!
     @IBOutlet weak var ChangeUniTop: NSLayoutConstraint!
-    //@IBOutlet weak var CommentsConstraint: NSLayoutConstraint!
-    @IBOutlet weak var CommentsTop: NSLayoutConstraint!
-    @IBOutlet weak var CommentsBottom: NSLayoutConstraint!
-    
-    
+
     
     //Outlets
     @IBOutlet weak var TakePuffContainerOutlet: UIView!
-    @IBOutlet weak var ReportOutlet: UIView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +43,6 @@ class MainRootViewController: UIViewController {
         }
 
         setMenuStage()
-        setCommentStage()
         setChangeUniStage()
  
     }
@@ -66,12 +58,6 @@ class MainRootViewController: UIViewController {
         MenuConstraint.constant = -drawerWidthConstant
     }
     
-    func setCommentStage() {
-        
-        CommentsTop.constant = view.bounds.size.height
-        CommentsBottom.constant = -view.bounds.size.height
-        
-    }
     
     func toggleChangeUni(completion: (Bool) -> ()) {
         
@@ -116,30 +102,6 @@ class MainRootViewController: UIViewController {
         }
     }
     
-    func toggleComments(completion: (Bool) -> ()) {
-        
-        var panelOffset: CGFloat = 0
-        
-        if commentsIsRevealed {
-            panelOffset = view.bounds.size.height
-
-            
-        }
-        
-        commentsIsRevealed = !commentsIsRevealed
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            
-            self.CommentsTop.constant = panelOffset
-            self.CommentsBottom.constant = -panelOffset
-            self.view.layoutIfNeeded()
-            
-            }) { (complete) -> Void in
-                
-                completion(complete)
-                
-        }
-    }
     
     
     func toggleTakePuff(completion: (Bool) -> ()) {
@@ -163,25 +125,6 @@ class MainRootViewController: UIViewController {
         }
     }
     
-    
-    func toggleBlockUser(completion: (Bool) -> ()) {
-        
-        var panelOffset: CGFloat = 1
-        
-        if reportIsRevealed {
-            panelOffset = 0
-        }
-        
-        reportIsRevealed = !reportIsRevealed
-        
-        UIView.animateWithDuration(0.3) { () -> Void in
-            
-            self.ReportOutlet.alpha = panelOffset
-            self.view.layoutIfNeeded()
-            
-        }
-    }
-  
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -219,19 +162,6 @@ class MainRootViewController: UIViewController {
             mainController = main
             mainController?.rootController = self
             
-        } else if segue.identifier == "CommentsSegue" {
-            
-            guard let navController = segue.destinationViewController as? UINavigationController, comments = navController.topViewController as? CommentsViewController else {return}
-            commentsController = comments
-            commentsController?.rootController = self
-            
-        } else if segue.identifier == "ReportSegue" {
-            
-            guard let navController = segue.destinationViewController as? UINavigationController, report = navController.topViewController as? ReportViewController else {return}
-            reportController = report
-            reportController?.rootController = self
-            
-        }
-
+        } 
     }
 }

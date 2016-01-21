@@ -41,6 +41,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
     @IBOutlet weak var CheckmarkOutlet: UIImageView!
     @IBOutlet weak var ReadTermsView: WhiteButton!
     @IBOutlet weak var termsView: UIView!
+    @IBOutlet weak var ImageBlur: UIView!
     
     
     
@@ -72,7 +73,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
         if CheckmarkOutlet.alpha == 0 {
             
             let alertController = UIAlertController(title: "Hey", message: "Read Terms Aggreement", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "Chate", style: .Cancel, handler: nil))
+            alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
         } else
 
@@ -85,8 +86,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
             
         } else if UniOutlet.image == UIImage(named: "ChooseUni") {
             
-            let alertController = UIAlertController(title: "Puff You", message: "Choose a university", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "Chate", style: .Cancel, handler: nil))
+            let alertController = UIAlertController(title: "Hey", message: "Choose a university", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
             
         }
@@ -166,6 +167,11 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
     func uniTapped() {
         
         print("uniTapped")
+        
+        UIView.animateWithDuration(0.3) { () -> Void in
+            self.ImageBlur.alpha = 1
+        }
+        
         rootController?.toggleChooseUni({ (complete) -> () in
             
         })

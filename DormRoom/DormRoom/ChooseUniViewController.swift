@@ -108,6 +108,10 @@ class ChooseUniViewController: UIViewController, UITableViewDataSource, UITableV
         actualController.signUpViewController?.universityName = universityNames[indexPath.row]
         actualController.signUpViewController?.UniOutlet.image = staticImages[indexPath.row]
         
+        UIView.animateWithDuration(0.3) { () -> Void in
+            actualController.signUpViewController?.ImageBlur.alpha = 0
+        }
+        
         rootController?.toggleChooseUni({ (complete) -> () in
             
         })

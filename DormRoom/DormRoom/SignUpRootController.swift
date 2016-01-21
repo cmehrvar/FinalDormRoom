@@ -13,25 +13,26 @@ class SignUpRootController: UIViewController {
     weak var signUpViewController: SignUpViewController?
     weak var chooseUniViewController: ChooseUniViewController?
     
+    let drawerWidthConstant: CGFloat = 240.0
+    
     var uniIsRevealed = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setStage()
-        //self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
+
         // Do any additional setup after loading the view.
     }
     
     //Constaints
-    @IBOutlet weak var TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var BottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var ChooseUniConstraint: NSLayoutConstraint!
+
     
     
     //Functions
     func setStage() {
         
-        TopConstraint.constant = view.bounds.size.height
-        BottomConstraint.constant = -view.bounds.size.height
+        ChooseUniConstraint.constant = -drawerWidthConstant
         
     }
     
@@ -40,15 +41,14 @@ class SignUpRootController: UIViewController {
         var panelOffset: CGFloat = 0
         
         if uniIsRevealed {
-            panelOffset = view.bounds.size.height
+            panelOffset = -drawerWidthConstant
         }
         
         uniIsRevealed = !uniIsRevealed
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             
-            self.TopConstraint.constant = panelOffset
-            self.BottomConstraint.constant = -panelOffset
+            self.ChooseUniConstraint.constant = panelOffset
             self.view.layoutIfNeeded()
             
             }) { (complete) -> Void in

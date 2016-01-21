@@ -53,8 +53,10 @@ class VideoTableViewCell: UITableViewCell {
     @IBOutlet weak var likeView: UIView!
     @IBOutlet weak var dislikeView: UIView!
     @IBOutlet weak var timePosted: UILabel!
-    @IBOutlet weak var TapPlay: UIView!
-    @IBOutlet weak var TapPause: UIView!
+    @IBOutlet weak var firstCommentProfile: RoundedImage!
+    @IBOutlet weak var firstComment: UILabel!
+    @IBOutlet weak var loadingVideoOutlet: UILabel!
+
     
     
     //Functions    

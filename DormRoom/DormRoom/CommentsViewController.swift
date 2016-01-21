@@ -11,7 +11,7 @@ import AVFoundation
 
 class CommentsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
-    weak var rootController: MainRootViewController?
+    //weak var rootController: MainRootViewController?
     
     var playerItem: AVPlayerItem!
     var player: AVPlayer!
@@ -93,15 +93,15 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerItemDidReachEnd:", name: AVPlayerItemDidPlayToEndTimeNotification, object: player.currentItem)
-*/
-    
+        */
+        
     }
     
     func playerItemDidReachEnd(notification: NSNotification) {
         let p: AVPlayerItem = notification.object as! AVPlayerItem
         p.seekToTime(kCMTimeZero)
     }
-
+    
     @IBAction func yesReport(sender: AnyObject) {
         
         report()
@@ -162,39 +162,10 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func hideButton(sender: AnyObject) {
         
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            
-            guard let actualController = self.rootController else {return}
-            actualController.mainController?.ImageBlur.alpha = 0
-            self.reportView.alpha = 0
-            self.Image.image = nil
-        })
-        
         if !self.isImage {
             self.player.pause()
             self.playerLayer.removeFromSuperlayer()
         }
-        
-        rootController?.toggleComments({ (Bool) -> () in
-            
-            guard let actualController = self.rootController else {return}
-            
-            actualController.mainController?.myTableView.scrollEnabled = true
-            
-            actualController.mainController?.commentsOpened = false
-            
-            self.view.endEditing(true)
-            
-            if !self.isUploading {
-                self.CommentText.text = ""
-            }
-            
-            self.textIsEditing = false
-            self.commentIcon.alpha = 1
-            self.comments.removeAll()
-            self.CommentTableView.reloadData()
-            
-        })
     }
     
     //Functions
@@ -225,34 +196,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         print(error)
                     }
                     
-                    }) { (Bool) -> Void in
-                        self.reportView.alpha = 0
-                        self.rootController?.mainController?.ImageBlur.alpha = 0
-                        self.rootController?.toggleComments({ (Bool) -> () in
-                            
-                            guard let actualController = self.rootController else {return}
-                            
-                            actualController.mainController?.myTableView.scrollEnabled = true
-                            
-                            actualController.mainController?.commentsOpened = false
-                            
-                            actualController.mainController?.loadFromParse({ () -> Void in
-                                
-                            })
-                            
-                            self.view.endEditing(true)
-                            
-                            if !self.isUploading {
-                                self.CommentText.text = ""
-                            }
-                            self.commentIcon.alpha = 1
-                            self.comments.removeAll()
-                            self.CommentTableView.reloadData()
-                            
-                        })
-
-                }
-                
+                })
                 
             })
         } else {
@@ -272,14 +216,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     post?["Deleted"] = true
                     post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                         
-                        self.rootController?.toggleComments({ (Bool) -> () in
-                            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                                self.rootController?.mainController?.ImageBlur.alpha = 0
-                            })
-                            self.rootController?.mainController?.loadFromParse({ () -> Void in
-                                
-                            })
-                        })
+                        
                     })
                 })
             }))
@@ -329,12 +266,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
                 
-                if let actualController = self.rootController {
-                    actualController.mainController?.uploadOutlet.alpha = 0
-                    self.isUploading = false
-                    self.uploadProfileUrl = "https://s3.amazonaws.com/dormroombucket/"
-                }
-                
+                self.isUploading = false
+                self.uploadProfileUrl = "https://s3.amazonaws.com/dormroombucket/"
             }
             return nil
         }
@@ -371,10 +304,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                             self.UploadIcon.alpha = 0
                             self.isUploading = false
                             self.uploadProfileUrl = "https://s3.amazonaws.com/dormroombucket/"
-                            self.rootController?.mainController?.loadFromParse({ () -> Void in
-                                
-                            })
-                        })
+                                                    })
                         
                         
                         self.loadFromParse()
@@ -518,8 +448,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
                     
-                    guard let actualController = self.rootController else {return}
-                    actualController.mainController?.ImageBlur.alpha = 0
                     self.reportView.alpha = 0
                 })
                 
@@ -527,24 +455,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.player.pause()
                     self.playerLayer.removeFromSuperlayer()
                 }
-                
-                rootController?.toggleComments({ (Bool) -> () in
-                    self.view.endEditing(true)
-                    
-                    guard let actualController = self.rootController else {return}
-                    actualController.mainController?.commentsOpened = false
-                    
-                    actualController.mainController?.myTableView.scrollEnabled = true
-                    
-                    if !self.isUploading {
-                        self.CommentText.text = ""
-                    }
-                    self.commentIcon.alpha = 1
-                    self.textIsEditing = false
-                    self.Image.image = nil
-                    self.comments.removeAll()
-                    self.CommentTableView.reloadData()
-                })
                 
             }
             

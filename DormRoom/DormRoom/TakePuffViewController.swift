@@ -115,9 +115,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     @IBAction func postPuff(sender: AnyObject) {
         
         rootController?.toggleTakePuff({ (complete) -> () in
-            
-            //self.previewLayer?.removeFromSuperlayer()
-            
+
             guard let actualController = self.rootController else {return}
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -293,6 +291,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             
         case .Began:
             
+            
             self.timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -428,7 +427,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
                 print("error uploading: \(task.error)")
                 
                 let alertController = UIAlertController(title: "Shit...", message: "Error Uploading", preferredStyle:  UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
+                alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
                 
                 if let actualController = self.rootController {
@@ -489,7 +488,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             } else {
                 print("error uploading: \(task.error)")
                 let alertController = UIAlertController(title: "Shit...", message: "Error Uploading", preferredStyle:  UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
+                alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
                 
                 if let actualController = self.rootController {
@@ -538,7 +537,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             } else {
                 print("error uploading: \(task.error)")
                 let alertController = UIAlertController(title: "Shit...", message: "Error Uploading", preferredStyle:  UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
+                alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
                 
                 if let actualController = self.rootController {
@@ -603,7 +602,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             } else {
                 
                 let alertController = UIAlertController(title: "Shit...", message: error?.localizedDescription, preferredStyle:  UIAlertControllerStyle.Alert)
-                alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
+                alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
                 
                 if let actualController = self.rootController {

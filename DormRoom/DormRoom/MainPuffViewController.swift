@@ -16,6 +16,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var user = PFUser.currentUser()
     
+    var didClickPlay = false
+    
     var wasVisible = false
     var index = 0
     
@@ -93,52 +95,15 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         ImageBlur.userInteractionEnabled = true
         ImageBlur.addGestureRecognizer(tapRecognizer)
         
+        
+        let playPauseRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "playPauseButtonAction")
+        PlayPauseView.userInteractionEnabled = true
+        PlayPauseView.addGestureRecognizer(playPauseRecognizer)
+
+        
     }
     
     func dismissKeyboard() {
-        
-        ///////////////////////////////////////////////////////////////////////////////
-        
-        guard let actualController = rootController else {return}
-        actualController.commentsController?.view.endEditing(true)
-        
-        guard let isUploading: Bool = actualController.commentsController?.isUploading else {return}
-        guard let isTyping: Bool = actualController.commentsController?.textIsEditing else {return}
-        
-        print(isTyping)
-        
-        if commentsOpened && isTyping != true {
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                
-                self.ImageBlur.alpha = 0
-                
-            })
-            
-            rootController?.toggleComments({ (Bool) -> () in
-                
-                self.commentsOpened = false
-                
-                self.myTableView.scrollEnabled = true
-                
-                actualController.commentsController?.view.endEditing(true)
-                
-                if actualController.commentsController?.isImage == false {
-                    actualController.commentsController?.player.pause()
-                    actualController.commentsController?.playerLayer.removeFromSuperlayer()
-                }
-                
-                
-                if !isUploading {
-                    actualController.commentsController?.CommentText.text = ""
-                }
-                actualController.commentsController?.commentIcon.alpha = 1
-                actualController.commentsController?.comments.removeAll()
-                actualController.commentsController?.CommentTableView.reloadData()
-                actualController.commentsController?.Image.image = nil
-                
-            })
-        }
         
         if menuOpened {
             
@@ -164,20 +129,51 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var uploadOutlet: UIImageView!
     @IBOutlet weak var ProgressView: UIProgressView!
     @IBOutlet weak var ImageBlur: UIView!
+    @IBOutlet weak var PlayPauseView: UIView!
+    @IBOutlet weak var PlayPauseImage: UIImageView!
+
     
     
     //Actions
+    func playPauseButtonAction() {
+        
+        if !didClickPlay {
+            
+            let image = UIImage(named: "pauseIcon")
+
+            PlayPauseImage.image = image
+            
+            if videoPlayer != nil {
+                videoPlayer.play()
+            }
+            didClickPlay = !didClickPlay
+            
+        } else {
+            
+            PlayPauseImage.image = UIImage(named: "playIcon")
+            
+            if videoPlayer != nil {
+                videoPlayer.pause()
+            }
+            
+            didClickPlay = !didClickPlay
+            
+        }
+    }
+    
+    
+    
+    
+    
     @IBAction func takePuffAction(sender: AnyObject) {
         
         guard let actualController = rootController else {return}
         
         actualController.takePuffController?.feed = feed
-        //actualController.takePuffController?.feed = feed
         
         rootController?.toggleTakePuff({ (complete) -> () in
             
             actualController.takePuffController?.TakenPuffOutlet.image = nil
-            //actualController.takePuffController?.TakenPuffOutlet.image = nil
             actualController.takePuffController?.CaptionOutlet.text = nil
             
             self.uploadOutlet.alpha = 0
@@ -194,7 +190,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         rootController?.toggleMenu({ (Bool) -> () in
             print("menu opened")
-            //self.myTableView.scrollEnabled = false
             self.menuOpened = true
         })
     }
@@ -251,14 +246,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
         }
-        
-        for cell in cells {
-            
-            guard let actualCell: VideoTableViewCell = cell as? VideoTableViewCell else {return}
-            //actualCell.player.pause()
-            
-        }
-        
     }
     
     
@@ -280,7 +267,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     func addRefresh() {
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Keep on Puffin'")
+        self.refreshControl.attributedTitle = NSAttributedString(string: "What's good Canada?")
         self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         
     }
@@ -341,7 +328,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                             }
                             
                             if puff["Deleted"] as! Bool != true {
-                                
+
                                 let blockedUsers = self.user?["blockedPuffs"] as! [String]
                                 var puffBlocked = false
                                 
@@ -369,7 +356,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.videoUrls.append(puff["VideoUrl"] as! String)
                                             
                                             if puff["CommentProfiles"] != nil {
-                                            self.commentProfiles.append(puff["CommentProfiles"] as! [String])
+                                                self.commentProfiles.append(puff["CommentProfiles"] as! [String])
                                             } else {
                                                 self.commentProfiles.append([])
                                             }
@@ -519,7 +506,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.ImageOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: nil) { (image, error, cache, url) -> Void in
                 
                 if error == nil {
-                    //cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (self.dormroomurl + self.profilePictureURLS[indexPath.row])))
                     cell.SwipeViewOutlet.image = image
                 }
             }
@@ -533,29 +519,18 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             if commentProfiles[indexPath.row] == [] {
                 cell.MostRecentProfileOutlet.image = nil
+                cell.MostRecentProfileOutlet.alpha = 0
             } else {
-                
+                cell.MostRecentProfileOutlet.alpha = 1
                 if let profile = commentProfiles[indexPath.row].first {
                     
                     if let url = NSURL(string: profile) {
                         cell.MostRecentProfileOutlet.sd_setImageWithURL(url)
-                   
+                        
                     }
                 }
             }
             
-            /*
-            
-            cell.MostRecentCommentOutlet.text = comments[indexPath.row].first
-            
-            if let profile = commentProfiles[indexPath.row].first {
-                
-                if let url = NSURL(string: profile) {
-                    cell.MostRecentProfileOutlet.sd_setImageWithURL(url)
-                }
-            }
-
-*/
             
             cell.UsernameOutlet.text = usernames[indexPath.row]
             
@@ -664,9 +639,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
         } else {
             
-            /*
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("VideoCell", forIndexPath: indexPath) as! VideoTableViewCell
             
             cell.selectionStyle = .None
             
@@ -678,27 +652,25 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                         self.asset = AVURLAsset(URL: url)
                         self.videoPlayerItem = AVPlayerItem(asset: self.asset)
-                        
                         self.videoPlayer = AVPlayer(playerItem: self.videoPlayerItem)
-                        
                         self.videoPlayerLayer = AVPlayerLayer(player: self.videoPlayer)
                         self.videoPlayerLayer.frame = cell.VideoView.bounds
                         self.videoPlayerLayer.fillMode = AVLayerVideoGravityResizeAspectFill
-                        
                         cell.VideoView.layer.addSublayer(self.videoPlayerLayer)
-                        
-                        self.videoPlayer.play()
                         
                         NSNotificationCenter.defaultCenter().addObserver(self,
                             selector: "playerItemDidReachEnd:",
                             name: AVPlayerItemDidPlayToEndTimeNotification,
                             object: self.videoPlayer.currentItem)
                         
-                        
+                    })
+                    
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.PlayPauseView.alpha = 1
                     })
                 }
             }
-
+            
             cell.objectId = objectId[indexPath.row]
             
             cell.like = likes[indexPath.row]
@@ -707,11 +679,33 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.timePosted.text = timeAgoSince(date)
             
-            //cell.videoUrl = videoUrls[indexPath.row]
+            cell.videoUrl = videoUrls[indexPath.row]
             
             cell.UsernameOutlet.text = usernames[indexPath.row]
             
-            //cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
+            cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
+            
+            if comments[indexPath.row] == [] {
+                cell.firstComment.text = "Be First to Comment!"
+            } else {
+                cell.firstComment.text = comments[indexPath.row].first
+            }
+            
+            
+            if commentProfiles[indexPath.row] == [] {
+                cell.firstCommentProfile.image = nil
+                cell.firstCommentProfile.alpha = 0
+            } else {
+                cell.firstCommentProfile.alpha = 1
+                if let profile = commentProfiles[indexPath.row].first {
+                    
+                    if let url = NSURL(string: profile) {
+                        cell.firstCommentProfile.sd_setImageWithURL(url)
+                        
+                    }
+                }
+            }
+
             
             var liked = false
             
@@ -808,8 +802,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             cell.feed = feed
-*/
-            return UITableViewCell()
+            
+            return cell
         }
     }
     
@@ -824,116 +818,122 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        print("Did Select Row")
+        
+        /*  let indexPath = tableView.indexPathForSelectedRow();
+        let currentCell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!;
+        let storyboard = UIStoryboard(name: "YourStoryBoardFileName", bundle: nil)
+        var viewController = storyboard.instantiateViewControllerWithIdentifier("viewControllerIdentifer") as AnotherViewController
+        viewController.passedValue = currentCell.textLabel.text
+        self.presentViewController(viewContoller, animated: true , completion: nil) */
+        
+        
+        /*
         if !commentsOpened {
-            
-            guard let actualController = rootController else {return}
-            
-            if !isImage[indexPath.row] {
-                let cell = tableView.cellForRowAtIndexPath(indexPath) as! VideoTableViewCell
-                //cell.player.pause()
-            }
-            
-            
-            if isImage[indexPath.row] {
-                actualController.commentsController?.imageUrl = dormroomurl + imageUrls[indexPath.row]
-                actualController.commentsController?.isImage = true
-            } else {
-                
-                actualController.commentsController?.isImage = false
-                actualController.commentsController?.playVideo(videoUrls[indexPath.row])
-            }
-            
-            actualController.commentsController?.profilePictureUrl = dormroomurl + profilePictureURLS[indexPath.row]
-            
-            actualController.commentsController?.usernameString = usernames[indexPath.row]
-            
-            actualController.commentsController?.updateInfo()
-            
-            switch universityNames[indexPath.row] {
-                
-            case "Brock":
-                actualController.commentsController?.University.image = brock
-                
-            case "Calgary":
-                actualController.commentsController?.University.image = calgary
-                
-            case "Carlton":
-                actualController.commentsController?.University.image = carlton
-                
-            case "Dalhousie":
-                actualController.commentsController?.University.image = dal
-                
-            case "Laurier":
-                actualController.commentsController?.University.image = laurier
-                
-            case "McGill":
-                actualController.commentsController?.University.image = mcgill
-                
-            case "Mac":
-                actualController.commentsController?.University.image = mac
-                
-            case "Mun":
-                actualController.commentsController?.University.image = mun
-                
-            case "Ottawa":
-                actualController.commentsController?.University.image = ottawa
-                
-            case "Queens":
-                actualController.commentsController?.University.image = queens
-                
-            case "Ryerson":
-                actualController.commentsController?.University.image = ryerson
-                
-            case "UBC":
-                actualController.commentsController?.University.image = ubc
-                
-            case "UofT":
-                actualController.commentsController?.University.image = uoft
-                
-            case "Western":
-                actualController.commentsController?.University.image = western
-                
-            case "York":
-                actualController.commentsController?.University.image = york
-                
-            case "OtherUni":
-                actualController.commentsController?.University.image = other
-                
-            default:
-                break
-                
-            }
-            
-            actualController.commentsController?.Username.text = "@" + usernames[indexPath.row]
-            
-            actualController.commentsController?.objectId = objectId[indexPath.row]
-            
-            actualController.commentsController?.feed = feed
-            
-            actualController.commentsController?.loadFromParse()
-            
-            actualController.commentsController?.view.endEditing(true)
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.ImageBlur.alpha = 1
-            })
-            
-            rootController?.toggleComments({ (Bool) -> () in
-                
-                
-                
-                print("comments toggled")
-                
-            })
-            
-            commentsOpened = true
-            
+        
+        guard let actualController = rootController else {return}
+        
+        if isImage[indexPath.row] {
+        actualController.commentsController?.imageUrl = dormroomurl + imageUrls[indexPath.row]
+        actualController.commentsController?.isImage = true
         } else {
-            
-            guard let actualController = rootController else {return}
-            actualController.commentsController?.view.endEditing(true)
-            
+        
+        actualController.commentsController?.isImage = false
+        actualController.commentsController?.playVideo(videoUrls[indexPath.row])
         }
+        
+        actualController.commentsController?.profilePictureUrl = dormroomurl + profilePictureURLS[indexPath.row]
+        
+        actualController.commentsController?.usernameString = usernames[indexPath.row]
+        
+        actualController.commentsController?.updateInfo()
+        
+        switch universityNames[indexPath.row] {
+        
+        case "Brock":
+        actualController.commentsController?.University.image = brock
+        
+        case "Calgary":
+        actualController.commentsController?.University.image = calgary
+        
+        case "Carlton":
+        actualController.commentsController?.University.image = carlton
+        
+        case "Dalhousie":
+        actualController.commentsController?.University.image = dal
+        
+        case "Laurier":
+        actualController.commentsController?.University.image = laurier
+        
+        case "McGill":
+        actualController.commentsController?.University.image = mcgill
+        
+        case "Mac":
+        actualController.commentsController?.University.image = mac
+        
+        case "Mun":
+        actualController.commentsController?.University.image = mun
+        
+        case "Ottawa":
+        actualController.commentsController?.University.image = ottawa
+        
+        case "Queens":
+        actualController.commentsController?.University.image = queens
+        
+        case "Ryerson":
+        actualController.commentsController?.University.image = ryerson
+        
+        case "UBC":
+        actualController.commentsController?.University.image = ubc
+        
+        case "UofT":
+        actualController.commentsController?.University.image = uoft
+        
+        case "Western":
+        actualController.commentsController?.University.image = western
+        
+        case "York":
+        actualController.commentsController?.University.image = york
+        
+        case "OtherUni":
+        actualController.commentsController?.University.image = other
+        
+        default:
+        break
+        
+        }
+        
+        actualController.commentsController?.Username.text = "@" + usernames[indexPath.row]
+        
+        actualController.commentsController?.objectId = objectId[indexPath.row]
+        
+        actualController.commentsController?.feed = feed
+        
+        actualController.commentsController?.loadFromParse()
+        
+        actualController.commentsController?.view.endEditing(true)
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        self.ImageBlur.alpha = 1
+        })
+        
+        rootController?.toggleComments({ (Bool) -> () in
+        
+        
+        
+        print("comments toggled")
+        
+        })
+        
+        commentsOpened = true
+        
+        } else {
+        
+        guard let actualController = rootController else {return}
+        actualController.commentsController?.view.endEditing(true)
+        
+        }
+        */
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
@@ -952,34 +952,19 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         
-        /*
-        print("begin dragging")
         
-        wasVisible = false
-        
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            
-            self.index = 0
-            
-            if self.videoPlayer != nil {
-                self.videoPlayer.pause()
-            }
-            
-            if self.videoPlayerLayer != nil {
-                self.videoPlayerLayer.removeFromSuperlayer()
-            }
-            
-            self.myTableView.reloadData()
-            
-        }
-*/
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        
-        //print("begin dragging")
-        
+
         wasVisible = false
+        
+        PlayPauseImage.image = UIImage(named: "playIcon")
+        didClickPlay = false
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.PlayPauseView.alpha = 0
+        })
         
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             
@@ -1008,12 +993,40 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-        print("End Scrolling")
-    }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         print("End Dragging")
+        
+        
+        let cells = myTableView.visibleCells
+        
+        print(cells.count)
+        
+        for cell in cells {
+            
+            if let actualCell = cell as? VideoTableViewCell {
+                
+                let indexPath = myTableView.indexPathForCell(actualCell)
+                var cellRect: CGRect = CGRect()
+                
+                if let actualPath = indexPath {
+                    
+                    cellRect = myTableView.rectForRowAtIndexPath(actualPath)
+                    
+                    let smallerRect = CGRectInset(cellRect, 20, 20)
+                    
+                    let visible = CGRectContainsRect(myTableView.bounds, smallerRect)
+                    
+                    print(visible)
+                    
+                    if visible {
+                        wasVisible = visible
+                        index = actualPath.row
+                        myTableView.reloadData()
+                    }
+                }
+            }
+        }
     }
     
     
@@ -1035,7 +1048,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 if let actualPath = indexPath {
                     
                     cellRect = myTableView.rectForRowAtIndexPath(actualPath)
-
+                    
                     let smallerRect = CGRectInset(cellRect, 20, 20)
                     
                     let visible = CGRectContainsRect(myTableView.bounds, smallerRect)
