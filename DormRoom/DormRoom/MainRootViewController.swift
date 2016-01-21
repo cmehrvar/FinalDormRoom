@@ -31,7 +31,9 @@ class MainRootViewController: UIViewController {
     @IBOutlet weak var MenuConstraint: NSLayoutConstraint!
     @IBOutlet weak var ChangeUniBottom: NSLayoutConstraint!
     @IBOutlet weak var ChangeUniTop: NSLayoutConstraint!
-    @IBOutlet weak var CommentsConstraint: NSLayoutConstraint!
+    //@IBOutlet weak var CommentsConstraint: NSLayoutConstraint!
+    @IBOutlet weak var CommentsTop: NSLayoutConstraint!
+    @IBOutlet weak var CommentsBottom: NSLayoutConstraint!
     
     
     
@@ -66,7 +68,8 @@ class MainRootViewController: UIViewController {
     
     func setCommentStage() {
         
-        CommentsConstraint.constant = -commentsWidthConstant
+        CommentsTop.constant = view.bounds.size.height
+        CommentsBottom.constant = -view.bounds.size.height
         
     }
     
@@ -118,7 +121,8 @@ class MainRootViewController: UIViewController {
         var panelOffset: CGFloat = 0
         
         if commentsIsRevealed {
-            panelOffset = -commentsWidthConstant
+            panelOffset = view.bounds.size.height
+
             
         }
         
@@ -126,7 +130,8 @@ class MainRootViewController: UIViewController {
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             
-            self.CommentsConstraint.constant = panelOffset
+            self.CommentsTop.constant = panelOffset
+            self.CommentsBottom.constant = -panelOffset
             self.view.layoutIfNeeded()
             
             }) { (complete) -> Void in

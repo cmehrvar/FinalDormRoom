@@ -48,6 +48,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var imageDates = [NSDate]()
     var isImage = [Bool]()
     var videoUrls = [String]()
+    var commentProfiles = [[String]]()
     
     let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York"), other = UIImage(named: "OtherUni")
     
@@ -320,6 +321,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.imageDates.removeAll()
                     self.isImage.removeAll()
                     self.videoUrls.removeAll()
+                    self.commentProfiles.removeAll()
                     
                     if let puffs = puffs {
                         
@@ -366,6 +368,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.isImage.append(puff["IsImage"] as! Bool)
                                             self.videoUrls.append(puff["VideoUrl"] as! String)
                                             
+                                            if puff["CommentProfiles"] != nil {
+                                            self.commentProfiles.append(puff["CommentProfiles"] as! [String])
+                                            } else {
+                                                self.commentProfiles.append([])
+                                            }
+                                            
                                             if let actualDate = puff.createdAt {
                                                 self.imageDates.append(actualDate)
                                             }
@@ -399,6 +407,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                         
                                         if let actualDate = puff.createdAt {
                                             self.imageDates.append(actualDate)
+                                        }
+                                        
+                                        if puff["CommentProfiles"] != nil {
+                                            self.commentProfiles.append(puff["CommentProfiles"] as! [String])
+                                        } else {
+                                            self.commentProfiles.append([])
                                         }
                                         
                                         if puff["Comments"] == nil {
@@ -502,15 +516,48 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.timePosted.text = timeAgoSince(date)
             
-            
-            cell.ImageOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: placeholderImage) { (image, error, cache, url) -> Void in
+            cell.ImageOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: nil) { (image, error, cache, url) -> Void in
                 
                 if error == nil {
+                    //cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (self.dormroomurl + self.profilePictureURLS[indexPath.row])))
                     cell.SwipeViewOutlet.image = image
                 }
             }
             
-            cell.UsernameOutlet.text = "@" + usernames[indexPath.row]
+            if comments[indexPath.row] == [] {
+                cell.MostRecentCommentOutlet.text = "Be First to Comment!"
+            } else {
+                cell.MostRecentCommentOutlet.text = comments[indexPath.row].first
+            }
+            
+            
+            if commentProfiles[indexPath.row] == [] {
+                cell.MostRecentProfileOutlet.image = nil
+            } else {
+                
+                if let profile = commentProfiles[indexPath.row].first {
+                    
+                    if let url = NSURL(string: profile) {
+                        cell.MostRecentProfileOutlet.sd_setImageWithURL(url)
+                   
+                    }
+                }
+            }
+            
+            /*
+            
+            cell.MostRecentCommentOutlet.text = comments[indexPath.row].first
+            
+            if let profile = commentProfiles[indexPath.row].first {
+                
+                if let url = NSURL(string: profile) {
+                    cell.MostRecentProfileOutlet.sd_setImageWithURL(url)
+                }
+            }
+
+*/
+            
+            cell.UsernameOutlet.text = usernames[indexPath.row]
             
             cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
             
@@ -614,9 +661,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.feed = feed
             
             return cell
+            
         } else {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("VideoCell", forIndexPath: indexPath) as! VideoTableViewCell
+            /*
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
             
             cell.selectionStyle = .None
             
@@ -648,7 +698,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     })
                 }
             }
-            
+
             cell.objectId = objectId[indexPath.row]
             
             cell.like = likes[indexPath.row]
@@ -657,11 +707,11 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.timePosted.text = timeAgoSince(date)
             
-            cell.videoUrl = videoUrls[indexPath.row]
+            //cell.videoUrl = videoUrls[indexPath.row]
             
-            cell.UsernameOutlet.text = "@" + usernames[indexPath.row]
+            cell.UsernameOutlet.text = usernames[indexPath.row]
             
-            cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
+            //cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
             
             var liked = false
             
@@ -758,8 +808,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             cell.feed = feed
-            
-            return cell
+*/
+            return UITableViewCell()
         }
     }
     
@@ -860,8 +910,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             actualController.commentsController?.feed = feed
             
-            
-            
             actualController.commentsController?.loadFromParse()
             
             actualController.commentsController?.view.endEditing(true)
@@ -939,10 +987,20 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             if self.videoPlayer != nil {
                 self.videoPlayer.pause()
+                self.videoPlayer = nil
             }
             
             if self.videoPlayerLayer != nil {
                 self.videoPlayerLayer.removeFromSuperlayer()
+                self.videoPlayerLayer = nil
+            }
+            
+            if self.videoPlayerItem != nil {
+                self.videoPlayerItem = nil
+            }
+            
+            if self.asset != nil {
+                self.asset = nil
             }
             
             self.myTableView.reloadData()
@@ -975,11 +1033,13 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 var cellRect: CGRect = CGRect()
                 
                 if let actualPath = indexPath {
+                    
                     cellRect = myTableView.rectForRowAtIndexPath(actualPath)
+
+                    let smallerRect = CGRectInset(cellRect, 20, 20)
                     
-                    cellRect.size.height = 300.0
+                    let visible = CGRectContainsRect(myTableView.bounds, smallerRect)
                     
-                    let visible = CGRectContainsRect(myTableView.bounds, cellRect)
                     print(visible)
                     
                     if visible {

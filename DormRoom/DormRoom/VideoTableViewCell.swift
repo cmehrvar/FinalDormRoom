@@ -76,15 +76,7 @@ class VideoTableViewCell: UITableViewCell {
         let dislikeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeDislike")
         dislikeView.userInteractionEnabled = true
         dislikeView.addGestureRecognizer(dislikeTapRecognizer)
-        
-        let playRecognizer = UITapGestureRecognizer(target: self, action: "play")
-        TapPlay.userInteractionEnabled = true
-        TapPlay.addGestureRecognizer(playRecognizer)
-        
-        let pauseRecognizer = UITapGestureRecognizer(target: self, action: "pause")
-        TapPause.userInteractionEnabled = true
-        TapPause.addGestureRecognizer(pauseRecognizer)
-        
+                
     }
     
     

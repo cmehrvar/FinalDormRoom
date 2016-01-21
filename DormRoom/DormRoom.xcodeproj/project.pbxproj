@@ -37,6 +37,7 @@
 		A3A419CA1C16375B003C05EA /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A419C91C16375B003C05EA /* AVKit.framework */; };
 		A3A419CB1C163760003C05EA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3A419C71C16373B003C05EA /* AVFoundation.framework */; };
 		A3B60AC51C25C4DA00266FB7 /* CommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B60AC41C25C4DA00266FB7 /* CommentsViewController.swift */; };
+		A3BA3B091C5034E800D23828 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3BA3B081C5034E800D23828 /* ContentView.swift */; };
 		A3D024E81C3A2EF2006716EC /* ReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D024E71C3A2EF2006716EC /* ReportViewController.swift */; };
 		A3D024EA1C3B1D7A006716EC /* TermsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D024E91C3B1D79006716EC /* TermsController.swift */; };
 		A3E08D871C2C55A8005E7A7A /* RoundedComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E08D861C2C55A8005E7A7A /* RoundedComment.swift */; };
@@ -104,6 +105,7 @@
 		A3A419C71C16373B003C05EA /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		A3A419C91C16375B003C05EA /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		A3B60AC41C25C4DA00266FB7 /* CommentsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsViewController.swift; sourceTree = "<group>"; };
+		A3BA3B081C5034E800D23828 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A3D024E71C3A2EF2006716EC /* ReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportViewController.swift; sourceTree = "<group>"; };
 		A3D024E91C3B1D79006716EC /* TermsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TermsController.swift; sourceTree = "<group>"; };
 		A3E08D861C2C55A8005E7A7A /* RoundedComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedComment.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				A3E08D861C2C55A8005E7A7A /* RoundedComment.swift */,
 				A3E08D881C2C6B01005E7A7A /* CommentImageRound.swift */,
 				A365BFB21C48746A0012C32F /* SmallRoundedCorners.swift */,
+				A3BA3B081C5034E800D23828 /* ContentView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 				A32EC6531C0E57550004D8C7 /* MenuViewController.swift in Sources */,
 				A365BFB11C4862020012C32F /* VideoTableViewCell.swift in Sources */,
 				A32EC6A01C0F80C30004D8C7 /* ChangeUniCell.swift in Sources */,
+				A3BA3B091C5034E800D23828 /* ContentView.swift in Sources */,
 				A39CBE611C0D15D200D59434 /* BridgingHeader.m in Sources */,
 				A39CBE5A1C0CF54200D59434 /* ChooseUniCellTableViewCell.swift in Sources */,
 				A3E110991C1E3E7D00398F03 /* ImageViewExtension.swift in Sources */,

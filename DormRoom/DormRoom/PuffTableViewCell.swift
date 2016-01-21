@@ -46,6 +46,8 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var likeView: UIView!
     @IBOutlet weak var dislikeView: UIView!
     @IBOutlet weak var timePosted: UILabel!
+    @IBOutlet weak var MostRecentProfileOutlet: UIImageView!
+    @IBOutlet weak var MostRecentCommentOutlet: UILabel!
     
     
     

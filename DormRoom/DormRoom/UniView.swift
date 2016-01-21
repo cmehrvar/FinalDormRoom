@@ -15,8 +15,6 @@ class UniView: UIImageView {
         super.awakeFromNib()
         
         layer.cornerRadius = (self.bounds.size.width + self.bounds.size.height) / 4
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.blackColor().CGColor
         self.clipsToBounds = true
     }
 
