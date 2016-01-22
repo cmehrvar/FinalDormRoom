@@ -8,13 +8,11 @@ PODS:
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
-  - VIMVideoPlayer (5.6.0)
 
 DEPENDENCIES:
   - AWSS3
   - Parse
   - SDWebImage
-  - VIMVideoPlayer
 
 SPEC CHECKSUMS:
   AWSCore: c2f69975fd2caf38a10736961de28a0105cdb00c
@@ -22,6 +20,5 @@ SPEC CHECKSUMS:
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   Parse: 90b2544822200f84b18bfacc4e8b0a3a6c3584a2
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
-  VIMVideoPlayer: a8e768f2ab1019564f45690411bc17d35ac932dc
 
 COCOAPODS: 0.39.0

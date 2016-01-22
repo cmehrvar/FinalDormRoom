@@ -5,5 +5,4 @@
 #import <Parse/Parse.h>
 #import <AWSS3/AWSS3.h>
 #import <SDWebImage/UIImageView+WebCache.h>
-#import <VIMVideoPlayer/VIMVideoPlayer.h>
-#import <VIMVideoPlayer/VIMVideoPlayerView.h>
+

@@ -56,6 +56,7 @@ class VideoTableViewCell: UITableViewCell {
     @IBOutlet weak var firstCommentProfile: RoundedImage!
     @IBOutlet weak var firstComment: UILabel!
     @IBOutlet weak var loadingVideoOutlet: UILabel!
+    @IBOutlet weak var ContentViewReal: ContentView!
 
     
     

@@ -720,7 +720,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         
         
         
-        captureSession.sessionPreset = AVCaptureSessionPresetMedium
+        captureSession.sessionPreset = AVCaptureSessionPresetPhoto
         captureSession.startRunning()
         
         if !frontCameraShown {
@@ -761,6 +761,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         CameraCaptureView.layer.addSublayer(actualPreviewLayer)
         
     }
+    
+    
     
     func playerItemDidReachEnd(notification: NSNotification) {
         let p: AVPlayerItem = notification.object as! AVPlayerItem

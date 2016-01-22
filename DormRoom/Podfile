@@ -8,7 +8,6 @@ target 'DormRoom' do
 pod ‘Parse’
 pod 'AWSS3'
 pod 'SDWebImage'
-pod 'VIMVideoPlayer'
 
 end
 

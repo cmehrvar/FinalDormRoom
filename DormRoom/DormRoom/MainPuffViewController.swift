@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MainPuffViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate {
     
@@ -32,6 +33,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var loading = false
     var commentsOpened = false
     var menuOpened = false
+    
+    var firstLoad = false
     
     var theBool: Bool = Bool()
     var myTimer: NSTimer = NSTimer()
@@ -99,7 +102,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         let playPauseRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "playPauseButtonAction")
         PlayPauseView.userInteractionEnabled = true
         PlayPauseView.addGestureRecognizer(playPauseRecognizer)
-
+        
         
     }
     
@@ -131,7 +134,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var ImageBlur: UIView!
     @IBOutlet weak var PlayPauseView: UIView!
     @IBOutlet weak var PlayPauseImage: UIImageView!
-
+    
     
     
     //Actions
@@ -139,30 +142,26 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         if !didClickPlay {
             
-            let image = UIImage(named: "pauseIcon")
-
-            PlayPauseImage.image = image
-            
             if videoPlayer != nil {
                 videoPlayer.play()
+                
+                let image = UIImage(named: "pauseIcon")
+                
+                PlayPauseImage.image = image
             }
             didClickPlay = !didClickPlay
             
         } else {
             
-            PlayPauseImage.image = UIImage(named: "playIcon")
-            
             if videoPlayer != nil {
                 videoPlayer.pause()
+                PlayPauseImage.image = UIImage(named: "playIcon")
             }
             
             didClickPlay = !didClickPlay
             
         }
     }
-    
-    
-    
     
     
     @IBAction func takePuffAction(sender: AnyObject) {
@@ -328,7 +327,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                             }
                             
                             if puff["Deleted"] as! Bool != true {
-
+                                
                                 let blockedUsers = self.user?["blockedPuffs"] as! [String]
                                 var puffBlocked = false
                                 
@@ -423,6 +422,13 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                             
                         }
                         
+                    }
+                    
+                    if !self.firstLoad {
+                        if self.isImage[0] == false {
+                            self.PlayPauseView.alpha = 1
+                            self.firstLoad = true
+                        }
                     }
                     
                     self.PuffTableView.reloadData()
@@ -654,9 +660,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.videoPlayerItem = AVPlayerItem(asset: self.asset)
                         self.videoPlayer = AVPlayer(playerItem: self.videoPlayerItem)
                         self.videoPlayerLayer = AVPlayerLayer(player: self.videoPlayer)
-                        self.videoPlayerLayer.frame = cell.VideoView.bounds
-                        self.videoPlayerLayer.fillMode = AVLayerVideoGravityResizeAspectFill
+                        
                         cell.VideoView.layer.addSublayer(self.videoPlayerLayer)
+                        self.videoPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+                        self.videoPlayerLayer.frame = cell.VideoView.bounds
+                        
+                        cell.VideoView.layer.layoutIfNeeded()
                         
                         NSNotificationCenter.defaultCenter().addObserver(self,
                             selector: "playerItemDidReachEnd:",
@@ -665,9 +674,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                     })
                     
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
-                        self.PlayPauseView.alpha = 1
-                    })
                 }
             }
             
@@ -705,7 +711,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     }
                 }
             }
-
+            
             
             var liked = false
             
@@ -956,7 +962,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-
+        
         wasVisible = false
         
         PlayPauseImage.image = UIImage(named: "playIcon")
@@ -1020,6 +1026,11 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     print(visible)
                     
                     if visible {
+                        
+                        UIView.animateWithDuration(0.3, animations: { () -> Void in
+                            self.PlayPauseView.alpha = 1
+                        })
+                        
                         wasVisible = visible
                         index = actualPath.row
                         myTableView.reloadData()
@@ -1056,6 +1067,11 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     print(visible)
                     
                     if visible {
+                        
+                        UIView.animateWithDuration(0.3, animations: { () -> Void in
+                            self.PlayPauseView.alpha = 1
+                        })
+                        
                         wasVisible = visible
                         index = actualPath.row
                         myTableView.reloadData()
@@ -1063,6 +1079,15 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
         }
+    }
+    
+    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        /*
+        guard let actualCell = cell as? VideoTableViewCell else {return}
+        actualCell.VideoView = UIView()
+            */
+
     }
     
     
