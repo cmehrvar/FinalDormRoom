@@ -11,7 +11,7 @@ import AVFoundation
 
 class CommentsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
-    //weak var rootController: MainRootViewController?
+    weak var rootController: MainRootViewController?
     
     var playerItem: AVPlayerItem!
     var player: AVPlayer!
@@ -43,9 +43,9 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addCloseSwipe()
-        addTapGesture()
-        addRefresh()
+        //addCloseSwipe()
+        //addTapGesture()
+        //addRefresh()
         // Do any additional setup after loading the view.
     }
     
@@ -62,6 +62,9 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var reportView: UIView!
     @IBOutlet weak var BlockReportOutlet: UILabel!
     @IBOutlet weak var VideoView: UIView!
+    @IBOutlet weak var LikeOutlet: UILabel!
+    @IBOutlet weak var DislikeOutlet: UILabel!
+    @IBOutlet weak var ReportButtonOutlet: UIButton!
     
     
     //Actions
@@ -72,6 +75,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            
             self.playerItem = AVPlayerItem(asset: self.asset)
             self.player = AVPlayer(playerItem: self.playerItem)
             self.playerLayer = AVPlayerLayer(player: self.player)
@@ -82,19 +86,13 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             self.VideoView.layer.addSublayer(self.playerLayer)
             self.player.play()
             
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerItemDidReachEnd:", name: AVPlayerItemDidPlayToEndTimeNotification, object: self.player.currentItem)
+            NSNotificationCenter.defaultCenter().addObserver(self,
+                selector: "playerItemDidReachEnd:",
+                name: AVPlayerItemDidPlayToEndTimeNotification,
+                object: self.player.currentItem)
+            
         }
-        
-        
-        
-        /*
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerItemDidReachEnd:", name: AVPlayerItemDidPlayToEndTimeNotification, object: player.currentItem)
-        
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerItemDidReachEnd:", name: AVPlayerItemDidPlayToEndTimeNotification, object: player.currentItem)
-        */
-        
+
     }
     
     func playerItemDidReachEnd(notification: NSNotification) {
@@ -121,18 +119,56 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func report(sender: AnyObject) {
         
-        UIView.animateWithDuration(0.3) { () -> Void in
+        if usernameString != user?.username {
             
-            if self.usernameString != self.user?.username {
-                
-                self.BlockReportOutlet.text = "Report & Block User?"
-                
-            } else {
-                self.BlockReportOutlet.text = "Delete?"
+            var blockedPuffs = [String]()
+            
+            do {
+                try user?.fetch()
+            } catch let error {
+                print(error)
             }
             
-            self.reportView.alpha = 1
+            blockedPuffs = user?["blockedPuffs"] as! [String]
             
+            user?["blockedPuffs"] = [usernameString] + blockedPuffs
+            
+            user?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    
+                    do {
+                        try self.user?.fetch()
+                    } catch let error {
+                        print(error)
+                    }
+                    
+                })
+                
+            })
+        } else {
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.reportView.alpha = 0
+            })
+            
+            let alertController = UIAlertController(title: "So...", message: "You wanna delete this?", preferredStyle:  UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil))
+            
+            alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
+                
+                let query = PFQuery(className: self.feed)
+                query.getObjectInBackgroundWithId(self.objectId, block: { (post: PFObject?, error: NSError?) -> Void in
+                    
+                    post?["Deleted"] = true
+                    post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                        
+                        
+                    })
+                })
+            }))
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
         }
     }
     
@@ -162,9 +198,21 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func hideButton(sender: AnyObject) {
         
+        print("hide tapped")
+        
+        rootController?.toggleComments({ (Bool) -> () in
+            print("Comments Closed")
+        })
+        
         if !self.isImage {
-            self.player.pause()
+            
+            if player != nil {
+                self.player.pause()
+            }
+            
+            if playerLayer != nil {
             self.playerLayer.removeFromSuperlayer()
+            }
         }
     }
     
@@ -172,7 +220,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     func report() {
         
         if usernameString != user?.username {
-            
             
             var blockedPuffs = [String]()
             
@@ -373,7 +420,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.profilePictures = post?["CommentProfiles"] as! [String]
                         self.dates = post?["CommentDates"] as! [NSDate]
                         
-                        self.CommentTableView.reloadData()
+                        //self.CommentTableView.reloadData()
                         
                     } else {
                         
@@ -417,7 +464,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     func updateInfo() {
         
         self.Image.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "Background"))
-        self.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictureUrl))
+        //self.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictureUrl))
     }
     
     

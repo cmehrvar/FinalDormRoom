@@ -362,12 +362,27 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cameraProfile.delegate = self
         cameraProfile.allowsEditing = false
         
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-            cameraProfile.sourceType = UIImagePickerControllerSourceType.Camera
-        } else {
+        let alertController = UIAlertController(title: "Smile!", message: "Take a pic or choose from gallery?", preferredStyle:  UIAlertControllerStyle.Alert)
+        
+        alertController.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+                cameraProfile.sourceType = UIImagePickerControllerSourceType.Camera
+            }
+            
+            self.presentViewController(cameraProfile, animated: true, completion: nil)
+            
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Gallery", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            
             cameraProfile.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        }
-        self.presentViewController(cameraProfile, animated: true, completion: nil)
+            
+            self.presentViewController(cameraProfile, animated: true, completion: nil)
+            
+        }))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
         
     }
     

@@ -14,6 +14,7 @@ class MainRootViewController: UIViewController {
     var menuIsRevealed = false
     var takePuffIsRevealed = false
     var changeUniIsRevealed = false
+    var commentsIsRevealed = false
 
     
     let user = PFUser.currentUser()
@@ -22,12 +23,15 @@ class MainRootViewController: UIViewController {
     weak var changeUniController: ChangeUniViewController?
     weak var takePuffController: TakePuffViewController?
     weak var menuController: MenuViewController?
+    weak var commentsController: CommentsViewController?
 
     
     //Constraints
     @IBOutlet weak var MenuConstraint: NSLayoutConstraint!
     @IBOutlet weak var ChangeUniBottom: NSLayoutConstraint!
     @IBOutlet weak var ChangeUniTop: NSLayoutConstraint!
+    @IBOutlet weak var CommentsLeading: NSLayoutConstraint!
+    @IBOutlet weak var CommentsTrailing: NSLayoutConstraint!
 
     
     //Outlets
@@ -44,6 +48,7 @@ class MainRootViewController: UIViewController {
 
         setMenuStage()
         setChangeUniStage()
+        setCommentStage()
  
     }
     
@@ -57,6 +62,35 @@ class MainRootViewController: UIViewController {
     func setMenuStage() {
         MenuConstraint.constant = -drawerWidthConstant
     }
+    
+    func setCommentStage() {
+        
+        CommentsLeading.constant = -view.bounds.size.width
+        CommentsTrailing.constant = view.bounds.size.width
+        
+    }
+    
+    func toggleComments(completion: (Bool) -> ()) {
+        
+        var panelOffset: CGFloat = 0
+        
+        if commentsIsRevealed {
+            panelOffset = view.bounds.size.height
+        }
+        
+        commentsIsRevealed = !commentsIsRevealed
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.CommentsLeading.constant = -panelOffset
+            self.CommentsTrailing.constant = panelOffset
+            self.view.layoutIfNeeded()
+            
+            }) { (complete) -> Void in
+                completion(complete)
+        }
+    }
+
     
     
     func toggleChangeUni(completion: (Bool) -> ()) {
@@ -162,6 +196,12 @@ class MainRootViewController: UIViewController {
             mainController = main
             mainController?.rootController = self
             
-        } 
+        } else if segue.identifier == "CommentsSegue" {
+            
+            guard let navController = segue.destinationViewController as? UINavigationController, comments = navController.topViewController as? CommentsViewController else {return}
+            commentsController = comments
+            commentsController?.rootController = self
+
+        }
     }
 }

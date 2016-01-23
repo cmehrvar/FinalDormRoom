@@ -19,6 +19,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var didClickPlay = false
     
+    var tapToTop = false
+    
     var wasVisible = false
     var index = 0
     
@@ -109,19 +111,13 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     func dismissKeyboard() {
         
         if menuOpened {
-            
             UIView.animateWithDuration(0.3, animations: { () -> Void in
-                
                 self.ImageBlur.alpha = 0
-                
             })
-            
             rootController?.toggleMenu({ (Bool) -> () in
-                
                 self.menuOpened = false
             })
         }
-        
     }
     
     
@@ -234,17 +230,19 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func scrollToTop() {
+        
+        tapToTop = true
+        
         myTableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
         
-        var cells: [AnyObject] = [AnyObject]()
-        for var j = 0; j < myTableView.numberOfSections; ++j {
-            for var i = 0; i < myTableView.numberOfRowsInSection(j); ++i {
-                
-                if let actualCell = myTableView.cellForRowAtIndexPath(NSIndexPath(forRow: i, inSection: j)) {
-                    cells.append(actualCell)
-                }
-            }
+        /*
+        
+        if isImage[0] == false {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+        self.PlayPauseView.alpha = 1
+        })
         }
+        */
     }
     
     
@@ -266,7 +264,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     func addRefresh() {
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "What's good Canada?")
+        self.refreshControl.attributedTitle = NSAttributedString(string: "What's Good Canada?")
         self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         
     }
@@ -645,7 +643,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
         } else {
             
-            
             let cell = tableView.dequeueReusableCellWithIdentifier("VideoCell", forIndexPath: indexPath) as! VideoTableViewCell
             
             cell.selectionStyle = .None
@@ -661,6 +658,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.videoPlayer = AVPlayer(playerItem: self.videoPlayerItem)
                         self.videoPlayerLayer = AVPlayerLayer(player: self.videoPlayer)
                         
+                        cell.VideoView.alpha = 1
+                        
                         cell.VideoView.layer.addSublayer(self.videoPlayerLayer)
                         self.videoPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
                         self.videoPlayerLayer.frame = cell.VideoView.bounds
@@ -675,6 +674,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     })
                     
                 }
+            } else {
+                
+                cell.VideoView.alpha = 0
+                
             }
             
             cell.objectId = objectId[indexPath.row]
@@ -826,17 +829,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         print("Did Select Row")
         
-        /*  let indexPath = tableView.indexPathForSelectedRow();
-        let currentCell = tableView.cellForRowAtIndexPath(indexPath!) as UITableViewCell!;
-        let storyboard = UIStoryboard(name: "YourStoryBoardFileName", bundle: nil)
-        var viewController = storyboard.instantiateViewControllerWithIdentifier("viewControllerIdentifer") as AnotherViewController
-        viewController.passedValue = currentCell.textLabel.text
-        self.presentViewController(viewContoller, animated: true , completion: nil) */
+        if videoPlayer != nil {
+            videoPlayer.pause()
+        }
         
-        
-        /*
-        if !commentsOpened {
-        
+        PlayPauseImage.image = UIImage(named: "playIcon")
+
         guard let actualController = rootController else {return}
         
         if isImage[indexPath.row] {
@@ -853,6 +851,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         actualController.commentsController?.usernameString = usernames[indexPath.row]
         
         actualController.commentsController?.updateInfo()
+        
+        /*
         
         switch universityNames[indexPath.row] {
         
@@ -909,7 +909,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         }
         
-        actualController.commentsController?.Username.text = "@" + usernames[indexPath.row]
+*/
+
+        //actualController.commentsController?.Username.text = usernames[indexPath.row]
         
         actualController.commentsController?.objectId = objectId[indexPath.row]
         
@@ -917,15 +919,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         actualController.commentsController?.loadFromParse()
         
-        actualController.commentsController?.view.endEditing(true)
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-        self.ImageBlur.alpha = 1
-        })
+        //actualController.commentsController?.view.endEditing(true)
         
         rootController?.toggleComments({ (Bool) -> () in
-        
-        
         
         print("comments toggled")
         
@@ -933,13 +929,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         commentsOpened = true
         
-        } else {
-        
-        guard let actualController = rootController else {return}
-        actualController.commentsController?.view.endEditing(true)
-        
-        }
-        */
+
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
@@ -974,8 +964,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             
-            self.index = 0
-            
             if self.videoPlayer != nil {
                 self.videoPlayer.pause()
                 self.videoPlayer = nil
@@ -996,13 +984,14 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             self.myTableView.reloadData()
             
+            self.index = 0
+            
         }
     }
     
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         print("End Dragging")
-        
         
         let cells = myTableView.visibleCells
         
@@ -1039,6 +1028,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
     }
+    
     
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -1081,14 +1071,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        /*
-        guard let actualCell = cell as? VideoTableViewCell else {return}
-        actualCell.VideoView = UIView()
-            */
-
-    }
     
     
     override func didReceiveMemoryWarning() {
