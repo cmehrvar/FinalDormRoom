@@ -27,8 +27,8 @@ class VideoTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        //swipeLikeDislike()
+        
+        swipeLikeDislike()
         // Initialization code
     }
     
@@ -43,51 +43,23 @@ class VideoTableViewCell: UITableViewCell {
     @IBOutlet weak var SecondUsername: UILabel!
     @IBOutlet weak var MostRecentComment: UILabel!
     @IBOutlet weak var SecondComment: UILabel!
-    
-    
-    
-    
-    
-    
     @IBOutlet weak var LikeOutlet: UILabel!
     @IBOutlet weak var DislikeOutlet: UILabel!
     @IBOutlet weak var CaptionOutlet: UILabel!
-    
-    
-    
-    
-    
     @IBOutlet weak var UniversityOutlet: UIImageView!
     @IBOutlet weak var ProfileOutlet: UIImageView!
-    @IBOutlet weak var SwipeViewOutlet: UIImageView!
-    @IBOutlet weak var ReadSwipeViewOutlet: UIView!
-    @IBOutlet weak var ThumbsUpOutlet: UIImageView!
-    @IBOutlet weak var ThumbsDownOutlet: UIImageView!
     @IBOutlet weak var LikeButtonOutlet: UIImageView!
     @IBOutlet weak var DislikeButtonOutlet: UIImageView!
-    @IBOutlet weak var SwipeConstraint: NSLayoutConstraint!
     @IBOutlet weak var CommentNumber: UILabel!
     @IBOutlet weak var likeView: UIView!
     @IBOutlet weak var dislikeView: UIView!
-
-    @IBOutlet weak var firstCommentProfile: RoundedImage!
-    @IBOutlet weak var firstComment: UILabel!
-    @IBOutlet weak var loadingVideoOutlet: UILabel!
-    @IBOutlet weak var ContentViewReal: ContentView!
-
+    @IBOutlet weak var UniversityName: UILabel!
     
     
-    //Functions    
+    
+    
+    //Functions
     func swipeLikeDislike() {
-        
-        let longPressRecognizer: UILongPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
-        longPressRecognizer.delegate = self
-        self.addGestureRecognizer(longPressRecognizer)
-        
-        //Adding Pan Gesture
-        let panRecognizer = UIPanGestureRecognizer(target: self, action: "panOnCell:")
-        panRecognizer.delegate = self
-        self.addGestureRecognizer(panRecognizer)
         
         let likeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeLike")
         likeView.userInteractionEnabled = true
@@ -96,114 +68,7 @@ class VideoTableViewCell: UITableViewCell {
         let dislikeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeDislike")
         dislikeView.userInteractionEnabled = true
         dislikeView.addGestureRecognizer(dislikeTapRecognizer)
-                
-    }
-    
-    
-    func expandImage() {
         
-        isExpanded = true
-        
-        UIView.animateWithDuration(0.3) { () -> Void in
-            
-            self.ReadSwipeViewOutlet.alpha = 1
-            self.ReadSwipeViewOutlet.transform = CGAffineTransformMakeScale(0.4, 0.4)
-            
-        }
-    }
-    
-    func contractImage() {
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            
-            self.ReadSwipeViewOutlet.alpha = 0
-            self.ReadSwipeViewOutlet.transform = CGAffineTransformIdentity
-            
-            }) { (complete) -> Void in
-                
-                self.SwipeConstraint.constant = 0
-                self.ThumbsUpOutlet.alpha = 0
-                self.ThumbsDownOutlet.alpha = 0
-        }
-    }
-    
-    
-    
-    func longPressed(sender: UILongPressGestureRecognizer) {
-        
-        switch sender.state {
-            
-        case .Began:
-            
-            if user?["liked"] == nil {
-                user?["liked"] = []
-            }
-            
-            let likedObjects: [String] = user?["liked"] as! [String]
-            var liked = false
-            
-            for likedObject in likedObjects {
-                
-                if likedObject == objectId {
-                    liked = true
-                }
-            }
-            
-            if !liked {
-                expandImage()
-            }
-            
-        case .Ended:
-            contractImage()
-            
-        default:
-            break
-            
-        }
-    }
-    
-    func panOnCell(sender: UIPanGestureRecognizer) {
-        
-        let translation = sender.translationInView(self)
-        
-        switch sender.state {
-            
-        case .Changed:
-            
-            if isExpanded {
-                SwipeConstraint.constant = translation.x
-                
-                if translation.x >= 50 {
-                    
-                    ThumbsUpOutlet.alpha = 1
-                    ThumbsDownOutlet.alpha = 0
-                    
-                } else if translation.x <= -50 {
-                    
-                    ThumbsUpOutlet.alpha = 0
-                    ThumbsDownOutlet.alpha = 1
-                    
-                } else {
-                    
-                    ThumbsUpOutlet.alpha = 0
-                    ThumbsDownOutlet.alpha = 0
-                    
-                }
-            }
-            
-        case .Ended:
-            
-            isExpanded = false
-            
-            if SwipeConstraint.constant <= -50 {
-                swipeDislike()
-            } else if SwipeConstraint.constant >= 50 {
-                swipeLike()
-            }
-            
-        default:
-            break
-        }
     }
     
     

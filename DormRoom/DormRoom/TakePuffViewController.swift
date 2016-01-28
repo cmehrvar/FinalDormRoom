@@ -718,7 +718,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         }
         
         
-        captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+        captureSession.sessionPreset = AVCaptureSessionPresetHigh
         
         
         captureSession.startRunning()

@@ -235,14 +235,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         myTableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
         
-        /*
-        
-        if isImage[0] == false {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-        self.PlayPauseView.alpha = 1
-        })
-        }
-        */
+
     }
     
     
@@ -503,9 +496,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         myTableView = tableView
-        
-        
-        
+                
         let likedObjects: [String] = user?["liked"] as! [String]
         
         let date: NSDate = imageDates[indexPath.row]
@@ -531,7 +522,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.ImageOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: nil) { (image, error, cache, url) -> Void in
                 
                 if error == nil {
-                    //cell.SwipeViewOutlet.image = image
+                    cell.SwipeViewOutlet.image = image
                 }
             }
             
@@ -576,7 +567,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.UniversityNameOutlet.text = universityNames[indexPath.row]
             
-            /*
+            
             if !liked {
             
             cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
@@ -595,7 +586,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.DislikeButtonOutlet.userInteractionEnabled = false
             
             }
-            */
+
             
             switch universityNames[indexPath.row] {
                 
@@ -703,6 +694,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }
             
+            cell.UniversityName.text = universityNames[indexPath.row]
+            
             cell.objectId = objectId[indexPath.row]
             
             cell.like = likes[indexPath.row]
@@ -747,9 +740,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     liked = true
                 }
             }
-            
-            /*
-            
+
             if !liked {
                 
                 cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
@@ -769,7 +760,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }
             
-            */
+            
             switch universityNames[indexPath.row] {
                 
             case "Brock":
@@ -1036,7 +1027,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                         cellRect = myTableView.rectForRowAtIndexPath(actualPath)
                         
-                        let smallerRect = CGRectInset(cellRect, 30, 30)
+                        let smallerRect = CGRectInset(cellRect, 0, 100)
                         
                         let visible = CGRectContainsRect(myTableView.bounds, smallerRect)
                         
@@ -1084,7 +1075,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                         cellRect = myTableView.rectForRowAtIndexPath(actualPath)
                         
-                        let smallerRect = CGRectInset(cellRect, 30, 30)
+                        let smallerRect = CGRectInset(cellRect, 0, 100)
                         
                         let visible = CGRectContainsRect(myTableView.bounds, smallerRect)
                         

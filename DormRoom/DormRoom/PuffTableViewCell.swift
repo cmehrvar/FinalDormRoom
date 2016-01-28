@@ -23,7 +23,7 @@ class PuffTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        //swipeLikeDislike()
+        swipeLikeDislike()
         // Initialization code
     }
     
@@ -38,32 +38,25 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var CommentNumber: UILabel!
     @IBOutlet weak var UniversityNameOutlet: UILabel!
     @IBOutlet weak var timePosted: UILabel!
-    
-    
-    
-    
+    @IBOutlet weak var LikeButtonOutlet: UIImageView!
+    @IBOutlet weak var DislikeButtonOutlet: UIImageView!
+    @IBOutlet weak var SecondRecentComment: UILabel!
+    @IBOutlet weak var ViewHowManyComments: UILabel!
+    @IBOutlet weak var SecondRecentUsername: UILabel!
+    @IBOutlet weak var MostRecentUsername: UILabel!
+    @IBOutlet weak var likeView: UIView!
+    @IBOutlet weak var dislikeView: UIView!
+    @IBOutlet weak var MostRecentCommentOutlet: UILabel!
     @IBOutlet weak var SwipeViewOutlet: UIImageView!
     @IBOutlet weak var ReadSwipeViewOutlet: UIView!
     @IBOutlet weak var ThumbsUpOutlet: UIImageView!
     @IBOutlet weak var ThumbsDownOutlet: UIImageView!
 
-    @IBOutlet weak var LikeButtonOutlet: UIImageView!
-    @IBOutlet weak var DislikeButtonOutlet: UIImageView!
+
     @IBOutlet weak var SwipeConstraint: NSLayoutConstraint!
 
-    @IBOutlet weak var likeView: UIView!
-    @IBOutlet weak var dislikeView: UIView!
 
-    @IBOutlet weak var MostRecentCommentOutlet: UILabel!
 
-    
-    @IBOutlet weak var SecondRecentComment: UILabel!
-    @IBOutlet weak var ViewHowManyComments: UILabel!
-    @IBOutlet weak var SecondRecentUsername: UILabel!
-    @IBOutlet weak var MostRecentUsername: UILabel!
-    
-    
-    
     //Functions
     func swipeLikeDislike() {
         
