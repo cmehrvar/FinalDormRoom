@@ -587,10 +587,9 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
                 print("successfully posted to parse")
                 self.TakenPuffOutlet.image = nil
                 self.CaptionOutlet.text = nil
-                self.rootController?.mainController?.loadFromParse({ () -> Void in
-                    
+                self.rootController?.mainController?.loadFromParse({ (Bool) -> () in
+                    print("Parse Loaded")
                 })
-                
                 guard let actualController = self.rootController else {return}
                 
                 UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -719,8 +718,9 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         }
         
         
-        
         captureSession.sessionPreset = AVCaptureSessionPresetPhoto
+        
+        
         captureSession.startRunning()
         
         if !frontCameraShown {

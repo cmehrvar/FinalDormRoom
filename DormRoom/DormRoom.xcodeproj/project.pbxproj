@@ -28,6 +28,10 @@
 		A365BFB31C48746A0012C32F /* SmallRoundedCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = A365BFB21C48746A0012C32F /* SmallRoundedCorners.swift */; };
 		A365BFB51C489F510012C32F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A365BFB41C489F510012C32F /* libz.tbd */; };
 		A365BFB71C489F650012C32F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = A365BFB61C489F650012C32F /* libsqlite3.tbd */; };
+		A3748F9C1C5979B1007AED90 /* anke.regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3748F9B1C5979B1007AED90 /* anke.regular.ttf */; };
+		A3748F9E1C5979BC007AED90 /* FjallaOne-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = A3748F9D1C5979BC007AED90 /* FjallaOne-Regular.otf */; };
+		A3748FA01C5985A3007AED90 /* MYRIADPRO-REGULAR.OTF in Resources */ = {isa = PBXBuildFile; fileRef = A3748F9F1C5985A3007AED90 /* MYRIADPRO-REGULAR.OTF */; };
+		A3748FA21C598C92007AED90 /* ProfilePictureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3748FA11C598C92007AED90 /* ProfilePictureView.swift */; };
 		A38C82B51C13F1FC000E650F /* InitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A38C82B41C13F1FC000E650F /* InitialViewController.swift */; };
 		A39CBE521C0CE87700D59434 /* RoundedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE511C0CE87600D59434 /* RoundedImage.swift */; };
 		A39CBE561C0CECF800D59434 /* BlackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39CBE551C0CECF800D59434 /* BlackButton.swift */; };
@@ -95,6 +99,10 @@
 		A365BFB21C48746A0012C32F /* SmallRoundedCorners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmallRoundedCorners.swift; sourceTree = "<group>"; };
 		A365BFB41C489F510012C32F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		A365BFB61C489F650012C32F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		A3748F9B1C5979B1007AED90 /* anke.regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = anke.regular.ttf; sourceTree = "<group>"; };
+		A3748F9D1C5979BC007AED90 /* FjallaOne-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FjallaOne-Regular.otf"; sourceTree = "<group>"; };
+		A3748F9F1C5985A3007AED90 /* MYRIADPRO-REGULAR.OTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MYRIADPRO-REGULAR.OTF"; sourceTree = "<group>"; };
+		A3748FA11C598C92007AED90 /* ProfilePictureView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePictureView.swift; sourceTree = "<group>"; };
 		A38C82B41C13F1FC000E650F /* InitialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InitialViewController.swift; sourceTree = "<group>"; };
 		A39CBE511C0CE87600D59434 /* RoundedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedImage.swift; sourceTree = "<group>"; };
 		A39CBE551C0CECF800D59434 /* BlackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlackButton.swift; sourceTree = "<group>"; };
@@ -238,6 +246,7 @@
 				A3E08D881C2C6B01005E7A7A /* CommentImageRound.swift */,
 				A365BFB21C48746A0012C32F /* SmallRoundedCorners.swift */,
 				A3BA3B081C5034E800D23828 /* ContentView.swift */,
+				A3748FA11C598C92007AED90 /* ProfilePictureView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -284,6 +293,9 @@
 		A3F309781C0BB32A002DEADF /* DormRoom */ = {
 			isa = PBXGroup;
 			children = (
+				A3748F9F1C5985A3007AED90 /* MYRIADPRO-REGULAR.OTF */,
+				A3748F9D1C5979BC007AED90 /* FjallaOne-Regular.otf */,
+				A3748F9B1C5979B1007AED90 /* anke.regular.ttf */,
 				A33C50D01C30A69C0085DA8C /* TimeAgo.swift */,
 				A39CBE621C0D18DC00D59434 /* Extensions */,
 				A36475581C0BBFAF00AC96CA /* BridgingHeaders */,
@@ -441,9 +453,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3748F9E1C5979BC007AED90 /* FjallaOne-Regular.otf in Resources */,
 				A3F309841C0BB32A002DEADF /* LaunchScreen.storyboard in Resources */,
+				A3748FA01C5985A3007AED90 /* MYRIADPRO-REGULAR.OTF in Resources */,
 				A3F309811C0BB32A002DEADF /* Assets.xcassets in Resources */,
 				A3F3097F1C0BB32A002DEADF /* Main.storyboard in Resources */,
+				A3748F9C1C5979B1007AED90 /* anke.regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,6 +552,7 @@
 				A33C50D11C30A69C0085DA8C /* TimeAgo.swift in Sources */,
 				A3FF60231C28744F0012159A /* Username.swift in Sources */,
 				A32EC65D1C0EA0DD0004D8C7 /* ChooseFeedCell.swift in Sources */,
+				A3748FA21C598C92007AED90 /* ProfilePictureView.swift in Sources */,
 				A32EC6511C0E56980004D8C7 /* MainRootViewController.swift in Sources */,
 				A32EC6491C0DF71B0004D8C7 /* SignUpRootController.swift in Sources */,
 				A38C82B51C13F1FC000E650F /* InitialViewController.swift in Sources */,

@@ -28,7 +28,7 @@ class VideoTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        swipeLikeDislike()
+        //swipeLikeDislike()
         // Initialization code
     }
     
@@ -36,23 +36,40 @@ class VideoTableViewCell: UITableViewCell {
     
     //Outlets
     @IBOutlet weak var VideoView: UIView!
+    @IBOutlet weak var UsernameOutlet: UILabel!
+    @IBOutlet weak var timePosted: UILabel!
+    @IBOutlet weak var HowManyComments: UILabel!
+    @IBOutlet weak var MostRecentUsername: UILabel!
+    @IBOutlet weak var SecondUsername: UILabel!
+    @IBOutlet weak var MostRecentComment: UILabel!
+    @IBOutlet weak var SecondComment: UILabel!
+    
+    
+    
+    
+    
+    
     @IBOutlet weak var LikeOutlet: UILabel!
     @IBOutlet weak var DislikeOutlet: UILabel!
     @IBOutlet weak var CaptionOutlet: UILabel!
+    
+    
+    
+    
+    
     @IBOutlet weak var UniversityOutlet: UIImageView!
     @IBOutlet weak var ProfileOutlet: UIImageView!
     @IBOutlet weak var SwipeViewOutlet: UIImageView!
     @IBOutlet weak var ReadSwipeViewOutlet: UIView!
     @IBOutlet weak var ThumbsUpOutlet: UIImageView!
     @IBOutlet weak var ThumbsDownOutlet: UIImageView!
-    @IBOutlet weak var UsernameOutlet: UILabel!
     @IBOutlet weak var LikeButtonOutlet: UIImageView!
     @IBOutlet weak var DislikeButtonOutlet: UIImageView!
     @IBOutlet weak var SwipeConstraint: NSLayoutConstraint!
     @IBOutlet weak var CommentNumber: UILabel!
     @IBOutlet weak var likeView: UIView!
     @IBOutlet weak var dislikeView: UIView!
-    @IBOutlet weak var timePosted: UILabel!
+
     @IBOutlet weak var firstCommentProfile: RoundedImage!
     @IBOutlet weak var firstComment: UILabel!
     @IBOutlet weak var loadingVideoOutlet: UILabel!

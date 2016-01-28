@@ -13,10 +13,10 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     weak var rootController: MainRootViewController?
     
+    var asset: AVURLAsset!
     var playerItem: AVPlayerItem!
     var player: AVPlayer!
     var playerLayer: AVPlayerLayer!
-    var asset: AVURLAsset!
     
     var isImage = Bool()
     
@@ -43,6 +43,9 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
+        
         //addCloseSwipe()
         //addTapGesture()
         //addRefresh()
@@ -52,34 +55,46 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     //Outlets
     @IBOutlet weak var Image: UIImageView!
+    @IBOutlet weak var VideoView: UIView!
+    @IBOutlet weak var LikeOutlet: UILabel!
+    @IBOutlet weak var DislikeOutlet: UILabel!
+    @IBOutlet weak var ReportButtonOutlet: UIButton!
+    @IBOutlet weak var ImageView: UIView!
     @IBOutlet weak var University: UIImageView!
     @IBOutlet weak var ProfilePicture: UIImageView!
     @IBOutlet weak var Username: UILabel!
+    @IBOutlet weak var TimePosted: UILabel!
+    @IBOutlet weak var Caption: UILabel!
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     @IBOutlet weak var CommentText: UITextView!
     @IBOutlet weak var CommentTableView: UITableView!
     @IBOutlet weak var commentIcon: UIImageView!
     @IBOutlet weak var UploadIcon: UIImageView!
     @IBOutlet weak var reportView: UIView!
     @IBOutlet weak var BlockReportOutlet: UILabel!
-    @IBOutlet weak var VideoView: UIView!
-    @IBOutlet weak var LikeOutlet: UILabel!
-    @IBOutlet weak var DislikeOutlet: UILabel!
-    @IBOutlet weak var ReportButtonOutlet: UIButton!
     
+
     
     //Actions
     func playVideo(url: String) {
         
-        if let actualUrl = NSURL(string: url) {
-            asset = AVURLAsset(URL: actualUrl)
-        }
-        
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             
+            if let actualUrl = NSURL(string: url) {
+                
+            self.asset = AVURLAsset(URL: actualUrl)
             self.playerItem = AVPlayerItem(asset: self.asset)
             self.player = AVPlayer(playerItem: self.playerItem)
             self.playerLayer = AVPlayerLayer(player: self.player)
-            self.player.replaceCurrentItemWithPlayerItem(self.playerItem)
             self.playerLayer.frame = self.VideoView.bounds
             self.player.actionAtItemEnd = .None
             self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
@@ -90,9 +105,9 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 selector: "playerItemDidReachEnd:",
                 name: AVPlayerItemDidPlayToEndTimeNotification,
                 object: self.player.currentItem)
-            
+                
+            }
         }
-
     }
     
     func playerItemDidReachEnd(notification: NSNotification) {
@@ -464,54 +479,12 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     func updateInfo() {
         
         self.Image.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "Background"))
-        //self.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictureUrl))
+        self.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictureUrl))
     }
     
     
     
-    func addCloseSwipe() {
-        
-        let closeSwipe: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: "closeMenu:")
-        self.view.userInteractionEnabled = true
-        self.view.addGestureRecognizer(closeSwipe)
-        
-    }
-    
-    func closeMenu(sender: UIPanGestureRecognizer) {
-        
-        var initialShit: CGFloat = CGFloat()
-        let translation = sender.translationInView(view)
-        
-        
-        switch sender.state {
-            
-        case .Began:
-            initialShit = translation.x
-            
-            
-        case .Ended:
-            
-            if translation.x < initialShit {
-                
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    
-                    self.reportView.alpha = 0
-                })
-                
-                if !self.isImage {
-                    self.player.pause()
-                    self.playerLayer.removeFromSuperlayer()
-                }
-                
-            }
-            
-        default:
-            break
-        }
-    }
-    
-    
-    func addTapGesture() {
+       func addTapGesture() {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)

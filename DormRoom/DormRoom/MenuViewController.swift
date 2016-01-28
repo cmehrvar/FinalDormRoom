@@ -125,10 +125,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             actualController.mainController?.ranking = "createdAt"
             actualController.mainController?.feed = feed
-            actualController.mainController?.loadFromParse({ () -> Void in
-                
+            actualController.mainController?.loadFromParse({ (Bool) -> () in
+                print("Parse Loaded")
             })
-            
             actualController.mainController?.WebViewOutlet.alpha = 0
             
         } else if indexPath.row == 2 {
@@ -137,10 +136,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             actualController.mainController?.ranking = "Like"
             actualController.mainController?.feed = feed
-            actualController.mainController?.loadFromParse({ () -> Void in
-                
+            actualController.mainController?.loadFromParse({ (Bool) -> () in
+                print("Parse Loaded")
             })
-            
             actualController.mainController?.WebViewOutlet.alpha = 0
             
         } else if indexPath.row == 3 {
@@ -149,10 +147,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             actualController.mainController?.ranking = "Dislike"
             actualController.mainController?.feed = feed
-            actualController.mainController?.loadFromParse({ () -> Void in
-                
+            actualController.mainController?.loadFromParse({ (Bool) -> () in
+                print("Parse Loaded")
             })
-            
             actualController.mainController?.WebViewOutlet.alpha = 0
             
         } else {
@@ -161,10 +158,9 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             actualController.mainController?.ranking = "createdAt"
             actualController.mainController?.feed = feed
-            actualController.mainController?.loadFromParse({ () -> Void in
-                
+            actualController.mainController?.loadFromParse({ (Bool) -> () in
+                print("Parse Loaded")
             })
-            
             actualController.mainController?.WebViewOutlet.alpha = 0
         }
         

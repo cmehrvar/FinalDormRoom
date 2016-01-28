@@ -28,9 +28,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     let placeholderImage = UIImage(named: "Background")
     
     var videoPlayer: AVPlayer!
-    var videoPlayerItem: AVPlayerItem!
-    var asset: AVURLAsset!
     var videoPlayerLayer: AVPlayerLayer!
+    var videoPlayerItem: AVPlayerItem!
     
     var loading = false
     var commentsOpened = false
@@ -55,7 +54,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var imageDates = [NSDate]()
     var isImage = [Bool]()
     var videoUrls = [String]()
-    var commentProfiles = [[String]]()
+    var commentUsernames = [[String]]()
+    var asset = [AVURLAsset]()
+    
     
     let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York"), other = UIImage(named: "OtherUni")
     
@@ -86,9 +87,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         addScrollToTop()
         addRefresh()
         addRecognizers()
-        loadFromParse { (complete) -> Void in
+        loadFromParse { (Bool) -> () in
             print("parse loaded")
-            
         }
         
         // Do any additional setup after loading the view.
@@ -271,15 +271,16 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func refresh(sender: AnyObject) {
         
-        loadFromParse { () -> Void in
-            print("parse loaded")
+        loadFromParse { (Bool) -> () in
+            print("loadCompleted")
         }
         
         refreshControl.endRefreshing()
     }
     
     
-    func loadFromParse(complete: () -> Void) {
+    
+    func loadFromParse(complete: (Bool) -> ()) {
         
         let query = PFQuery(className: "CanadaPuff")
         query.orderByDescending(ranking)
@@ -305,7 +306,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.imageDates.removeAll()
                     self.isImage.removeAll()
                     self.videoUrls.removeAll()
-                    self.commentProfiles.removeAll()
+                    self.commentUsernames.removeAll()
+                    self.asset.removeAll()
                     
                     if let puffs = puffs {
                         
@@ -352,22 +354,23 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.isImage.append(puff["IsImage"] as! Bool)
                                             self.videoUrls.append(puff["VideoUrl"] as! String)
                                             
-                                            if puff["CommentProfiles"] != nil {
-                                                self.commentProfiles.append(puff["CommentProfiles"] as! [String])
+                                            
+                                            if puff["NewCommentUsernames"] != nil {
+                                                self.commentUsernames.append(puff["NewCommentUsernames"] as! [String])
                                             } else {
-                                                self.commentProfiles.append([])
+                                                self.commentUsernames.append([])
                                             }
                                             
                                             if let actualDate = puff.createdAt {
                                                 self.imageDates.append(actualDate)
                                             }
                                             
-                                            if puff["Comments"] == nil {
+                                            if puff["NewComments"] == nil {
                                                 self.commentsNil.append(true)
                                                 self.comments.append([])
                                             } else {
                                                 self.commentsNil.append(false)
-                                                self.comments.append(puff["Comments"] as! [String])
+                                                self.comments.append(puff["NewComments"] as! [String])
                                             }
                                             
                                             
@@ -389,22 +392,23 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                         self.isImage.append(puff["IsImage"] as! Bool)
                                         self.videoUrls.append(puff["VideoUrl"] as! String)
                                         
+                                        
                                         if let actualDate = puff.createdAt {
                                             self.imageDates.append(actualDate)
                                         }
                                         
-                                        if puff["CommentProfiles"] != nil {
-                                            self.commentProfiles.append(puff["CommentProfiles"] as! [String])
+                                        if puff["NewCommentUsernames"] != nil {
+                                            self.commentUsernames.append(puff["NewCommentUsernames"] as! [String])
                                         } else {
-                                            self.commentProfiles.append([])
+                                            self.commentUsernames.append([])
                                         }
                                         
-                                        if puff["Comments"] == nil {
+                                        if puff["NewComments"] == nil {
                                             self.commentsNil.append(true)
                                             self.comments.append([])
                                         } else {
                                             self.commentsNil.append(false)
-                                            self.comments.append(puff["Comments"] as! [String])
+                                            self.comments.append(puff["NewComments"] as! [String])
                                         }
                                         
                                         
@@ -416,10 +420,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                 }
                                 
                             }
-                            
-                            
                         }
-                        
                     }
                     
                     if !self.firstLoad {
@@ -428,15 +429,33 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                             self.firstLoad = true
                         }
                     }
-                    
                     self.PuffTableView.reloadData()
-                    print(self.imageUrls)
+                    self.urlToAsset()
                     self.loading = false
+                    
+                    
                 }
             } else {
                 
                 print("\(error)")
                 
+            }
+        }
+    }
+    
+    
+    func urlToAsset() {
+        
+        for var i = 0; i < videoUrls.count; i++ {
+            
+            if isImage[i] == true {
+                self.asset.append(AVURLAsset(URL: NSURL(string: "")!))
+            } else {
+                
+                if let url = NSURL(string: videoUrls[i]) {
+                    self.asset.append(AVURLAsset(URL: url))
+                    self.myTableView.reloadData()
+                }
             }
         }
     }
@@ -485,6 +504,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         myTableView = tableView
         
+        
+        
         let likedObjects: [String] = user?["liked"] as! [String]
         
         let date: NSDate = imageDates[indexPath.row]
@@ -510,35 +531,39 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.ImageOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + imageUrls[indexPath.row])), placeholderImage: nil) { (image, error, cache, url) -> Void in
                 
                 if error == nil {
-                    cell.SwipeViewOutlet.image = image
+                    //cell.SwipeViewOutlet.image = image
                 }
             }
+            
             
             if comments[indexPath.row] == [] {
-                cell.MostRecentCommentOutlet.text = "Be First to Comment!"
-            } else {
-                cell.MostRecentCommentOutlet.text = comments[indexPath.row].first
+                cell.ViewHowManyComments.text = "Be First to Comment!"
+                
             }
             
-            
-            if commentProfiles[indexPath.row] == [] {
-                cell.MostRecentProfileOutlet.image = nil
-                cell.MostRecentProfileOutlet.alpha = 0
+            if comments[indexPath.row].count == 1 {
+                cell.MostRecentCommentOutlet.text = comments[indexPath.row].first
+                cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
+                
+            } else if comments[indexPath.row].count >= 2 {
+                cell.MostRecentCommentOutlet.text = comments[indexPath.row].first
+                cell.MostRecentUsername.text = comments[indexPath.row].first
+                cell.SecondRecentComment.text = comments[indexPath.row][1]
+                cell.SecondRecentUsername.text = comments[indexPath.row][1]
+                
             } else {
-                cell.MostRecentProfileOutlet.alpha = 1
-                if let profile = commentProfiles[indexPath.row].first {
-                    
-                    if let url = NSURL(string: profile) {
-                        cell.MostRecentProfileOutlet.sd_setImageWithURL(url)
-                        
-                    }
-                }
+                cell.MostRecentCommentOutlet.text = ""
+                cell.SecondRecentComment.text = ""
+                cell.MostRecentUsername.text = ""
+                cell.SecondRecentUsername.text = ""
             }
             
             
             cell.UsernameOutlet.text = usernames[indexPath.row]
             
             cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
+            
+            cell.CaptionOutlet.text = captions[indexPath.row]
             
             var liked = false
             
@@ -549,25 +574,28 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
             
-            if !liked {
-                
-                cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
-                cell.likeView.userInteractionEnabled = true
-                
-                cell.DislikeButtonOutlet.image = UIImage(named: "ThumbsDown")
-                cell.DislikeButtonOutlet.userInteractionEnabled = true
-                
-                
-            } else {
-                
-                cell.LikeButtonOutlet.image = nil
-                cell.LikeButtonOutlet.userInteractionEnabled = false
-                
-                cell.DislikeButtonOutlet.image = nil
-                cell.DislikeButtonOutlet.userInteractionEnabled = false
-                
-            }
+            cell.UniversityNameOutlet.text = universityNames[indexPath.row]
             
+            /*
+            if !liked {
+            
+            cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
+            cell.likeView.userInteractionEnabled = true
+            
+            cell.DislikeButtonOutlet.image = UIImage(named: "ThumbsDown")
+            cell.DislikeButtonOutlet.userInteractionEnabled = true
+            
+            
+            } else {
+            
+            cell.LikeButtonOutlet.image = nil
+            cell.LikeButtonOutlet.userInteractionEnabled = false
+            
+            cell.DislikeButtonOutlet.image = nil
+            cell.DislikeButtonOutlet.userInteractionEnabled = false
+            
+            }
+            */
             
             switch universityNames[indexPath.row] {
                 
@@ -628,9 +656,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.DislikeOutlet.text = "\(dislikes[indexPath.row])"
             
-            cell.CaptionOutlet.text = captions[indexPath.row]
-            
-            
             if commentsNil[indexPath.row] == true {
                 cell.CommentNumber.text = "0"
             } else {
@@ -649,34 +674,32 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             if indexPath.row == index {
                 
-                if let url = NSURL(string: self.videoUrls[indexPath.row]) {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        
-                        self.asset = AVURLAsset(URL: url)
-                        self.videoPlayerItem = AVPlayerItem(asset: self.asset)
-                        self.videoPlayer = AVPlayer(playerItem: self.videoPlayerItem)
-                        self.videoPlayerLayer = AVPlayerLayer(player: self.videoPlayer)
-                        
-                        cell.VideoView.alpha = 1
-                        
-                        cell.VideoView.layer.addSublayer(self.videoPlayerLayer)
-                        self.videoPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-                        self.videoPlayerLayer.frame = cell.VideoView.bounds
-                        
-                        cell.VideoView.layer.layoutIfNeeded()
-                        
-                        NSNotificationCenter.defaultCenter().addObserver(self,
-                            selector: "playerItemDidReachEnd:",
-                            name: AVPlayerItemDidPlayToEndTimeNotification,
-                            object: self.videoPlayer.currentItem)
-                        
-                    })
+                    if self.videoPlayerLayer != nil {
+                        self.videoPlayerLayer.removeFromSuperlayer()
+                    }
                     
-                }
-            } else {
-                
-                cell.VideoView.alpha = 0
+                    self.videoPlayerItem = AVPlayerItem(asset: self.asset[indexPath.row])
+                    self.videoPlayer = AVPlayer(playerItem: self.videoPlayerItem)
+                    self.videoPlayerLayer = AVPlayerLayer(player: self.videoPlayer)
+                    
+                    cell.VideoView.layer.addSublayer(self.videoPlayerLayer)
+                    cell.VideoView.alpha = 1
+                    self.videoPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+                    self.videoPlayerLayer.frame = cell.VideoView.bounds
+                    
+                    self.videoPlayer.play()
+                    
+                    self.PlayPauseImage.image = UIImage(named: "pauseIcon")
+                    self.didClickPlay = true
+                    
+                    NSNotificationCenter.defaultCenter().addObserver(self,
+                        selector: "playerItemDidReachEnd:",
+                        name: AVPlayerItemDidPlayToEndTimeNotification,
+                        object: self.videoPlayer.currentItem)
+                    
+                })
                 
             }
             
@@ -695,26 +718,26 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
             
             if comments[indexPath.row] == [] {
-                cell.firstComment.text = "Be First to Comment!"
-            } else {
-                cell.firstComment.text = comments[indexPath.row].first
+                cell.HowManyComments.text = "Be First to Comment!"
+                
             }
             
-            
-            if commentProfiles[indexPath.row] == [] {
-                cell.firstCommentProfile.image = nil
-                cell.firstCommentProfile.alpha = 0
+            if comments[indexPath.row].count == 1 {
+                cell.MostRecentComment.text = comments[indexPath.row].first
+                cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
+                
+            } else if comments[indexPath.row].count >= 2 {
+                cell.MostRecentComment.text = comments[indexPath.row].first
+                cell.MostRecentUsername.text = comments[indexPath.row].first
+                cell.SecondComment.text = comments[indexPath.row][1]
+                cell.SecondUsername.text = comments[indexPath.row][1]
+                
             } else {
-                cell.firstCommentProfile.alpha = 1
-                if let profile = commentProfiles[indexPath.row].first {
-                    
-                    if let url = NSURL(string: profile) {
-                        cell.firstCommentProfile.sd_setImageWithURL(url)
-                        
-                    }
-                }
+                cell.MostRecentUsername.text = ""
+                cell.MostRecentComment.text = ""
+                cell.SecondUsername.text = ""
+                cell.SecondComment.text = ""
             }
-            
             
             var liked = false
             
@@ -724,6 +747,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     liked = true
                 }
             }
+            
+            /*
             
             if !liked {
                 
@@ -744,7 +769,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }
             
-            
+            */
             switch universityNames[indexPath.row] {
                 
             case "Brock":
@@ -814,6 +839,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             return cell
         }
+
     }
     
     func playerItemDidReachEnd(notification: NSNotification) {
@@ -821,10 +847,15 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         self.videoPlayer.play()
     }
     
+    
+
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return imageUrls.count
+        return  imageUrls.count
     }
     
+    
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         print("Did Select Row")
@@ -834,17 +865,34 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         PlayPauseImage.image = UIImage(named: "playIcon")
-
+        
         guard let actualController = rootController else {return}
         
         if isImage[indexPath.row] {
-        actualController.commentsController?.imageUrl = dormroomurl + imageUrls[indexPath.row]
-        actualController.commentsController?.isImage = true
+            actualController.commentsController?.imageUrl = dormroomurl + imageUrls[indexPath.row]
+            actualController.commentsController?.isImage = true
+            
+            actualController.commentsController?.VideoView.alpha = 0
+            actualController.commentsController?.ImageView.alpha = 1
+            
         } else {
-        
-        actualController.commentsController?.isImage = false
-        actualController.commentsController?.playVideo(videoUrls[indexPath.row])
+            
+            actualController.commentsController?.isImage = false
+            
+            actualController.commentsController?.VideoView.alpha = 1
+            actualController.commentsController?.ImageView.alpha = 0
+            
+            actualController.commentsController?.playVideo(videoUrls[indexPath.row])
         }
+        
+        
+        actualController.commentsController?.LikeOutlet.text = "\(likes[indexPath.row])"
+        
+        actualController.commentsController?.DislikeOutlet.text = "\(dislikes[indexPath.row])"
+        
+        actualController.commentsController?.Caption.text = captions[indexPath.row]
+        
+        
         
         actualController.commentsController?.profilePictureUrl = dormroomurl + profilePictureURLS[indexPath.row]
         
@@ -852,66 +900,63 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         actualController.commentsController?.updateInfo()
         
-        /*
         
         switch universityNames[indexPath.row] {
-        
+            
         case "Brock":
-        actualController.commentsController?.University.image = brock
-        
+            actualController.commentsController?.University.image = brock
+            
         case "Calgary":
-        actualController.commentsController?.University.image = calgary
-        
+            actualController.commentsController?.University.image = calgary
+            
         case "Carlton":
-        actualController.commentsController?.University.image = carlton
-        
+            actualController.commentsController?.University.image = carlton
+            
         case "Dalhousie":
-        actualController.commentsController?.University.image = dal
-        
+            actualController.commentsController?.University.image = dal
+            
         case "Laurier":
-        actualController.commentsController?.University.image = laurier
-        
+            actualController.commentsController?.University.image = laurier
+            
         case "McGill":
-        actualController.commentsController?.University.image = mcgill
-        
+            actualController.commentsController?.University.image = mcgill
+            
         case "Mac":
-        actualController.commentsController?.University.image = mac
-        
+            actualController.commentsController?.University.image = mac
+            
         case "Mun":
-        actualController.commentsController?.University.image = mun
-        
+            actualController.commentsController?.University.image = mun
+            
         case "Ottawa":
-        actualController.commentsController?.University.image = ottawa
-        
+            actualController.commentsController?.University.image = ottawa
+            
         case "Queens":
-        actualController.commentsController?.University.image = queens
-        
+            actualController.commentsController?.University.image = queens
+            
         case "Ryerson":
-        actualController.commentsController?.University.image = ryerson
-        
+            actualController.commentsController?.University.image = ryerson
+            
         case "UBC":
-        actualController.commentsController?.University.image = ubc
-        
+            actualController.commentsController?.University.image = ubc
+            
         case "UofT":
-        actualController.commentsController?.University.image = uoft
-        
+            actualController.commentsController?.University.image = uoft
+            
         case "Western":
-        actualController.commentsController?.University.image = western
-        
+            actualController.commentsController?.University.image = western
+            
         case "York":
-        actualController.commentsController?.University.image = york
-        
+            actualController.commentsController?.University.image = york
+            
         case "OtherUni":
-        actualController.commentsController?.University.image = other
-        
+            actualController.commentsController?.University.image = other
+            
         default:
-        break
-        
+            break
+            
         }
         
-*/
-
-        //actualController.commentsController?.Username.text = usernames[indexPath.row]
+        actualController.commentsController?.Username.text = usernames[indexPath.row]
         
         actualController.commentsController?.objectId = objectId[indexPath.row]
         
@@ -922,14 +967,13 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         //actualController.commentsController?.view.endEditing(true)
         
         rootController?.toggleComments({ (Bool) -> () in
-        
-        print("comments toggled")
-        
+            
+            print("comments toggled")
+            
         })
         
         commentsOpened = true
         
-
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
@@ -946,10 +990,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        
-        
-    }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
@@ -962,31 +1002,17 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             self.PlayPauseView.alpha = 0
         })
         
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            
-            if self.videoPlayer != nil {
-                self.videoPlayer.pause()
-                self.videoPlayer = nil
-            }
-            
-            if self.videoPlayerLayer != nil {
-                self.videoPlayerLayer.removeFromSuperlayer()
-                self.videoPlayerLayer = nil
-            }
-            
-            if self.videoPlayerItem != nil {
-                self.videoPlayerItem = nil
-            }
-            
-            if self.asset != nil {
-                self.asset = nil
-            }
-            
-            self.myTableView.reloadData()
-            
-            self.index = 0
-            
+        if videoPlayer != nil {
+            self.videoPlayer.pause()
         }
+    }
+    
+    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        guard let actualCell = cell as? VideoTableViewCell else {return}
+        
+        actualCell.VideoView.alpha = 0
+        
     }
     
     
@@ -997,32 +1023,38 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         print(cells.count)
         
-        for cell in cells {
+        if PlayPauseView.alpha != 1 {
             
-            if let actualCell = cell as? VideoTableViewCell {
+            for cell in cells {
                 
-                let indexPath = myTableView.indexPathForCell(actualCell)
-                var cellRect: CGRect = CGRect()
-                
-                if let actualPath = indexPath {
+                if let actualCell = cell as? VideoTableViewCell {
                     
-                    cellRect = myTableView.rectForRowAtIndexPath(actualPath)
+                    let indexPath = myTableView.indexPathForCell(actualCell)
+                    var cellRect: CGRect = CGRect()
                     
-                    let smallerRect = CGRectInset(cellRect, 20, 20)
-                    
-                    let visible = CGRectContainsRect(myTableView.bounds, smallerRect)
-                    
-                    print(visible)
-                    
-                    if visible {
+                    if let actualPath = indexPath {
                         
-                        UIView.animateWithDuration(0.3, animations: { () -> Void in
-                            self.PlayPauseView.alpha = 1
-                        })
+                        cellRect = myTableView.rectForRowAtIndexPath(actualPath)
                         
-                        wasVisible = visible
-                        index = actualPath.row
-                        myTableView.reloadData()
+                        let smallerRect = CGRectInset(cellRect, 30, 30)
+                        
+                        let visible = CGRectContainsRect(myTableView.bounds, smallerRect)
+                        
+                        print(visible)
+                        
+                        if visible {
+                            
+                            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                                self.PlayPauseView.alpha = 1
+                            })
+                            
+                            if index != indexPath?.row {
+                                
+                                wasVisible = visible
+                                index = actualPath.row
+                                myTableView.reloadData()
+                            }
+                        }
                     }
                 }
             }
@@ -1039,37 +1071,45 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         print(cells.count)
         
-        for cell in cells {
+        if PlayPauseView.alpha != 1 {
             
-            if let actualCell = cell as? VideoTableViewCell {
+            for cell in cells {
                 
-                let indexPath = myTableView.indexPathForCell(actualCell)
-                var cellRect: CGRect = CGRect()
-                
-                if let actualPath = indexPath {
+                if let actualCell = cell as? VideoTableViewCell {
                     
-                    cellRect = myTableView.rectForRowAtIndexPath(actualPath)
+                    let indexPath = myTableView.indexPathForCell(actualCell)
+                    var cellRect: CGRect = CGRect()
                     
-                    let smallerRect = CGRectInset(cellRect, 20, 20)
-                    
-                    let visible = CGRectContainsRect(myTableView.bounds, smallerRect)
-                    
-                    print(visible)
-                    
-                    if visible {
+                    if let actualPath = indexPath {
                         
-                        UIView.animateWithDuration(0.3, animations: { () -> Void in
-                            self.PlayPauseView.alpha = 1
-                        })
+                        cellRect = myTableView.rectForRowAtIndexPath(actualPath)
                         
-                        wasVisible = visible
-                        index = actualPath.row
-                        myTableView.reloadData()
+                        let smallerRect = CGRectInset(cellRect, 30, 30)
+                        
+                        let visible = CGRectContainsRect(myTableView.bounds, smallerRect)
+                        
+                        print(visible)
+                        
+                        if visible {
+                            
+                            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                                self.PlayPauseView.alpha = 1
+                            })
+                            
+                            
+                            if index != indexPath?.row {
+                                
+                                wasVisible = visible
+                                index = actualPath.row
+                                myTableView.reloadData()
+                            }
+                        }
                     }
                 }
             }
         }
     }
+    
     
     
     
