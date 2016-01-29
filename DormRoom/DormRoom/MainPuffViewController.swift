@@ -564,10 +564,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     liked = true
                 }
             }
-            
-            cell.UniversityNameOutlet.text = universityNames[indexPath.row]
-            
-            
+
             if !liked {
             
             cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
@@ -591,52 +588,52 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             switch universityNames[indexPath.row] {
                 
             case "Brock":
-                cell.UniversityOutlet.image = brock
+                cell.UniversityNameOutlet.text = "Brock Univeristy"
                 
             case "Calgary":
-                cell.UniversityOutlet.image = calgary
+                cell.UniversityNameOutlet.text = "University of Calgary"
                 
             case "Carlton":
-                cell.UniversityOutlet.image = carlton
+                cell.UniversityNameOutlet.text = "Carlton University"
                 
             case "Dalhousie":
-                cell.UniversityOutlet.image = dal
+                cell.UniversityNameOutlet.text = "Dalhousie University"
                 
             case "Laurier":
-                cell.UniversityOutlet.image = laurier
+                cell.UniversityNameOutlet.text = "Wilfred Laurier University"
                 
             case "McGill":
-                cell.UniversityOutlet.image = mcgill
+                cell.UniversityNameOutlet.text = "McGill University"
                 
             case "Mac":
-                cell.UniversityOutlet.image = mac
+                cell.UniversityNameOutlet.text = "McMaster University"
                 
             case "Mun":
-                cell.UniversityOutlet.image = mun
+                cell.UniversityNameOutlet.text = "Memorial University"
                 
             case "Ottawa":
-                cell.UniversityOutlet.image = ottawa
+                cell.UniversityNameOutlet.text = "University of Ottawa"
                 
             case "Queens":
-                cell.UniversityOutlet.image = queens
+                cell.UniversityNameOutlet.text = "Queens University"
                 
             case "Ryerson":
-                cell.UniversityOutlet.image = ryerson
+                cell.UniversityNameOutlet.text = "Ryerson University"
                 
             case "UBC":
-                cell.UniversityOutlet.image = ubc
+                cell.UniversityNameOutlet.text = "University of British Colombia"
                 
             case "UofT":
-                cell.UniversityOutlet.image = uoft
+                cell.UniversityNameOutlet.text = "University of Toronto"
                 
             case "Western":
-                cell.UniversityOutlet.image = western
+                cell.UniversityNameOutlet.text = "University of Western Ontario"
                 
             case "York":
-                cell.UniversityOutlet.image = york
+                cell.UniversityNameOutlet.text = "York University"
                 
             case "OtherUni":
-                cell.UniversityOutlet.image = other
+                cell.UniversityNameOutlet.text = "Other"
                 
             default:
                 break
@@ -693,8 +690,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 })
                 
             }
-            
-            cell.UniversityName.text = universityNames[indexPath.row]
             
             cell.objectId = objectId[indexPath.row]
             
@@ -764,49 +759,52 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             switch universityNames[indexPath.row] {
                 
             case "Brock":
-                cell.UniversityOutlet.image = brock
+                cell.UniversityName.text = "Brock Univeristy"
                 
             case "Calgary":
-                cell.UniversityOutlet.image = calgary
+                cell.UniversityName.text = "University of Calgary"
                 
             case "Carlton":
-                cell.UniversityOutlet.image = carlton
+                cell.UniversityName.text = "Carlton University"
                 
             case "Dalhousie":
-                cell.UniversityOutlet.image = dal
+                cell.UniversityName.text = "Dalhousie University"
                 
             case "Laurier":
-                cell.UniversityOutlet.image = laurier
+                cell.UniversityName.text = "Wilfred Laurier University"
                 
             case "McGill":
-                cell.UniversityOutlet.image = mcgill
+                cell.UniversityName.text = "McGill University"
                 
             case "Mac":
-                cell.UniversityOutlet.image = mac
+                cell.UniversityName.text = "McMaster University"
                 
             case "Mun":
-                cell.UniversityOutlet.image = mun
+                cell.UniversityName.text = "Memorial University"
                 
             case "Ottawa":
-                cell.UniversityOutlet.image = ottawa
+                cell.UniversityName.text = "University of Ottawa"
                 
             case "Queens":
-                cell.UniversityOutlet.image = queens
+                cell.UniversityName.text = "Queens University"
                 
             case "Ryerson":
-                cell.UniversityOutlet.image = ryerson
+                cell.UniversityName.text = "Ryerson University"
                 
             case "UBC":
-                cell.UniversityOutlet.image = ubc
+                cell.UniversityName.text = "University of British Colombia"
                 
             case "UofT":
-                cell.UniversityOutlet.image = uoft
+                cell.UniversityName.text = "University of Toronto"
                 
             case "Western":
-                cell.UniversityOutlet.image = western
+                cell.UniversityName.text = "University of Western Ontario"
                 
             case "York":
-                cell.UniversityOutlet.image = york
+                cell.UniversityName.text = "York University"
+                
+            case "OtherUni":
+                cell.UniversityName.text = "Other"
                 
             default:
                 break
@@ -859,20 +857,24 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         guard let actualController = rootController else {return}
         
+        /*
+        
         if isImage[indexPath.row] {
             actualController.commentsController?.imageUrl = dormroomurl + imageUrls[indexPath.row]
             actualController.commentsController?.isImage = true
             
             actualController.commentsController?.VideoView.alpha = 0
             actualController.commentsController?.ImageView.alpha = 1
+
             
         } else {
             
             actualController.commentsController?.isImage = false
             
+            
             actualController.commentsController?.VideoView.alpha = 1
             actualController.commentsController?.ImageView.alpha = 0
-            
+
             actualController.commentsController?.playVideo(videoUrls[indexPath.row])
         }
         
@@ -956,13 +958,15 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         actualController.commentsController?.loadFromParse()
         
         //actualController.commentsController?.view.endEditing(true)
+        */
         
         rootController?.toggleComments({ (Bool) -> () in
             
             print("comments toggled")
             
         })
-        
+
+
         commentsOpened = true
         
     }

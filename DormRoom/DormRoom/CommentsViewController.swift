@@ -18,7 +18,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     var player: AVPlayer!
     var playerLayer: AVPlayerLayer!
     
-    var isImage = Bool()
+    var isImage = true
     
     var comments = [String]()
     var profilePictures = [String]()
