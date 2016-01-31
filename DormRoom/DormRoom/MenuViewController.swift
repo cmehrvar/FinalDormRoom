@@ -26,8 +26,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         addFeedImages()
         retrieveProfilePicture()
         retrieveUniversity()
-        
-        //FeedTableViewOutlet.reloadData()
+
         // Do any additional setup after loading the view.
     }
     

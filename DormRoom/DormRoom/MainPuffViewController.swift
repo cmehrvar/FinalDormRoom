@@ -509,6 +509,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
             
+            
             cell.selectionStyle = .None
             
             cell.objectId = objectId[indexPath.row]
@@ -526,34 +527,59 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
             
-            
-            if comments[indexPath.row] == [] {
+
+            if comments[indexPath.row].count == 0 {
                 cell.ViewHowManyComments.text = "Be First to Comment!"
+                cell.MostRecentCommentOutlet.alpha = 0
+                cell.MostRecentUsername.alpha = 0
+                cell.SecondRecentUsername.alpha = 0
+                cell.SecondRecentComment.alpha = 0
+
+            } else if comments[indexPath.row].count == 1 {
                 
-            }
-            
-            if comments[indexPath.row].count == 1 {
+                cell.MostRecentCommentOutlet.alpha = 1
+                cell.MostRecentUsername.alpha = 1
+                
                 cell.MostRecentCommentOutlet.text = comments[indexPath.row].first
                 cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
                 
-            } else if comments[indexPath.row].count >= 2 {
-                cell.MostRecentCommentOutlet.text = comments[indexPath.row].first
-                cell.MostRecentUsername.text = comments[indexPath.row].first
-                cell.SecondRecentComment.text = comments[indexPath.row][1]
-                cell.SecondRecentUsername.text = comments[indexPath.row][1]
+                cell.SecondRecentComment.alpha = 0
+                cell.SecondRecentUsername.alpha = 0
                 
-            } else {
-                cell.MostRecentCommentOutlet.text = ""
-                cell.SecondRecentComment.text = ""
-                cell.MostRecentUsername.text = ""
-                cell.SecondRecentUsername.text = ""
+                cell.ViewHowManyComments.text = "Be Second to Comment!"
+                
+            } else if comments[indexPath.row].count >= 2 {
+                
+                cell.MostRecentCommentOutlet.alpha = 1
+                cell.MostRecentUsername.alpha = 1
+                cell.SecondRecentUsername.alpha = 1
+                cell.SecondRecentComment.alpha = 1
+                
+                cell.MostRecentCommentOutlet.text = comments[indexPath.row].first
+                cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
+                cell.SecondRecentComment.text = comments[indexPath.row][1]
+                cell.SecondRecentUsername.text = commentUsernames[indexPath.row][1]
+                cell.ViewHowManyComments.text = "Be Third to Comment"
+                
             }
             
+            cell.mainController = self
             
             cell.UsernameOutlet.text = usernames[indexPath.row]
             
             cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
             
+            if usernames[indexPath.row] == user?.username {
+                
+                cell.ReportOutlet.titleLabel?.text = "Delete?"
+                
+            } else {
+                
+                cell.ReportOutlet.titleLabel?.text = "Report?"
+                
+            }
+            
+        
             cell.CaptionOutlet.text = captions[indexPath.row]
             
             var liked = false
@@ -856,116 +882,16 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         PlayPauseImage.image = UIImage(named: "playIcon")
         
         guard let actualController = rootController else {return}
-        
-        /*
-        
-        if isImage[indexPath.row] {
-            actualController.commentsController?.imageUrl = dormroomurl + imageUrls[indexPath.row]
-            actualController.commentsController?.isImage = true
-            
-            actualController.commentsController?.VideoView.alpha = 0
-            actualController.commentsController?.ImageView.alpha = 1
 
-            
-        } else {
-            
-            actualController.commentsController?.isImage = false
-            
-            
-            actualController.commentsController?.VideoView.alpha = 1
-            actualController.commentsController?.ImageView.alpha = 0
-
-            actualController.commentsController?.playVideo(videoUrls[indexPath.row])
-        }
-        
-        
-        actualController.commentsController?.LikeOutlet.text = "\(likes[indexPath.row])"
-        
-        actualController.commentsController?.DislikeOutlet.text = "\(dislikes[indexPath.row])"
-        
-        actualController.commentsController?.Caption.text = captions[indexPath.row]
-        
-        
-        
-        actualController.commentsController?.profilePictureUrl = dormroomurl + profilePictureURLS[indexPath.row]
-        
-        actualController.commentsController?.usernameString = usernames[indexPath.row]
-        
-        actualController.commentsController?.updateInfo()
-        
-        
-        switch universityNames[indexPath.row] {
-            
-        case "Brock":
-            actualController.commentsController?.University.image = brock
-            
-        case "Calgary":
-            actualController.commentsController?.University.image = calgary
-            
-        case "Carlton":
-            actualController.commentsController?.University.image = carlton
-            
-        case "Dalhousie":
-            actualController.commentsController?.University.image = dal
-            
-        case "Laurier":
-            actualController.commentsController?.University.image = laurier
-            
-        case "McGill":
-            actualController.commentsController?.University.image = mcgill
-            
-        case "Mac":
-            actualController.commentsController?.University.image = mac
-            
-        case "Mun":
-            actualController.commentsController?.University.image = mun
-            
-        case "Ottawa":
-            actualController.commentsController?.University.image = ottawa
-            
-        case "Queens":
-            actualController.commentsController?.University.image = queens
-            
-        case "Ryerson":
-            actualController.commentsController?.University.image = ryerson
-            
-        case "UBC":
-            actualController.commentsController?.University.image = ubc
-            
-        case "UofT":
-            actualController.commentsController?.University.image = uoft
-            
-        case "Western":
-            actualController.commentsController?.University.image = western
-            
-        case "York":
-            actualController.commentsController?.University.image = york
-            
-        case "OtherUni":
-            actualController.commentsController?.University.image = other
-            
-        default:
-            break
-            
-        }
-        
-        actualController.commentsController?.Username.text = usernames[indexPath.row]
-        
         actualController.commentsController?.objectId = objectId[indexPath.row]
         
-        actualController.commentsController?.feed = feed
-        
         actualController.commentsController?.loadFromParse()
-        
-        //actualController.commentsController?.view.endEditing(true)
-        */
-        
+
         rootController?.toggleComments({ (Bool) -> () in
             
             print("comments toggled")
             
         })
-
 
         commentsOpened = true
         

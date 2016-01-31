@@ -24,9 +24,12 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     var imageUrl: String = String()
     var profilePictureUrl: String = String()
     var videoUrl: String = String()
-    var globalVideoUrl: NSURL = NSURL()
     var globalVideoName: String = String()
     var globalVideoSaveUrl: String = String()
+    var exportedVideoUrl: NSURL = NSURL()
+    var exportedVideoName: String = String()
+    
+    var doneExporting: Bool = false
     
     var ms = 0
     var s = 0
@@ -115,39 +118,42 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     @IBAction func postPuff(sender: AnyObject) {
         
         rootController?.toggleTakePuff({ (complete) -> () in
+                
+                guard let actualController = self.rootController else {return}
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    
+                    actualController.mainController?.uploadOutlet.alpha = 1
+                    actualController.mainController?.TakeAPuffOutlet.alpha = 0
+                    
+                    self.CameraCaptureView.alpha = 1
+                    self.TakePuffButtonViewOutlet.alpha = 1
+                    self.ChangeCameraOutlet.alpha = 1
+                    self.HoldToRecordOutlet.alpha = 1
+                    
+                    self.PostButtonOutlet.alpha = 0
+                    
+                    self.view.endEditing(true)
+                    
+                    if self.isImage {
+                        
+                        print(self.isImage)
+                        if let actualImage = self.TakenPuffOutlet.image {
+                            self.uploadToAWS(actualImage)
+                        }
+                    } else {
+                        
+                        print(self.isImage)
 
-            guard let actualController = self.rootController else {return}
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                
-                actualController.mainController?.uploadOutlet.alpha = 1
-                actualController.mainController?.TakeAPuffOutlet.alpha = 0
-                
-                self.CameraCaptureView.alpha = 1
-                self.TakePuffButtonViewOutlet.alpha = 1
-                self.ChangeCameraOutlet.alpha = 1
-                self.HoldToRecordOutlet.alpha = 1
-                
-                self.PostButtonOutlet.alpha = 0
-                
-                self.view.endEditing(true)
-                
-                if self.isImage {
-                    
-                    print(self.isImage)
-                    if let actualImage = self.TakenPuffOutlet.image {
-                        self.uploadToAWS(actualImage)
+                        ////////////////////////////////////////////////////////
+                        
+                        self.uploadVideo()
+                        self.player.pause()
                     }
-                } else {
-                    
-                    print(self.isImage)
-                    self.uploadVideo()
-                    self.player.pause()
-                }
+                })
             })
-        })
-        
-        print("Upload in progress")
+            
+            print("Upload in progress")
         
     }
     
@@ -191,8 +197,18 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         
         print("done recording")
         
-        globalVideoUrl = outputFileURL
         
+        convertVideoToLowQualityWithInputURL(outputFileURL) { (exportSession: AVAssetExportSession) -> Void in
+            
+            if exportSession.status == .Completed {
+                print("succesfulExport")
+                self.doneExporting = true
+            } else {
+                print("BadExport")
+            }
+            
+        }
+
         self.TakenPuffOutlet.image = nil
         self.PostButtonOutlet.alpha = 1
         self.TakeImageOutlet.image = UIImage(named: "TakeAPuff")
@@ -291,7 +307,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             
         case .Began:
             
-            
             self.timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: Selector("update"), userInfo: nil, repeats: true)
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -308,8 +323,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
                 
                 let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".mov")
                 let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload").URLByAppendingPathComponent(fileName)
-                
-                
                 
                 backVideoOut.startRecordingToOutputFileURL(fileURL, recordingDelegate: recordingDelegate)
                 
@@ -461,13 +474,40 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         
     }
     
+
+    func convertVideoToLowQualityWithInputURL(inputURL: NSURL, handler: (AVAssetExportSession) -> Void) {
+        
+        let newAsset: AVURLAsset = AVURLAsset(URL: inputURL)
+        
+        if let exportSession: AVAssetExportSession = AVAssetExportSession(asset: newAsset, presetName: AVAssetExportPresetMediumQuality) {
+            
+            let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".mov")
+            let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload").URLByAppendingPathComponent(fileName)
+            
+            exportedVideoUrl = fileURL
+            exportedVideoName = fileName
+            
+            exportSession.outputURL = fileURL
+            exportSession.outputFileType = AVFileTypeQuickTimeMovie
+            exportSession.exportAsynchronouslyWithCompletionHandler({ () -> Void in
+                
+                handler(exportSession)
+                
+                print("Export Session Done")
+                
+            })
+        }
+    }
+    
+
+    
     func uploadVideo() {
         
         let uploadRequest = AWSS3TransferManagerUploadRequest()
         
         let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".mov")
         
-        uploadRequest.body = globalVideoUrl
+        uploadRequest.body = exportedVideoUrl
         uploadRequest.key = fileName
         uploadRequest.bucket = "dormroombucket"
         

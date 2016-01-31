@@ -14,6 +14,8 @@ class PuffTableViewCell: UITableViewCell {
     
     let user = PFUser.currentUser()
     
+    var mainController: MainPuffViewController!
+    
     var objectId = String()
     var like = Int()
     var dislike = Int()
@@ -32,7 +34,6 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var LikeOutlet: UILabel!
     @IBOutlet weak var DislikeOutlet: UILabel!
     @IBOutlet weak var CaptionOutlet: UILabel!
-    @IBOutlet weak var UniversityOutlet: UIImageView!
     @IBOutlet weak var ProfileOutlet: UIImageView!
     @IBOutlet weak var UsernameOutlet: UILabel!
     @IBOutlet weak var CommentNumber: UILabel!
@@ -51,12 +52,89 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var ReadSwipeViewOutlet: UIView!
     @IBOutlet weak var ThumbsUpOutlet: UIImageView!
     @IBOutlet weak var ThumbsDownOutlet: UIImageView!
-
-
+    @IBOutlet weak var ReportOutlet: UIButton!
+    
+    
     @IBOutlet weak var SwipeConstraint: NSLayoutConstraint!
+    
+    @IBAction func ReportDelete(sender: AnyObject) {
+        
+        print("Report Delete")
+        
+        guard let actualUsername = UsernameOutlet.text else {return}
+        
+        if actualUsername != user?.username {
+            
+            let alertController = UIAlertController(title: "So...", message: "You wanna report \(actualUsername)?", preferredStyle:  UIAlertControllerStyle.Alert)
+            
+            alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil))
+            
+            alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
+                
+                var blockedPuffs = [String]()
+                
+                do {
+                    try self.user?.fetch()
+                } catch let error {
+                    print(error)
+                }
+                
+                blockedPuffs = self.user?["blockedPuffs"] as! [String]
+                
+                self.user?["blockedPuffs"] = [actualUsername] + blockedPuffs
+                
+                self.user?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                    
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        
+                        do {
+                            try self.user?.fetch()
+                            
+                            self.mainController.loadFromParse({ (Bool) -> () in
+                                
+                            })
+                            
+                        } catch let error {
+                            print(error)
+                        }
+                        
+                    })
+                    
+                })
 
+            }))
+            
+            mainController.presentViewController(alertController, animated: true, completion: nil)
+            
+        } else {
+            
+            let alertController = UIAlertController(title: "So...", message: "You wanna delete this?", preferredStyle:  UIAlertControllerStyle.Alert)
+            
+            alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil))
+            
+            alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
+                
+                let query = PFQuery(className: self.feed)
+                query.getObjectInBackgroundWithId(self.objectId, block: { (post: PFObject?, error: NSError?) -> Void in
+                    
+                    post?["Deleted"] = true
+                    post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                        
+                        self.mainController.loadFromParse({ (Bool) -> () in
+                            
+                        })
+                        
+                        
+                    })
+                })
+            }))
+            
+            mainController.presentViewController(alertController, animated: true, completion: nil)
+        }
 
-
+    }
+    
+    
     //Functions
     func swipeLikeDislike() {
         
@@ -108,7 +186,7 @@ class PuffTableViewCell: UITableViewCell {
     }
     
     
-   
+    
     func longPressed(sender: UILongPressGestureRecognizer) {
         
         switch sender.state {
@@ -130,7 +208,7 @@ class PuffTableViewCell: UITableViewCell {
             }
             
             if !liked {
-            expandImage()
+                expandImage()
             }
             
         case .Ended:
@@ -212,7 +290,7 @@ class PuffTableViewCell: UITableViewCell {
                 self.DislikeButtonOutlet.alpha = 1
                 
         }
-
+        
         
         let query = PFQuery(className: feed)
         
@@ -279,7 +357,7 @@ class PuffTableViewCell: UITableViewCell {
                 self.DislikeButtonOutlet.alpha = 1
                 
         }
-
+        
         
         let query = PFQuery(className: feed)
         
@@ -312,7 +390,7 @@ class PuffTableViewCell: UITableViewCell {
                     }
                     
                 })
-
+                
                 
             } else {
                 print("\(error)")

@@ -13,19 +13,15 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     weak var rootController: MainRootViewController?
     
-    var asset: AVURLAsset!
-    var playerItem: AVPlayerItem!
-    var player: AVPlayer!
-    var playerLayer: AVPlayerLayer!
-    
-    var isImage = true
-    
     var comments = [String]()
     var profilePictures = [String]()
     var dates = [NSDate]()
+    var usernames = [String]()
+    var universities = [String]()
+    var votes = [Int]()
+    var commentIds = [String]()
+
     var objectId = String()
-    var feed = String()
-    var usernameString = String()
     
     var textIsEditing = false
     
@@ -46,150 +42,23 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         
-        //addCloseSwipe()
-        //addTapGesture()
-        //addRefresh()
+        CommentText.delegate = self
+        
+        handleKeyboard()
+        addTapGesture()
+        addRefresh()
         // Do any additional setup after loading the view.
     }
     
     
     //Outlets
-    @IBOutlet weak var Image: UIImageView!
-    @IBOutlet weak var VideoView: UIView!
-    @IBOutlet weak var LikeOutlet: UILabel!
-    @IBOutlet weak var DislikeOutlet: UILabel!
-    @IBOutlet weak var ReportButtonOutlet: UIButton!
-    @IBOutlet weak var ImageView: UIView!
-    @IBOutlet weak var University: UIImageView!
-    @IBOutlet weak var ProfilePicture: UIImageView!
-    @IBOutlet weak var Username: UILabel!
-    @IBOutlet weak var TimePosted: UILabel!
-    @IBOutlet weak var Caption: UILabel!
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @IBOutlet weak var CommentText: UITextView!
     @IBOutlet weak var CommentTableView: UITableView!
-    @IBOutlet weak var commentIcon: UIImageView!
     @IBOutlet weak var UploadIcon: UIImageView!
-    @IBOutlet weak var reportView: UIView!
-    @IBOutlet weak var BlockReportOutlet: UILabel!
     
-
+    
     
     //Actions
-    func playVideo(url: String) {
-        
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            
-            if let actualUrl = NSURL(string: url) {
-                
-            self.asset = AVURLAsset(URL: actualUrl)
-            self.playerItem = AVPlayerItem(asset: self.asset)
-            self.player = AVPlayer(playerItem: self.playerItem)
-            self.playerLayer = AVPlayerLayer(player: self.player)
-            self.playerLayer.frame = self.VideoView.bounds
-            self.player.actionAtItemEnd = .None
-            self.playerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-            self.VideoView.layer.addSublayer(self.playerLayer)
-            self.player.play()
-            
-            NSNotificationCenter.defaultCenter().addObserver(self,
-                selector: "playerItemDidReachEnd:",
-                name: AVPlayerItemDidPlayToEndTimeNotification,
-                object: self.player.currentItem)
-                
-            }
-        }
-    }
-    
-    func playerItemDidReachEnd(notification: NSNotification) {
-        let p: AVPlayerItem = notification.object as! AVPlayerItem
-        p.seekToTime(kCMTimeZero)
-    }
-    
-    @IBAction func yesReport(sender: AnyObject) {
-        
-        report()
-        
-    }
-    
-    
-    @IBAction func noReport(sender: AnyObject) {
-        
-        UIView.animateWithDuration(0.3) { () -> Void in
-            
-            self.reportView.alpha = 0
-            
-        }
-    }
-    
-    
-    @IBAction func report(sender: AnyObject) {
-        
-        if usernameString != user?.username {
-            
-            var blockedPuffs = [String]()
-            
-            do {
-                try user?.fetch()
-            } catch let error {
-                print(error)
-            }
-            
-            blockedPuffs = user?["blockedPuffs"] as! [String]
-            
-            user?["blockedPuffs"] = [usernameString] + blockedPuffs
-            
-            user?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
-                
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    
-                    do {
-                        try self.user?.fetch()
-                    } catch let error {
-                        print(error)
-                    }
-                    
-                })
-                
-            })
-        } else {
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.reportView.alpha = 0
-            })
-            
-            let alertController = UIAlertController(title: "So...", message: "You wanna delete this?", preferredStyle:  UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil))
-            
-            alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
-                
-                let query = PFQuery(className: self.feed)
-                query.getObjectInBackgroundWithId(self.objectId, block: { (post: PFObject?, error: NSError?) -> Void in
-                    
-                    post?["Deleted"] = true
-                    post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
-                        
-                        
-                    })
-                })
-            }))
-            
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }
-    }
-    
-    
-    
-    
     @IBAction func post(sender: AnyObject) {
         
         if !isUploading {
@@ -205,11 +74,12 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     
                 })
                 
-                
                 view.endEditing(true)
             }
         }
     }
+    
+    
     
     @IBAction func hideButton(sender: AnyObject) {
         
@@ -219,75 +89,9 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             print("Comments Closed")
         })
         
-        if !self.isImage {
-            
-            if player != nil {
-                self.player.pause()
-            }
-            
-            if playerLayer != nil {
-            self.playerLayer.removeFromSuperlayer()
-            }
-        }
     }
     
     //Functions
-    func report() {
-        
-        if usernameString != user?.username {
-            
-            var blockedPuffs = [String]()
-            
-            do {
-                try user?.fetch()
-            } catch let error {
-                print(error)
-            }
-            
-            blockedPuffs = user?["blockedPuffs"] as! [String]
-            
-            user?["blockedPuffs"] = [usernameString] + blockedPuffs
-            
-            user?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
-                
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    
-                    do {
-                        try self.user?.fetch()
-                    } catch let error {
-                        print(error)
-                    }
-                    
-                })
-                
-            })
-        } else {
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.reportView.alpha = 0
-            })
-            
-            let alertController = UIAlertController(title: "So...", message: "You wanna delete this?", preferredStyle:  UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil))
-            
-            alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
-                
-                let query = PFQuery(className: self.feed)
-                query.getObjectInBackgroundWithId(self.objectId, block: { (post: PFObject?, error: NSError?) -> Void in
-                    
-                    post?["Deleted"] = true
-                    post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
-                        
-                        
-                    })
-                })
-            }))
-            
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }
-    }
-    
-    
     func uploadProfilePicture() {
         
         let userProfilePictureFile: PFFile = user?["profilePicture"] as! PFFile
@@ -338,7 +142,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func saveToParse() {
         
-        let query = PFQuery(className: feed)
+        let query = PFQuery(className: "CanadaPuff")
         query.getObjectInBackgroundWithId(objectId) { (post: PFObject?, error: NSError?) -> Void in
             
             if error != nil {
@@ -347,13 +151,23 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 let date = NSDate()
                 
-                self.comments = post["Comments"] as! [String]
-                self.profilePictures = post["CommentProfiles"] as! [String]
-                self.dates = post["CommentDates"] as! [NSDate]
+                self.comments = post["NewComments"] as! [String]
+                self.profilePictures = post["NewCommentProfiles"] as! [String]
+                self.dates = post["NewCommentDates"] as! [NSDate]
+                self.usernames = post["NewCommentUsernames"] as! [String]
+                self.universities = post["NewCommentUniversities"] as! [String]
+                self.votes = post["NewCommentVotes"] as! [Int]
                 
-                post["Comments"] = [self.CommentText.text] + self.comments
-                post["CommentProfiles"] = [self.uploadProfileUrl] + self.profilePictures
-                post["CommentDates"] = [date] + self.dates
+                post["NewComments"] = [self.CommentText.text] + self.comments
+                post["NewCommentProfiles"] = [self.uploadProfileUrl] + self.profilePictures
+                post["NewCommentDates"] = [date] + self.dates
+                post["NewCommentUniversities"] = [self.user?["universityName"] as! String] + self.universities
+                
+                if let actualUsername = self.user?.username {
+                    post["NewCommentUsernames"] = [actualUsername] + self.usernames
+                }
+                
+                post["NewCommentVotes"] = [0] + self.votes
                 
                 post.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                     
@@ -362,11 +176,10 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.CommentText.text = ""
                         
                         UIView.animateWithDuration(0.3, animations: { () -> Void in
-                            self.commentIcon.alpha = 1
                             self.UploadIcon.alpha = 0
                             self.isUploading = false
                             self.uploadProfileUrl = "https://s3.amazonaws.com/dormroombucket/"
-                                                    })
+                        })
                         
                         
                         self.loadFromParse()
@@ -396,7 +209,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     func addRefresh() {
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "Keep on Puffin'")
+        self.refreshControl.attributedTitle = NSAttributedString(string: "Comment Away")
         self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         
     }
@@ -410,7 +223,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func loadFromParse() {
         
-        let query = PFQuery(className: feed)
+        let query = PFQuery(className: "CanadaPuff")
         
         query.getObjectInBackgroundWithId(objectId) { (post: PFObject?, error: NSError?) -> Void in
             
@@ -429,43 +242,39 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         print(error)
                     }
                     
-                    if post?["Comments"] != nil {
+                    if post?["NewCommentUsernames"] != nil {
                         
-                        self.comments = post?["Comments"] as! [String]
-                        self.profilePictures = post?["CommentProfiles"] as! [String]
-                        self.dates = post?["CommentDates"] as! [NSDate]
+                        self.comments = post?["NewComments"] as! [String]
+                        self.profilePictures = post?["NewCommentProfiles"] as! [String]
+                        self.dates = post?["NewCommentDates"] as! [NSDate]
+                        self.usernames = post?["NewCommentUsernames"] as! [String]
+                        self.universities = post?["NewCommentUniversities"] as! [String]
+                        self.votes = post?["NewCommentVotes"] as! [Int]
                         
-                        //self.CommentTableView.reloadData()
+                        self.CommentTableView.reloadData()
                         
                     } else {
                         
+                        post?["NewComments"] = []
+                        post?["NewCommentProfiles"] = []
+                        post?["NewCommentDates"] = []
+                        post?["NewCommentUsernames"] = []
+                        post?["NewCommentUniversities"] = []
+                        post?["NewCommentVotes"] = []
                         
-                        let query = PFQuery(className: self.feed)
-                        query.getObjectInBackgroundWithId(self.objectId) { (post: PFObject?, error: NSError?) -> Void in
+                        post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                             
-                            if error != nil {
-                                print(error)
-                            } else if let post = post {
+                            if error == nil {
                                 
-                                post["Comments"] = []
-                                post["CommentProfiles"] = []
-                                post["CommentDates"] = []
+                                print("success")
                                 
-                                post.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
-                                    
-                                    if error == nil {
-                                        
-                                        print("success")
-                                        
-                                    } else {
-                                        print("error")
-                                    }
-                                    
-                                })
+                            } else {
+                                print("error")
                             }
-                        }
-                        
+                            
+                        })
                     }
+                    
                 } else {
                     print(error)
                 }
@@ -473,18 +282,10 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }
         }
-        
-    }
-    
-    func updateInfo() {
-        
-        self.Image.sd_setImageWithURL(NSURL(string: imageUrl), placeholderImage: UIImage(named: "Background"))
-        self.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictureUrl))
     }
     
     
-    
-       func addTapGesture() {
+    func addTapGesture() {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         view.addGestureRecognizer(tap)
@@ -504,14 +305,77 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentsCell", forIndexPath: indexPath) as! CommentsCell
         
+        /*
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 60.0
+        */
         
         cell.selectionStyle = .None
         
-        cell.WorkingLabel.text = comments[indexPath.row]
-        cell.CommentProfile.sd_setImageWithURL(NSURL(string: profilePictures[indexPath.row]))
-        cell.TimeLabel.text = timeAgoSince(dates[indexPath.row])
+        cell.Comment.text = comments[indexPath.row]
+        cell.TimePosted.text = timeAgoSince(dates[indexPath.row])
+        cell.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictures[indexPath.row]))
+        cell.Username.text = usernames[indexPath.row] + ","
+        cell.VoteCount.text = "\(votes[indexPath.row])"
+        
+        cell.votes = votes
+        cell.indexPath = indexPath.row
+        cell.objectId = objectId
+        
+        switch universities[indexPath.row] {
+            
+        case "Brock":
+            cell.UniversityName.text = "Brock Univeristy"
+            
+        case "Calgary":
+            cell.UniversityName.text = "University of Calgary"
+            
+        case "Carlton":
+            cell.UniversityName.text = "Carlton University"
+            
+        case "Dalhousie":
+            cell.UniversityName.text = "Dalhousie University"
+            
+        case "Laurier":
+            cell.UniversityName.text = "Wilfred Laurier University"
+            
+        case "McGill":
+            cell.UniversityName.text = "McGill University"
+            
+        case "Mac":
+            cell.UniversityName.text = "McMaster University"
+            
+        case "Mun":
+            cell.UniversityName.text = "Memorial University"
+            
+        case "Ottawa":
+            cell.UniversityName.text = "University of Ottawa"
+            
+        case "Queens":
+            cell.UniversityName.text = "Queens University"
+            
+        case "Ryerson":
+            cell.UniversityName.text = "Ryerson University"
+            
+        case "UBC":
+            cell.UniversityName.text = "University of British Colombia"
+            
+        case "UofT":
+            cell.UniversityName.text = "University of Toronto"
+            
+        case "Western":
+            cell.UniversityName.text = "University of Western Ontario"
+            
+        case "York":
+            cell.UniversityName.text = "York University"
+            
+        case "OtherUni":
+            cell.UniversityName.text = "Other"
+            
+        default:
+            break
+            
+        }
         
         return cell
         
@@ -522,27 +386,50 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         return comments.count
     }
     
+    
     func textViewDidBeginEditing(textView: UITextView) {
+        print("began")
         
-        UIView.animateWithDuration(0.3) { () -> Void in
-            self.textIsEditing = true
-            self.commentIcon.alpha = 0
-            
+        if CommentText.text == "Comment Here" {
+            CommentText.text = ""
         }
+        
+        self.textIsEditing = true
     }
     
     func textViewDidEndEditing(textView: UITextView) {
+        print("ended")
         
         if CommentText.text == "" {
-            
-            UIView.animateWithDuration(0.3) { () -> Void in
-                
-                self.textIsEditing = false
-                self.commentIcon.alpha = 1
-                
-            }
+            CommentText.text = "Comment Here"
+        }
+        
+        self.textIsEditing = false
+    }
+    
+    
+    func handleKeyboard() {
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
+        
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            self.view.frame.origin.y -= keyboardSize.height
         }
     }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+            self.view.frame.origin.y += keyboardSize.height
+        }
+        
+    }
+    
     
     
     override func didReceiveMemoryWarning() {
