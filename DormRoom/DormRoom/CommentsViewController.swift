@@ -40,7 +40,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
+        self.navigationItem.titleView = UIImageView(image: UIImage(named: "CommentsTitle"))
         
         CommentText.delegate = self
         
@@ -84,6 +84,18 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBAction func hideButton(sender: AnyObject) {
         
         print("hide tapped")
+        
+        view.endEditing(true)
+        
+        comments.removeAll()
+        profilePictures.removeAll()
+        dates.removeAll()
+        usernames.removeAll()
+        universities.removeAll()
+        votes.removeAll()
+        commentIds.removeAll()
+        
+        CommentTableView.reloadData()
         
         rootController?.toggleComments({ (Bool) -> () in
             print("Comments Closed")
@@ -142,14 +154,17 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func saveToParse() {
         
+        print(objectId)
+        
+        let fileName = NSProcessInfo.processInfo().globallyUniqueString
         let query = PFQuery(className: "CanadaPuff")
+        let date = NSDate()
+        
         query.getObjectInBackgroundWithId(objectId) { (post: PFObject?, error: NSError?) -> Void in
             
             if error != nil {
                 print(error)
             } else if let post = post {
-                
-                let date = NSDate()
                 
                 self.comments = post["NewComments"] as! [String]
                 self.profilePictures = post["NewCommentProfiles"] as! [String]
@@ -158,10 +173,17 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.universities = post["NewCommentUniversities"] as! [String]
                 self.votes = post["NewCommentVotes"] as! [Int]
                 
+                if post["CommentIds"] == nil {
+                    self.commentIds = []
+                } else {
+                    self.commentIds = post["CommentIds"] as! [String]
+                }
+                
                 post["NewComments"] = [self.CommentText.text] + self.comments
                 post["NewCommentProfiles"] = [self.uploadProfileUrl] + self.profilePictures
                 post["NewCommentDates"] = [date] + self.dates
                 post["NewCommentUniversities"] = [self.user?["universityName"] as! String] + self.universities
+                post["CommentIds"] = [fileName] + self.commentIds
                 
                 if let actualUsername = self.user?.username {
                     post["NewCommentUsernames"] = [actualUsername] + self.usernames
@@ -172,6 +194,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 post.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                     
                     if error == nil {
+                        print("comment saved")
                         
                         self.CommentText.text = ""
                         
@@ -181,11 +204,14 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                             self.uploadProfileUrl = "https://s3.amazonaws.com/dormroombucket/"
                         })
                         
-                        
                         self.loadFromParse()
+                        self.rootController?.mainController?.loadFromParse({ (Bool) -> () in
+                            
+                        })
                         
                     } else {
-                        print("error")
+                        
+                        print("what the fuck")
                         
                         let alertController = UIAlertController(title: "Shit!", message: "There was an error uploading your comment", preferredStyle:  UIAlertControllerStyle.Alert)
                         alertController.addAction(UIAlertAction(title: "Chate", style: UIAlertActionStyle.Cancel, handler: nil))
@@ -235,6 +261,11 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     
                     self.comments.removeAll()
                     self.profilePictures.removeAll()
+                    self.dates.removeAll()
+                    self.usernames.removeAll()
+                    self.universities.removeAll()
+                    self.votes.removeAll()
+                    self.commentIds.removeAll()
                     
                     do {
                         try post?.fetch()
@@ -243,7 +274,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     }
                     
                     if post?["NewCommentUsernames"] != nil {
-                        
+                        print("Adding")
                         self.comments = post?["NewComments"] as! [String]
                         self.profilePictures = post?["NewCommentProfiles"] as! [String]
                         self.dates = post?["NewCommentDates"] as! [NSDate]
@@ -251,16 +282,23 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.universities = post?["NewCommentUniversities"] as! [String]
                         self.votes = post?["NewCommentVotes"] as! [Int]
                         
+                        if post?["CommentIds"] == nil {
+                            self.commentIds = []
+                        } else {
+                            self.commentIds = post?["CommentIds"] as! [String]
+                        }
+
                         self.CommentTableView.reloadData()
                         
                     } else {
-                        
+                        print("replacing")
                         post?["NewComments"] = []
                         post?["NewCommentProfiles"] = []
                         post?["NewCommentDates"] = []
                         post?["NewCommentUsernames"] = []
                         post?["NewCommentUniversities"] = []
                         post?["NewCommentVotes"] = []
+                        post?["CommentIds"] = []
                         
                         post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                             
@@ -271,7 +309,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                             } else {
                                 print("error")
                             }
-                            
                         })
                     }
                     
@@ -305,10 +342,34 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let cell = tableView.dequeueReusableCellWithIdentifier("CommentsCell", forIndexPath: indexPath) as! CommentsCell
         
-        /*
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 60.0
-        */
+        var hasBeenVotedOn = false
+        
+        var commentsVotedOn = [String]()
+        
+        if user?["votes"] == nil {
+            commentsVotedOn = []
+        } else {
+            commentsVotedOn = user?["votes"] as! [String]
+        }
+   
+        for commentVotedOn in commentsVotedOn {
+            
+            if commentVotedOn == commentIds[indexPath.row] {
+                hasBeenVotedOn = true
+            }
+        }
+        
+        if !hasBeenVotedOn {
+            
+            cell.VoteUpOutlet.alpha = 1
+            cell.VoteDownOutlet.alpha = 1
+            
+        } else {
+            
+            cell.VoteUpOutlet.alpha = 0
+            cell.VoteDownOutlet.alpha = 0
+            
+        }
         
         cell.selectionStyle = .None
         
@@ -316,7 +377,28 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.TimePosted.text = timeAgoSince(dates[indexPath.row])
         cell.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictures[indexPath.row]))
         cell.Username.text = usernames[indexPath.row] + ","
-        cell.VoteCount.text = "\(votes[indexPath.row])"
+        
+        
+        if votes[indexPath.row] > 0 {
+            
+            cell.VoteCount.text = "\(votes[indexPath.row])"
+            cell.plusMinusIcon.image = UIImage(named: "plus")
+            
+        } else if votes[indexPath.row] == 0 {
+            
+            cell.plusMinusIcon.image = nil
+            cell.VoteCount.text = "\(votes[indexPath.row])"
+            
+        } else if votes[indexPath.row] < 0 {
+            
+            cell.plusMinusIcon.image = UIImage(named: "minus")
+            let positiveVotes = -(votes[indexPath.row])
+            cell.VoteCount.text = "\(positiveVotes)"
+            
+        }
+        
+        cell.commentViewController = self
+        cell.commentId = commentIds[indexPath.row]
         
         cell.votes = votes
         cell.indexPath = indexPath.row
@@ -430,8 +512,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
-    
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

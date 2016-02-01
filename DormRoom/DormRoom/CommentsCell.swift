@@ -18,23 +18,36 @@ class CommentsCell: UITableViewCell {
     @IBOutlet weak var VoteDownOutlet: UIButton!
     @IBOutlet weak var VoteCount: UILabel!
     @IBOutlet weak var Comment: UILabel!
+    @IBOutlet weak var plusMinusIcon: UIImageView!
+    
     
     var votes = [Int]()
     var indexPath: Int!
     var objectId: String!
     
+    var commentId: String!
+    var commentViewController: CommentsViewController!
+    
+    
     let user = PFUser.currentUser()
     
     @IBAction func VoteUp(sender: AnyObject) {
         
-        VoteCount.text = "\(votes[indexPath] + 1)"
-        
-        print("Vote Up")
+        print("Vote Down")
         
         var vote = votes[indexPath]
         vote = vote + 1
         votes[indexPath] = vote
         
+        VoteCount.text = "\(votes[indexPath])"
+        
+        UIView.animateWithDuration(0.3) { () -> Void in
+            
+            self.VoteUpOutlet.alpha = 0
+            self.VoteDownOutlet.alpha = 0
+            
+        }
+        
         let query = PFQuery(className: "CanadaPuff")
         
         query.getObjectInBackgroundWithId(objectId) { (post: PFObject?, error: NSError?) -> Void in
@@ -43,27 +56,68 @@ class CommentsCell: UITableViewCell {
                 
                 post?["NewCommentVotes"] = self.votes
                 
-                do {
-                    try post?.save()
-                } catch let error {
-                    print(error)
-                }
+                post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                    
+                    if error == nil {
+                        
+                        var userVotes: [String]!
+                        
+                        if self.user?["votes"] == nil {
+                            userVotes = []
+                        } else {
+                            userVotes = self.user?["votes"] as! [String]
+                        }
+                        
+                        userVotes.append(self.commentId)
+                        self.user?["votes"] = userVotes
+                        
+                        self.user?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                            
+                            if error == nil {
+                                
+                                do {
+                                    try self.user?.fetch()
+                                    self.commentViewController.loadFromParse()
+                                    
+                                } catch let error {
+                                    print(error)
+                                }
+                            } else {
+                                print(error)
+                            }
+                        })
+                        
+                    } else {
+                        
+                        print(error)
+                        
+                    }
+                })
                 
             } else {
-                print("Error getting object")
+                print(error)
             }
         }
     }
     
     @IBAction func VoteDown(sender: AnyObject) {
-        
-        VoteCount.text = "\(votes[indexPath] - 1)"
-        
+
         print("Vote Down")
         
-        var vote = votes[indexPath]
-        vote = vote - 1
-        votes[indexPath] = vote
+ 
+        
+        UIView.animateWithDuration(0.3) { () -> Void in
+            
+            var vote = self.votes[self.indexPath]
+            vote = vote - 1
+            self.votes[self.indexPath] = vote
+            
+            self.VoteCount.text = "\(self.votes[self.indexPath])"
+            
+            self.VoteUpOutlet.alpha = 0
+            self.VoteDownOutlet.alpha = 0
+            
+        }
         
         let query = PFQuery(className: "CanadaPuff")
         
@@ -73,15 +127,46 @@ class CommentsCell: UITableViewCell {
                 
                 post?["NewCommentVotes"] = self.votes
                 
-                do {
-                    try post?.save()
-                } catch let error {
-                    print(error)
-                }
-                
+                post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                    
+                    if error == nil {
+                        
+                        var userVotes: [String]!
+                        
+                        if self.user?["votes"] == nil {
+                            userVotes = []
+                        } else {
+                            userVotes = self.user?["votes"] as! [String]
+                        }
+                        
+                        userVotes.append(self.commentId)
+                        self.user?["votes"] = userVotes
+                        
+                        self.user?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                            
+                            if error == nil {
+                                
+                                do {
+                                    try self.user?.fetch()
+                                    self.commentViewController.loadFromParse()
+                                    
+                                } catch let error {
+                                    print(error)
+                                }
+                            } else {
+                                print(error)
+                            }
+                        })
+                        
+                    } else {
+                        
+                        print(error)
+                        
+                    }
+                })
                 
             } else {
-                print("Error getting object")
+                print(error)
             }
         }
     }

@@ -166,8 +166,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         actualController.takePuffController?.feed = feed
         
+        
         rootController?.toggleTakePuff({ (complete) -> () in
             
+            actualController.takePuffController?.configureCameraForCapture()
             actualController.takePuffController?.TakenPuffOutlet.image = nil
             actualController.takePuffController?.CaptionOutlet.text = nil
             
@@ -717,6 +719,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }
             
+            cell.selectionStyle = .None
+            
             cell.objectId = objectId[indexPath.row]
             
             cell.like = likes[indexPath.row]
@@ -725,33 +729,59 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.timePosted.text = timeAgoSince(date)
             
-            cell.videoUrl = videoUrls[indexPath.row]
+            if comments[indexPath.row].count == 0 {
+                cell.HowManyComments.text = "Be First to Comment!"
+                cell.MostRecentComment.alpha = 0
+                cell.MostRecentUsername.alpha = 0
+                cell.SecondComment.alpha = 0
+                cell.SecondUsername.alpha = 0
+                
+            } else if comments[indexPath.row].count == 1 {
+                
+                cell.MostRecentComment.alpha = 1
+                cell.MostRecentUsername.alpha = 1
+                
+                cell.MostRecentComment.text = comments[indexPath.row].first
+                cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
+                
+                cell.SecondComment.alpha = 0
+                cell.SecondUsername.alpha = 0
+                
+                cell.HowManyComments.text = "Be Second to Comment!"
+                
+            } else if comments[indexPath.row].count >= 2 {
+                
+                cell.MostRecentComment.alpha = 1
+                cell.MostRecentUsername.alpha = 1
+                cell.SecondUsername.alpha = 1
+                cell.SecondComment.alpha = 1
+                
+                cell.MostRecentComment.text = comments[indexPath.row].first
+                cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
+                cell.SecondComment.text = comments[indexPath.row][1]
+                cell.SecondUsername.text = commentUsernames[indexPath.row][1]
+                cell.HowManyComments.text = "Be Third to Comment"
+                
+            }
+            
+            cell.mainController = self
             
             cell.UsernameOutlet.text = usernames[indexPath.row]
             
             cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
             
-            if comments[indexPath.row] == [] {
-                cell.HowManyComments.text = "Be First to Comment!"
+            if usernames[indexPath.row] == user?.username {
+                
+                cell.ReportOutlet.titleLabel?.text = "Delete?"
+                
+            } else {
+                
+                cell.ReportOutlet.titleLabel?.text = "Report?"
                 
             }
             
-            if comments[indexPath.row].count == 1 {
-                cell.MostRecentComment.text = comments[indexPath.row].first
-                cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
-                
-            } else if comments[indexPath.row].count >= 2 {
-                cell.MostRecentComment.text = comments[indexPath.row].first
-                cell.MostRecentUsername.text = comments[indexPath.row].first
-                cell.SecondComment.text = comments[indexPath.row][1]
-                cell.SecondUsername.text = comments[indexPath.row][1]
-                
-            } else {
-                cell.MostRecentUsername.text = ""
-                cell.MostRecentComment.text = ""
-                cell.SecondUsername.text = ""
-                cell.SecondComment.text = ""
-            }
+            
+            cell.CaptionOutlet.text = captions[indexPath.row]
             
             var liked = false
             
@@ -761,7 +791,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     liked = true
                 }
             }
-
+            
             if !liked {
                 
                 cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
@@ -774,7 +804,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             } else {
                 
                 cell.LikeButtonOutlet.image = nil
-                cell.likeView.userInteractionEnabled = false
+                cell.LikeButtonOutlet.userInteractionEnabled = false
                 
                 cell.DislikeButtonOutlet.image = nil
                 cell.DislikeButtonOutlet.userInteractionEnabled = false
@@ -840,9 +870,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.LikeOutlet.text = "\(likes[indexPath.row])"
             
             cell.DislikeOutlet.text = "\(dislikes[indexPath.row])"
-            
-            cell.CaptionOutlet.text = captions[indexPath.row]
-            
             
             if commentsNil[indexPath.row] == true {
                 cell.CommentNumber.text = "0"

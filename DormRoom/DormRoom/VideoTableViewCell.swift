@@ -23,6 +23,8 @@ class VideoTableViewCell: UITableViewCell {
     var like = Int()
     var dislike = Int()
     
+    var mainController: MainPuffViewController!
+    
     var feed: String = "CanadaPuff"
     
     override func awakeFromNib() {
@@ -46,21 +48,99 @@ class VideoTableViewCell: UITableViewCell {
     @IBOutlet weak var LikeOutlet: UILabel!
     @IBOutlet weak var DislikeOutlet: UILabel!
     @IBOutlet weak var CaptionOutlet: UILabel!
-    @IBOutlet weak var UniversityOutlet: UIImageView!
     @IBOutlet weak var ProfileOutlet: UIImageView!
     @IBOutlet weak var LikeButtonOutlet: UIImageView!
     @IBOutlet weak var DislikeButtonOutlet: UIImageView!
     @IBOutlet weak var CommentNumber: UILabel!
     @IBOutlet weak var likeView: UIView!
     @IBOutlet weak var dislikeView: UIView!
+    @IBOutlet weak var ReportOutlet: UIButton!
     @IBOutlet weak var UniversityName: UILabel!
     
     
     
     
+    @IBAction func ReportDelete(sender: AnyObject) {
+        
+        print("Report Delete")
+        
+        guard let actualUsername = UsernameOutlet.text else {return}
+        
+        if actualUsername != user?.username {
+            
+            let alertController = UIAlertController(title: "So...", message: "You wanna report \(actualUsername)?", preferredStyle:  UIAlertControllerStyle.Alert)
+            
+            alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil))
+            
+            alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
+                
+                var blockedPuffs = [String]()
+                
+                do {
+                    try self.user?.fetch()
+                } catch let error {
+                    print(error)
+                }
+                
+                blockedPuffs = self.user?["blockedPuffs"] as! [String]
+                
+                self.user?["blockedPuffs"] = [actualUsername] + blockedPuffs
+                
+                self.user?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                    
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        
+                        do {
+                            try self.user?.fetch()
+                            
+                            self.mainController.loadFromParse({ (Bool) -> () in
+                                
+                            })
+                            
+                        } catch let error {
+                            print(error)
+                        }
+                        
+                    })
+                    
+                })
+                
+            }))
+            
+            mainController.presentViewController(alertController, animated: true, completion: nil)
+            
+        } else {
+            
+            let alertController = UIAlertController(title: "So...", message: "You wanna delete this?", preferredStyle:  UIAlertControllerStyle.Alert)
+            
+            alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil))
+            
+            alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
+                
+                let query = PFQuery(className: self.feed)
+                query.getObjectInBackgroundWithId(self.objectId, block: { (post: PFObject?, error: NSError?) -> Void in
+                    
+                    post?["Deleted"] = true
+                    post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                        
+                        self.mainController.loadFromParse({ (Bool) -> () in
+                            
+                        })
+                        
+                        
+                    })
+                })
+            }))
+            
+            mainController.presentViewController(alertController, animated: true, completion: nil)
+        }
+        
+    }
+    
+    
     //Functions
     func swipeLikeDislike() {
-        
+                
         let likeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeLike")
         likeView.userInteractionEnabled = true
         likeView.addGestureRecognizer(likeTapRecognizer)
@@ -216,4 +296,5 @@ class VideoTableViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
+    
 }
