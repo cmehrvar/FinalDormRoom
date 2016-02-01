@@ -38,8 +38,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     var timer:NSTimer = NSTimer()
     
     var isImage = true
-    
-    
+
     let frontOut = AVCaptureStillImageOutput()
     let backOut = AVCaptureStillImageOutput()
     
@@ -76,14 +75,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     }
     
     
-    
-    
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    
-    
-    
-    
     //Outlets
     @IBOutlet weak var TakenPuffOutlet: UIImageView!
     @IBOutlet weak var CaptionOutlet: UITextField!
@@ -99,22 +90,12 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     
     
     
-    
-    
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    
-    
-    
-    
     //Actions
     @IBAction func changeCameraAction(sender: AnyObject) {
         frontCameraShown = !frontCameraShown
         configureCameraForCapture()
     }
-    
-    
-    
+ 
     @IBAction func postPuff(sender: AnyObject) {
         
         rootController?.toggleTakePuff({ (complete) -> () in
@@ -156,8 +137,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             print("Upload in progress")
         
     }
-    
-    
+
     @IBAction func cancelAction(sender: AnyObject) {
         
         
@@ -187,13 +167,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         })
         
     }
-    
-    
-    
-    
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    
-    
     
     
     
@@ -479,7 +452,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         
     }
     
-
     func convertVideoToLowQualityWithInputURL(inputURL: NSURL, handler: (AVAssetExportSession) -> Void) {
         
         let newAsset: AVURLAsset = AVURLAsset(URL: inputURL)
@@ -503,8 +475,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             })
         }
     }
-    
-
     
     func uploadVideo() {
         
@@ -657,7 +627,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         }
     }
     
-    
     func addUploadStuff(){
         
         let error = NSErrorPointer()
@@ -670,13 +639,9 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         }
     }
     
-    
     func dismissKeyboard() {
         view.endEditing(true)
     }
-    
-    ////////////////////////////////////////////////////////////////////////////////////////////////
-    
     
     func addTapGesture() {
         
@@ -704,11 +669,10 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         return length <= 20
         
     }
-    
-    
+ 
     func configureCameraForCapture() {
         
-        previewLayer?.removeFromSuperlayer()
+        //previewLayer?.removeFromSuperlayer()
         
         if !isImage {
         playerLayer.removeFromSuperlayer()
@@ -806,14 +770,11 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
         CameraCaptureView.layer.addSublayer(actualPreviewLayer)
         
     }
-    
-    
-    
+
     func playerItemDidReachEnd(notification: NSNotification) {
         let p: AVPlayerItem = notification.object as! AVPlayerItem
         p.seekToTime(kCMTimeZero)
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

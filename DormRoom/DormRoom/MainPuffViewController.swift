@@ -134,6 +134,38 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     //Actions
+    @IBAction func takePuffAction(sender: AnyObject) {
+        
+        guard let actualController = rootController else {return}
+        
+        actualController.takePuffController?.feed = feed
+        
+        
+        rootController?.toggleTakePuff({ (complete) -> () in
+            
+            actualController.takePuffController?.configureCameraForCapture()
+            actualController.takePuffController?.TakenPuffOutlet.image = nil
+            actualController.takePuffController?.CaptionOutlet.text = nil
+            
+            self.uploadOutlet.alpha = 0
+            
+        })
+    }
+    
+    @IBAction func menuAction(sender: AnyObject) {
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.ImageBlur.alpha = 1
+        })
+        
+        rootController?.toggleMenu({ (Bool) -> () in
+            print("menu opened")
+            self.menuOpened = true
+        })
+    }
+    
+    
+    //Functions
     func playPauseButtonAction() {
         
         if !didClickPlay {
@@ -159,40 +191,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    
-    @IBAction func takePuffAction(sender: AnyObject) {
-        
-        guard let actualController = rootController else {return}
-        
-        actualController.takePuffController?.feed = feed
-        
-        
-        rootController?.toggleTakePuff({ (complete) -> () in
-            
-            actualController.takePuffController?.configureCameraForCapture()
-            actualController.takePuffController?.TakenPuffOutlet.image = nil
-            actualController.takePuffController?.CaptionOutlet.text = nil
-            
-            self.uploadOutlet.alpha = 0
-            
-        })
-    }
-    
-    
-    @IBAction func menuAction(sender: AnyObject) {
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.ImageBlur.alpha = 1
-        })
-        
-        rootController?.toggleMenu({ (Bool) -> () in
-            print("menu opened")
-            self.menuOpened = true
-        })
-    }
-    
-    
-    //Functions
     func funcToCallWhenStartLoadingYourWebview() {
         ProgressView.progress = 0.0
         ProgressView.alpha = 1
@@ -223,7 +221,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    
     func addScrollToTop() {
         let tapScrollToTop: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "scrollToTop")
         self.navigationItem.titleView?.userInteractionEnabled = true
@@ -240,7 +237,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
 
     }
     
-    
     func initializeFeeds() {
         
         feed = "CanadaPuff"
@@ -254,7 +250,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             TakeAPuffOutlet.alpha = 1
         }
     }
-    
     
     func addRefresh() {
         
@@ -272,8 +267,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         refreshControl.endRefreshing()
     }
-    
-    
     
     func loadFromParse(complete: (Bool) -> ()) {
         
@@ -438,7 +431,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    
     func urlToAsset() {
         
         for var i = 0; i < videoUrls.count; i++ {
@@ -454,7 +446,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
     }
-    
     
     func loadWebsite() {
         
@@ -491,6 +482,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
         })
     }
+    
     
     
     
@@ -889,15 +881,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         self.videoPlayer.play()
     }
     
-    
-
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  imageUrls.count
     }
     
-    
-
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         print("Did Select Row")
@@ -911,9 +898,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         guard let actualController = rootController else {return}
 
         actualController.commentsController?.objectId = objectId[indexPath.row]
-        
-        actualController.commentsController?.loadFromParse()
 
+        actualController.commentsController?.loadFromParse()
+        
         rootController?.toggleComments({ (Bool) -> () in
             
             print("comments toggled")
@@ -936,8 +923,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             return false
         }
     }
-    
-    
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
@@ -962,7 +947,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         actualCell.VideoView.alpha = 0
         
     }
-    
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         print("End Dragging")
@@ -1008,8 +992,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
     }
-    
-    
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         

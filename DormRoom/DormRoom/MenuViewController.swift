@@ -51,7 +51,6 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    
     @IBAction func hide(sender: AnyObject) {
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -81,7 +80,6 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         return cell
     }
-    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -175,7 +173,6 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         })
     }
     
-    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (staticImages.count)
     }
@@ -225,14 +222,12 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
     }
     
-    
     func retrieveProfilePicture() {
         
         let imageFile: PFFile = user?["profilePicture"] as! PFFile
         self.ProfileOutlet.imageFromPFFile(imageFile, placeholder: "Crest")
         
     }
-    
     
     func retrieveUniversity() {
         

@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-class CommentsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
+class CommentsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     weak var rootController: MainRootViewController?
     
@@ -20,6 +20,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     var universities = [String]()
     var votes = [Int]()
     var commentIds = [String]()
+    var isPhoto = [Bool]()
+    var commentPhotos = [String]()
 
     var objectId = String()
     
@@ -28,6 +30,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     let user = PFUser.currentUser()
     
     var isUploading = false
+    
+    var replyImage = UIImage()
     
     var imageUrl = String()
     var profilePictureUrl = String()
@@ -43,22 +47,57 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "CommentsTitle"))
         
         CommentText.delegate = self
+        PhotoText.delegate = self
         
-        handleKeyboard()
+        //handleKeyboard()
         addTapGesture()
         addRefresh()
         // Do any additional setup after loading the view.
     }
     
-    
     //Outlets
     @IBOutlet weak var CommentText: UITextView!
     @IBOutlet weak var CommentTableView: UITableView!
     @IBOutlet weak var UploadIcon: UIImageView!
+    @IBOutlet weak var CommentPhoto: UIImageView!
+    @IBOutlet weak var PhotoText: UITextView!
+    @IBOutlet weak var textView: UIView!
+    @IBOutlet weak var photoView: UIView!
     
-    
-    
+
     //Actions
+    @IBAction func callCamera(sender: AnyObject) {
+        
+        let cameraProfile = UIImagePickerController()
+        
+        cameraProfile.delegate = self
+        cameraProfile.allowsEditing = false
+        
+        let alertController = UIAlertController(title: "Smile!", message: "Take a pic or choose from gallery?", preferredStyle:  UIAlertControllerStyle.Alert)
+        
+        alertController.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+                cameraProfile.sourceType = UIImagePickerControllerSourceType.Camera
+            }
+            
+            self.presentViewController(cameraProfile, animated: true, completion: nil)
+            
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Gallery", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            
+            cameraProfile.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            
+            self.presentViewController(cameraProfile, animated: true, completion: nil)
+            
+        }))
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
+        
+    }
+    
     @IBAction func post(sender: AnyObject) {
         
         if !isUploading {
@@ -78,8 +117,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
     }
-    
-    
     
     @IBAction func hideButton(sender: AnyObject) {
         
@@ -103,7 +140,79 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
+    @IBAction func postPhoto(sender: AnyObject) {
+        
+        
+    }
+    
+    @IBAction func discardPhoto(sender: AnyObject) {
+        
+        discardPhoto()
+    }
+    
+
     //Functions
+    func uploadToAWS(image: UIImage) {
+        
+        let uploadRequest = imageUploadRequest(image)
+        
+        let transferManager = AWSS3TransferManager.defaultS3TransferManager()
+        
+        transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject? in
+            
+            if task.error == nil {
+                
+                print("successful image upload")
+                
+                
+                ///////// DO SOMETHING
+                
+                
+            } else {
+                print("error uploading: \(task.error)")
+                
+                let alertController = UIAlertController(title: "Shit...", message: "Error Uploading", preferredStyle:  UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
+                self.presentViewController(alertController, animated: true, completion: nil)
+
+            }
+            return nil
+        }
+    }
+    
+    func imageUploadRequest(image: UIImage) -> AWSS3TransferManagerUploadRequest {
+        
+        let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".jpeg")
+        let fileURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("upload").URLByAppendingPathComponent(fileName)
+        let filePath = fileURL.path!
+        
+        let imageData = UIImageJPEGRepresentation(image, 0.25)
+        
+        imageData?.writeToFile(filePath, atomically: true)
+        
+        let uploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest.body = fileURL
+        uploadRequest.key = fileName
+        uploadRequest.bucket = "dormroombucket"
+        
+        if let key = uploadRequest.key {
+            imageUrl = key
+        }
+        
+        return uploadRequest
+        
+    }
+    
+    func discardPhoto() {
+        
+        PhotoText.text = "Comment Here"
+        CommentPhoto.image = nil
+        
+        photoView.alpha = 0
+        textView.alpha = 1
+        
+    }
+
     func uploadProfilePicture() {
         
         let userProfilePictureFile: PFFile = user?["profilePicture"] as! PFFile
@@ -150,7 +259,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             return nil
         }
     }
-    
     
     func saveToParse() {
         
@@ -230,8 +338,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    
-    
     func addRefresh() {
         
         self.refreshControl = UIRefreshControl()
@@ -245,7 +351,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         loadFromParse()
         refreshControl.endRefreshing()
     }
-    
     
     func loadFromParse() {
         
@@ -266,6 +371,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.universities.removeAll()
                     self.votes.removeAll()
                     self.commentIds.removeAll()
+                    self.isPhoto.removeAll()
+                    self.commentPhotos.removeAll()
                     
                     do {
                         try post?.fetch()
@@ -287,7 +394,21 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         } else {
                             self.commentIds = post?["CommentIds"] as! [String]
                         }
-
+                        
+                        
+                        if post?["CommentPhoto"] == nil {
+                            self.commentIds = []
+                        } else {
+                            self.commentIds = post?["CommentPhoto"] as! [String]
+                        }
+                        
+                        
+                        if post?["IsPhotoComment"] == nil {
+                            self.isPhoto = []
+                        } else {
+                            self.isPhoto.append(post?["IsPhotoComment"] as! Bool)
+                        }
+                        
                         self.CommentTableView.reloadData()
                         
                     } else {
@@ -299,6 +420,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         post?["NewCommentUniversities"] = []
                         post?["NewCommentVotes"] = []
                         post?["CommentIds"] = []
+                        post?["IsPhotoComment"] = []
+                        post?["CommentPhoto"] = []
                         
                         post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                             
@@ -321,7 +444,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    
     func addTapGesture() {
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
@@ -333,134 +455,269 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         view.endEditing(true)
     }
     
-    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        
+        textView.alpha = 0
+        photoView.alpha = 1
+
+        CommentPhoto.image = image
+        self.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
     
     //TableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         tableView.addSubview(refreshControl)
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("CommentsCell", forIndexPath: indexPath) as! CommentsCell
-        
-        var hasBeenVotedOn = false
-        
-        var commentsVotedOn = [String]()
-        
-        if user?["votes"] == nil {
-            commentsVotedOn = []
-        } else {
-            commentsVotedOn = user?["votes"] as! [String]
-        }
-   
-        for commentVotedOn in commentsVotedOn {
+        if isPhoto[indexPath.row] {
             
-            if commentVotedOn == commentIds[indexPath.row] {
-                hasBeenVotedOn = true
+            let cell = tableView.dequeueReusableCellWithIdentifier("CommentsPhotoCell", forIndexPath: indexPath) as! PhotoCommentCell
+            
+            var hasBeenVotedOn = false
+            
+            var commentsVotedOn = [String]()
+            
+            if user?["votes"] == nil {
+                commentsVotedOn = []
+            } else {
+                commentsVotedOn = user?["votes"] as! [String]
             }
-        }
-        
-        if !hasBeenVotedOn {
             
-            cell.VoteUpOutlet.alpha = 1
-            cell.VoteDownOutlet.alpha = 1
+            for commentVotedOn in commentsVotedOn {
+                
+                if commentVotedOn == commentIds[indexPath.row] {
+                    hasBeenVotedOn = true
+                }
+            }
+            
+            if !hasBeenVotedOn {
+                
+                cell.VoteUpOutlet.alpha = 1
+                cell.VoteDownOutlet.alpha = 1
+                
+            } else {
+                
+                cell.VoteUpOutlet.alpha = 0
+                cell.VoteDownOutlet.alpha = 0
+                
+            }
+            
+            cell.selectionStyle = .None
+            
+            cell.Comment.text = comments[indexPath.row]
+            cell.TimePosted.text = timeAgoSince(dates[indexPath.row])
+            cell.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictures[indexPath.row]))
+            cell.Username.text = usernames[indexPath.row] + ","
+            
+            
+            if votes[indexPath.row] > 0 {
+                
+                cell.VoteCount.text = "\(votes[indexPath.row])"
+                cell.plusMinusIcon.image = UIImage(named: "plus")
+                
+            } else if votes[indexPath.row] == 0 {
+                
+                cell.plusMinusIcon.image = nil
+                cell.VoteCount.text = "\(votes[indexPath.row])"
+                
+            } else if votes[indexPath.row] < 0 {
+                
+                cell.plusMinusIcon.image = UIImage(named: "minus")
+                let positiveVotes = -(votes[indexPath.row])
+                cell.VoteCount.text = "\(positiveVotes)"
+                
+            }
+            
+            cell.commentViewController = self
+            cell.commentId = commentIds[indexPath.row]
+            
+            cell.votes = votes
+            cell.indexPath = indexPath.row
+            cell.objectId = objectId
+            
+            switch universities[indexPath.row] {
+                
+            case "Brock":
+                cell.UniversityName.text = "Brock Univeristy"
+                
+            case "Calgary":
+                cell.UniversityName.text = "University of Calgary"
+                
+            case "Carlton":
+                cell.UniversityName.text = "Carlton University"
+                
+            case "Dalhousie":
+                cell.UniversityName.text = "Dalhousie University"
+                
+            case "Laurier":
+                cell.UniversityName.text = "Wilfred Laurier University"
+                
+            case "McGill":
+                cell.UniversityName.text = "McGill University"
+                
+            case "Mac":
+                cell.UniversityName.text = "McMaster University"
+                
+            case "Mun":
+                cell.UniversityName.text = "Memorial University"
+                
+            case "Ottawa":
+                cell.UniversityName.text = "University of Ottawa"
+                
+            case "Queens":
+                cell.UniversityName.text = "Queens University"
+                
+            case "Ryerson":
+                cell.UniversityName.text = "Ryerson University"
+                
+            case "UBC":
+                cell.UniversityName.text = "University of British Colombia"
+                
+            case "UofT":
+                cell.UniversityName.text = "University of Toronto"
+                
+            case "Western":
+                cell.UniversityName.text = "University of Western Ontario"
+                
+            case "York":
+                cell.UniversityName.text = "York University"
+                
+            case "OtherUni":
+                cell.UniversityName.text = "Other"
+                
+            default:
+                break
+                
+            }
+            
+            return cell
             
         } else {
             
-            cell.VoteUpOutlet.alpha = 0
-            cell.VoteDownOutlet.alpha = 0
+            let cell = tableView.dequeueReusableCellWithIdentifier("CommentsCell", forIndexPath: indexPath) as! CommentsCell
             
+            var hasBeenVotedOn = false
+            
+            var commentsVotedOn = [String]()
+            
+            if user?["votes"] == nil {
+                commentsVotedOn = []
+            } else {
+                commentsVotedOn = user?["votes"] as! [String]
+            }
+            
+            for commentVotedOn in commentsVotedOn {
+                
+                if commentVotedOn == commentIds[indexPath.row] {
+                    hasBeenVotedOn = true
+                }
+            }
+            
+            if !hasBeenVotedOn {
+                
+                cell.VoteUpOutlet.alpha = 1
+                cell.VoteDownOutlet.alpha = 1
+                
+            } else {
+                
+                cell.VoteUpOutlet.alpha = 0
+                cell.VoteDownOutlet.alpha = 0
+                
+            }
+            
+            cell.selectionStyle = .None
+            
+            cell.Comment.text = comments[indexPath.row]
+            cell.TimePosted.text = timeAgoSince(dates[indexPath.row])
+            cell.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictures[indexPath.row]))
+            cell.Username.text = usernames[indexPath.row] + ","
+            
+            
+            if votes[indexPath.row] > 0 {
+                
+                cell.VoteCount.text = "\(votes[indexPath.row])"
+                cell.plusMinusIcon.image = UIImage(named: "plus")
+                
+            } else if votes[indexPath.row] == 0 {
+                
+                cell.plusMinusIcon.image = nil
+                cell.VoteCount.text = "\(votes[indexPath.row])"
+                
+            } else if votes[indexPath.row] < 0 {
+                
+                cell.plusMinusIcon.image = UIImage(named: "minus")
+                let positiveVotes = -(votes[indexPath.row])
+                cell.VoteCount.text = "\(positiveVotes)"
+                
+            }
+            
+            cell.commentViewController = self
+            cell.commentId = commentIds[indexPath.row]
+            
+            cell.votes = votes
+            cell.indexPath = indexPath.row
+            cell.objectId = objectId
+            
+            switch universities[indexPath.row] {
+                
+            case "Brock":
+                cell.UniversityName.text = "Brock Univeristy"
+                
+            case "Calgary":
+                cell.UniversityName.text = "University of Calgary"
+                
+            case "Carlton":
+                cell.UniversityName.text = "Carlton University"
+                
+            case "Dalhousie":
+                cell.UniversityName.text = "Dalhousie University"
+                
+            case "Laurier":
+                cell.UniversityName.text = "Wilfred Laurier University"
+                
+            case "McGill":
+                cell.UniversityName.text = "McGill University"
+                
+            case "Mac":
+                cell.UniversityName.text = "McMaster University"
+                
+            case "Mun":
+                cell.UniversityName.text = "Memorial University"
+                
+            case "Ottawa":
+                cell.UniversityName.text = "University of Ottawa"
+                
+            case "Queens":
+                cell.UniversityName.text = "Queens University"
+                
+            case "Ryerson":
+                cell.UniversityName.text = "Ryerson University"
+                
+            case "UBC":
+                cell.UniversityName.text = "University of British Colombia"
+                
+            case "UofT":
+                cell.UniversityName.text = "University of Toronto"
+                
+            case "Western":
+                cell.UniversityName.text = "University of Western Ontario"
+                
+            case "York":
+                cell.UniversityName.text = "York University"
+                
+            case "OtherUni":
+                cell.UniversityName.text = "Other"
+                
+            default:
+                break
+                
+            }
+            
+            return cell
+
         }
-        
-        cell.selectionStyle = .None
-        
-        cell.Comment.text = comments[indexPath.row]
-        cell.TimePosted.text = timeAgoSince(dates[indexPath.row])
-        cell.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictures[indexPath.row]))
-        cell.Username.text = usernames[indexPath.row] + ","
-        
-        
-        if votes[indexPath.row] > 0 {
-            
-            cell.VoteCount.text = "\(votes[indexPath.row])"
-            cell.plusMinusIcon.image = UIImage(named: "plus")
-            
-        } else if votes[indexPath.row] == 0 {
-            
-            cell.plusMinusIcon.image = nil
-            cell.VoteCount.text = "\(votes[indexPath.row])"
-            
-        } else if votes[indexPath.row] < 0 {
-            
-            cell.plusMinusIcon.image = UIImage(named: "minus")
-            let positiveVotes = -(votes[indexPath.row])
-            cell.VoteCount.text = "\(positiveVotes)"
-            
-        }
-        
-        cell.commentViewController = self
-        cell.commentId = commentIds[indexPath.row]
-        
-        cell.votes = votes
-        cell.indexPath = indexPath.row
-        cell.objectId = objectId
-        
-        switch universities[indexPath.row] {
-            
-        case "Brock":
-            cell.UniversityName.text = "Brock Univeristy"
-            
-        case "Calgary":
-            cell.UniversityName.text = "University of Calgary"
-            
-        case "Carlton":
-            cell.UniversityName.text = "Carlton University"
-            
-        case "Dalhousie":
-            cell.UniversityName.text = "Dalhousie University"
-            
-        case "Laurier":
-            cell.UniversityName.text = "Wilfred Laurier University"
-            
-        case "McGill":
-            cell.UniversityName.text = "McGill University"
-            
-        case "Mac":
-            cell.UniversityName.text = "McMaster University"
-            
-        case "Mun":
-            cell.UniversityName.text = "Memorial University"
-            
-        case "Ottawa":
-            cell.UniversityName.text = "University of Ottawa"
-            
-        case "Queens":
-            cell.UniversityName.text = "Queens University"
-            
-        case "Ryerson":
-            cell.UniversityName.text = "Ryerson University"
-            
-        case "UBC":
-            cell.UniversityName.text = "University of British Colombia"
-            
-        case "UofT":
-            cell.UniversityName.text = "University of Toronto"
-            
-        case "Western":
-            cell.UniversityName.text = "University of Western Ontario"
-            
-        case "York":
-            cell.UniversityName.text = "York University"
-            
-        case "OtherUni":
-            cell.UniversityName.text = "Other"
-            
-        default:
-            break
-            
-        }
-        
-        return cell
-        
+
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -468,27 +725,49 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         return comments.count
     }
     
-    
     func textViewDidBeginEditing(textView: UITextView) {
+        
         print("began")
         
-        if CommentText.text == "Comment Here" {
-            CommentText.text = ""
+        if textView == CommentText {
+            
+            if CommentText.text == "Comment Here" {
+                CommentText.text = ""
+            }
+            
+            self.textIsEditing = true
+            
+        } else {
+            
+            if PhotoText.text == "Comment Here" {
+                PhotoText.text = ""
+            }
+
         }
-        
         self.textIsEditing = true
+
     }
     
     func textViewDidEndEditing(textView: UITextView) {
         print("ended")
-        
-        if CommentText.text == "" {
-            CommentText.text = "Comment Here"
+
+        if textView == CommentText {
+            
+            if CommentText.text == "" {
+                CommentText.text = "Comment Here"
+            }
+ 
+            
+        } else {
+            
+            if PhotoText.text == "" {
+                PhotoText.text = "Comment Here"
+            }
+
         }
         
         self.textIsEditing = false
     }
-    
     
     func handleKeyboard() {
         
@@ -512,7 +791,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

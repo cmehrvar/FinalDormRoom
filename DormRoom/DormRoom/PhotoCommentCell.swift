@@ -1,14 +1,14 @@
 //
-//  CommentsCell.swift
+//  PhotoCommentCell.swift
 //  DormRoom
 //
-//  Created by Cina Mehrvar on 2015-12-22.
-//  Copyright © 2015 Cina Mehrvar. All rights reserved.
+//  Created by Cina Mehrvar on 2016-02-01.
+//  Copyright © 2016 Cina Mehrvar. All rights reserved.
 //
 
 import UIKit
 
-class CommentsCell: UITableViewCell {
+class PhotoCommentCell: UITableViewCell {
 
     @IBOutlet weak var ProfilePicture: UIImageView!
     @IBOutlet weak var TimePosted: UILabel!
@@ -19,6 +19,7 @@ class CommentsCell: UITableViewCell {
     @IBOutlet weak var VoteCount: UILabel!
     @IBOutlet weak var Comment: UITextView!
     @IBOutlet weak var plusMinusIcon: UIImageView!
+    @IBOutlet weak var photoComment: UIImageView!
     
     
     var votes = [Int]()
@@ -101,10 +102,10 @@ class CommentsCell: UITableViewCell {
     }
     
     @IBAction func VoteDown(sender: AnyObject) {
-
+        
         print("Vote Down")
         
- 
+        
         
         UIView.animateWithDuration(0.3) { () -> Void in
             
@@ -176,10 +177,10 @@ class CommentsCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
 
