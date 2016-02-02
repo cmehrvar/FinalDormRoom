@@ -53,7 +53,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         CommentText.delegate = self
         PhotoText.delegate = self
         
-        //handleKeyboard()
+        handleKeyboard()
         addTapGesture()
         addRefresh()
         // Do any additional setup after loading the view.
@@ -67,6 +67,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var PhotoText: UITextView!
     @IBOutlet weak var textView: UIView!
     @IBOutlet weak var photoView: UIView!
+    @IBOutlet weak var TableViewConstraint: NSLayoutConstraint!
     
     
     //Actions
@@ -215,6 +216,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func discardPhoto() {
         
+        TableViewConstraint.constant = 0
         isPhotoComment = false
         
         PhotoText.text = "Comment Here"
@@ -499,14 +501,12 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         photoView.alpha = 1
         
         isPhotoComment = true
+        TableViewConstraint.constant = 40
         
         CommentPhoto.image = image
         self.dismissViewControllerAnimated(true, completion: nil)
         
     }
-    
-    
-    
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
@@ -518,9 +518,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         
     }
     
-    
-    
-    
+
     //TableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         

@@ -19,6 +19,8 @@ class VideoTableViewCell: UITableViewCell {
     
     var fullyVisible = false
     
+    var indexPath: Int!
+    
     var objectId = String()
     var like = Int()
     var dislike = Int()
@@ -56,8 +58,6 @@ class VideoTableViewCell: UITableViewCell {
     @IBOutlet weak var dislikeView: UIView!
     @IBOutlet weak var ReportOutlet: UIButton!
     @IBOutlet weak var UniversityName: UILabel!
-    
-    
     
     
     @IBAction func ReportDelete(sender: AnyObject) {
@@ -138,9 +138,38 @@ class VideoTableViewCell: UITableViewCell {
     }
     
     
+    @IBAction func viewComments(sender: AnyObject) {
+
+        print("Did Select Row")
+        
+        if mainController.videoPlayer != nil {
+            mainController.videoPlayer.pause()
+        }
+        
+        mainController.PlayPauseImage.image = UIImage(named: "playIcon")
+        
+        guard let actualController = mainController.rootController else {return}
+        
+        actualController.commentsController?.objectId = mainController.objectId[indexPath]
+        
+        actualController.commentsController?.loadFromParse()
+        
+        mainController.rootController?.toggleComments({ (Bool) -> () in
+            
+            print("Comments Toggled")
+            
+        })
+        
+        
+        mainController.commentsOpened = true
+
+    }
+    
+    
+    
     //Functions
     func swipeLikeDislike() {
-                
+        
         let likeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeLike")
         likeView.userInteractionEnabled = true
         likeView.addGestureRecognizer(likeTapRecognizer)

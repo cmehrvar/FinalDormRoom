@@ -521,8 +521,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
             
-            
-            
             if comments[indexPath.row].count == 0 {
                 
                 cell.ViewHowManyComments.text = "Be First to Comment!"
@@ -561,7 +559,13 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.SecondRecentComment.text = comments[indexPath.row][1]
                 cell.SecondRecentUsername.text = commentUsernames[indexPath.row][1]
                 
-                cell.ViewHowManyComments.text = "View all \(comments[indexPath.row].count) comments"
+                if comments[indexPath.row].count == 2 {
+                    cell.ViewHowManyComments.text = "Be Third to Comment"
+                } else {
+                    cell.ViewHowManyComments.text = "View all \(comments[indexPath.row].count) comments"
+                }
+                
+                
             }
             
             
@@ -721,6 +725,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.selectionStyle = .None
             
+            cell.indexPath = indexPath.row
+            
             cell.objectId = objectId[indexPath.row]
             
             cell.like = likes[indexPath.row]
@@ -730,13 +736,17 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.timePosted.text = timeAgoSince(date)
             
             if comments[indexPath.row].count == 0 {
+                
                 cell.HowManyComments.text = "Be First to Comment!"
+                
                 cell.MostRecentComment.alpha = 0
                 cell.MostRecentUsername.alpha = 0
                 cell.SecondComment.alpha = 0
                 cell.SecondUsername.alpha = 0
                 
-            } else if comments[indexPath.row].count == 1 {
+            }
+            
+            if comments[indexPath.row].count == 1 {
                 
                 cell.MostRecentComment.alpha = 1
                 cell.MostRecentUsername.alpha = 1
@@ -753,15 +763,21 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 cell.MostRecentComment.alpha = 1
                 cell.MostRecentUsername.alpha = 1
-                cell.SecondUsername.alpha = 1
                 cell.SecondComment.alpha = 1
+                cell.SecondUsername.alpha = 1
+                
+                print(commentUsernames[indexPath.row][1])
                 
                 cell.MostRecentComment.text = comments[indexPath.row].first
                 cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
                 cell.SecondComment.text = comments[indexPath.row][1]
                 cell.SecondUsername.text = commentUsernames[indexPath.row][1]
-                cell.HowManyComments.text = "Be Third to Comment"
                 
+                if comments[indexPath.row].count == 2 {
+                    cell.HowManyComments.text = "Be Third to Comment"
+                } else {
+                    cell.HowManyComments.text = "View all \(comments[indexPath.row].count) comments"
+                }
             }
             
             cell.mainController = self
