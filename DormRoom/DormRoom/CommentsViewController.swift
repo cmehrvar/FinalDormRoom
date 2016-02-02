@@ -22,7 +22,9 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     var commentIds = [String]()
     var isPhoto = [Bool]()
     var commentPhotos = [String]()
-
+    
+    var dormroomUrl = "https://s3.amazonaws.com/dormroombucket/"
+    
     var objectId = String()
     
     var textIsEditing = false
@@ -36,6 +38,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     var imageUrl = String()
     var profilePictureUrl = String()
     var uploadProfileUrl = "https://s3.amazonaws.com/dormroombucket/"
+    
+    var isPhotoComment = false
     
     var loading = false
     
@@ -64,7 +68,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var textView: UIView!
     @IBOutlet weak var photoView: UIView!
     
-
+    
     //Actions
     @IBAction func callCamera(sender: AnyObject) {
         
@@ -131,6 +135,10 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         universities.removeAll()
         votes.removeAll()
         commentIds.removeAll()
+        isPhoto.removeAll()
+        commentPhotos.removeAll()
+        
+        discardPhoto()
         
         CommentTableView.reloadData()
         
@@ -142,7 +150,9 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func postPhoto(sender: AnyObject) {
         
-        
+        if let actualImage = CommentPhoto.image {
+            uploadToAWS(actualImage)
+        }
     }
     
     @IBAction func discardPhoto(sender: AnyObject) {
@@ -150,7 +160,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         discardPhoto()
     }
     
-
+    
     //Functions
     func uploadToAWS(image: UIImage) {
         
@@ -164,7 +174,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 print("successful image upload")
                 
-                
+                self.uploadProfilePicture()
                 ///////// DO SOMETHING
                 
                 
@@ -174,7 +184,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 let alertController = UIAlertController(title: "Shit...", message: "Error Uploading", preferredStyle:  UIAlertControllerStyle.Alert)
                 alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alertController, animated: true, completion: nil)
-
+                
             }
             return nil
         }
@@ -205,6 +215,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func discardPhoto() {
         
+        isPhotoComment = false
+        
         PhotoText.text = "Comment Here"
         CommentPhoto.image = nil
         
@@ -212,7 +224,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         textView.alpha = 1
         
     }
-
+    
     func uploadProfilePicture() {
         
         let userProfilePictureFile: PFFile = user?["profilePicture"] as! PFFile
@@ -281,17 +293,42 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.universities = post["NewCommentUniversities"] as! [String]
                 self.votes = post["NewCommentVotes"] as! [Int]
                 
+                if post["CommentPhoto"] == nil {
+                    self.commentPhotos = []
+                } else {
+                    self.commentPhotos = post["CommentPhoto"] as! [String]
+                }
+                
+                if post["IsPhotoComment"] == nil {
+                    self.isPhoto = []
+                } else {
+                    self.isPhoto = post["IsPhotoComment"] as! [Bool]
+                }
+                
                 if post["CommentIds"] == nil {
                     self.commentIds = []
                 } else {
                     self.commentIds = post["CommentIds"] as! [String]
                 }
                 
-                post["NewComments"] = [self.CommentText.text] + self.comments
+                
                 post["NewCommentProfiles"] = [self.uploadProfileUrl] + self.profilePictures
                 post["NewCommentDates"] = [date] + self.dates
                 post["NewCommentUniversities"] = [self.user?["universityName"] as! String] + self.universities
                 post["CommentIds"] = [fileName] + self.commentIds
+                
+                
+                
+                if self.isPhotoComment {
+                    post["NewComments"] = [self.PhotoText.text] + self.comments
+                    post["CommentPhoto"] = [self.dormroomUrl + self.imageUrl] + self.commentPhotos
+                } else {
+                    post["CommentPhoto"] = [""] + self.commentPhotos
+                    post["NewComments"] = [self.CommentText.text] + self.comments
+                }
+                
+                post["IsPhotoComment"] = [self.isPhotoComment] + self.isPhoto
+                
                 
                 if let actualUsername = self.user?.username {
                     post["NewCommentUsernames"] = [actualUsername] + self.usernames
@@ -305,6 +342,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         print("comment saved")
                         
                         self.CommentText.text = ""
+                        self.discardPhoto()
                         
                         UIView.animateWithDuration(0.3, animations: { () -> Void in
                             self.UploadIcon.alpha = 0
@@ -397,17 +435,17 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         
                         
                         if post?["CommentPhoto"] == nil {
-                            self.commentIds = []
+                            self.commentPhotos = []
                         } else {
-                            self.commentIds = post?["CommentPhoto"] as! [String]
+                            self.commentPhotos = post?["CommentPhoto"] as! [String]
                         }
-                        
                         
                         if post?["IsPhotoComment"] == nil {
                             self.isPhoto = []
                         } else {
-                            self.isPhoto.append(post?["IsPhotoComment"] as! Bool)
+                            self.isPhoto = post?["IsPhotoComment"] as! [Bool]
                         }
+                        
                         
                         self.CommentTableView.reloadData()
                         
@@ -459,11 +497,29 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         
         textView.alpha = 0
         photoView.alpha = 1
-
+        
+        isPhotoComment = true
+        
         CommentPhoto.image = image
         self.dismissViewControllerAnimated(true, completion: nil)
         
     }
+    
+    
+    
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        if isPhoto[indexPath.row] {
+            return 125.0
+        } else {
+            return 100.0
+        }
+        
+    }
+    
+    
+    
     
     //TableView
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -473,7 +529,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         if isPhoto[indexPath.row] {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("CommentsPhotoCell", forIndexPath: indexPath) as! PhotoCommentCell
-            
+                        
             var hasBeenVotedOn = false
             
             var commentsVotedOn = [String]()
@@ -509,6 +565,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.TimePosted.text = timeAgoSince(dates[indexPath.row])
             cell.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictures[indexPath.row]))
             cell.Username.text = usernames[indexPath.row] + ","
+            cell.photoComment.sd_setImageWithURL(NSURL(string: commentPhotos[indexPath.row]))
             
             
             if votes[indexPath.row] > 0 {
@@ -715,9 +772,9 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             return cell
-
+            
         }
-
+        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -742,28 +799,28 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             if PhotoText.text == "Comment Here" {
                 PhotoText.text = ""
             }
-
+            
         }
         self.textIsEditing = true
-
+        
     }
     
     func textViewDidEndEditing(textView: UITextView) {
         print("ended")
-
+        
         if textView == CommentText {
             
             if CommentText.text == "" {
                 CommentText.text = "Comment Here"
             }
- 
+            
             
         } else {
             
             if PhotoText.text == "" {
                 PhotoText.text = "Comment Here"
             }
-
+            
         }
         
         self.textIsEditing = false

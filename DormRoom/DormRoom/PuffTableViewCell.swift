@@ -22,6 +22,8 @@ class PuffTableViewCell: UITableViewCell {
     
     var feed: String = "CanadaPuff"
     
+    var indexPath: Int!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -134,6 +136,33 @@ class PuffTableViewCell: UITableViewCell {
 
     }
     
+    @IBAction func ViewComments(sender: AnyObject) {
+        
+        print("Did Select Row")
+        
+        if mainController.videoPlayer != nil {
+             mainController.videoPlayer.pause()
+        }
+        
+        mainController.PlayPauseImage.image = UIImage(named: "playIcon")
+        
+        guard let actualController = mainController.rootController else {return}
+
+        actualController.commentsController?.objectId = mainController.objectId[indexPath]
+        
+        actualController.commentsController?.loadFromParse()
+        
+        mainController.rootController?.toggleComments({ (Bool) -> () in
+            
+            print("Comments Toggled")
+            
+        })
+
+        
+        mainController.commentsOpened = true
+        
+
+    }
     
     //Functions
     func swipeLikeDislike() {
@@ -156,7 +185,6 @@ class PuffTableViewCell: UITableViewCell {
         dislikeView.addGestureRecognizer(dislikeTapRecognizer)
         
     }
-    
     
     func expandImage() {
         
@@ -184,8 +212,6 @@ class PuffTableViewCell: UITableViewCell {
                 self.ThumbsDownOutlet.alpha = 0
         }
     }
-    
-    
     
     func longPressed(sender: UILongPressGestureRecognizer) {
         
@@ -264,7 +290,6 @@ class PuffTableViewCell: UITableViewCell {
         }
     }
     
-    
     func swipeLike() {
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -330,7 +355,6 @@ class PuffTableViewCell: UITableViewCell {
         
         LikeOutlet.text = "\(1 + like)"
     }
-    
     
     func swipeDislike() {
         
@@ -400,6 +424,7 @@ class PuffTableViewCell: UITableViewCell {
         DislikeOutlet.text = "\(1 + dislike)"
         
     }
+    
     override func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }

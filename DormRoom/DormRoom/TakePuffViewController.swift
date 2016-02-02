@@ -54,10 +54,10 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureCameraForCapture()
         addTapGesture()
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         CaptionOutlet.delegate = self
-        //configureCameraForCapture()
         addUploadStuff()
         
     }
@@ -140,8 +140,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
 
     @IBAction func cancelAction(sender: AnyObject) {
         
-        
-        
         rootController?.toggleTakePuff({ (complete) -> () in
             
             self.CameraCaptureView.alpha = 1
@@ -156,9 +154,6 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
             self.TakenPuffOutlet.image = nil
             self.CaptionOutlet.text = nil
             print("cancelled")
-            
-            self.previewLayer?.session.stopRunning()
-            self.previewLayer?.removeFromSuperlayer()
             
             if !self.isImage {
             
@@ -672,7 +667,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
  
     func configureCameraForCapture() {
         
-        //previewLayer?.removeFromSuperlayer()
+        previewLayer?.removeFromSuperlayer()
         
         if !isImage {
         playerLayer.removeFromSuperlayer()

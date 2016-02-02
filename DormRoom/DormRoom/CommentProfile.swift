@@ -13,7 +13,7 @@ class CommentProfile: UIView {
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        layer.cornerRadius = 22
+        layer.cornerRadius = 18
         layer.borderWidth = 1
         layer.borderColor = UIColor.grayColor().CGColor
         self.clipsToBounds = true

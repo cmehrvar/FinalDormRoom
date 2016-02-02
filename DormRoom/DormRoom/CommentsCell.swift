@@ -39,8 +39,25 @@ class CommentsCell: UITableViewCell {
         vote = vote + 1
         votes[indexPath] = vote
         
-        VoteCount.text = "\(votes[indexPath])"
-        
+        if vote > 0 {
+            
+            VoteCount.text = "\(votes[indexPath])"
+            plusMinusIcon.image = UIImage(named: "plus")
+            
+        } else if votes[indexPath] == 0 {
+            
+            plusMinusIcon.image = nil
+            VoteCount.text = "\(votes[indexPath])"
+            
+        } else if votes[indexPath] < 0 {
+            
+            plusMinusIcon.image = UIImage(named: "minus")
+            let positiveVotes = -(votes[indexPath])
+            VoteCount.text = "\(positiveVotes)"
+            
+        }
+
+ 
         UIView.animateWithDuration(0.3) { () -> Void in
             
             self.VoteUpOutlet.alpha = 0
@@ -104,15 +121,29 @@ class CommentsCell: UITableViewCell {
 
         print("Vote Down")
         
- 
+        var vote = votes[indexPath]
+        vote = vote - 1
+        votes[indexPath] = vote
+        
+        if vote > 0 {
+            
+            VoteCount.text = "\(votes[indexPath])"
+            plusMinusIcon.image = UIImage(named: "plus")
+            
+        } else if votes[indexPath] == 0 {
+            
+            plusMinusIcon.image = nil
+            VoteCount.text = "\(votes[indexPath])"
+            
+        } else if votes[indexPath] < 0 {
+            
+            plusMinusIcon.image = UIImage(named: "minus")
+            let positiveVotes = -(votes[indexPath])
+            VoteCount.text = "\(positiveVotes)"
+            
+        }
         
         UIView.animateWithDuration(0.3) { () -> Void in
-            
-            var vote = self.votes[self.indexPath]
-            vote = vote - 1
-            self.votes[self.indexPath] = vote
-            
-            self.VoteCount.text = "\(self.votes[self.indexPath])"
             
             self.VoteUpOutlet.alpha = 0
             self.VoteDownOutlet.alpha = 0

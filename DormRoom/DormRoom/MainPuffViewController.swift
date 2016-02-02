@@ -94,6 +94,53 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         // Do any additional setup after loading the view.
     }
     
+
+    
+    
+    //Outlets
+    @IBOutlet weak var PuffTableView: UITableView!
+    @IBOutlet weak var TakeAPuffOutlet: UIView!
+    @IBOutlet weak var WebViewOutlet: UIWebView!
+    @IBOutlet weak var uploadOutlet: UIImageView!
+    @IBOutlet weak var ProgressView: UIProgressView!
+    @IBOutlet weak var ImageBlur: UIView!
+    @IBOutlet weak var PlayPauseView: UIView!
+    @IBOutlet weak var PlayPauseImage: UIImageView!
+    
+    
+    
+    //Actions
+    @IBAction func takePuffAction(sender: AnyObject) {
+        
+        guard let actualController = rootController else {return}
+        
+        actualController.takePuffController?.feed = feed
+        
+        
+        rootController?.toggleTakePuff({ (complete) -> () in
+
+            actualController.takePuffController?.TakenPuffOutlet.image = nil
+            actualController.takePuffController?.CaptionOutlet.text = nil
+            
+            self.uploadOutlet.alpha = 0
+            
+        })
+    }
+    
+    @IBAction func menuAction(sender: AnyObject) {
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.ImageBlur.alpha = 1
+        })
+        
+        rootController?.toggleMenu({ (Bool) -> () in
+            print("menu opened")
+            self.menuOpened = true
+        })
+    }
+    
+    
+    //Functions
     func addRecognizers() {
         
         let tapRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
@@ -120,52 +167,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    
-    //Outlets
-    @IBOutlet weak var PuffTableView: UITableView!
-    @IBOutlet weak var TakeAPuffOutlet: UIView!
-    @IBOutlet weak var WebViewOutlet: UIWebView!
-    @IBOutlet weak var uploadOutlet: UIImageView!
-    @IBOutlet weak var ProgressView: UIProgressView!
-    @IBOutlet weak var ImageBlur: UIView!
-    @IBOutlet weak var PlayPauseView: UIView!
-    @IBOutlet weak var PlayPauseImage: UIImageView!
-    
-    
-    
-    //Actions
-    @IBAction func takePuffAction(sender: AnyObject) {
-        
-        guard let actualController = rootController else {return}
-        
-        actualController.takePuffController?.feed = feed
-        
-        
-        rootController?.toggleTakePuff({ (complete) -> () in
-            
-            actualController.takePuffController?.configureCameraForCapture()
-            actualController.takePuffController?.TakenPuffOutlet.image = nil
-            actualController.takePuffController?.CaptionOutlet.text = nil
-            
-            self.uploadOutlet.alpha = 0
-            
-        })
-    }
-    
-    @IBAction func menuAction(sender: AnyObject) {
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.ImageBlur.alpha = 1
-        })
-        
-        rootController?.toggleMenu({ (Bool) -> () in
-            print("menu opened")
-            self.menuOpened = true
-        })
-    }
-    
-    
-    //Functions
     func playPauseButtonAction() {
         
         if !didClickPlay {
@@ -483,9 +484,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         })
     }
     
-    
-    
-    
+
     //TableView shit
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -503,8 +502,9 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
             
-            
             cell.selectionStyle = .None
+            
+            cell.indexPath = indexPath.row
             
             cell.objectId = objectId[indexPath.row]
             
@@ -521,15 +521,20 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
             
-
+            
+            
             if comments[indexPath.row].count == 0 {
+                
                 cell.ViewHowManyComments.text = "Be First to Comment!"
+                
                 cell.MostRecentCommentOutlet.alpha = 0
                 cell.MostRecentUsername.alpha = 0
                 cell.SecondRecentUsername.alpha = 0
                 cell.SecondRecentComment.alpha = 0
-
-            } else if comments[indexPath.row].count == 1 {
+                
+            }
+            
+            if comments[indexPath.row].count == 1 {
                 
                 cell.MostRecentCommentOutlet.alpha = 1
                 cell.MostRecentUsername.alpha = 1
@@ -539,7 +544,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 cell.SecondRecentComment.alpha = 0
                 cell.SecondRecentUsername.alpha = 0
-                
+
                 cell.ViewHowManyComments.text = "Be Second to Comment!"
                 
             } else if comments[indexPath.row].count >= 2 {
@@ -549,13 +554,16 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.SecondRecentUsername.alpha = 1
                 cell.SecondRecentComment.alpha = 1
                 
+                print(commentUsernames[indexPath.row][1])
+                
                 cell.MostRecentCommentOutlet.text = comments[indexPath.row].first
                 cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
                 cell.SecondRecentComment.text = comments[indexPath.row][1]
                 cell.SecondRecentUsername.text = commentUsernames[indexPath.row][1]
-                cell.ViewHowManyComments.text = "Be Third to Comment"
                 
+                cell.ViewHowManyComments.text = "View all \(comments[indexPath.row].count) comments"
             }
+            
             
             cell.mainController = self
             
@@ -883,32 +891,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  imageUrls.count
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        print("Did Select Row")
-        
-        if videoPlayer != nil {
-            videoPlayer.pause()
-        }
-        
-        PlayPauseImage.image = UIImage(named: "playIcon")
-        
-        guard let actualController = rootController else {return}
-
-        actualController.commentsController?.objectId = objectId[indexPath.row]
-
-        actualController.commentsController?.loadFromParse()
-        
-        rootController?.toggleComments({ (Bool) -> () in
-            
-            print("comments toggled")
-            
-        })
-
-        commentsOpened = true
-        
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
