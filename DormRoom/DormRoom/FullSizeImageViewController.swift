@@ -201,16 +201,16 @@ class FullSizeImageViewController: UIViewController {
     
     @IBAction func back(sender: AnyObject) {
         
-        if self.videoPlayerLayer != nil {
-            self.videoPlayerLayer.removeFromSuperlayer()
-        }
-        
         PlayPauseView.alpha = 0
         CaptionViewOutlet.alpha = 0
         InfoViewOutlet.alpha = 0
         
         rootController?.toggleFullSizeImage({ (Bool) -> () in
             self.ImageOutlet.image = nil
+            
+            if self.videoPlayerLayer != nil {
+                self.videoPlayerLayer.removeFromSuperlayer()
+            }
         })
         
     }

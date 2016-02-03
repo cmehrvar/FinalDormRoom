@@ -83,6 +83,7 @@ class VideoTableViewCell: UITableViewCell {
         actualController.imageController?.InfoViewOutlet.alpha = 1
         actualController.imageController?.objectId = objectId
         actualController.imageController?.ReportOutlet.text = repDel
+        actualController.imageController?.CaptionOutlet.text = captionVar
         
         mainController.rootController?.toggleFullSizeImage({ (Bool) -> () in
             

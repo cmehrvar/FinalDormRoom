@@ -597,6 +597,10 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             let cell = tableView.dequeueReusableCellWithIdentifier("CommentsPhotoCell", forIndexPath: indexPath) as! PhotoCommentCell
             
+            cell.profileUrl = profilePictures[indexPath.row]
+            cell.usernameVar = usernames[indexPath.row]
+            cell.timePostedVar = timeAgoSince(dates[indexPath.row])
+            
             cell.isDeleted = isDeleted
                         
             var hasBeenVotedOn = false
@@ -677,51 +681,67 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             case "Brock":
                 cell.UniversityName.text = "Brock Univeristy"
+                cell.uniVar = "Brock Univeristy"
                 
             case "Calgary":
                 cell.UniversityName.text = "University of Calgary"
+                cell.uniVar = "University of Calgary"
                 
             case "Carlton":
                 cell.UniversityName.text = "Carlton University"
+                cell.uniVar = "Carlton University"
                 
             case "Dalhousie":
                 cell.UniversityName.text = "Dalhousie University"
+                cell.uniVar = "Dalhousie University"
                 
             case "Laurier":
                 cell.UniversityName.text = "Wilfred Laurier University"
+                cell.uniVar = "Wilfred Laurier University"
                 
             case "McGill":
                 cell.UniversityName.text = "McGill University"
+                cell.uniVar = "McGill University"
                 
             case "Mac":
                 cell.UniversityName.text = "McMaster University"
+                cell.uniVar = "McMaster University"
                 
             case "Mun":
                 cell.UniversityName.text = "Memorial University"
+                cell.uniVar = "Memorial University"
                 
             case "Ottawa":
                 cell.UniversityName.text = "University of Ottawa"
+                cell.uniVar = "University of Ottawa"
                 
             case "Queens":
                 cell.UniversityName.text = "Queens University"
+                cell.uniVar = "Queens University"
                 
             case "Ryerson":
                 cell.UniversityName.text = "Ryerson University"
+                cell.uniVar = "Ryerson University"
                 
             case "UBC":
                 cell.UniversityName.text = "University of British Colombia"
+                cell.uniVar = "University of British Colombia"
                 
             case "UofT":
                 cell.UniversityName.text = "University of Toronto"
+                cell.uniVar = "University of Toronto"
                 
             case "Western":
                 cell.UniversityName.text = "University of Western Ontario"
+                cell.uniVar = "University of Western Ontario"
                 
             case "York":
                 cell.UniversityName.text = "York University"
+                cell.uniVar = "York University"
                 
             case "OtherUni":
                 cell.UniversityName.text = "Other"
+                cell.uniVar = "Other"
                 
             default:
                 break
