@@ -155,6 +155,15 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
         commentIds.removeAll()
         isPhoto.removeAll()
         commentPhotos.removeAll()
+        isDeleted.removeAll()
+        checkedCommentIds.removeAll()
+        checkedCommentPhotos.removeAll()
+        checkedComments.removeAll()
+        checkedDates.removeAll()
+        checkedIsPhoto.removeAll()
+        checkedProfilePictures.removeAll()
+        checkedUniversities.removeAll()
+        checkedUsernames.removeAll()
         
         discardPhoto()
         
