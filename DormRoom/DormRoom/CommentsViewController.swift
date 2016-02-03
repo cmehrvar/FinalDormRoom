@@ -14,14 +14,25 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     weak var rootController: MainRootViewController?
     
     var comments = [String]()
+    var checkedComments = [String]()
     var profilePictures = [String]()
+    var checkedProfilePictures = [String]()
     var dates = [NSDate]()
+    var checkedDates = [NSDate]()
     var usernames = [String]()
+    var checkedUsernames = [String]()
     var universities = [String]()
+    var checkedUniversities = [String]()
     var votes = [Int]()
+    var checkedVotes = [Int]()
     var commentIds = [String]()
+    var checkedCommentIds = [String]()
     var isPhoto = [Bool]()
+    var checkedIsPhoto = [Bool]()
     var commentPhotos = [String]()
+    var checkedCommentPhotos = [String]()
+    var isDeleted = [Bool]()
+
     
     var dormroomUrl = "https://s3.amazonaws.com/dormroombucket/"
     
@@ -71,6 +82,12 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     //Actions
+    
+    
+    
+    
+    
+    
     @IBAction func callCamera(sender: AnyObject) {
         
         let cameraProfile = UIImagePickerController()
@@ -150,6 +167,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func postPhoto(sender: AnyObject) {
+        
+        view.endEditing(true)
         
         if let actualImage = CommentPhoto.image {
             uploadToAWS(actualImage)
@@ -295,6 +314,13 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 self.universities = post["NewCommentUniversities"] as! [String]
                 self.votes = post["NewCommentVotes"] as! [Int]
                 
+                if post["IsCommentDeleted"] == nil {
+                    self.isDeleted = []
+                } else {
+                    self.isPhoto = post["IsCommentDeleted"] as! [Bool]
+                }
+
+                
                 if post["CommentPhoto"] == nil {
                     self.commentPhotos = []
                 } else {
@@ -318,8 +344,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 post["NewCommentDates"] = [date] + self.dates
                 post["NewCommentUniversities"] = [self.user?["universityName"] as! String] + self.universities
                 post["CommentIds"] = [fileName] + self.commentIds
-                
-                
+                post["IsCommentDeleted"] = [false] + self.isDeleted
                 
                 if self.isPhotoComment {
                     post["NewComments"] = [self.PhotoText.text] + self.comments
@@ -413,6 +438,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.commentIds.removeAll()
                     self.isPhoto.removeAll()
                     self.commentPhotos.removeAll()
+                    self.isDeleted.removeAll()
                     
                     do {
                         try post?.fetch()
@@ -448,6 +474,46 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                             self.isPhoto = post?["IsPhotoComment"] as! [Bool]
                         }
                         
+                        if post?["IsCommentDeleted"] == nil {
+                            self.isDeleted = []
+                        } else {
+                            self.isDeleted = post?["IsCommentDeleted"] as! [Bool]
+                        }
+                        
+                        self.checkedUniversities.removeAll()
+                        self.checkedComments.removeAll()
+                        self.checkedProfilePictures.removeAll()
+                        self.checkedUsernames.removeAll()
+                        self.checkedDates.removeAll()
+                        self.checkedVotes.removeAll()
+                        self.checkedIsPhoto.removeAll()
+                        self.checkedCommentIds.removeAll()
+                        self.checkedCommentPhotos.removeAll()
+                        
+                        var i = 0
+                        
+                        if post?["IsCommentDeleted"] != nil {
+                            
+                            for deleted in self.isDeleted {
+                                
+                                if !deleted {
+                                    
+                                    self.checkedComments.append(self.comments[i])
+                                    self.checkedProfilePictures.append(self.profilePictures[i])
+                                    self.checkedUsernames.append(self.usernames[i])
+                                    self.checkedDates.append(self.dates[i])
+                                    self.checkedVotes.append(self.votes[i])
+                                    self.checkedIsPhoto.append(self.isPhoto[i])
+                                    self.checkedCommentIds.append(self.commentIds[i])
+                                    self.checkedCommentPhotos.append(self.commentPhotos[i])
+                                    self.checkedUniversities.append(self.universities[i])
+                                }
+                                
+                                i++
+                            }
+
+                        }
+                        
                         
                         self.CommentTableView.reloadData()
                         
@@ -462,13 +528,12 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         post?["CommentIds"] = []
                         post?["IsPhotoComment"] = []
                         post?["CommentPhoto"] = []
+                        post?["IsCommentDeleted"] = []
                         
                         post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                             
                             if error == nil {
-                                
                                 print("success")
-                                
                             } else {
                                 print("error")
                             }
@@ -482,6 +547,10 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }
         }
+        
+        self.rootController?.mainController?.loadFromParse({ (Bool) -> () in
+            
+        })
     }
     
     func addTapGesture() {
@@ -510,7 +579,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        if isPhoto[indexPath.row] {
+        if checkedIsPhoto[indexPath.row] {
             return 125.0
         } else {
             return 100.0
@@ -523,15 +592,27 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         tableView.addSubview(refreshControl)
-        
-        if isPhoto[indexPath.row] {
+
+        if checkedIsPhoto[indexPath.row] {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("CommentsPhotoCell", forIndexPath: indexPath) as! PhotoCommentCell
+            
+            cell.isDeleted = isDeleted
                         
             var hasBeenVotedOn = false
             
             var commentsVotedOn = [String]()
             
+            if checkedUsernames[indexPath.row] == user?.username {
+                
+                cell.DeleteOutlet.alpha = 1
+                
+            } else {
+                
+                cell.DeleteOutlet.alpha = 0
+                
+            }
+
             if user?["votes"] == nil {
                 commentsVotedOn = []
             } else {
@@ -540,7 +621,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             for commentVotedOn in commentsVotedOn {
                 
-                if commentVotedOn == commentIds[indexPath.row] {
+                if commentVotedOn == checkedCommentIds[indexPath.row] {
                     hasBeenVotedOn = true
                 }
             }
@@ -559,39 +640,39 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.selectionStyle = .None
             
-            cell.Comment.text = comments[indexPath.row]
-            cell.TimePosted.text = timeAgoSince(dates[indexPath.row])
-            cell.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictures[indexPath.row]))
-            cell.Username.text = usernames[indexPath.row] + ","
-            cell.photoComment.sd_setImageWithURL(NSURL(string: commentPhotos[indexPath.row]))
+            cell.Comment.text = checkedComments[indexPath.row]
+            cell.TimePosted.text = timeAgoSince(checkedDates[indexPath.row])
+            cell.ProfilePicture.sd_setImageWithURL(NSURL(string: checkedProfilePictures[indexPath.row]))
+            cell.Username.text = checkedUsernames[indexPath.row] + ","
+            cell.photoComment.sd_setImageWithURL(NSURL(string: checkedCommentPhotos[indexPath.row]))
             
-            
-            if votes[indexPath.row] > 0 {
+            if checkedVotes[indexPath.row] > 0 {
                 
-                cell.VoteCount.text = "\(votes[indexPath.row])"
+                cell.VoteCount.text = "\(checkedVotes[indexPath.row])"
                 cell.plusMinusIcon.image = UIImage(named: "plus")
                 
-            } else if votes[indexPath.row] == 0 {
+            } else if checkedVotes[indexPath.row] == 0 {
                 
                 cell.plusMinusIcon.image = nil
-                cell.VoteCount.text = "\(votes[indexPath.row])"
+                cell.VoteCount.text = "\(checkedVotes[indexPath.row])"
                 
-            } else if votes[indexPath.row] < 0 {
+            } else if checkedVotes[indexPath.row] < 0 {
                 
                 cell.plusMinusIcon.image = UIImage(named: "minus")
-                let positiveVotes = -(votes[indexPath.row])
+                let positiveVotes = -(checkedVotes[indexPath.row])
                 cell.VoteCount.text = "\(positiveVotes)"
                 
             }
             
             cell.commentViewController = self
-            cell.commentId = commentIds[indexPath.row]
+            cell.commentId = checkedCommentIds[indexPath.row]
             
-            cell.votes = votes
+            cell.votes = checkedVotes
             cell.indexPath = indexPath.row
             cell.objectId = objectId
             
-            switch universities[indexPath.row] {
+            
+            switch checkedUniversities[indexPath.row] {
                 
             case "Brock":
                 cell.UniversityName.text = "Brock Univeristy"
@@ -664,7 +745,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             for commentVotedOn in commentsVotedOn {
                 
-                if commentVotedOn == commentIds[indexPath.row] {
+                if commentVotedOn == checkedCommentIds[indexPath.row] {
                     hasBeenVotedOn = true
                 }
             }
@@ -683,38 +764,39 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.selectionStyle = .None
             
-            cell.Comment.text = comments[indexPath.row]
-            cell.TimePosted.text = timeAgoSince(dates[indexPath.row])
-            cell.ProfilePicture.sd_setImageWithURL(NSURL(string: profilePictures[indexPath.row]))
-            cell.Username.text = usernames[indexPath.row] + ","
+            cell.Comment.text = checkedComments[indexPath.row]
+            cell.TimePosted.text = timeAgoSince(checkedDates[indexPath.row])
+            cell.ProfilePicture.sd_setImageWithURL(NSURL(string: checkedProfilePictures[indexPath.row]))
+            cell.Username.text = checkedUsernames[indexPath.row] + ","
             
             
-            if votes[indexPath.row] > 0 {
+            if checkedVotes[indexPath.row] > 0 {
                 
-                cell.VoteCount.text = "\(votes[indexPath.row])"
+                cell.VoteCount.text = "\(checkedVotes[indexPath.row])"
                 cell.plusMinusIcon.image = UIImage(named: "plus")
                 
-            } else if votes[indexPath.row] == 0 {
+            } else if checkedVotes[indexPath.row] == 0 {
                 
                 cell.plusMinusIcon.image = nil
-                cell.VoteCount.text = "\(votes[indexPath.row])"
+                cell.VoteCount.text = "\(checkedVotes[indexPath.row])"
                 
-            } else if votes[indexPath.row] < 0 {
+            } else if checkedVotes[indexPath.row] < 0 {
                 
                 cell.plusMinusIcon.image = UIImage(named: "minus")
-                let positiveVotes = -(votes[indexPath.row])
+                let positiveVotes = -(checkedVotes[indexPath.row])
                 cell.VoteCount.text = "\(positiveVotes)"
                 
             }
             
             cell.commentViewController = self
-            cell.commentId = commentIds[indexPath.row]
+            cell.commentId = checkedCommentIds[indexPath.row]
             
-            cell.votes = votes
+            cell.votes = checkedVotes
             cell.indexPath = indexPath.row
             cell.objectId = objectId
+            cell.isDeleted = isDeleted
             
-            switch universities[indexPath.row] {
+            switch checkedUniversities[indexPath.row] {
                 
             case "Brock":
                 cell.UniversityName.text = "Brock Univeristy"
@@ -777,7 +859,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return comments.count
+        return checkedComments.count
     }
     
     func textViewDidBeginEditing(textView: UITextView) {

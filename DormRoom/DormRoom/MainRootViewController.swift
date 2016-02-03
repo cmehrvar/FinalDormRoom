@@ -74,6 +74,12 @@ class MainRootViewController: UIViewController {
         
         var panelOffset: CGFloat = 0
         
+        let player = mainController?.videoPlayer
+        
+        if player != nil {
+            player?.pause()
+        }
+        
         if commentsIsRevealed {
             panelOffset = view.bounds.size.height
         }
@@ -96,6 +102,12 @@ class MainRootViewController: UIViewController {
     func toggleChangeUni(completion: (Bool) -> ()) {
         
         var panelOffset: CGFloat = 0
+        
+        let player = mainController?.videoPlayer
+        
+        if player != nil {
+            player?.pause()
+        }
         
         if changeUniIsRevealed {
             panelOffset = view.bounds.size.height
@@ -122,6 +134,12 @@ class MainRootViewController: UIViewController {
             panelOffset = -drawerWidthConstant
         }
         
+        let player = mainController?.videoPlayer
+        
+        if player != nil {
+            player?.pause()
+        }
+        
         menuIsRevealed = !menuIsRevealed
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
@@ -141,6 +159,12 @@ class MainRootViewController: UIViewController {
     func toggleTakePuff(completion: (Bool) -> ()) {
         
         var panelOffset: CGFloat = 1
+        
+        let player = mainController?.videoPlayer
+        
+        if player != nil {
+            player?.pause()
+        }
         
         if takePuffIsRevealed {
             panelOffset = 0

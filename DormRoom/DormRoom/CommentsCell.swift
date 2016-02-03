@@ -9,7 +9,7 @@
 import UIKit
 
 class CommentsCell: UITableViewCell {
-
+    
     @IBOutlet weak var ProfilePicture: UIImageView!
     @IBOutlet weak var TimePosted: UILabel!
     @IBOutlet weak var Username: UILabel!
@@ -19,15 +19,16 @@ class CommentsCell: UITableViewCell {
     @IBOutlet weak var VoteCount: UILabel!
     @IBOutlet weak var Comment: UITextView!
     @IBOutlet weak var plusMinusIcon: UIImageView!
+    @IBOutlet weak var DeleteOutlet: UIButton!
     
     
     var votes = [Int]()
+    var isDeleted = [Bool]()
     var indexPath: Int!
     var objectId: String!
     
     var commentId: String!
     var commentViewController: CommentsViewController!
-    
     
     let user = PFUser.currentUser()
     
@@ -56,8 +57,8 @@ class CommentsCell: UITableViewCell {
             VoteCount.text = "\(positiveVotes)"
             
         }
-
- 
+        
+        
         UIView.animateWithDuration(0.3) { () -> Void in
             
             self.VoteUpOutlet.alpha = 0
@@ -118,7 +119,7 @@ class CommentsCell: UITableViewCell {
     }
     
     @IBAction func VoteDown(sender: AnyObject) {
-
+        
         print("Vote Down")
         
         var vote = votes[indexPath]
@@ -203,15 +204,55 @@ class CommentsCell: UITableViewCell {
     }
     
     
+    @IBAction func Delete(sender: AnyObject) {
+        
+        let alertController = UIAlertController(title: "So...", message: "You wanna delete this?", preferredStyle:  UIAlertControllerStyle.Alert)
+        
+        alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
+            
+            var delete = self.isDeleted[self.indexPath]
+            delete = true
+            self.isDeleted[self.indexPath] = delete
+            
+            let query = PFQuery(className: "CanadaPuff")
+            
+            query.getObjectInBackgroundWithId(self.objectId, block: { (post: PFObject?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    post?["IsCommentDeleted"] = self.isDeleted
+                    
+                    post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                        
+                        self.commentViewController.loadFromParse()
+                    
+                    })
+
+                } else {
+                    
+                    print(error)
+                    
+                }
+            })
+        }))
+        
+        self.commentViewController.presentViewController(alertController, animated: true, completion: nil)
+        
+    }
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
 }

@@ -53,10 +53,11 @@ class VideoTableViewCell: UITableViewCell {
     @IBOutlet weak var ProfileOutlet: UIImageView!
     @IBOutlet weak var LikeButtonOutlet: UIImageView!
     @IBOutlet weak var DislikeButtonOutlet: UIImageView!
-    @IBOutlet weak var CommentNumber: UILabel!
     @IBOutlet weak var likeView: UIView!
     @IBOutlet weak var dislikeView: UIView!
-    @IBOutlet weak var ReportOutlet: UIButton!
+    @IBOutlet weak var ReportOutlet: UILabel!
+    
+    
     @IBOutlet weak var UniversityName: UILabel!
     
     

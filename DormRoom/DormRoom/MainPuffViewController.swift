@@ -48,13 +48,20 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     var dislikes = [Int]()
     var usernames = [String]()
     var objectId = [String]()
+    
     var comments = [[String]]()
+    var checkedComments = [[String]]()
+    var deletedComments = [[Bool]]()
+    
     var commentsNil = [Bool]()
     var usersBlocked = [[String]]()
     var imageDates = [NSDate]()
     var isImage = [Bool]()
     var videoUrls = [String]()
+    
     var commentUsernames = [[String]]()
+    var checkedUsernames = [[String]]()
+    
     var asset = [AVURLAsset]()
     
     
@@ -115,6 +122,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         guard let actualController = rootController else {return}
         
         actualController.takePuffController?.feed = feed
+        actualController.takePuffController?.configureCameraForCapture()
         
         
         rootController?.toggleTakePuff({ (complete) -> () in
@@ -291,14 +299,19 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.usernames.removeAll()
                     self.objectId.removeAll()
                     self.comments.removeAll()
+                    self.checkedComments.removeAll()
                     self.commentsNil.removeAll()
                     self.imageDates.removeAll()
                     self.isImage.removeAll()
                     self.videoUrls.removeAll()
                     self.commentUsernames.removeAll()
+                    self.checkedUsernames.removeAll()
                     self.asset.removeAll()
+                    self.deletedComments.removeAll()
                     
                     if let puffs = puffs {
+                        
+                        var mainIndex = 0
                         
                         for puff in puffs {
                             
@@ -342,6 +355,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.usernames.append(puff["Username"] as! String)
                                             self.isImage.append(puff["IsImage"] as! Bool)
                                             self.videoUrls.append(puff["VideoUrl"] as! String)
+                                            self.checkedComments.append([])
+                                            self.checkedUsernames.append([])
                                             
                                             
                                             if puff["NewCommentUsernames"] != nil {
@@ -362,10 +377,38 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                                 self.comments.append(puff["NewComments"] as! [String])
                                             }
                                             
-                                            
                                             if let actualId = puff.objectId {
                                                 self.objectId.append(actualId)
                                             }
+                                            
+                                            
+                                            
+                                            if puff["IsCommentDeleted"] != nil {
+                                                
+                                                self.deletedComments.append(puff["IsCommentDeleted"] as! [Bool])
+                                                
+                                                var i = 0
+
+                                                for deleted in self.deletedComments[mainIndex] {
+                                                    
+                                                    if !deleted {
+                                                        
+                                                        self.checkedComments[mainIndex].append(self.comments[mainIndex][i])
+                                                        self.checkedUsernames[mainIndex].append(self.commentUsernames[mainIndex][i])
+                                                        
+                                                    }
+                                                    
+                                                    i++
+                                                }
+                                                
+                                            } else {
+                                                self.deletedComments.append([])
+                                                self.checkedComments[mainIndex] = []
+                                                self.checkedUsernames[mainIndex] = []
+                                            }
+                                            
+                                            mainIndex++
+  
                                         }
                                         
                                     }
@@ -380,7 +423,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                         self.usernames.append(puff["Username"] as! String)
                                         self.isImage.append(puff["IsImage"] as! Bool)
                                         self.videoUrls.append(puff["VideoUrl"] as! String)
-                                        
+                                        self.checkedComments.append([])
+                                        self.checkedUsernames.append([])
                                         
                                         if let actualDate = puff.createdAt {
                                             self.imageDates.append(actualDate)
@@ -400,18 +444,45 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.comments.append(puff["NewComments"] as! [String])
                                         }
                                         
-                                        
+
                                         if let actualId = puff.objectId {
                                             self.objectId.append(actualId)
                                         }
+                                        
+                                        if puff["IsCommentDeleted"] != nil {
+                                            
+                                            self.deletedComments.append(puff["IsCommentDeleted"] as! [Bool])
+                                            
+                                            var i = 0
+                                            
+                                            for deleted in self.deletedComments[mainIndex] {
+                                                
+                                                if !deleted {
+                                                    
+                                                    self.checkedComments[mainIndex].append(self.comments[mainIndex][i])
+                                                    self.checkedUsernames[mainIndex].append(self.commentUsernames[mainIndex][i])
+                                                    
+                                                }
+                                                
+                                                i++
+                                            }
+                                            
+                                        } else {
+                                            
+                                            self.deletedComments.append([])
+                                            self.checkedComments[mainIndex] = []
+                                            self.checkedUsernames[mainIndex] = []
+                                        }
+                                        
+                                        mainIndex++
+                                        
                                     }
-                                    
                                 }
-                                
                             }
                         }
                     }
                     
+
                     if !self.firstLoad {
                         if self.isImage[0] == false {
                             self.PlayPauseView.alpha = 1
@@ -521,7 +592,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 }
             }
             
-            if comments[indexPath.row].count == 0 {
+            if checkedComments[indexPath.row].count == 0 {
                 
                 cell.ViewHowManyComments.text = "Be First to Comment!"
                 
@@ -532,37 +603,37 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }
             
-            if comments[indexPath.row].count == 1 {
+            if checkedComments[indexPath.row].count == 1 {
                 
                 cell.MostRecentCommentOutlet.alpha = 1
                 cell.MostRecentUsername.alpha = 1
                 
-                cell.MostRecentCommentOutlet.text = comments[indexPath.row].first
-                cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
+                cell.MostRecentCommentOutlet.text = checkedComments[indexPath.row].first
+                cell.MostRecentUsername.text = checkedUsernames[indexPath.row].first
                 
                 cell.SecondRecentComment.alpha = 0
                 cell.SecondRecentUsername.alpha = 0
 
                 cell.ViewHowManyComments.text = "Be Second to Comment!"
                 
-            } else if comments[indexPath.row].count >= 2 {
+            } else if checkedComments[indexPath.row].count >= 2 {
                 
                 cell.MostRecentCommentOutlet.alpha = 1
                 cell.MostRecentUsername.alpha = 1
                 cell.SecondRecentUsername.alpha = 1
                 cell.SecondRecentComment.alpha = 1
                 
-                print(commentUsernames[indexPath.row][1])
+                print(checkedUsernames[indexPath.row][1])
                 
-                cell.MostRecentCommentOutlet.text = comments[indexPath.row].first
-                cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
-                cell.SecondRecentComment.text = comments[indexPath.row][1]
-                cell.SecondRecentUsername.text = commentUsernames[indexPath.row][1]
+                cell.MostRecentCommentOutlet.text = checkedComments[indexPath.row].first
+                cell.MostRecentUsername.text = checkedUsernames[indexPath.row].first
+                cell.SecondRecentComment.text = checkedComments[indexPath.row][1]
+                cell.SecondRecentUsername.text = checkedUsernames[indexPath.row][1]
                 
-                if comments[indexPath.row].count == 2 {
+                if checkedComments[indexPath.row].count == 2 {
                     cell.ViewHowManyComments.text = "Be Third to Comment"
                 } else {
-                    cell.ViewHowManyComments.text = "View all \(comments[indexPath.row].count) comments"
+                    cell.ViewHowManyComments.text = "View all \(checkedComments[indexPath.row].count) comments"
                 }
                 
                 
@@ -576,13 +647,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
             
             if usernames[indexPath.row] == user?.username {
-                
-                cell.ReportOutlet.titleLabel?.text = "Delete?"
+
+                cell.ReportOutlet.text = "Delete?"
                 
             } else {
-                
-                cell.ReportOutlet.titleLabel?.text = "Report?"
-                
+
+                cell.ReportOutlet.text = "Report?"
             }
             
         
@@ -676,12 +746,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.DislikeOutlet.text = "\(dislikes[indexPath.row])"
             
-            if commentsNil[indexPath.row] == true {
-                cell.CommentNumber.text = "0"
-            } else {
-                cell.CommentNumber.text = "\(comments[indexPath.row].count)"
-            }
-            
             cell.feed = feed
             
             return cell
@@ -735,7 +799,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.timePosted.text = timeAgoSince(date)
             
-            if comments[indexPath.row].count == 0 {
+            if checkedComments[indexPath.row].count == 0 {
                 
                 cell.HowManyComments.text = "Be First to Comment!"
                 
@@ -746,37 +810,37 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             }
             
-            if comments[indexPath.row].count == 1 {
+            if checkedComments[indexPath.row].count == 1 {
                 
                 cell.MostRecentComment.alpha = 1
                 cell.MostRecentUsername.alpha = 1
                 
-                cell.MostRecentComment.text = comments[indexPath.row].first
-                cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
+                cell.MostRecentComment.text = checkedComments[indexPath.row].first
+                cell.MostRecentUsername.text = checkedUsernames[indexPath.row].first
                 
-                cell.SecondComment.alpha = 0
                 cell.SecondUsername.alpha = 0
+                cell.SecondComment.alpha = 0
                 
                 cell.HowManyComments.text = "Be Second to Comment!"
                 
-            } else if comments[indexPath.row].count >= 2 {
+            } else if checkedComments[indexPath.row].count >= 2 {
                 
                 cell.MostRecentComment.alpha = 1
                 cell.MostRecentUsername.alpha = 1
                 cell.SecondComment.alpha = 1
                 cell.SecondUsername.alpha = 1
                 
-                print(commentUsernames[indexPath.row][1])
+                print(checkedUsernames[indexPath.row][1])
                 
-                cell.MostRecentComment.text = comments[indexPath.row].first
-                cell.MostRecentUsername.text = commentUsernames[indexPath.row].first
-                cell.SecondComment.text = comments[indexPath.row][1]
-                cell.SecondUsername.text = commentUsernames[indexPath.row][1]
+                cell.MostRecentComment.text = checkedComments[indexPath.row].first
+                cell.MostRecentUsername.text = checkedUsernames[indexPath.row].first
+                cell.SecondComment.text = checkedComments[indexPath.row][1]
+                cell.SecondUsername.text = checkedUsernames[indexPath.row][1]
                 
-                if comments[indexPath.row].count == 2 {
+                if checkedComments[indexPath.row].count == 2 {
                     cell.HowManyComments.text = "Be Third to Comment"
                 } else {
-                    cell.HowManyComments.text = "View all \(comments[indexPath.row].count) comments"
+                    cell.HowManyComments.text = "View all \(checkedComments[indexPath.row].count) comments"
                 }
             }
             
@@ -788,11 +852,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             if usernames[indexPath.row] == user?.username {
                 
-                cell.ReportOutlet.titleLabel?.text = "Delete?"
+                cell.ReportOutlet.text = "Delete?"
+                
                 
             } else {
                 
-                cell.ReportOutlet.titleLabel?.text = "Report?"
+                cell.ReportOutlet.text = "Report?"
                 
             }
             
@@ -886,12 +951,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.LikeOutlet.text = "\(likes[indexPath.row])"
             
             cell.DislikeOutlet.text = "\(dislikes[indexPath.row])"
-            
-            if commentsNil[indexPath.row] == true {
-                cell.CommentNumber.text = "0"
-            } else {
-                cell.CommentNumber.text = "\(comments[indexPath.row].count)"
-            }
             
             cell.feed = feed
             
@@ -1037,9 +1096,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             }
         }
     }
-    
-    
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -54,7 +54,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureCameraForCapture()
+        //configureCameraForCapture()
         addTapGesture()
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         CaptionOutlet.delegate = self
@@ -93,6 +93,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     //Actions
     @IBAction func changeCameraAction(sender: AnyObject) {
         frontCameraShown = !frontCameraShown
+        previewLayer?.removeFromSuperlayer()
         configureCameraForCapture()
     }
  
@@ -141,6 +142,8 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
     @IBAction func cancelAction(sender: AnyObject) {
         
         rootController?.toggleTakePuff({ (complete) -> () in
+            
+            self.previewLayer?.removeFromSuperlayer()
             
             self.CameraCaptureView.alpha = 1
             self.TakePuffButtonViewOutlet.alpha = 1
@@ -667,7 +670,7 @@ class TakePuffViewController: UIViewController, UITextFieldDelegate, AVCaptureFi
  
     func configureCameraForCapture() {
         
-        previewLayer?.removeFromSuperlayer()
+        //previewLayer?.removeFromSuperlayer()
         
         if !isImage {
         playerLayer.removeFromSuperlayer()

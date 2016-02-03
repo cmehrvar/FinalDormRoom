@@ -20,9 +20,12 @@ class PhotoCommentCell: UITableViewCell {
     @IBOutlet weak var Comment: UITextView!
     @IBOutlet weak var plusMinusIcon: UIImageView!
     @IBOutlet weak var photoComment: UIImageView!
+    @IBOutlet weak var DeleteOutlet: UIButton!
     
     
     var votes = [Int]()
+    var isDeleted = [Bool]()
+    
     var indexPath: Int!
     var objectId: String!
     
@@ -170,6 +173,46 @@ class PhotoCommentCell: UITableViewCell {
                 print(error)
             }
         }
+    }
+    
+    
+    @IBAction func Delete(sender: AnyObject) {
+        
+        let alertController = UIAlertController(title: "So...", message: "You wanna delete this?", preferredStyle:  UIAlertControllerStyle.Alert)
+        
+        alertController.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
+            
+            var delete = self.isDeleted[self.indexPath]
+            delete = true
+            self.isDeleted[self.indexPath] = delete
+            
+            let query = PFQuery(className: "CanadaPuff")
+            
+            query.getObjectInBackgroundWithId(self.objectId, block: { (post: PFObject?, error: NSError?) -> Void in
+                
+                if error == nil {
+                    
+                    post?["IsCommentDeleted"] = self.isDeleted
+                    
+                    post?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
+                        
+                        self.commentViewController.loadFromParse()
+                        
+                    })
+                    
+                } else {
+                    
+                    print(error)
+                    
+                }
+            })
+        }))
+        
+        self.commentViewController.presentViewController(alertController, animated: true, completion: nil)
+
+        
     }
     
     

@@ -38,7 +38,6 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var CaptionOutlet: UILabel!
     @IBOutlet weak var ProfileOutlet: UIImageView!
     @IBOutlet weak var UsernameOutlet: UILabel!
-    @IBOutlet weak var CommentNumber: UILabel!
     @IBOutlet weak var UniversityNameOutlet: UILabel!
     @IBOutlet weak var timePosted: UILabel!
     @IBOutlet weak var LikeButtonOutlet: UIImageView!
@@ -54,7 +53,8 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var ReadSwipeViewOutlet: UIView!
     @IBOutlet weak var ThumbsUpOutlet: UIImageView!
     @IBOutlet weak var ThumbsDownOutlet: UIImageView!
-    @IBOutlet weak var ReportOutlet: UIButton!
+    @IBOutlet weak var ReportOutlet: UILabel!
+    
     
     
     @IBOutlet weak var SwipeConstraint: NSLayoutConstraint!
@@ -147,7 +147,7 @@ class PuffTableViewCell: UITableViewCell {
         mainController.PlayPauseImage.image = UIImage(named: "playIcon")
         
         guard let actualController = mainController.rootController else {return}
-
+        
         actualController.commentsController?.objectId = mainController.objectId[indexPath]
         
         actualController.commentsController?.loadFromParse()
