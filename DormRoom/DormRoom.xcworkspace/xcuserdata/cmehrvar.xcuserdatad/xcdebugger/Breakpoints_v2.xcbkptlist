@@ -26,11 +26,11 @@
                   moduleName = "DormRoom"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cmehrvar/Desktop/What&apos;s%20Up%20DormRoom/DormRoom/DormRoom/CommentsViewController.swift"
-                  timestampString = "476154829.85047"
+                  timestampString = "476171234.029412"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "299"
-                  endingLineNumber = "299"
+                  startingLineNumber = "304"
+                  endingLineNumber = "304"
                   offsetFromSymbolStart = "396">
                </Location>
                <Location
@@ -41,11 +41,11 @@
                   moduleName = "DormRoom"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/cmehrvar/Desktop/What&apos;s%20Up%20DormRoom/DormRoom/DormRoom/CommentsViewController.swift"
-                  timestampString = "476154829.850712"
+                  timestampString = "476171234.029925"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "301"
-                  endingLineNumber = "301"
+                  startingLineNumber = "306"
+                  endingLineNumber = "306"
                   offsetFromSymbolStart = "44">
                </Location>
             </Locations>
@@ -74,44 +74,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DormRoom/MainPuffViewController.swift"
-            timestampString = "476154828.748995"
+            timestampString = "476171232.938868"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "386"
-            endingLineNumber = "386"
+            startingLineNumber = "454"
+            endingLineNumber = "454"
             landmarkName = "loadFromParse(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DormRoom/MainPuffViewController.swift"
-            timestampString = "476154828.748995"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "452"
-            endingLineNumber = "452"
-            landmarkName = "loadFromParse(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DormRoom/MainPuffViewController.swift"
-            timestampString = "476154828.748995"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "560"
-            endingLineNumber = "560"
-            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

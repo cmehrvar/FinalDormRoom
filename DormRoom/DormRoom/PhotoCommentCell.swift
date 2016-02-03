@@ -26,6 +26,8 @@ class PhotoCommentCell: UITableViewCell {
     var votes = [Int]()
     var isDeleted = [Bool]()
     
+    var photoUrl = String()
+    
     var indexPath: Int!
     var objectId: String!
     
@@ -34,6 +36,21 @@ class PhotoCommentCell: UITableViewCell {
     
     
     let user = PFUser.currentUser()
+    
+    
+    @IBAction func fullSizeImage(sender: AnyObject) {
+        
+        guard let actualController = commentViewController.rootController else {return}
+        
+        actualController.imageController?.ImageOutlet.sd_setImageWithURL(NSURL(string: photoUrl))
+        
+        commentViewController.rootController?.toggleFullSizeImage({ (Bool) -> () in
+            
+            print("Full Size Opened")
+            
+        })
+        
+    }
     
     @IBAction func VoteUp(sender: AnyObject) {
         

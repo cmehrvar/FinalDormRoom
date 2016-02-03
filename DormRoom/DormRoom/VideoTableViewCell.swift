@@ -15,11 +15,19 @@ class VideoTableViewCell: UITableViewCell {
     
     let user = PFUser.currentUser()
     
-    var videoUrl = String()
-    
     var fullyVisible = false
     
     var indexPath: Int!
+    
+    var profileUrl = String()
+    var uniName = String()
+    var username = String()
+    var timePostedVar = String()
+    var captionVar = String()
+    var likeVar = String()
+    var dislikeVar = String()
+    var repDel = String()
+    var asset: AVURLAsset!
     
     var objectId = String()
     var like = Int()
@@ -61,6 +69,30 @@ class VideoTableViewCell: UITableViewCell {
     @IBOutlet weak var UniversityName: UILabel!
     
     
+    @IBAction func fullScreen(sender: AnyObject) {
+        
+        guard let actualController = mainController.rootController else {return}
+        
+        actualController.imageController?.ProfilePictureOutlet.sd_setImageWithURL(NSURL(string: profileUrl))
+        actualController.imageController?.UsernameOutlet.text = username
+        actualController.imageController?.TimePostedOutlet.text = timePostedVar
+        actualController.imageController?.UniversityNameOutlet.text = uniName
+        actualController.imageController?.playVideo(asset)
+        actualController.imageController?.PlayPauseView.alpha = 1
+        actualController.imageController?.CaptionViewOutlet.alpha = 1
+        actualController.imageController?.InfoViewOutlet.alpha = 1
+        actualController.imageController?.objectId = objectId
+        actualController.imageController?.ReportOutlet.text = repDel
+        
+        mainController.rootController?.toggleFullSizeImage({ (Bool) -> () in
+            
+            print("FullScreenToggled")
+            
+        })
+    }
+    
+    
+
     @IBAction func ReportDelete(sender: AnyObject) {
         
         print("Report Delete")

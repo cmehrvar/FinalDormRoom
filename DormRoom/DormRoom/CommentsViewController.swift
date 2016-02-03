@@ -645,6 +645,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.ProfilePicture.sd_setImageWithURL(NSURL(string: checkedProfilePictures[indexPath.row]))
             cell.Username.text = checkedUsernames[indexPath.row] + ","
             cell.photoComment.sd_setImageWithURL(NSURL(string: checkedCommentPhotos[indexPath.row]))
+            cell.photoUrl = checkedCommentPhotos[indexPath.row]
             
             if checkedVotes[indexPath.row] > 0 {
                 

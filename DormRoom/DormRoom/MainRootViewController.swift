@@ -15,6 +15,7 @@ class MainRootViewController: UIViewController {
     var takePuffIsRevealed = false
     var changeUniIsRevealed = false
     var commentsIsRevealed = false
+    var fullSizeImageIsRevealed = false
 
     
     let user = PFUser.currentUser()
@@ -24,6 +25,7 @@ class MainRootViewController: UIViewController {
     weak var takePuffController: TakePuffViewController?
     weak var menuController: MenuViewController?
     weak var commentsController: CommentsViewController?
+    weak var imageController: FullSizeImageViewController?
 
     
     //Constraints
@@ -32,6 +34,8 @@ class MainRootViewController: UIViewController {
     @IBOutlet weak var ChangeUniTop: NSLayoutConstraint!
     @IBOutlet weak var CommentsLeading: NSLayoutConstraint!
     @IBOutlet weak var CommentsTrailing: NSLayoutConstraint!
+    @IBOutlet weak var FullSizeImageLeading: NSLayoutConstraint!
+    @IBOutlet weak var FullSizeImageTrailing: NSLayoutConstraint!
 
     
     //Outlets
@@ -49,6 +53,7 @@ class MainRootViewController: UIViewController {
         setMenuStage()
         setChangeUniStage()
         setCommentStage()
+        setFullSizeStage()
  
     }
     
@@ -70,6 +75,46 @@ class MainRootViewController: UIViewController {
         
     }
     
+    
+    func setFullSizeStage() {
+        
+        FullSizeImageLeading.constant = -view.bounds.size.width
+        FullSizeImageTrailing.constant = view.bounds.size.width
+        
+    }
+    
+    
+    func toggleFullSizeImage(completion: (Bool) -> ()) {
+        
+        var panelOffset: CGFloat = 0
+        
+        let player = mainController?.videoPlayer
+        
+        if player != nil {
+            player?.pause()
+            mainController?.PlayPauseImage.image = UIImage(named: "playIcon")
+        }
+        
+        if fullSizeImageIsRevealed {
+            panelOffset = view.bounds.size.height
+        }
+        
+        fullSizeImageIsRevealed = !fullSizeImageIsRevealed
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.FullSizeImageLeading.constant = -panelOffset
+            self.FullSizeImageTrailing.constant = panelOffset
+            self.view.layoutIfNeeded()
+            
+            }) { (complete) -> Void in
+                completion(complete)
+        }
+    }
+
+    
+    
+    
     func toggleComments(completion: (Bool) -> ()) {
         
         var panelOffset: CGFloat = 0
@@ -78,6 +123,7 @@ class MainRootViewController: UIViewController {
         
         if player != nil {
             player?.pause()
+            mainController?.PlayPauseImage.image = UIImage(named: "playIcon")
         }
         
         if commentsIsRevealed {
@@ -107,6 +153,7 @@ class MainRootViewController: UIViewController {
         
         if player != nil {
             player?.pause()
+            mainController?.PlayPauseImage.image = UIImage(named: "playIcon")
         }
         
         if changeUniIsRevealed {
@@ -138,6 +185,7 @@ class MainRootViewController: UIViewController {
         
         if player != nil {
             player?.pause()
+            mainController?.PlayPauseImage.image = UIImage(named: "playIcon")
         }
         
         menuIsRevealed = !menuIsRevealed
@@ -164,6 +212,7 @@ class MainRootViewController: UIViewController {
         
         if player != nil {
             player?.pause()
+            mainController?.PlayPauseImage.image = UIImage(named: "playIcon")
         }
         
         if takePuffIsRevealed {
@@ -226,6 +275,11 @@ class MainRootViewController: UIViewController {
             commentsController = comments
             commentsController?.rootController = self
 
+        } else if segue.identifier == "FullSizeSegue" {
+            
+            guard let navController = segue.destinationViewController as? UINavigationController, fullSizeController = navController.topViewController as? FullSizeImageViewController else {return}
+            imageController = fullSizeController
+            imageController?.rootController = self
         }
     }
 }

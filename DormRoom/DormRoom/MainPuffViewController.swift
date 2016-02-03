@@ -355,6 +355,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.usernames.append(puff["Username"] as! String)
                                             self.isImage.append(puff["IsImage"] as! Bool)
                                             self.videoUrls.append(puff["VideoUrl"] as! String)
+                                            self.asset.append(AVURLAsset(URL: NSURL(string: "")!))
                                             self.checkedComments.append([])
                                             self.checkedUsernames.append([])
                                             
@@ -423,6 +424,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                         self.usernames.append(puff["Username"] as! String)
                                         self.isImage.append(puff["IsImage"] as! Bool)
                                         self.videoUrls.append(puff["VideoUrl"] as! String)
+                                        self.asset.append(AVURLAsset(URL: NSURL(string: "")!))
                                         self.checkedComments.append([])
                                         self.checkedUsernames.append([])
                                         
@@ -505,6 +507,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func urlToAsset() {
         
+        self.asset.removeAll()
+        
         for var i = 0; i < videoUrls.count; i++ {
             
             if isImage[i] == true {
@@ -575,6 +579,14 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             cell.selectionStyle = .None
             
+            cell.imageUrl = dormroomurl + imageUrls[indexPath.row]
+            cell.profileUrl = dormroomurl + profilePictureURLS[indexPath.row]
+            cell.timePostedVar = timeAgoSince(date)
+            cell.username = usernames[indexPath.row]
+            cell.captionVar = captions[indexPath.row]
+            cell.likeVar = "\(likes[indexPath.row])"
+            cell.dislikeVar = "\(dislikes[indexPath.row])"
+
             cell.indexPath = indexPath.row
             
             cell.objectId = objectId[indexPath.row]
@@ -649,10 +661,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             if usernames[indexPath.row] == user?.username {
 
                 cell.ReportOutlet.text = "Delete?"
+                cell.repDel = "Delete?"
                 
             } else {
 
                 cell.ReportOutlet.text = "Report?"
+                cell.repDel = "Report?"
             }
             
         
@@ -691,51 +705,67 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             case "Brock":
                 cell.UniversityNameOutlet.text = "Brock Univeristy"
+                cell.uniName = "Brock Univeristy"
                 
             case "Calgary":
                 cell.UniversityNameOutlet.text = "University of Calgary"
+                cell.uniName = "University of Calgary"
                 
             case "Carlton":
                 cell.UniversityNameOutlet.text = "Carlton University"
+                cell.uniName = "Carlton University"
                 
             case "Dalhousie":
                 cell.UniversityNameOutlet.text = "Dalhousie University"
+                cell.uniName = "Dalhousie University"
                 
             case "Laurier":
                 cell.UniversityNameOutlet.text = "Wilfred Laurier University"
+                cell.uniName = "Wilfred Laurier University"
                 
             case "McGill":
                 cell.UniversityNameOutlet.text = "McGill University"
+                cell.uniName = "McGill University"
                 
             case "Mac":
                 cell.UniversityNameOutlet.text = "McMaster University"
+                cell.uniName = "McMaster University"
                 
             case "Mun":
                 cell.UniversityNameOutlet.text = "Memorial University"
+                cell.uniName = "Memorial University"
                 
             case "Ottawa":
                 cell.UniversityNameOutlet.text = "University of Ottawa"
+                cell.uniName = "University of Ottawa"
                 
             case "Queens":
                 cell.UniversityNameOutlet.text = "Queens University"
+                cell.uniName = "Queens University"
                 
             case "Ryerson":
                 cell.UniversityNameOutlet.text = "Ryerson University"
+                cell.uniName = "Ryerson University"
                 
             case "UBC":
                 cell.UniversityNameOutlet.text = "University of British Colombia"
+                cell.uniName = "University of British Colombia"
                 
             case "UofT":
                 cell.UniversityNameOutlet.text = "University of Toronto"
+                cell.uniName = "University of Toronto"
                 
             case "Western":
                 cell.UniversityNameOutlet.text = "University of Western Ontario"
+                cell.uniName = "University of Western Ontario"
                 
             case "York":
                 cell.UniversityNameOutlet.text = "York University"
+                cell.uniName = "York University"
                 
             case "OtherUni":
                 cell.UniversityNameOutlet.text = "Other"
+                cell.uniName = "Other"
                 
             default:
                 break
@@ -755,6 +785,14 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             let cell = tableView.dequeueReusableCellWithIdentifier("VideoCell", forIndexPath: indexPath) as! VideoTableViewCell
             
             cell.selectionStyle = .None
+            
+            cell.profileUrl = dormroomurl + profilePictureURLS[indexPath.row]
+            cell.timePostedVar = timeAgoSince(date)
+            cell.username = usernames[indexPath.row]
+            cell.captionVar = captions[indexPath.row]
+            cell.likeVar = "\(likes[indexPath.row])"
+            cell.dislikeVar = "\(dislikes[indexPath.row])"
+            cell.asset = asset[indexPath.row]
             
             if indexPath.row == index {
                 
@@ -853,11 +891,13 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             if usernames[indexPath.row] == user?.username {
                 
                 cell.ReportOutlet.text = "Delete?"
+                cell.repDel = "Delete?"
                 
                 
             } else {
                 
                 cell.ReportOutlet.text = "Report?"
+                cell.repDel = "Report?"
                 
             }
             
@@ -897,51 +937,67 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
             case "Brock":
                 cell.UniversityName.text = "Brock Univeristy"
+                cell.uniName = "Brock Univeristy"
                 
             case "Calgary":
                 cell.UniversityName.text = "University of Calgary"
+                cell.uniName = "University of Calgary"
                 
             case "Carlton":
                 cell.UniversityName.text = "Carlton University"
+                cell.uniName = "Carlton University"
                 
             case "Dalhousie":
                 cell.UniversityName.text = "Dalhousie University"
+                cell.uniName = "Dalhousie University"
                 
             case "Laurier":
                 cell.UniversityName.text = "Wilfred Laurier University"
+                cell.uniName = "Wilfred Laurier University"
                 
             case "McGill":
                 cell.UniversityName.text = "McGill University"
+                cell.uniName = "McGill University"
                 
             case "Mac":
                 cell.UniversityName.text = "McMaster University"
+                cell.uniName = "McMaster University"
                 
             case "Mun":
                 cell.UniversityName.text = "Memorial University"
+                cell.uniName = "Memorial University"
                 
             case "Ottawa":
                 cell.UniversityName.text = "University of Ottawa"
+                cell.uniName = "University of Ottawa"
                 
             case "Queens":
                 cell.UniversityName.text = "Queens University"
+                cell.uniName = "Queens University"
                 
             case "Ryerson":
                 cell.UniversityName.text = "Ryerson University"
+                cell.uniName = "Ryerson University"
                 
             case "UBC":
                 cell.UniversityName.text = "University of British Colombia"
+                cell.uniName = "University of British Colombia"
                 
             case "UofT":
                 cell.UniversityName.text = "University of Toronto"
+                cell.uniName = "University of Toronto"
                 
             case "Western":
                 cell.UniversityName.text = "University of Western Ontario"
+                cell.uniName = "University of Western Ontario"
                 
             case "York":
                 cell.UniversityName.text = "York University"
+                cell.uniName = "York University"
                 
             case "OtherUni":
                 cell.UniversityName.text = "Other"
+                cell.uniName = "Other"
                 
             default:
                 break

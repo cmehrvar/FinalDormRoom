@@ -16,6 +16,16 @@ class PuffTableViewCell: UITableViewCell {
     
     var mainController: MainPuffViewController!
     
+    var imageUrl = String()
+    var profileUrl = String()
+    var uniName = String()
+    var username = String()
+    var timePostedVar = String()
+    var captionVar = String()
+    var likeVar = String()
+    var dislikeVar = String()
+    var repDel = String()
+    
     var objectId = String()
     var like = Int()
     var dislike = Int()
@@ -58,6 +68,43 @@ class PuffTableViewCell: UITableViewCell {
     
     
     @IBOutlet weak var SwipeConstraint: NSLayoutConstraint!
+    
+    
+    
+    
+    @IBAction func fullScreen(sender: AnyObject) {
+        
+        guard let actualController = mainController.rootController else {return}
+        
+        actualController.imageController?.ImageOutlet.sd_setImageWithURL(NSURL(string: imageUrl))
+        actualController.imageController?.ProfilePictureOutlet.sd_setImageWithURL(NSURL(string: profileUrl))
+        actualController.imageController?.UsernameOutlet.text = username
+        actualController.imageController?.TimePostedOutlet.text = timePostedVar
+        actualController.imageController?.UniversityNameOutlet.text = uniName
+        actualController.imageController?.CaptionOutlet.text = captionVar
+        actualController.imageController?.LikeOutlet.text = likeVar
+        actualController.imageController?.DislikeOutlet.text = dislikeVar
+        actualController.imageController?.CaptionViewOutlet.alpha = 1
+        actualController.imageController?.InfoViewOutlet.alpha = 1
+        actualController.imageController?.objectId = objectId
+        actualController.imageController?.isComment = false
+        actualController.imageController?.ReportOutlet.text = repDel
+        
+        
+        mainController.rootController?.toggleFullSizeImage({ (Bool) -> () in
+            
+            print("FullScreenToggled")
+            
+        })
+        
+        
+    }
+    
+    
+    
+    
+    
+    
     
     @IBAction func ReportDelete(sender: AnyObject) {
         
