@@ -211,6 +211,10 @@ class FullSizeImageViewController: UIViewController {
             if self.videoPlayerLayer != nil {
                 self.videoPlayerLayer.removeFromSuperlayer()
             }
+            
+            if self.videoPlayer != nil {
+                self.videoPlayer.pause()
+            }
         })
         
     }

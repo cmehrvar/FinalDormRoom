@@ -186,11 +186,7 @@ class PuffTableViewCell: UITableViewCell {
     @IBAction func ViewComments(sender: AnyObject) {
         
         print("Did Select Row")
-        
-        if mainController.videoPlayer != nil {
-             mainController.videoPlayer.pause()
-        }
-        
+
         mainController.PlayPauseImage.image = UIImage(named: "playIcon")
         
         guard let actualController = mainController.rootController else {return}
@@ -198,6 +194,10 @@ class PuffTableViewCell: UITableViewCell {
         actualController.commentsController?.objectId = mainController.objectId[indexPath]
         
         actualController.commentsController?.loadFromParse()
+        
+        if mainController.videoPlayer != nil {
+            mainController.videoPlayer.pause()
+        }
         
         mainController.rootController?.toggleComments({ (Bool) -> () in
             

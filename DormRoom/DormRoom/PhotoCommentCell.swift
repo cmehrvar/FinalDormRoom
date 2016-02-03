@@ -239,8 +239,6 @@ class PhotoCommentCell: UITableViewCell {
         }))
         
         self.commentViewController.presentViewController(alertController, animated: true, completion: nil)
-
-        
     }
     
     

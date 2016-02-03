@@ -456,6 +456,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                     }
                     
                     if post?["NewCommentUsernames"] != nil {
+                        
                         print("Adding")
                         self.comments = post?["NewComments"] as! [String]
                         self.profilePictures = post?["NewCommentProfiles"] as! [String]
