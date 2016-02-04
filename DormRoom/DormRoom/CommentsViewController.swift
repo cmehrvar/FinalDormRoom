@@ -760,6 +760,12 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             var hasBeenVotedOn = false
             
+            if checkedUsernames[indexPath.row] == user?.username {
+                cell.DeleteOutlet.alpha = 1
+            } else {
+                cell.DeleteOutlet.alpha = 0
+            }
+            
             var commentsVotedOn = [String]()
             
             if user?["votes"] == nil {

@@ -580,21 +580,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
             
-            if showProfile[indexPath.row] {
-                
-                cell.BigProfileOutlet.alpha = 1
-                cell.backToContentOutlet.alpha = 1
-                
-            } else {
-                cell.BigProfileOutlet.alpha = 0
-                cell.backToContentOutlet.alpha = 0
-            }
-            
             cell.selectionStyle = .None
             
             cell.imageUrl = dormroomurl + imageUrls[indexPath.row]
             cell.profileUrl = dormroomurl + profilePictureURLS[indexPath.row]
-            cell.BigProfileOutlet.sd_setImageWithURL(NSURL(string: dormroomurl + profilePictureURLS[indexPath.row]))
             cell.timePostedVar = timeAgoSince(date)
             cell.username = usernames[indexPath.row]
             cell.captionVar = captions[indexPath.row]
@@ -798,17 +787,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             let cell = tableView.dequeueReusableCellWithIdentifier("VideoCell", forIndexPath: indexPath) as! VideoTableViewCell
             
-            if showProfile[indexPath.row] {
-                
-                cell.BigProfileOutlet.alpha = 1
-                cell.backToContentOutlet.alpha = 1
-                
-            } else {
-                cell.BigProfileOutlet.alpha = 0
-                cell.backToContentOutlet.alpha = 0
-            }
-
-            
             cell.selectionStyle = .None
             
             cell.profileUrl = dormroomurl + profilePictureURLS[indexPath.row]
@@ -818,8 +796,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.likeVar = "\(likes[indexPath.row])"
             cell.dislikeVar = "\(dislikes[indexPath.row])"
             cell.asset = asset[indexPath.row]
-            
-            cell.BigProfileOutlet.sd_setImageWithURL(NSURL(string: dormroomurl + profilePictureURLS[indexPath.row]))
             
             if indexPath.row == index {
                 

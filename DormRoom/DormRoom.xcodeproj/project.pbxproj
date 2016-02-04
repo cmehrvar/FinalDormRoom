@@ -56,9 +56,6 @@
 		A3E08D871C2C55A8005E7A7A /* RoundedComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E08D861C2C55A8005E7A7A /* RoundedComment.swift */; };
 		A3E08D891C2C6B01005E7A7A /* CommentImageRound.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E08D881C2C6B01005E7A7A /* CommentImageRound.swift */; };
 		A3E110991C1E3E7D00398F03 /* ImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3E110981C1E3E7D00398F03 /* ImageViewExtension.swift */; };
-		A3F048221C1F8D09003763D3 /* instruction1.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F048211C1F8D09003763D3 /* instruction1.swift */; };
-		A3F048241C1F8DBD003763D3 /* instruction2.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F048231C1F8DBD003763D3 /* instruction2.swift */; };
-		A3F048261C1F8DCD003763D3 /* instruction3.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F048251C1F8DCD003763D3 /* instruction3.swift */; };
 		A3F3097A1C0BB32A002DEADF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F309791C0BB32A002DEADF /* AppDelegate.swift */; };
 		A3F3097F1C0BB32A002DEADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3F3097D1C0BB32A002DEADF /* Main.storyboard */; };
 		A3F309811C0BB32A002DEADF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3F309801C0BB32A002DEADF /* Assets.xcassets */; };
@@ -139,9 +136,6 @@
 		A3E08D861C2C55A8005E7A7A /* RoundedComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedComment.swift; sourceTree = "<group>"; };
 		A3E08D881C2C6B01005E7A7A /* CommentImageRound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentImageRound.swift; sourceTree = "<group>"; };
 		A3E110981C1E3E7D00398F03 /* ImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewExtension.swift; sourceTree = "<group>"; };
-		A3F048211C1F8D09003763D3 /* instruction1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = instruction1.swift; sourceTree = "<group>"; };
-		A3F048231C1F8DBD003763D3 /* instruction2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = instruction2.swift; sourceTree = "<group>"; };
-		A3F048251C1F8DCD003763D3 /* instruction3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = instruction3.swift; sourceTree = "<group>"; };
 		A3F309761C0BB32A002DEADF /* DormRoom.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DormRoom.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3F309791C0BB32A002DEADF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3F3097E1C0BB32A002DEADF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -221,9 +215,6 @@
 				A32EC6561C0E576D0004D8C7 /* ChangeUniViewController.swift */,
 				A32EC6581C0E577F0004D8C7 /* MainPuffViewController.swift */,
 				A38C82B41C13F1FC000E650F /* InitialViewController.swift */,
-				A3F048211C1F8D09003763D3 /* instruction1.swift */,
-				A3F048231C1F8DBD003763D3 /* instruction2.swift */,
-				A3F048251C1F8DCD003763D3 /* instruction3.swift */,
 				A3B60AC41C25C4DA00266FB7 /* CommentsViewController.swift */,
 				A3D024E71C3A2EF2006716EC /* ReportViewController.swift */,
 				A3D024E91C3B1D79006716EC /* TermsController.swift */,
@@ -569,7 +560,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3F048221C1F8D09003763D3 /* instruction1.swift in Sources */,
 				A32EC64D1C0DF7AC0004D8C7 /* SignUpViewController.swift in Sources */,
 				A39CBE521C0CE87700D59434 /* RoundedImage.swift in Sources */,
 				A3748FA41C5C17D3007AED90 /* BigRoundedImage.swift in Sources */,
@@ -577,7 +567,6 @@
 				A3F3097A1C0BB32A002DEADF /* AppDelegate.swift in Sources */,
 				A32EC69E1C0F72B20004D8C7 /* SwipeView.swift in Sources */,
 				A32EC6591C0E577F0004D8C7 /* MainPuffViewController.swift in Sources */,
-				A3F048261C1F8DCD003763D3 /* instruction3.swift in Sources */,
 				A33BCFBE1C62FBE700BEAC86 /* SignUpProfile.swift in Sources */,
 				A32EC6531C0E57550004D8C7 /* MenuViewController.swift in Sources */,
 				A365BFB11C4862020012C32F /* VideoTableViewCell.swift in Sources */,
@@ -603,7 +592,6 @@
 				A38C82B51C13F1FC000E650F /* InitialViewController.swift in Sources */,
 				A3E08D871C2C55A8005E7A7A /* RoundedComment.swift in Sources */,
 				A3B60AC51C25C4DA00266FB7 /* CommentsViewController.swift in Sources */,
-				A3F048241C1F8DBD003763D3 /* instruction2.swift in Sources */,
 				A32EC6571C0E576D0004D8C7 /* ChangeUniViewController.swift in Sources */,
 				A36475571C0BBAB000AC96CA /* TextFields.swift in Sources */,
 				A32EC65B1C0E6A610004D8C7 /* PuffTableViewCell.swift in Sources */,
@@ -759,7 +747,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Cina Mehrvar (8YKL2VACPX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -768,9 +756,9 @@
 				INFOPLIST_FILE = DormRoom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.DormRoom.V2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DormRoom.DormRoom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dc3a765c-2a17-4249-a67b-161a5808693e";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "DormRoom/DormRoom-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -784,7 +772,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Cina Mehrvar (8YKL2VACPX)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -793,9 +781,9 @@
 				INFOPLIST_FILE = DormRoom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.DormRoom.V2;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DormRoom.DormRoom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "dc3a765c-2a17-4249-a67b-161a5808693e";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "DormRoom/DormRoom-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

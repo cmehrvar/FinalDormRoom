@@ -121,9 +121,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
                     //call main root controller
                     print("successfully signed up")
                     
-                    if let vc: UIViewController = (self.storyboard?.instantiateViewControllerWithIdentifier("InstructionController")) {
+                    if let vc: UIViewController = (self.storyboard?.instantiateViewControllerWithIdentifier("MainController")) {
                         vc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                         self.presentViewController(vc, animated: true, completion: nil)
+                        
                     }
 
                 } else {

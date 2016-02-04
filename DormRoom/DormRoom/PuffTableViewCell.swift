@@ -64,8 +64,6 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var ThumbsUpOutlet: UIImageView!
     @IBOutlet weak var ThumbsDownOutlet: UIImageView!
     @IBOutlet weak var ReportOutlet: UILabel!
-    @IBOutlet weak var BigProfileOutlet: UIImageView!
-    @IBOutlet weak var backToContentOutlet: UIButton!
     
     
     
