@@ -64,6 +64,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var asset = [AVURLAsset]()
     
+    var showProfile = [Bool]()
+    
     
     let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York"), other = UIImage(named: "OtherUni")
     
@@ -122,8 +124,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         guard let actualController = rootController else {return}
         
         actualController.takePuffController?.feed = feed
-        actualController.takePuffController?.configureCameraForCapture()
-        
         
         rootController?.toggleTakePuff({ (complete) -> () in
 
@@ -263,7 +263,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     func addRefresh() {
         
         self.refreshControl = UIRefreshControl()
-        self.refreshControl.attributedTitle = NSAttributedString(string: "What's Good Canada?")
+        self.refreshControl.attributedTitle = NSAttributedString(string: "More Student Posts...")
         self.refreshControl.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
         
     }
@@ -308,6 +308,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.checkedUsernames.removeAll()
                     self.asset.removeAll()
                     self.deletedComments.removeAll()
+                    self.showProfile.removeAll()
                     
                     if let puffs = puffs {
                         
@@ -358,6 +359,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.asset.append(AVURLAsset(URL: NSURL(string: "")!))
                                             self.checkedComments.append([])
                                             self.checkedUsernames.append([])
+                                            self.showProfile.append(false)
                                             
                                             
                                             if puff["NewCommentUsernames"] != nil {
@@ -427,6 +429,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                         self.asset.append(AVURLAsset(URL: NSURL(string: "")!))
                                         self.checkedComments.append([])
                                         self.checkedUsernames.append([])
+                                        self.showProfile.append(false)
                                         
                                         if let actualDate = puff.createdAt {
                                             self.imageDates.append(actualDate)
@@ -577,10 +580,21 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             let cell = tableView.dequeueReusableCellWithIdentifier("PuffCell", forIndexPath: indexPath) as! PuffTableViewCell
             
+            if showProfile[indexPath.row] {
+                
+                cell.BigProfileOutlet.alpha = 1
+                cell.backToContentOutlet.alpha = 1
+                
+            } else {
+                cell.BigProfileOutlet.alpha = 0
+                cell.backToContentOutlet.alpha = 0
+            }
+            
             cell.selectionStyle = .None
             
             cell.imageUrl = dormroomurl + imageUrls[indexPath.row]
             cell.profileUrl = dormroomurl + profilePictureURLS[indexPath.row]
+            cell.BigProfileOutlet.sd_setImageWithURL(NSURL(string: dormroomurl + profilePictureURLS[indexPath.row]))
             cell.timePostedVar = timeAgoSince(date)
             cell.username = usernames[indexPath.row]
             cell.captionVar = captions[indexPath.row]
@@ -784,6 +798,17 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             let cell = tableView.dequeueReusableCellWithIdentifier("VideoCell", forIndexPath: indexPath) as! VideoTableViewCell
             
+            if showProfile[indexPath.row] {
+                
+                cell.BigProfileOutlet.alpha = 1
+                cell.backToContentOutlet.alpha = 1
+                
+            } else {
+                cell.BigProfileOutlet.alpha = 0
+                cell.backToContentOutlet.alpha = 0
+            }
+
+            
             cell.selectionStyle = .None
             
             cell.profileUrl = dormroomurl + profilePictureURLS[indexPath.row]
@@ -793,6 +818,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.likeVar = "\(likes[indexPath.row])"
             cell.dislikeVar = "\(dislikes[indexPath.row])"
             cell.asset = asset[indexPath.row]
+            
+            cell.BigProfileOutlet.sd_setImageWithURL(NSURL(string: dormroomurl + profilePictureURLS[indexPath.row]))
             
             if indexPath.row == index {
                 
@@ -811,8 +838,14 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.videoPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
                     self.videoPlayerLayer.frame = cell.VideoView.bounds
                     
-                    self.videoPlayer.play()
+                    if !self.showProfile[indexPath.row] {
+                        self.videoPlayer.play()
+                        self.PlayPauseView.alpha = 1
+                    } else {
+                        self.PlayPauseView.alpha = 0
+                    }
                     
+
                     self.PlayPauseImage.image = UIImage(named: "pauseIcon")
                     self.didClickPlay = true
                     

@@ -64,19 +64,16 @@ class VideoTableViewCell: UITableViewCell {
     @IBOutlet weak var likeView: UIView!
     @IBOutlet weak var dislikeView: UIView!
     @IBOutlet weak var ReportOutlet: UILabel!
+    @IBOutlet weak var BigProfileOutlet: UIImageView!
+    @IBOutlet weak var backToContentOutlet: UIButton!
     
     
     @IBOutlet weak var UniversityName: UILabel!
-    
     
     @IBAction func fullScreen(sender: AnyObject) {
         
         guard let actualController = mainController.rootController else {return}
         
-        actualController.imageController?.ProfilePictureOutlet.sd_setImageWithURL(NSURL(string: profileUrl))
-        actualController.imageController?.UsernameOutlet.text = username
-        actualController.imageController?.TimePostedOutlet.text = timePostedVar
-        actualController.imageController?.UniversityNameOutlet.text = uniName
         actualController.imageController?.playVideo(asset)
         actualController.imageController?.PlayPauseView.alpha = 1
         actualController.imageController?.CaptionViewOutlet.alpha = 1
@@ -84,6 +81,7 @@ class VideoTableViewCell: UITableViewCell {
         actualController.imageController?.objectId = objectId
         actualController.imageController?.ReportOutlet.text = repDel
         actualController.imageController?.CaptionOutlet.text = captionVar
+        actualController.imageController?.actualUsername = username
         
         mainController.rootController?.toggleFullSizeImage({ (Bool) -> () in
             
@@ -184,23 +182,39 @@ class VideoTableViewCell: UITableViewCell {
         
         actualController.commentsController?.loadFromParse()
         
-        if mainController.videoPlayer != nil {
-            mainController.videoPlayer.pause()
-        }
-        
         mainController.rootController?.toggleComments({ (Bool) -> () in
             
             print("Comments Toggled")
             
+            if self.mainController.videoPlayer != nil {
+                self.mainController.videoPlayer.pause()
+            }
+            
         })
-        
         
         mainController.commentsOpened = true
 
     }
     
     
+    @IBAction func showProfile(sender: AnyObject) {
+        
+        mainController.showProfile[indexPath] = true
+        
+        mainController.myTableView.reloadData()
+        
+    }
     
+    
+    @IBAction func backToContent(sender: AnyObject) {
+        
+        mainController.showProfile[indexPath] = false
+        mainController.myTableView.reloadData()
+        
+    }
+    
+    
+
     //Functions
     func swipeLikeDislike() {
         

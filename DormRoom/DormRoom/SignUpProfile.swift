@@ -1,19 +1,20 @@
 //
-//  BigRoundedImage.swift
+//  SignUpProfile.swift
 //  DormRoom
 //
-//  Created by Cina Mehrvar on 2016-01-29.
+//  Created by Cina Mehrvar on 2016-02-03.
 //  Copyright © 2016 Cina Mehrvar. All rights reserved.
 //
 
 import UIKit
 
-class BigRoundedImage: UIView {
+class SignUpProfile: UIImageView {
 
     override func awakeFromNib() {
         
         super.awakeFromNib()
-        layer.cornerRadius = 32
+        layer.cornerRadius = 40
         self.clipsToBounds = true
     }
+    
 }

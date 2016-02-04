@@ -82,12 +82,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     //Actions
-    
-    
-    
-    
-    
-    
     @IBAction func callCamera(sender: AnyObject) {
         
         let cameraProfile = UIImagePickerController()

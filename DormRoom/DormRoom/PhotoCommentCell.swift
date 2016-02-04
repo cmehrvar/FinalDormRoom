@@ -47,10 +47,6 @@ class PhotoCommentCell: UITableViewCell {
         guard let actualController = commentViewController.rootController else {return}
         
         actualController.imageController?.ImageOutlet.sd_setImageWithURL(NSURL(string: photoUrl))
-        actualController.imageController?.ProfilePictureOutlet.sd_setImageWithURL(NSURL(string: profileUrl))
-        actualController.imageController?.UsernameOutlet.text = usernameVar
-        actualController.imageController?.UniversityNameOutlet.text = uniVar
-        actualController.imageController?.TimePostedOutlet.text = timePostedVar
         
         actualController.imageController?.InfoViewOutlet.alpha = 0
         actualController.imageController?.CaptionViewOutlet.alpha = 0

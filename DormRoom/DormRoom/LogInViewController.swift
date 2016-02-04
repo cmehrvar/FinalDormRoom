@@ -15,6 +15,12 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let url = NSURL(string: "http://i.giphy.com/l2JI67RBdmHNxkHhC.gif") {
+            
+                 Gif.image = UIImage.animatedImageWithAnimatedGIFURL(url)
+            
+        }
+        
         handleKeyboard()
         addDismissKeyboard()
         textFieldDelegates()
@@ -23,6 +29,7 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     //Outlets
     @IBOutlet weak var UsernameOutlet: UITextField!
     @IBOutlet weak var PasswordOutlet: UITextField!
+    @IBOutlet weak var Gif: UIImageView!
     
     
     //Actions

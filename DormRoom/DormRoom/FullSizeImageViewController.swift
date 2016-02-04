@@ -13,10 +13,6 @@ class FullSizeImageViewController: UIViewController {
     
     
     @IBOutlet weak var ImageOutlet: UIImageView!
-    @IBOutlet weak var UsernameOutlet: UILabel!
-    @IBOutlet weak var TimePostedOutlet: UILabel!
-    @IBOutlet weak var ProfilePictureOutlet: UIImageView!
-    @IBOutlet weak var UniversityNameOutlet: UILabel!
     @IBOutlet weak var ReportOutlet: UILabel!
     @IBOutlet weak var DislikeOutlet: UILabel!
     @IBOutlet weak var LikeOutlet: UILabel!
@@ -27,9 +23,9 @@ class FullSizeImageViewController: UIViewController {
     @IBOutlet weak var CaptionViewOutlet: UIView!
     @IBOutlet weak var InfoViewOutlet: UIView!
     
-    
-    
     let user = PFUser.currentUser()
+    
+    var actualUsername = String()
     
     var videoPlayer: AVPlayer!
     var videoPlayerLayer: AVPlayerLayer!
@@ -42,10 +38,7 @@ class FullSizeImageViewController: UIViewController {
     
     weak var rootController: MainRootViewController?
     
-    
     @IBAction func reportDelete(sender: AnyObject) {
-        
-        guard let actualUsername = UsernameOutlet.text else {return}
         
         if actualUsername != user?.username {
             
@@ -65,7 +58,7 @@ class FullSizeImageViewController: UIViewController {
                 
                 blockedPuffs = self.user?["blockedPuffs"] as! [String]
                 
-                self.user?["blockedPuffs"] = [actualUsername] + blockedPuffs
+                self.user?["blockedPuffs"] = [self.actualUsername] + blockedPuffs
                 
                 self.user?.saveInBackgroundWithBlock({ (Bool, error: NSError?) -> Void in
                     

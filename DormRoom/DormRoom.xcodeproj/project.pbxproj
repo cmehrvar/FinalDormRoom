@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3278FD4F4880FAB3A73E3957 /* libPods-DormRoom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F2451B51057A263F932FCF4E /* libPods-DormRoom.a */; };
+		399EDB07D96EDE052431E2E6 /* libPods-DormRoom.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9294A6B52C437C620CF00130 /* libPods-DormRoom.a */; };
 		A32EC6491C0DF71B0004D8C7 /* SignUpRootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC6481C0DF71B0004D8C7 /* SignUpRootController.swift */; };
 		A32EC64B1C0DF7650004D8C7 /* ChooseUniViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC64A1C0DF7650004D8C7 /* ChooseUniViewController.swift */; };
 		A32EC64D1C0DF7AC0004D8C7 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC64C1C0DF7AC0004D8C7 /* SignUpViewController.swift */; };
@@ -22,6 +22,11 @@
 		A32EC69C1C0F4B300004D8C7 /* UniView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC69B1C0F4B300004D8C7 /* UniView.swift */; };
 		A32EC69E1C0F72B20004D8C7 /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC69D1C0F72B20004D8C7 /* SwipeView.swift */; };
 		A32EC6A01C0F80C30004D8C7 /* ChangeUniCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A32EC69F1C0F80C30004D8C7 /* ChangeUniCell.swift */; };
+		A33BCFB61C62D9EC00BEAC86 /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = A33BCFB51C62D9EC00BEAC86 /* UIImage+animatedGIF.m */; };
+		A33BCFB81C62DA8100BEAC86 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A33BCFB71C62DA8100BEAC86 /* ImageIO.framework */; };
+		A33BCFBA1C62E5CB00BEAC86 /* RoundedLogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33BCFB91C62E5CB00BEAC86 /* RoundedLogIn.swift */; };
+		A33BCFBC1C62F71400BEAC86 /* roundedCheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33BCFBB1C62F71400BEAC86 /* roundedCheckBox.swift */; };
+		A33BCFBE1C62FBE700BEAC86 /* SignUpProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33BCFBD1C62FBE700BEAC86 /* SignUpProfile.swift */; };
 		A33C50D11C30A69C0085DA8C /* TimeAgo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A33C50D01C30A69C0085DA8C /* TimeAgo.swift */; };
 		A36475571C0BBAB000AC96CA /* TextFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36475561C0BBAB000AC96CA /* TextFields.swift */; };
 		A365BFB11C4862020012C32F /* VideoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A365BFB01C4862020012C32F /* VideoTableViewCell.swift */; };
@@ -83,6 +88,7 @@
 
 /* Begin PBXFileReference section */
 		467D6FD297E4D0CB4EB63789 /* Pods-DormRoom.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DormRoom.release.xcconfig"; path = "Pods/Target Support Files/Pods-DormRoom/Pods-DormRoom.release.xcconfig"; sourceTree = "<group>"; };
+		9294A6B52C437C620CF00130 /* libPods-DormRoom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DormRoom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A32EC6481C0DF71B0004D8C7 /* SignUpRootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpRootController.swift; sourceTree = "<group>"; };
 		A32EC64A1C0DF7650004D8C7 /* ChooseUniViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseUniViewController.swift; sourceTree = "<group>"; };
 		A32EC64C1C0DF7AC0004D8C7 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +103,12 @@
 		A32EC69B1C0F4B300004D8C7 /* UniView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniView.swift; sourceTree = "<group>"; };
 		A32EC69D1C0F72B20004D8C7 /* SwipeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeView.swift; sourceTree = "<group>"; };
 		A32EC69F1C0F80C30004D8C7 /* ChangeUniCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeUniCell.swift; sourceTree = "<group>"; };
+		A33BCFB41C62D9EC00BEAC86 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		A33BCFB51C62D9EC00BEAC86 /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		A33BCFB71C62DA8100BEAC86 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		A33BCFB91C62E5CB00BEAC86 /* RoundedLogIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedLogIn.swift; sourceTree = "<group>"; };
+		A33BCFBB1C62F71400BEAC86 /* roundedCheckBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = roundedCheckBox.swift; sourceTree = "<group>"; };
+		A33BCFBD1C62FBE700BEAC86 /* SignUpProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpProfile.swift; sourceTree = "<group>"; };
 		A33C50D01C30A69C0085DA8C /* TimeAgo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeAgo.swift; sourceTree = "<group>"; };
 		A36475561C0BBAB000AC96CA /* TextFields.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFields.swift; sourceTree = "<group>"; };
 		A365BFB01C4862020012C32F /* VideoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoTableViewCell.swift; sourceTree = "<group>"; };
@@ -145,7 +157,6 @@
 		A3FF60221C28744F0012159A /* Username.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Username.swift; sourceTree = "<group>"; };
 		A3FF60261C2A4C2A0012159A /* CommentsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentsCell.swift; sourceTree = "<group>"; };
 		D7A798F36447F0377FEE4814 /* Pods-DormRoom.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DormRoom.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DormRoom/Pods-DormRoom.debug.xcconfig"; sourceTree = "<group>"; };
-		F2451B51057A263F932FCF4E /* libPods-DormRoom.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DormRoom.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,11 +164,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A33BCFB81C62DA8100BEAC86 /* ImageIO.framework in Frameworks */,
 				A365BFB71C489F650012C32F /* libsqlite3.tbd in Frameworks */,
 				A365BFB51C489F510012C32F /* libz.tbd in Frameworks */,
 				A3A419CB1C163760003C05EA /* AVFoundation.framework in Frameworks */,
 				A3A419CA1C16375B003C05EA /* AVKit.framework in Frameworks */,
-				3278FD4F4880FAB3A73E3957 /* libPods-DormRoom.a in Frameworks */,
+				399EDB07D96EDE052431E2E6 /* libPods-DormRoom.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +197,15 @@
 				467D6FD297E4D0CB4EB63789 /* Pods-DormRoom.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		A33BCFB31C62D9E000BEAC86 /* Gif */ = {
+			isa = PBXGroup;
+			children = (
+				A33BCFB41C62D9EC00BEAC86 /* UIImage+animatedGIF.h */,
+				A33BCFB51C62D9EC00BEAC86 /* UIImage+animatedGIF.m */,
+			);
+			name = Gif;
 			sourceTree = "<group>";
 		};
 		A36475501C0BB9F600AC96CA /* ViewControllers */ = {
@@ -259,6 +280,9 @@
 				A3748FA11C598C92007AED90 /* ProfilePictureView.swift */,
 				A3748FA31C5C17D3007AED90 /* BigRoundedImage.swift */,
 				A3748FA51C5D98E7007AED90 /* CommentProfile.swift */,
+				A33BCFB91C62E5CB00BEAC86 /* RoundedLogIn.swift */,
+				A33BCFBB1C62F71400BEAC86 /* roundedCheckBox.swift */,
+				A33BCFBD1C62FBE700BEAC86 /* SignUpProfile.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -305,6 +329,7 @@
 		A3F309781C0BB32A002DEADF /* DormRoom */ = {
 			isa = PBXGroup;
 			children = (
+				A33BCFB31C62D9E000BEAC86 /* Gif */,
 				A3748F9F1C5985A3007AED90 /* MYRIADPRO-REGULAR.OTF */,
 				A3748F9D1C5979BC007AED90 /* FjallaOne-Regular.otf */,
 				A3748F9B1C5979B1007AED90 /* anke.regular.ttf */,
@@ -343,11 +368,12 @@
 		A4C3461F16B93E17CC57459F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A33BCFB71C62DA8100BEAC86 /* ImageIO.framework */,
 				A365BFB61C489F650012C32F /* libsqlite3.tbd */,
 				A365BFB41C489F510012C32F /* libz.tbd */,
 				A3A419C91C16375B003C05EA /* AVKit.framework */,
 				A3A419C71C16373B003C05EA /* AVFoundation.framework */,
-				F2451B51057A263F932FCF4E /* libPods-DormRoom.a */,
+				9294A6B52C437C620CF00130 /* libPods-DormRoom.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -552,6 +578,7 @@
 				A32EC69E1C0F72B20004D8C7 /* SwipeView.swift in Sources */,
 				A32EC6591C0E577F0004D8C7 /* MainPuffViewController.swift in Sources */,
 				A3F048261C1F8DCD003763D3 /* instruction3.swift in Sources */,
+				A33BCFBE1C62FBE700BEAC86 /* SignUpProfile.swift in Sources */,
 				A32EC6531C0E57550004D8C7 /* MenuViewController.swift in Sources */,
 				A365BFB11C4862020012C32F /* VideoTableViewCell.swift in Sources */,
 				A3748FA61C5D98E7007AED90 /* CommentProfile.swift in Sources */,
@@ -560,9 +587,12 @@
 				A39CBE611C0D15D200D59434 /* BridgingHeader.m in Sources */,
 				A39CBE5A1C0CF54200D59434 /* ChooseUniCellTableViewCell.swift in Sources */,
 				A3E110991C1E3E7D00398F03 /* ImageViewExtension.swift in Sources */,
+				A33BCFB61C62D9EC00BEAC86 /* UIImage+animatedGIF.m in Sources */,
 				A3CE00B21C5FAFE700813809 /* PhotoCommentCell.swift in Sources */,
+				A33BCFBA1C62E5CB00BEAC86 /* RoundedLogIn.swift in Sources */,
 				A365BFB31C48746A0012C32F /* SmallRoundedCorners.swift in Sources */,
 				A32EC64B1C0DF7650004D8C7 /* ChooseUniViewController.swift in Sources */,
+				A33BCFBC1C62F71400BEAC86 /* roundedCheckBox.swift in Sources */,
 				A3FF60271C2A4C2A0012159A /* CommentsCell.swift in Sources */,
 				A33C50D11C30A69C0085DA8C /* TimeAgo.swift in Sources */,
 				A3FF60231C28744F0012159A /* Username.swift in Sources */,
@@ -727,8 +757,9 @@
 			baseConfigurationReference = D7A798F36447F0377FEE4814 /* Pods-DormRoom.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Cina Mehrvar (8YKL2VACPX)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -737,9 +768,9 @@
 				INFOPLIST_FILE = DormRoom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.DormRoom.DormRoom;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DormRoom.V2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "dc3a765c-2a17-4249-a67b-161a5808693e";
 				SWIFT_OBJC_BRIDGING_HEADER = "DormRoom/DormRoom-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -751,8 +782,9 @@
 			baseConfigurationReference = 467D6FD297E4D0CB4EB63789 /* Pods-DormRoom.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Cina Mehrvar (8YKL2VACPX)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -761,9 +793,9 @@
 				INFOPLIST_FILE = DormRoom/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.DormRoom.DormRoom;
+				PRODUCT_BUNDLE_IDENTIFIER = com.DormRoom.V2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "dc3a765c-2a17-4249-a67b-161a5808693e";
 				SWIFT_OBJC_BRIDGING_HEADER = "DormRoom/DormRoom-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

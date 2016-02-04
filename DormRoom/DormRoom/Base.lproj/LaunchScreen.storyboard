@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="al2-hr-k9F">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="EHf-IW-A2E">
+        <scene sceneID="XL6-5r-9IM">
             <objects>
-                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                <viewController id="al2-hr-k9F" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
-                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                        <viewControllerLayoutGuide type="top" id="HAu-Tn-6VL"/>
+                        <viewControllerLayoutGuide type="bottom" id="nEe-np-jRG"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" contentMode="scaleToFill" id="DW1-sB-w7l">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WillFerrel" translatesAutoresizingMaskIntoConstraints="NO" id="xkU-tn-BhO">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="stillGif" translatesAutoresizingMaskIntoConstraints="NO" id="8Vw-1F-w0a">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="xkU-tn-BhO" secondAttribute="bottom" id="DLc-k8-QEf"/>
-                            <constraint firstAttribute="trailing" secondItem="xkU-tn-BhO" secondAttribute="trailing" id="Iub-sr-Lnh"/>
-                            <constraint firstItem="xkU-tn-BhO" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="isf-DV-Xjt"/>
-                            <constraint firstItem="xkU-tn-BhO" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="kPW-1Q-wsu"/>
+                            <constraint firstItem="8Vw-1F-w0a" firstAttribute="leading" secondItem="DW1-sB-w7l" secondAttribute="leading" id="1bB-pn-250"/>
+                            <constraint firstAttribute="trailing" secondItem="8Vw-1F-w0a" secondAttribute="trailing" id="7DC-Wq-4vV"/>
+                            <constraint firstItem="8Vw-1F-w0a" firstAttribute="top" secondItem="DW1-sB-w7l" secondAttribute="top" id="8od-gQ-A8x"/>
+                            <constraint firstItem="nEe-np-jRG" firstAttribute="top" secondItem="8Vw-1F-w0a" secondAttribute="bottom" id="JNh-Ek-LP8"/>
                         </constraints>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nMZ-d1-EuB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="-211" y="331"/>
         </scene>
     </scenes>
     <resources>
-        <image name="WillFerrel" width="600" height="800"/>
+        <image name="stillGif" width="250" height="250"/>
     </resources>
 </document>

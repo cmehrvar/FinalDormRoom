@@ -64,23 +64,18 @@ class PuffTableViewCell: UITableViewCell {
     @IBOutlet weak var ThumbsUpOutlet: UIImageView!
     @IBOutlet weak var ThumbsDownOutlet: UIImageView!
     @IBOutlet weak var ReportOutlet: UILabel!
+    @IBOutlet weak var BigProfileOutlet: UIImageView!
+    @IBOutlet weak var backToContentOutlet: UIButton!
     
     
     
     @IBOutlet weak var SwipeConstraint: NSLayoutConstraint!
-    
-    
-    
     
     @IBAction func fullScreen(sender: AnyObject) {
         
         guard let actualController = mainController.rootController else {return}
         
         actualController.imageController?.ImageOutlet.sd_setImageWithURL(NSURL(string: imageUrl))
-        actualController.imageController?.ProfilePictureOutlet.sd_setImageWithURL(NSURL(string: profileUrl))
-        actualController.imageController?.UsernameOutlet.text = username
-        actualController.imageController?.TimePostedOutlet.text = timePostedVar
-        actualController.imageController?.UniversityNameOutlet.text = uniName
         actualController.imageController?.CaptionOutlet.text = captionVar
         actualController.imageController?.LikeOutlet.text = likeVar
         actualController.imageController?.DislikeOutlet.text = dislikeVar
@@ -89,6 +84,7 @@ class PuffTableViewCell: UITableViewCell {
         actualController.imageController?.objectId = objectId
         actualController.imageController?.isComment = false
         actualController.imageController?.ReportOutlet.text = repDel
+        actualController.imageController?.actualUsername = username
         
         
         mainController.rootController?.toggleFullSizeImage({ (Bool) -> () in
@@ -194,14 +190,14 @@ class PuffTableViewCell: UITableViewCell {
         actualController.commentsController?.objectId = mainController.objectId[indexPath]
         
         actualController.commentsController?.loadFromParse()
-        
-        if mainController.videoPlayer != nil {
-            mainController.videoPlayer.pause()
-        }
-        
+
         mainController.rootController?.toggleComments({ (Bool) -> () in
             
             print("Comments Toggled")
+            
+            if self.mainController.videoPlayer != nil {
+                self.mainController.videoPlayer.pause()
+            }
             
         })
 
@@ -210,6 +206,25 @@ class PuffTableViewCell: UITableViewCell {
         
 
     }
+    
+    
+    
+    @IBAction func showProfile(sender: AnyObject) {
+        
+        mainController.showProfile[indexPath] = true
+        mainController.myTableView.reloadData()
+        
+    }
+    
+    
+    @IBAction func backToContent(sender: AnyObject) {
+        
+        mainController.showProfile[indexPath] = false
+        mainController.myTableView.reloadData()
+    }
+    
+    
+    
     
     //Functions
     func swipeLikeDislike() {

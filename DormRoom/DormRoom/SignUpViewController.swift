@@ -20,6 +20,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let url = NSURL(string: "http://i.giphy.com/l2JI67RBdmHNxkHhC.gif") {
+            Gif.image = UIImage.animatedImageWithAnimatedGIFURL(url)
+        }
+        
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         
         UsernameOutlet.delegate = self
@@ -42,6 +46,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
     @IBOutlet weak var ReadTermsView: WhiteButton!
     @IBOutlet weak var termsView: UIView!
     @IBOutlet weak var ImageBlur: UIView!
+    @IBOutlet weak var Gif: UIImageView!
+    @IBOutlet weak var BlankProfileOutlet: UIImageView!
+    @IBOutlet weak var ChooseProfile: UIImageView!
     
     
     
@@ -80,8 +87,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
         
         if ProfileOutlet.image == UIImage(named: "ChooseProfile") {
             
-            let alertController = UIAlertController(title: "Puff You", message: "Take a profile picture", preferredStyle: UIAlertControllerStyle.Alert)
-            alertController.addAction(UIAlertAction(title: "Chate", style: .Cancel, handler: nil))
+            let alertController = UIAlertController(title: "Hey", message: "Take a profile picture", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
             
         } else if UniOutlet.image == UIImage(named: "ChooseUni") {
@@ -143,12 +150,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
         let dismissKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         let readTermsRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "readTerms")
         
-        ProfileOutlet.userInteractionEnabled = true
+        ChooseProfile.userInteractionEnabled = true
         UniOutlet.userInteractionEnabled = true
         view.userInteractionEnabled = true
         ReadTermsView.userInteractionEnabled = true
         
-        ProfileOutlet.addGestureRecognizer(profilePictureRecognizer)
+        ChooseProfile.addGestureRecognizer(profilePictureRecognizer)
         UniOutlet.addGestureRecognizer(universityRecognizer)
         view.addGestureRecognizer(dismissKeyboard)
         ReadTermsView.addGestureRecognizer(readTermsRecognizer)
@@ -212,6 +219,12 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
         
         let temp: UIImage = image
         ProfileOutlet.image = temp
+        
+        ChooseProfile.alpha = 0
+        BlankProfileOutlet.alpha = 1
+        ProfileOutlet.alpha = 1
+        
+        BlankProfileOutlet.alpha = 1
         dismissViewControllerAnimated(true, completion: nil)
 
     }

@@ -20,6 +20,12 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>Fonts provided by application</key>
+	<array>
+		<string>FjallaOne-Regular.otf</string>
+		<string>anke.regular.ttf</string>
+		<string>MYRIADPRO-REGULAR.OTF</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -54,11 +60,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-    <key>Fonts provided by application</key>
-    <array>
-        <string>FjallaOne-Regular.otf</string>
-        <string>anke.regular.ttf</string>
-        <string>MYRIADPRO-REGULAR.OTF</string>
-    </array>
 </dict>
 </plist>

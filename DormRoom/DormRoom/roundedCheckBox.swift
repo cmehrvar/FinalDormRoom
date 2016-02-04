@@ -1,15 +1,15 @@
 //
-//  RoundedImage.swift
+//  roundedCheckBox.swift
 //  DormRoom
 //
-//  Created by Cina Mehrvar on 2015-11-30.
-//  Copyright © 2015 Cina Mehrvar. All rights reserved.
+//  Created by Cina Mehrvar on 2016-02-03.
+//  Copyright © 2016 Cina Mehrvar. All rights reserved.
 //
 
 import UIKit
 
-class RoundedImage: UIImageView {
-    
+class roundedCheckBox: UIView {
+
     override func awakeFromNib() {
         
         super.awakeFromNib()
@@ -17,4 +17,5 @@ class RoundedImage: UIImageView {
         layer.cornerRadius = 10
         self.clipsToBounds = true
     }
+
 }

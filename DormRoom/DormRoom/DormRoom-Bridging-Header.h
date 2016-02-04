@@ -5,4 +5,5 @@
 #import <Parse/Parse.h>
 #import <AWSS3/AWSS3.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "UIImage+animatedGIF.h"
 

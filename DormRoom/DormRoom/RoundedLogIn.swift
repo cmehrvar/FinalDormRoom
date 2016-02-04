@@ -1,23 +1,26 @@
 //
-//  TextFields.swift
+//  RoundedLogIn.swift
 //  DormRoom
 //
-//  Created by Cina Mehrvar on 2015-11-29.
-//  Copyright © 2015 Cina Mehrvar. All rights reserved.
+//  Created by Cina Mehrvar on 2016-02-03.
+//  Copyright © 2016 Cina Mehrvar. All rights reserved.
 //
 
 import UIKit
 
-class TextFields: UIView {
+class RoundedLogIn: UIView {
     
     override func awakeFromNib() {
         
         super.awakeFromNib()
         
         self.layer.cornerRadius = 10
+        layer.borderWidth = 2
+        layer.borderColor = UIColor.whiteColor().CGColor
         self.clipsToBounds = true
         
     }
+
 
     /*
     // Only override drawRect: if you perform custom drawing.
