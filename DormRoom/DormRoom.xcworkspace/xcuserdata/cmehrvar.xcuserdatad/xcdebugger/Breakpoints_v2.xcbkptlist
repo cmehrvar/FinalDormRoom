@@ -9,46 +9,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DormRoom/CommentsViewController.swift"
-            timestampString = "476238792.479501"
+            filePath = "DormRoom/MainPuffViewController.swift"
+            timestampString = "476260626.086504"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "307"
-            endingLineNumber = "307"
-            landmarkName = "saveToParse()"
+            startingLineNumber = "318"
+            endingLineNumber = "318"
+            landmarkName = "loadFromParse(_:)"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "DormRoom.CommentsViewController.saveToParse (DormRoom.CommentsViewController)() -&gt; ()"
-                  moduleName = "DormRoom"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cmehrvar/Desktop/What&apos;s%20Up%20DormRoom/DormRoom/DormRoom/CommentsViewController.swift"
-                  timestampString = "476171234.029412"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "304"
-                  endingLineNumber = "304"
-                  offsetFromSymbolStart = "396">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "DormRoom.CommentsViewController.(saveToParse (DormRoom.CommentsViewController) -&gt; () -&gt; ()).(closure #1)"
-                  moduleName = "DormRoom"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/cmehrvar/Desktop/What&apos;s%20Up%20DormRoom/DormRoom/DormRoom/CommentsViewController.swift"
-                  timestampString = "476171234.029925"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "306"
-                  endingLineNumber = "306"
-                  offsetFromSymbolStart = "44">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -57,13 +25,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DormRoom/MainPuffViewController.swift"
-            timestampString = "476260626.086504"
+            filePath = "DormRoom/PhotoCommentCell.swift"
+            timestampString = "476306126.087123"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "318"
-            endingLineNumber = "318"
-            landmarkName = "loadFromParse(_:)"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "Delete(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DormRoom/PhotoCommentCell.swift"
+            timestampString = "476306126.087123"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
+            landmarkName = "Delete(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

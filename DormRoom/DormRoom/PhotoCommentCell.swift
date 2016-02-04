@@ -23,8 +23,13 @@ class PhotoCommentCell: UITableViewCell {
     @IBOutlet weak var DeleteOutlet: UIButton!
     
     
-    var votes = [Int]()
     var isDeleted = [Bool]()
+    var votes = [Int]()
+    var currentVote = Int()
+    
+    var actualIndexPath: Int!
+
+    
     
     var photoUrl = String()
     var usernameVar = String()
@@ -32,15 +37,12 @@ class PhotoCommentCell: UITableViewCell {
     var timePostedVar = String()
     var profileUrl = String()
     
-    var indexPath: Int!
     var objectId: String!
     
     var commentId: String!
     var commentViewController: CommentsViewController!
     
-    
     let user = PFUser.currentUser()
-    
     
     @IBAction func fullSizeImage(sender: AnyObject) {
         
@@ -63,11 +65,11 @@ class PhotoCommentCell: UITableViewCell {
         
         print("Vote Down")
         
-        var vote = votes[indexPath]
+        var vote = currentVote
         vote = vote + 1
-        votes[indexPath] = vote
+        votes[actualIndexPath] = vote
         
-        VoteCount.text = "\(votes[indexPath])"
+        VoteCount.text = "\(votes[actualIndexPath])"
         
         UIView.animateWithDuration(0.3) { () -> Void in
             
@@ -132,15 +134,13 @@ class PhotoCommentCell: UITableViewCell {
         
         print("Vote Down")
         
+        var vote = currentVote
+        vote = vote + 1
+        votes[actualIndexPath] = vote
         
+        VoteCount.text = "\(votes[actualIndexPath])"
         
         UIView.animateWithDuration(0.3) { () -> Void in
-            
-            var vote = self.votes[self.indexPath]
-            vote = vote - 1
-            self.votes[self.indexPath] = vote
-            
-            self.VoteCount.text = "\(self.votes[self.indexPath])"
             
             self.VoteUpOutlet.alpha = 0
             self.VoteDownOutlet.alpha = 0
@@ -208,9 +208,8 @@ class PhotoCommentCell: UITableViewCell {
         
         alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
             
-            var delete = self.isDeleted[self.indexPath]
-            delete = true
-            self.isDeleted[self.indexPath] = delete
+            
+            self.isDeleted[self.actualIndexPath] = true
             
             let query = PFQuery(className: "CanadaPuff")
             
@@ -241,6 +240,12 @@ class PhotoCommentCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        
+        
+        
+        
+        
     }
     
     override func setSelected(selected: Bool, animated: Bool) {

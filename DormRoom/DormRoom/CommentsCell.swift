@@ -24,7 +24,10 @@ class CommentsCell: UITableViewCell {
     
     var votes = [Int]()
     var isDeleted = [Bool]()
-    var indexPath: Int!
+    var currentVote = Int()
+    
+    var actualIndexPath = Int()
+    
     var objectId: String!
     
     var commentId: String!
@@ -36,24 +39,24 @@ class CommentsCell: UITableViewCell {
         
         print("Vote Down")
         
-        var vote = votes[indexPath]
+        var vote = votes[actualIndexPath]
         vote = vote + 1
-        votes[indexPath] = vote
+        votes[actualIndexPath] = vote
         
         if vote > 0 {
             
-            VoteCount.text = "\(votes[indexPath])"
+            VoteCount.text = "\(votes[actualIndexPath])"
             plusMinusIcon.image = UIImage(named: "plus")
             
-        } else if votes[indexPath] == 0 {
+        } else if votes[actualIndexPath] == 0 {
             
             plusMinusIcon.image = nil
-            VoteCount.text = "\(votes[indexPath])"
+            VoteCount.text = "\(votes[actualIndexPath])"
             
-        } else if votes[indexPath] < 0 {
+        } else if votes[actualIndexPath] < 0 {
             
             plusMinusIcon.image = UIImage(named: "minus")
-            let positiveVotes = -(votes[indexPath])
+            let positiveVotes = -(votes[actualIndexPath])
             VoteCount.text = "\(positiveVotes)"
             
         }
@@ -122,24 +125,24 @@ class CommentsCell: UITableViewCell {
         
         print("Vote Down")
         
-        var vote = votes[indexPath]
+        var vote = votes[actualIndexPath]
         vote = vote - 1
-        votes[indexPath] = vote
+        votes[actualIndexPath] = vote
         
         if vote > 0 {
             
-            VoteCount.text = "\(votes[indexPath])"
+            VoteCount.text = "\(votes[actualIndexPath])"
             plusMinusIcon.image = UIImage(named: "plus")
             
-        } else if votes[indexPath] == 0 {
+        } else if votes[actualIndexPath] == 0 {
             
             plusMinusIcon.image = nil
-            VoteCount.text = "\(votes[indexPath])"
+            VoteCount.text = "\(votes[actualIndexPath])"
             
-        } else if votes[indexPath] < 0 {
+        } else if votes[actualIndexPath] < 0 {
             
             plusMinusIcon.image = UIImage(named: "minus")
-            let positiveVotes = -(votes[indexPath])
+            let positiveVotes = -(votes[actualIndexPath])
             VoteCount.text = "\(positiveVotes)"
             
         }
@@ -212,9 +215,9 @@ class CommentsCell: UITableViewCell {
         
         alertController.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Destructive, handler: { (UIAlertAction) -> Void in
             
-            var delete = self.isDeleted[self.indexPath]
+            var delete = self.isDeleted[self.actualIndexPath]
             delete = true
-            self.isDeleted[self.indexPath] = delete
+            self.isDeleted[self.actualIndexPath] = delete
             
             let query = PFQuery(className: "CanadaPuff")
             

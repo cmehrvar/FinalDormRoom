@@ -32,7 +32,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
     var commentPhotos = [String]()
     var checkedCommentPhotos = [String]()
     var isDeleted = [Bool]()
-
+    
+    var actualIndexPaths = [Int]()
     
     var dormroomUrl = "https://s3.amazonaws.com/dormroombucket/"
     
@@ -493,6 +494,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                         self.checkedIsPhoto.removeAll()
                         self.checkedCommentIds.removeAll()
                         self.checkedCommentPhotos.removeAll()
+                        self.actualIndexPaths.removeAll()
                         
                         var i = 0
                         
@@ -511,6 +513,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                                     self.checkedCommentIds.append(self.commentIds[i])
                                     self.checkedCommentPhotos.append(self.commentPhotos[i])
                                     self.checkedUniversities.append(self.universities[i])
+                                    self.actualIndexPaths.append(i)
                                 }
                                 
                                 i++
@@ -601,11 +604,15 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             
             let cell = tableView.dequeueReusableCellWithIdentifier("CommentsPhotoCell", forIndexPath: indexPath) as! PhotoCommentCell
             
-            cell.profileUrl = profilePictures[indexPath.row]
-            cell.usernameVar = usernames[indexPath.row]
-            cell.timePostedVar = timeAgoSince(dates[indexPath.row])
+            cell.actualIndexPath = actualIndexPaths[indexPath.row]
+            
+            cell.profileUrl = checkedProfilePictures[indexPath.row]
+            cell.usernameVar = checkedUsernames[indexPath.row]
+            cell.timePostedVar = timeAgoSince(checkedDates[indexPath.row])
             
             cell.isDeleted = isDeleted
+            cell.votes = votes
+            cell.currentVote = checkedVotes[indexPath.row]
                         
             var hasBeenVotedOn = false
             
@@ -676,8 +683,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.commentViewController = self
             cell.commentId = checkedCommentIds[indexPath.row]
             
-            cell.votes = checkedVotes
-            cell.indexPath = indexPath.row
             cell.objectId = objectId
             
             
@@ -822,10 +827,13 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.commentViewController = self
             cell.commentId = checkedCommentIds[indexPath.row]
             
-            cell.votes = checkedVotes
-            cell.indexPath = indexPath.row
-            cell.objectId = objectId
+            cell.votes = votes
             cell.isDeleted = isDeleted
+            cell.actualIndexPath = actualIndexPaths[indexPath.row]
+            cell.currentVote = checkedVotes[indexPath.row]
+
+            cell.objectId = objectId
+            
             
             switch checkedUniversities[indexPath.row] {
                 
@@ -885,7 +893,6 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
             return cell
             
         }
-        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
