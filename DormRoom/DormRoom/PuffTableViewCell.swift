@@ -207,23 +207,6 @@ class PuffTableViewCell: UITableViewCell {
     
     
     
-    @IBAction func showProfile(sender: AnyObject) {
-        
-        mainController.showProfile[indexPath] = true
-        mainController.myTableView.reloadData()
-        
-    }
-    
-    
-    @IBAction func backToContent(sender: AnyObject) {
-        
-        mainController.showProfile[indexPath] = false
-        mainController.myTableView.reloadData()
-    }
-    
-    
-    
-    
     //Functions
     func swipeLikeDislike() {
         

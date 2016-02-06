@@ -85,6 +85,8 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         guard let actualController = rootController else {return}
         
+        actualController.mainController?.PlayPauseView.alpha = 0
+        
         if indexPath.row >= 1 {
             
             if universityNames[indexPath.row - 1] == "CanadaPuff" {

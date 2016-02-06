@@ -22,15 +22,12 @@ class PhotoCommentCell: UITableViewCell {
     @IBOutlet weak var photoComment: UIImageView!
     @IBOutlet weak var DeleteOutlet: UIButton!
     
-    
     var isDeleted = [Bool]()
     var votes = [Int]()
     var currentVote = Int()
     
     var actualIndexPath: Int!
 
-    
-    
     var photoUrl = String()
     var usernameVar = String()
     var uniVar = String()

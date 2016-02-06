@@ -697,8 +697,8 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.uniVar = "University of Calgary"
                 
             case "Carlton":
-                cell.UniversityName.text = "Carlton University"
-                cell.uniVar = "Carlton University"
+                cell.UniversityName.text = "Carleton University"
+                cell.uniVar = "Carleton University"
                 
             case "Dalhousie":
                 cell.UniversityName.text = "Dalhousie University"
@@ -844,7 +844,7 @@ class CommentsViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.UniversityName.text = "University of Calgary"
                 
             case "Carlton":
-                cell.UniversityName.text = "Carlton University"
+                cell.UniversityName.text = "Carleton University"
                 
             case "Dalhousie":
                 cell.UniversityName.text = "Dalhousie University"

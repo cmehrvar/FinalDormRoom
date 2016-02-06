@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class MainRootViewController: UIViewController {
     
@@ -88,11 +89,14 @@ class MainRootViewController: UIViewController {
         
         var panelOffset: CGFloat = 0
         
-        let player = mainController?.videoPlayer
+        let player: AVPlayer!
         
-        if player != nil {
+        if mainController?.videoPlayer != nil {
+            
+            player = mainController?.videoPlayer
             player?.pause()
             mainController?.PlayPauseImage.image = UIImage(named: "playIcon")
+            
         }
         
         if fullSizeImageIsRevealed {
@@ -119,11 +123,14 @@ class MainRootViewController: UIViewController {
         
         var panelOffset: CGFloat = 0
         
-        let player = mainController?.videoPlayer
+        let player: AVPlayer!
         
-        if player != nil {
+        if mainController?.videoPlayer != nil {
+            
+            player = mainController?.videoPlayer
             player?.pause()
             mainController?.PlayPauseImage.image = UIImage(named: "playIcon")
+            
         }
         
         if commentsIsRevealed {
@@ -149,11 +156,14 @@ class MainRootViewController: UIViewController {
         
         var panelOffset: CGFloat = 0
         
-        let player = mainController?.videoPlayer
+        let player: AVPlayer!
         
-        if player != nil {
+        if mainController?.videoPlayer != nil {
+            
+            player = mainController?.videoPlayer
             player?.pause()
             mainController?.PlayPauseImage.image = UIImage(named: "playIcon")
+            
         }
         
         if changeUniIsRevealed {
@@ -181,11 +191,14 @@ class MainRootViewController: UIViewController {
             panelOffset = -drawerWidthConstant
         }
         
-        let player = mainController?.videoPlayer
+        let player: AVPlayer!
         
-        if player != nil {
+        if mainController?.videoPlayer != nil {
+            
+            player = mainController?.videoPlayer
             player?.pause()
             mainController?.PlayPauseImage.image = UIImage(named: "playIcon")
+            
         }
         
         menuIsRevealed = !menuIsRevealed
@@ -208,11 +221,14 @@ class MainRootViewController: UIViewController {
         
         var panelOffset: CGFloat = 1
         
-        let player = mainController?.videoPlayer
+        let player: AVPlayer!
         
-        if player != nil {
+        if mainController?.videoPlayer != nil {
+            
+            player = mainController?.videoPlayer
             player?.pause()
             mainController?.PlayPauseImage.image = UIImage(named: "playIcon")
+            
         }
         
         if takePuffIsRevealed {

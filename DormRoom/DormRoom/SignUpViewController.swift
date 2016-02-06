@@ -13,16 +13,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
     weak var rootController: SignUpRootController?
     let user = PFUser()
     
+    var termsOpen = false
     
+    var uniChosen = false
     var universityName = String()
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if let url = NSURL(string: "http://i.giphy.com/l2JI67RBdmHNxkHhC.gif") {
-            Gif.image = UIImage.animatedImageWithAnimatedGIFURL(url)
-        }
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         
@@ -36,6 +33,16 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
         view.addGestureRecognizer(dismissKeyboard)
     }
     
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        if let url = NSURL(string: "http://i.giphy.com/l2JI67RBdmHNxkHhC.gif") {
+            
+            Gif.image = UIImage.animatedImageWithAnimatedGIFURL(url)
+        }
+    }
+    
+
     //Outlets
     @IBOutlet weak var UsernameOutlet: UITextField!
     @IBOutlet weak var PasswordOutlet: UITextField!
@@ -53,10 +60,30 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
     
     
     //Actions
+    @IBAction func backAction(sender: AnyObject) {
+        
+        if termsOpen {
+            
+            UIView.animateWithDuration(0.3) { () -> Void in
+                
+                self.termsView.alpha = 0
+                self.termsOpen = false
+            }
+        } else {
+            
+            if let vc: UIViewController = (self.storyboard?.instantiateViewControllerWithIdentifier("LogInController")) {
+                vc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+                self.presentViewController(vc, animated: true, completion: nil)
+            }
+        }
+    }
+    
+
     @IBAction func termsAction(sender: AnyObject) {
         
         UIView.animateWithDuration(0.3) { () -> Void in
             self.termsView.alpha = 1
+            self.termsOpen = true
             
         }
         
@@ -65,10 +92,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
     @IBAction func okAction(sender: AnyObject) {
         
         UIView.animateWithDuration(0.3) { () -> Void in
+            
+            self.CheckmarkOutlet.alpha = 1
             self.termsView.alpha = 0
+            self.termsOpen = false
         }
         
     }
+    
     @IBAction func termsOfAgreement(sender: AnyObject) {
         
         rootController?.uniIsRevealed = false
@@ -82,24 +113,38 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
             let alertController = UIAlertController(title: "Hey", message: "Read Terms Aggreement", preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
-        } else
-
-        
-        if ProfileOutlet.image == UIImage(named: "ChooseProfile") {
+            
+        } else if ProfileOutlet.alpha == 0 {
             
             let alertController = UIAlertController(title: "Hey", message: "Take a profile picture", preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
             
-        } else if UniOutlet.image == UIImage(named: "ChooseUni") {
+        } else if !uniChosen {
             
             let alertController = UIAlertController(title: "Hey", message: "Choose a university", preferredStyle: UIAlertControllerStyle.Alert)
             alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
             self.presentViewController(alertController, animated: true, completion: nil)
             
-        }
+        } else if PasswordOutlet.text == "" {
             
-        else {
+            let alertController = UIAlertController(title: "Hey", message: "Enter a password", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+        } else if UsernameOutlet.text == "" {
+            
+            let alertController = UIAlertController(title: "Hey", message: "Enter a username", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+        } else if EmailOutlet.text == "" {
+            
+            let alertController = UIAlertController(title: "Hey", message: "Enter an email", preferredStyle: UIAlertControllerStyle.Alert)
+            alertController.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: nil))
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+        } else {
             
             guard let actualImage = ProfileOutlet.image else {return}
             
@@ -150,19 +195,42 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, UINavigationC
         let universityRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "uniTapped")
         let dismissKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         let readTermsRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "readTerms")
+        let dismissSlideIn: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "closeChooseUni")
+        let anotherProfileRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "profileTapped")
         
+        ImageBlur.userInteractionEnabled = true
         ChooseProfile.userInteractionEnabled = true
         UniOutlet.userInteractionEnabled = true
         view.userInteractionEnabled = true
         ReadTermsView.userInteractionEnabled = true
+        ProfileOutlet.userInteractionEnabled = true
         
+        ImageBlur.addGestureRecognizer(dismissSlideIn)
         ChooseProfile.addGestureRecognizer(profilePictureRecognizer)
         UniOutlet.addGestureRecognizer(universityRecognizer)
         view.addGestureRecognizer(dismissKeyboard)
         ReadTermsView.addGestureRecognizer(readTermsRecognizer)
+        ProfileOutlet.addGestureRecognizer(anotherProfileRecognizer)
         
     }
     
+    
+    func closeChooseUni() {
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            
+            self.ImageBlur.alpha = 0
+            
+        })
+        
+        rootController?.toggleChooseUni({ (Bool) -> () in
+            print("Choose Uni Closed")
+            
+            
+        })
+    }
+    
+
     func readTerms() {
         
         UIView.animateWithDuration(0.3) { () -> Void in

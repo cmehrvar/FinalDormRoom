@@ -10,20 +10,18 @@ import UIKit
 
 class LogInViewController: UIViewController, UITextFieldDelegate {
     
-    var keyboardIsShown = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let url = NSURL(string: "http://i.giphy.com/l2JI67RBdmHNxkHhC.gif") {
-            
-                 Gif.image = UIImage.animatedImageWithAnimatedGIFURL(url)
-            
-        }
-        
-        handleKeyboard()
         addDismissKeyboard()
         textFieldDelegates()
+    }
+    
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        loadGif()
+        
     }
     
     //Outlets
@@ -60,6 +58,15 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
     
     
     //Functions
+    func loadGif() {
+        
+        if let url = NSURL(string: "http://i.giphy.com/l2JI67RBdmHNxkHhC.gif") {
+            
+            Gif.image = UIImage.animatedImageWithAnimatedGIFURL(url)
+        }
+        
+    }
+    
     func textFieldDelegates() {
         
         UsernameOutlet.delegate = self
@@ -67,12 +74,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func handleKeyboard() {
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name: UIKeyboardWillHideNotification, object: nil)
-        
-    }
     
     func addDismissKeyboard() {
         
@@ -81,30 +82,6 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        
-        if !keyboardIsShown {
-            
-            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-                self.view.frame.origin.y -= keyboardSize.height
-            }
-            
-            keyboardIsShown = !keyboardIsShown
-            
-        }
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        
-        if keyboardIsShown {
-            
-            if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
-                self.view.frame.origin.y += keyboardSize.height
-            }
-            
-            keyboardIsShown = !keyboardIsShown
-        }
-    }
     
     func dismissKeyboard() {
         view.endEditing(true)
@@ -126,14 +103,19 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    /*
+    
     // MARK: - Navigation
     
+    /*
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
+    
+    let viewController = segue.destinationViewController as! SignUpRootController
+    
+    if gifImage != nil {
+    viewController.gifImage = gifImage
+    }
+    
     }
     */
-    
 }

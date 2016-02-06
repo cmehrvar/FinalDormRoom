@@ -20,7 +20,7 @@ class SignUpRootController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setStage()
-
+        
         // Do any additional setup after loading the view.
     }
     

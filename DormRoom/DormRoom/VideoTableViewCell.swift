@@ -80,6 +80,8 @@ class VideoTableViewCell: UITableViewCell {
         actualController.imageController?.ReportOutlet.text = repDel
         actualController.imageController?.CaptionOutlet.text = captionVar
         actualController.imageController?.actualUsername = username
+        actualController.imageController?.LikeOutlet.text = "\(like)"
+        actualController.imageController?.DislikeOutlet.text = "\(dislike)"
         
         mainController.rootController?.toggleFullSizeImage({ (Bool) -> () in
             
@@ -195,24 +197,7 @@ class VideoTableViewCell: UITableViewCell {
     }
     
     
-    @IBAction func showProfile(sender: AnyObject) {
-        
-        mainController.showProfile[indexPath] = true
-        
-        mainController.myTableView.reloadData()
-        
-    }
     
-    
-    @IBAction func backToContent(sender: AnyObject) {
-        
-        mainController.showProfile[indexPath] = false
-        mainController.myTableView.reloadData()
-        
-    }
-    
-    
-
     //Functions
     func swipeLikeDislike() {
         

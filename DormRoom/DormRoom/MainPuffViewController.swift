@@ -13,13 +13,15 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     weak var rootController: MainRootViewController?
     
+    
+    var tapToTop = false
+    
+    
     var myTableView = UITableView()
     
     var user = PFUser.currentUser()
     
     var didClickPlay = false
-    
-    var tapToTop = false
     
     var wasVisible = false
     var index = 0
@@ -64,9 +66,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var asset = [AVURLAsset]()
     
-    var showProfile = [Bool]()
-    
-    
     let brock = UIImage(named: "Brock"), calgary = UIImage(named: "Calgary"), carlton = UIImage(named: "Carleton"), dal = UIImage(named: "Dalhousie"), laurier = UIImage(named: "Laurier"), mcgill = UIImage(named: "McGill"), mac = UIImage(named: "Mac"), mun = UIImage(named: "Mun"), ottawa = UIImage(named: "Ottawa"), queens = UIImage(named: "Queens"), ryerson = UIImage(named: "Ryerson"), ubc = UIImage(named: "UBC"), uoft = UIImage(named: "UofT"), western = UIImage(named: "Western"), york = UIImage(named: "York"), other = UIImage(named: "OtherUni")
     
     var feed = String()
@@ -79,19 +78,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         
-        if user?["firstTime"] as! Bool == true {
-            
-            rootController?.toggleTakePuff({ (complete) -> () in
-                
-                guard let actualController = self.rootController else {return}
-                actualController.takePuffController?.feed = self.feed
-                
-                self.user?["firstTime"] = false
-                self.user?.saveEventually()
-                
-            })
-        }
-        
         initializeFeeds()
         addScrollToTop()
         addRefresh()
@@ -102,8 +88,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         // Do any additional setup after loading the view.
     }
-    
-
     
     
     //Outlets
@@ -126,7 +110,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         actualController.takePuffController?.feed = feed
         
         rootController?.toggleTakePuff({ (complete) -> () in
-
+            
             actualController.takePuffController?.TakenPuffOutlet.image = nil
             actualController.takePuffController?.CaptionOutlet.text = nil
             
@@ -239,11 +223,17 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func scrollToTop() {
         
-        tapToTop = true
-        
         myTableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
         
-
+        tapToTop = true
+        
+        if !isImage[0] {
+            
+            index = 0
+            wasVisible = true
+            //myTableView.reloadData()
+            
+        }
     }
     
     func initializeFeeds() {
@@ -308,7 +298,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.checkedUsernames.removeAll()
                     self.asset.removeAll()
                     self.deletedComments.removeAll()
-                    self.showProfile.removeAll()
                     
                     if let puffs = puffs {
                         
@@ -359,7 +348,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.asset.append(AVURLAsset(URL: NSURL(string: "")!))
                                             self.checkedComments.append([])
                                             self.checkedUsernames.append([])
-                                            self.showProfile.append(false)
                                             
                                             
                                             if puff["NewCommentUsernames"] != nil {
@@ -391,7 +379,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                                 self.deletedComments.append(puff["IsCommentDeleted"] as! [Bool])
                                                 
                                                 var i = 0
-
+                                                
                                                 for deleted in self.deletedComments[mainIndex] {
                                                     
                                                     if !deleted {
@@ -411,11 +399,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             }
                                             
                                             mainIndex++
-  
+                                            
                                         }
                                         
-                                    }
-                                    else {
+                                    } else {
                                         
                                         self.imageUrls.append(puff["ImageUrl"] as! String)
                                         self.profilePictureURLS.append(puff["ProfilePictureUrl"] as! String)
@@ -429,7 +416,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                         self.asset.append(AVURLAsset(URL: NSURL(string: "")!))
                                         self.checkedComments.append([])
                                         self.checkedUsernames.append([])
-                                        self.showProfile.append(false)
                                         
                                         if let actualDate = puff.createdAt {
                                             self.imageDates.append(actualDate)
@@ -449,7 +435,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                                             self.comments.append(puff["NewComments"] as! [String])
                                         }
                                         
-
+                                        
                                         if let actualId = puff.objectId {
                                             self.objectId.append(actualId)
                                         }
@@ -487,13 +473,14 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                         }
                     }
                     
-
+                    
                     if !self.firstLoad {
                         if self.isImage[0] == false {
                             self.PlayPauseView.alpha = 1
                             self.firstLoad = true
                         }
                     }
+                    
                     self.PuffTableView.reloadData()
                     self.urlToAsset()
                     self.loading = false
@@ -562,12 +549,12 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         })
     }
     
-
+    
     //TableView shit
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         myTableView = tableView
-                
+        
         let likedObjects: [String] = user?["liked"] as! [String]
         
         let date: NSDate = imageDates[indexPath.row]
@@ -589,7 +576,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.captionVar = captions[indexPath.row]
             cell.likeVar = "\(likes[indexPath.row])"
             cell.dislikeVar = "\(dislikes[indexPath.row])"
-
+            
             cell.indexPath = indexPath.row
             
             cell.objectId = objectId[indexPath.row]
@@ -628,7 +615,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 
                 cell.SecondRecentComment.alpha = 0
                 cell.SecondRecentUsername.alpha = 0
-
+                
                 cell.ViewHowManyComments.text = "Be Second to Comment!"
                 
             } else if checkedComments[indexPath.row].count >= 2 {
@@ -650,10 +637,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 } else {
                     cell.ViewHowManyComments.text = "View all \(checkedComments[indexPath.row].count) comments"
                 }
-                
-                
             }
-            
             
             cell.mainController = self
             
@@ -662,17 +646,17 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             cell.ProfileOutlet.sd_setImageWithURL(NSURL(string: (dormroomurl + profilePictureURLS[indexPath.row])))
             
             if usernames[indexPath.row] == user?.username {
-
+                
                 cell.ReportOutlet.text = "Delete?"
                 cell.repDel = "Delete?"
                 
             } else {
-
+                
                 cell.ReportOutlet.text = "Report?"
                 cell.repDel = "Report?"
             }
             
-        
+            
             cell.CaptionOutlet.text = captions[indexPath.row]
             
             var liked = false
@@ -683,26 +667,26 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     liked = true
                 }
             }
-
+            
             if !liked {
-            
-            cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
-            cell.likeView.userInteractionEnabled = true
-            
-            cell.DislikeButtonOutlet.image = UIImage(named: "ThumbsDown")
-            cell.DislikeButtonOutlet.userInteractionEnabled = true
-            
-            
+                
+                cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
+                cell.likeView.userInteractionEnabled = true
+                
+                cell.DislikeButtonOutlet.image = UIImage(named: "ThumbsDown")
+                cell.DislikeButtonOutlet.userInteractionEnabled = true
+                
+                
             } else {
-            
-            cell.LikeButtonOutlet.image = nil
-            cell.LikeButtonOutlet.userInteractionEnabled = false
-            
-            cell.DislikeButtonOutlet.image = nil
-            cell.DislikeButtonOutlet.userInteractionEnabled = false
-            
+                
+                cell.LikeButtonOutlet.image = nil
+                cell.LikeButtonOutlet.userInteractionEnabled = false
+                
+                cell.DislikeButtonOutlet.image = nil
+                cell.DislikeButtonOutlet.userInteractionEnabled = false
+                
             }
-
+            
             
             switch universityNames[indexPath.row] {
                 
@@ -715,8 +699,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.uniName = "University of Calgary"
                 
             case "Carlton":
-                cell.UniversityNameOutlet.text = "Carlton University"
-                cell.uniName = "Carlton University"
+                cell.UniversityNameOutlet.text = "Carleton University"
+                cell.uniName = "Carleton University"
                 
             case "Dalhousie":
                 cell.UniversityNameOutlet.text = "Dalhousie University"
@@ -813,17 +797,10 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     cell.VideoView.alpha = 1
                     self.videoPlayerLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
                     self.videoPlayerLayer.frame = cell.VideoView.bounds
-                    
-                    if !self.showProfile[indexPath.row] {
-                        self.videoPlayer.play()
-                        self.PlayPauseView.alpha = 1
-                    } else {
-                        self.PlayPauseView.alpha = 0
-                    }
-                    
 
+                    self.PlayPauseView.alpha = 1
                     self.PlayPauseImage.image = UIImage(named: "pauseIcon")
-                    self.didClickPlay = true
+                    self.videoPlayer.play()
                     
                     NSNotificationCenter.defaultCenter().addObserver(self,
                         selector: "playerItemDidReachEnd:",
@@ -831,7 +808,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                         object: self.videoPlayer.currentItem)
                     
                 })
-                
             }
             
             cell.selectionStyle = .None
@@ -953,8 +929,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 cell.uniName = "University of Calgary"
                 
             case "Carlton":
-                cell.UniversityName.text = "Carlton University"
-                cell.uniName = "Carlton University"
+                cell.UniversityName.text = "Carleton University"
+                cell.uniName = "Carleton University"
                 
             case "Dalhousie":
                 cell.UniversityName.text = "Dalhousie University"
@@ -1021,7 +997,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             return cell
         }
-
+        
     }
     
     func playerItemDidReachEnd(notification: NSNotification) {
@@ -1048,27 +1024,37 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
         
-        wasVisible = false
-        
-        PlayPauseImage.image = UIImage(named: "playIcon")
-        didClickPlay = false
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.PlayPauseView.alpha = 0
-        })
-        
-        if videoPlayer != nil {
-            self.videoPlayer.pause()
+        if !tapToTop {
+            
+            wasVisible = false
+            
+            PlayPauseImage.image = UIImage(named: "playIcon")
+            didClickPlay = false
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.PlayPauseView.alpha = 0
+            })
+            
+            if videoPlayer != nil {
+                self.videoPlayer.pause()
+            }
+            
         }
     }
     
     func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
         guard let actualCell = cell as? VideoTableViewCell else {return}
-        
         actualCell.VideoView.alpha = 0
         
     }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        
+        tapToTop = false
+        
+    }
+    
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         print("End Dragging")
@@ -1077,7 +1063,17 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         print(cells.count)
         
-        if PlayPauseView.alpha != 1 {
+        if tapToTop {
+            
+            if videoPlayer != nil {
+                
+                PlayPauseImage.image = UIImage(named: "pauseIcon")
+                PlayPauseView.alpha = 1
+                videoPlayer.play()
+                myTableView.reloadData()
+            }
+            
+        } else if PlayPauseView.alpha != 1 {
             
             for cell in cells {
                 
@@ -1123,7 +1119,17 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         print(cells.count)
         
-        if PlayPauseView.alpha != 1 {
+        if tapToTop {
+            
+            if videoPlayer != nil {
+                
+                PlayPauseImage.image = UIImage(named: "pauseIcon")
+                PlayPauseView.alpha = 1
+                videoPlayer.play()
+                myTableView.reloadData()
+            }
+            
+        } else if PlayPauseView.alpha != 1 {
             
             for cell in cells {
                 
