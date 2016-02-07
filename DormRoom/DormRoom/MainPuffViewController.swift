@@ -13,9 +13,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     weak var rootController: MainRootViewController?
     
-    
     var tapToTop = false
-    
     
     var myTableView = UITableView()
     
@@ -670,20 +668,13 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             if !liked {
                 
-                cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
-                cell.likeView.userInteractionEnabled = true
-                
-                cell.DislikeButtonOutlet.image = UIImage(named: "ThumbsDown")
-                cell.DislikeButtonOutlet.userInteractionEnabled = true
-                
+                cell.likeView.alpha = 1
+                cell.dislikeView.alpha = 1
                 
             } else {
                 
-                cell.LikeButtonOutlet.image = nil
-                cell.LikeButtonOutlet.userInteractionEnabled = false
-                
-                cell.DislikeButtonOutlet.image = nil
-                cell.DislikeButtonOutlet.userInteractionEnabled = false
+                cell.likeView.alpha = 0
+                cell.dislikeView.alpha = 0
                 
             }
             
@@ -900,20 +891,13 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             if !liked {
                 
-                cell.LikeButtonOutlet.image = UIImage(named: "ThumbsUp")
-                cell.likeView.userInteractionEnabled = true
-                
-                cell.DislikeButtonOutlet.image = UIImage(named: "ThumbsDown")
-                cell.DislikeButtonOutlet.userInteractionEnabled = true
-                
+                cell.likeView.alpha = 1
+                cell.dislikeView.alpha = 1
                 
             } else {
                 
-                cell.LikeButtonOutlet.image = nil
-                cell.LikeButtonOutlet.userInteractionEnabled = false
-                
-                cell.DislikeButtonOutlet.image = nil
-                cell.DislikeButtonOutlet.userInteractionEnabled = false
+                cell.likeView.alpha = 0
+                cell.dislikeView.alpha = 0
                 
             }
             

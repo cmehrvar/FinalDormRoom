@@ -96,7 +96,18 @@ class PuffTableViewCell: UITableViewCell {
     
     
     
+    @IBAction func dislike(sender: AnyObject) {
+        
+        swipeDislike()
+        
+    }
     
+    
+    @IBAction func like(sender: AnyObject) {
+        
+        swipeLike()
+        
+    }
     
     
     
@@ -218,14 +229,6 @@ class PuffTableViewCell: UITableViewCell {
         let panRecognizer = UIPanGestureRecognizer(target: self, action: "panOnCell:")
         panRecognizer.delegate = self
         self.addGestureRecognizer(panRecognizer)
-        
-        let likeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeLike")
-        likeView.userInteractionEnabled = true
-        likeView.addGestureRecognizer(likeTapRecognizer)
-        
-        let dislikeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeDislike")
-        dislikeView.userInteractionEnabled = true
-        dislikeView.addGestureRecognizer(dislikeTapRecognizer)
         
     }
     

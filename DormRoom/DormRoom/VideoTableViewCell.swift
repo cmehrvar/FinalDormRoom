@@ -40,7 +40,6 @@ class VideoTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        swipeLikeDislike()
         // Initialization code
     }
     
@@ -67,6 +66,24 @@ class VideoTableViewCell: UITableViewCell {
     
     
     @IBOutlet weak var UniversityName: UILabel!
+    
+    
+    
+    @IBAction func Like(sender: AnyObject) {
+        
+        swipeLike()
+        
+    }
+    
+    
+    
+    @IBAction func Dislike(sender: AnyObject) {
+        
+        swipeDislike()
+        
+    }
+    
+    
     
     @IBAction func fullScreen(sender: AnyObject) {
         
@@ -199,19 +216,6 @@ class VideoTableViewCell: UITableViewCell {
     
     
     //Functions
-    func swipeLikeDislike() {
-        
-        let likeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeLike")
-        likeView.userInteractionEnabled = true
-        likeView.addGestureRecognizer(likeTapRecognizer)
-        
-        let dislikeTapRecognizer = UITapGestureRecognizer(target: self, action: "swipeDislike")
-        dislikeView.userInteractionEnabled = true
-        dislikeView.addGestureRecognizer(dislikeTapRecognizer)
-        
-    }
-    
-    
     func swipeLike() {
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in

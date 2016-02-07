@@ -72,7 +72,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let cell = tableView.dequeueReusableCellWithIdentifier("ChooseFeedCell", forIndexPath: indexPath) as! ChooseFeedCell
         
-        tableView.decelerationRate = 0.01
+        tableView.decelerationRate = 0.1
         
         cell.selectionStyle = .None
         
