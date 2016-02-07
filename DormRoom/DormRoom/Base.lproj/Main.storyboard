@@ -1675,10 +1675,10 @@ You may be subject to additional terms and conditions that apply when you use or
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ChooseUniCell" id="cOc-Ub-9RO" customClass="ChooseUniCellTableViewCell" customModule="DormRoom" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="600" height="250"/>
+                                        <rect key="frame" x="0.0" y="28" width="600" height="240"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cOc-Ub-9RO" id="XXh-Lu-LS3">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="249"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="239"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background" translatesAutoresizingMaskIntoConstraints="NO" id="UEJ-ib-cRk" userLabel="Background">
@@ -3348,12 +3348,12 @@ You may be subject to additional terms and conditions that apply when you use or
                                                         <mask key="constraints">
                                                             <exclude reference="9eb-e9-cCP"/>
                                                             <exclude reference="Flb-k1-iev"/>
-                                                            <exclude reference="DCl-kS-y66"/>
-                                                            <exclude reference="vyO-78-PvD"/>
                                                             <exclude reference="0BM-AA-UQj"/>
                                                             <exclude reference="6fM-hm-IL8"/>
                                                             <exclude reference="bOL-bX-XZ2"/>
                                                             <exclude reference="fgl-YD-bww"/>
+                                                            <exclude reference="DCl-kS-y66"/>
+                                                            <exclude reference="vyO-78-PvD"/>
                                                         </mask>
                                                     </variation>
                                                     <variation key="heightClass=regular">
@@ -3364,12 +3364,12 @@ You may be subject to additional terms and conditions that apply when you use or
                                                         <mask key="constraints">
                                                             <include reference="9eb-e9-cCP"/>
                                                             <include reference="Flb-k1-iev"/>
-                                                            <include reference="DCl-kS-y66"/>
-                                                            <include reference="vyO-78-PvD"/>
                                                             <include reference="0BM-AA-UQj"/>
                                                             <include reference="6fM-hm-IL8"/>
                                                             <include reference="bOL-bX-XZ2"/>
                                                             <include reference="fgl-YD-bww"/>
+                                                            <include reference="DCl-kS-y66"/>
+                                                            <include reference="vyO-78-PvD"/>
                                                         </mask>
                                                     </variation>
                                                 </view>
@@ -4489,12 +4489,12 @@ You may be subject to additional terms and conditions that apply when you use or
                                                         <mask key="constraints">
                                                             <exclude reference="gby-wV-4jD"/>
                                                             <exclude reference="pVZ-ok-LsT"/>
-                                                            <exclude reference="Hfu-FT-QNI"/>
-                                                            <exclude reference="gFj-E7-SLf"/>
                                                             <exclude reference="7oo-6X-UIr"/>
                                                             <exclude reference="Lkr-bo-74C"/>
                                                             <exclude reference="bZP-Uf-Czk"/>
                                                             <exclude reference="qW8-MB-p1H"/>
+                                                            <exclude reference="Hfu-FT-QNI"/>
+                                                            <exclude reference="gFj-E7-SLf"/>
                                                         </mask>
                                                     </variation>
                                                     <variation key="heightClass=regular">
@@ -4505,12 +4505,12 @@ You may be subject to additional terms and conditions that apply when you use or
                                                         <mask key="constraints">
                                                             <include reference="gby-wV-4jD"/>
                                                             <include reference="pVZ-ok-LsT"/>
-                                                            <include reference="Hfu-FT-QNI"/>
-                                                            <include reference="gFj-E7-SLf"/>
                                                             <include reference="7oo-6X-UIr"/>
                                                             <include reference="Lkr-bo-74C"/>
                                                             <include reference="bZP-Uf-Czk"/>
                                                             <include reference="qW8-MB-p1H"/>
+                                                            <include reference="Hfu-FT-QNI"/>
+                                                            <include reference="gFj-E7-SLf"/>
                                                         </mask>
                                                     </variation>
                                                 </view>
@@ -4984,8 +4984,16 @@ You may be subject to additional terms and conditions that apply when you use or
                                             </mask>
                                         </variation>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8C-s2-4lx" userLabel="playPause">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <connections>
+                                            <action selector="playPause:" destination="kgB-RT-bCH" eventType="touchUpInside" id="sXj-nd-YV4"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="y8C-s2-4lx" secondAttribute="bottom" id="2Mz-21-eWI"/>
+                                    <constraint firstItem="y8C-s2-4lx" firstAttribute="top" secondItem="mw3-nG-GzJ" secondAttribute="top" id="36A-j6-TDq"/>
                                     <constraint firstAttribute="width" constant="80" id="5pA-le-b5y">
                                         <variation key="heightClass=regular" constant="60"/>
                                     </constraint>
@@ -4993,28 +5001,40 @@ You may be subject to additional terms and conditions that apply when you use or
                                         <variation key="heightClass=regular" constant="60"/>
                                     </constraint>
                                     <constraint firstItem="6zp-XJ-JmV" firstAttribute="centerY" secondItem="mw3-nG-GzJ" secondAttribute="centerY" id="b9Q-Ex-LiZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="y8C-s2-4lx" secondAttribute="trailing" id="dZE-NB-ZSL"/>
                                     <constraint firstItem="6zp-XJ-JmV" firstAttribute="centerX" secondItem="mw3-nG-GzJ" secondAttribute="centerX" id="f3c-C6-o8U"/>
+                                    <constraint firstItem="y8C-s2-4lx" firstAttribute="leading" secondItem="mw3-nG-GzJ" secondAttribute="leading" id="h4u-Ze-9ym"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
                                         <exclude reference="6zp-XJ-JmV"/>
+                                        <exclude reference="y8C-s2-4lx"/>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="5pA-le-b5y"/>
                                         <exclude reference="TUe-hf-JFk"/>
                                         <exclude reference="b9Q-Ex-LiZ"/>
                                         <exclude reference="f3c-C6-o8U"/>
+                                        <exclude reference="2Mz-21-eWI"/>
+                                        <exclude reference="36A-j6-TDq"/>
+                                        <exclude reference="dZE-NB-ZSL"/>
+                                        <exclude reference="h4u-Ze-9ym"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular">
                                     <mask key="subviews">
                                         <include reference="6zp-XJ-JmV"/>
+                                        <include reference="y8C-s2-4lx"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="5pA-le-b5y"/>
                                         <include reference="TUe-hf-JFk"/>
                                         <include reference="b9Q-Ex-LiZ"/>
                                         <include reference="f3c-C6-o8U"/>
+                                        <include reference="2Mz-21-eWI"/>
+                                        <include reference="36A-j6-TDq"/>
+                                        <include reference="dZE-NB-ZSL"/>
+                                        <include reference="h4u-Ze-9ym"/>
                                     </mask>
                                 </variation>
                             </view>

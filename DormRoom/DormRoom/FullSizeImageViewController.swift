@@ -198,6 +198,9 @@ class FullSizeImageViewController: UIViewController {
         CaptionViewOutlet.alpha = 0
         InfoViewOutlet.alpha = 0
         
+        guard let actualController = rootController else {return}
+        actualController.mainController?.playing = false
+        
         rootController?.toggleFullSizeImage({ (Bool) -> () in
             self.ImageOutlet.image = nil
             

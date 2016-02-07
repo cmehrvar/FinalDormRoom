@@ -19,7 +19,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var user = PFUser.currentUser()
     
-    var didClickPlay = false
+    var playing = false
     
     var wasVisible = false
     var index = 0
@@ -101,6 +101,34 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     
     //Actions
+    @IBAction func playPause(sender: AnyObject) {
+        
+        if !playing {
+            
+            if videoPlayer != nil {
+                videoPlayer.play()
+                
+                let image = UIImage(named: "pauseIcon")
+                
+                PlayPauseImage.image = image
+            }
+            
+            playing = !playing
+            
+        } else {
+            
+            if videoPlayer != nil {
+                videoPlayer.pause()
+                PlayPauseImage.image = UIImage(named: "playIcon")
+            }
+            
+            playing = !playing
+            
+        }
+    }
+    
+    
+    
     @IBAction func takePuffAction(sender: AnyObject) {
         
         guard let actualController = rootController else {return}
@@ -137,12 +165,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         ImageBlur.userInteractionEnabled = true
         ImageBlur.addGestureRecognizer(tapRecognizer)
         
-        
-        let playPauseRecognizer: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "playPauseButtonAction")
-        PlayPauseView.userInteractionEnabled = true
-        PlayPauseView.addGestureRecognizer(playPauseRecognizer)
-        
-        
     }
     
     func dismissKeyboard() {
@@ -157,30 +179,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func playPauseButtonAction() {
-        
-        if !didClickPlay {
-            
-            if videoPlayer != nil {
-                videoPlayer.play()
-                
-                let image = UIImage(named: "pauseIcon")
-                
-                PlayPauseImage.image = image
-            }
-            didClickPlay = !didClickPlay
-            
-        } else {
-            
-            if videoPlayer != nil {
-                videoPlayer.pause()
-                PlayPauseImage.image = UIImage(named: "playIcon")
-            }
-            
-            didClickPlay = !didClickPlay
-            
-        }
-    }
     
     func funcToCallWhenStartLoadingYourWebview() {
         ProgressView.progress = 0.0
@@ -229,7 +227,6 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
             index = 0
             wasVisible = true
-            //myTableView.reloadData()
             
         }
     }
@@ -493,6 +490,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    
+    
     func urlToAsset() {
         
         self.asset.removeAll()
@@ -511,12 +510,16 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
+    
+    
     func loadWebsite() {
         
         guard let url = NSURL(string: "http://www.dormroomnetwork.com/trending.html") else {return}
         WebViewOutlet.loadRequest(NSURLRequest(URL: url))
         
     }
+    
+    
     
     func callCamera() -> UIImagePickerController {
         
@@ -529,6 +532,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         return cameraProfile
         
     }
+    
+    
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         
@@ -546,6 +551,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             
         })
     }
+    
+    
     
     
     //TableView shit
@@ -793,6 +800,8 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                     self.PlayPauseImage.image = UIImage(named: "pauseIcon")
                     self.videoPlayer.play()
                     
+                    self.playing = true
+                    
                     NSNotificationCenter.defaultCenter().addObserver(self,
                         selector: "playerItemDidReachEnd:",
                         name: AVPlayerItemDidPlayToEndTimeNotification,
@@ -1013,7 +1022,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
             wasVisible = false
             
             PlayPauseImage.image = UIImage(named: "playIcon")
-            didClickPlay = false
+            playing = false
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.PlayPauseView.alpha = 0
@@ -1055,6 +1064,7 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
                 PlayPauseView.alpha = 1
                 videoPlayer.play()
                 myTableView.reloadData()
+                
             }
             
         } else if PlayPauseView.alpha != 1 {
