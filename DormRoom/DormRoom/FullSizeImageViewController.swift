@@ -212,7 +212,6 @@ class FullSizeImageViewController: UIViewController {
                 self.videoPlayer.pause()
             }
         })
-        
     }
 
     override func viewDidLoad() {

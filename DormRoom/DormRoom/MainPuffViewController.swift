@@ -268,6 +268,13 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func loadFromParse(complete: (Bool) -> ()) {
         
+        PlayPauseView.alpha = 0
+        
+        if videoPlayer != nil {
+            videoPlayer.pause()
+        }
+        
+        
         let query = PFQuery(className: "CanadaPuff")
         query.orderByDescending(ranking)
         
