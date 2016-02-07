@@ -221,13 +221,17 @@ class MainPuffViewController: UIViewController, UITableViewDataSource, UITableVi
         
         myTableView.scrollRectToVisible(CGRect(x: 0, y: 0, width: 1, height: 1), animated: true)
         
+        PlayPauseView.alpha = 0
+        
+        if videoPlayer != nil {
+            videoPlayer.pause()
+        }
+        
         tapToTop = true
+        index = 0
         
         if !isImage[0] {
-            
-            index = 0
             wasVisible = true
-            
         }
     }
     
