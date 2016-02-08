@@ -5013,12 +5013,12 @@ You may be subject to additional terms and conditions that apply when you use or
                                     <mask key="constraints">
                                         <exclude reference="5pA-le-b5y"/>
                                         <exclude reference="TUe-hf-JFk"/>
-                                        <exclude reference="b9Q-Ex-LiZ"/>
-                                        <exclude reference="f3c-C6-o8U"/>
                                         <exclude reference="2Mz-21-eWI"/>
                                         <exclude reference="36A-j6-TDq"/>
                                         <exclude reference="dZE-NB-ZSL"/>
                                         <exclude reference="h4u-Ze-9ym"/>
+                                        <exclude reference="b9Q-Ex-LiZ"/>
+                                        <exclude reference="f3c-C6-o8U"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular">
@@ -5029,12 +5029,12 @@ You may be subject to additional terms and conditions that apply when you use or
                                     <mask key="constraints">
                                         <include reference="5pA-le-b5y"/>
                                         <include reference="TUe-hf-JFk"/>
-                                        <include reference="b9Q-Ex-LiZ"/>
-                                        <include reference="f3c-C6-o8U"/>
                                         <include reference="2Mz-21-eWI"/>
                                         <include reference="36A-j6-TDq"/>
                                         <include reference="dZE-NB-ZSL"/>
                                         <include reference="h4u-Ze-9ym"/>
+                                        <include reference="b9Q-Ex-LiZ"/>
+                                        <include reference="f3c-C6-o8U"/>
                                     </mask>
                                 </variation>
                             </view>

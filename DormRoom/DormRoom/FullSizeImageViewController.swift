@@ -185,9 +185,7 @@ class FullSizeImageViewController: UIViewController {
                 self.PlayPauseImage.image = UIImage(named: "pauseIcon")
                 
             }
-            
             didClickPlay = !didClickPlay
-            
         }
     }
     
